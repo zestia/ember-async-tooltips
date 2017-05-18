@@ -1,6 +1,6 @@
 import RSVP from 'rsvp';
 import Component from 'ember-component';
-import computed from 'ember-computed';
+import computed from 'ember-improved-cp/read-only';
 import inject from 'ember-service/inject';
 import { debounce } from 'ember-runloop';
 import { isPresent } from 'ember-utils';
@@ -20,14 +20,19 @@ export default Component.extend({
 
   tooltipService: inject('tooltip'),
 
+  typeAttr: computed(function() {
+    return this.get('type') ? this.get('type') : 'button';
+  }),
+
   didReceiveAttrs() {
     this._super(...arguments);
     this._setCustomHoverDelay();
   },
 
-  typeAttr: computed(function() {
-    return this.get('type') ? this.get('type') : 'button';
-  }),
+  willDestroyElement() {
+    this._super(...arguments);
+    this._destroyTooltip();
+  },
 
   mouseEnter() {
     this._super(...arguments);
@@ -113,11 +118,6 @@ export default Component.extend({
 
   _destroyTooltip() {
     this.get('tooltipService').deactivate(this);
-  },
-
-  willDestroyElement() {
-    this._super(...arguments);
-    this._destroyTooltip();
   },
 
   actions: {
