@@ -7,6 +7,12 @@
 ember install ember-async-tooltips
 ```
 
+### Demo
+
+Demo coming soon, for now checkout and build the dummy application.
+
+<img src="docs/screenshot.png" width"512" height="319">
+
 ### Features
 * Manual positioning either: N, NE, E, SE, S, SW, W, NW
 * Automatic positioning: Viewport is split into rows and columns which help determine where a tooltip is positioned
