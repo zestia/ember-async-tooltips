@@ -15,7 +15,7 @@ Demo coming soon, for now checkout and build the dummy application.
 
 ### Example
 
-When "Hover over me" is overed over, the `tool-tip/example` component will be rendered in a place of your chosing in the DOM.
+When `tool-tipper/example` is hovered over, the `tool-tip/example` component will be rendered in a place of your chosing in the DOM.
 
 ```handlebars
 {{#tool-tipper/example tooltip=(component 'tool-tip/example')}}
@@ -119,7 +119,7 @@ Setting the `placement` attribute will add `left` and `right` CSS properties bas
 
 ### Automatic positioning
 
-The tooltip will be positioned around the outside edge of the `tool-tipper` component that caused it display by chosing the most appropriate compass point. For example: If the `tool-tipper` component is at the very bottom of the viewport, then the `tool-tip` component will be displayed _above_ the `tool-tipper` - so as to remain visible in the viewport, rather than going below the fold.
+The tooltip will be positioned around the outside edge of the `tool-tipper` component that caused it display by chosing the most appropriate compass point. For example: If the `tool-tipper` component is at the very bottom of the viewport, then the `tool-tip` component will be displayed _above_ the `tool-tipper` - so as to remain visible in the viewport.
 
 ```handlebars
   {{tool-tipper/example tooltip=(component 'tool-tip/example')}}
