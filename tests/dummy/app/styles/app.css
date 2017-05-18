@@ -1,0 +1,146 @@
+@keyframes fade-in {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fade-out {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+:root {
+  font-family: sans-serif;
+}
+
+:root,
+.ember-application {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+
+.ember-application {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.controls {
+  position: fixed;
+  top: 5px;
+  left: 5px;
+}
+
+.control {
+  margin-right: 20px;
+}
+
+.number-input {
+  max-width: 40px;
+}
+
+.boundary {
+  border: 1px solid grey;
+  pointer-events: none;
+  position: fixed;
+}
+
+.tooltipper,
+.tooltip {
+  color: white;
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+.tooltipper {
+  background-color: blue;
+  cursor: move;
+  user-select: none;
+}
+
+.tooltip {
+  position: absolute;
+  background-color: red;
+  pointer-events: none;
+}
+
+.tooltip.is-showing {
+  animation: fade-in 250ms;
+}
+
+.tooltip.is-hiding {
+  animation: fade-out 250ms;
+}
+
+.translate-x .tooltip.is-east {
+  transform: translateX(-100%);
+}
+
+.translate-x .tooltip.is-west {
+  transform: translateX(100%);
+}
+
+.grid {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  background-color: #f1f1f1;
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+}
+
+.cell {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.cell::after {
+  color: #aaa;
+  font-size: 2vw;
+  position: absolute;
+  margin-top: -1vw;
+  margin-left: -1vw;
+}
+
+.row:nth-child(even) .cell:nth-child(odd),
+.row:nth-child(odd) .cell:nth-child(even) {
+  background-color: #e1e1e1;
+}
+
+.nw::after {
+  content: 'NW';
+}
+
+.n::after {
+  content: 'N';
+}
+
+.ne::after {
+  content: 'NE';
+}
+
+.w::after {
+  content: 'W';
+}
+
+.e::after {
+  content: 'E';
+}
+
+.sw::after {
+  content: 'SW';
+}
+
+.s::after {
+  content: 'S';
+}
+
+.se::after {
+  content: 'SE';
+}

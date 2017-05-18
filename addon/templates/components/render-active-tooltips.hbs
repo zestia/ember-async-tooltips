@@ -1,0 +1,8 @@
+{{#each tooltippers as |tooltipper|}}
+  {{component tooltipper.tooltip
+    data=tooltipper.data
+    reference-element=(unbound tooltipper.element)
+    on-insert=(action 'tooltipInserted' target=tooltipper)
+    on-mouse-leave=(action 'tooltipExited' target=tooltipper)
+    on-hide=(action 'tooltipHidden' target=tooltipper)}}
+{{/each}}

@@ -1,0 +1,62 @@
+{
+  "name": "ember-async-tooltips",
+  "version": "1.0.0",
+  "description": "Render tooltips asyncronously on hover",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "ember build",
+    "start": "ember server",
+    "test": "ember try:each"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amk221/ember-async-tooltips.git"
+  },
+  "engines": {
+    "node": ">= 0.12.0"
+  },
+  "author": "Andrew Kirwin",
+  "license": "MIT",
+  "devDependencies": {
+    "broccoli-asset-rev": "2.5.0",
+    "ember-cli": "2.13.0",
+    "ember-cli-dependency-checker": "1.4.0",
+    "ember-cli-eslint": "3.0.3",
+    "ember-cli-htmlbars-inline-precompile": "0.4.1",
+    "ember-cli-inject-live-reload": "1.6.1",
+    "ember-cli-qunit": "4.0.0",
+    "ember-cli-release": "0.2.9",
+    "ember-cli-shims": "1.1.0",
+    "ember-cli-sri": "2.1.1",
+    "ember-cli-test-loader": "2.1.0",
+    "ember-cli-uglify": "1.2.0",
+    "ember-disable-prototype-extensions": "1.1.0",
+    "ember-disable-proxy-controllers": "1.0.1",
+    "ember-load-initializers": "1.0.0",
+    "ember-resolver": "4.1.0",
+    "ember-source": "2.13.0",
+    "loader.js": "4.3.0"
+  },
+  "dependencies": {
+    "ember-cli-babel": "6.1.0",
+    "ember-cli-htmlbars": "1.3.0"
+  },
+  "keywords": [
+    "ember-addon",
+    "tooltips",
+    "mouseover",
+    "hover",
+    "async"
+  ],
+  "ember-addon": {
+    "configPath": "tests/dummy/config"
+  },
+  "bugs": {
+    "url": "https://github.com/amk221/ember-async-tooltips/issues"
+  },
+  "homepage": "https://github.com/amk221/ember-async-tooltips",
+  "configPath": "tests/dummy/config"
+}
