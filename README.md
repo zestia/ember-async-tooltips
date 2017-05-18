@@ -31,8 +31,8 @@ Tooltips will be rendered here:
 
 ### Features
 
-* Manual positioning either: N, NE, E, SE, S, SW, W, NW
-* Automatic positioning: Viewport is split into rows and columns which help determine where a tooltip should be optimally positioned
+* [Manual positioning](#manual-positioning) either: N, NE, E, SE, S, SW, W, NW
+* [Automatic positioning](#automatic-positioning): Viewport is split into rows and columns which help determine where a tooltip should be optimally positioned
 * Can specify delay before the tooltip will show/hide on a per-tooltip or per-class basis
 * Can optionally wait for async data to be loaded and passed to the tooltips without negatively affecting the hover delay.
 
@@ -119,7 +119,7 @@ Setting the `placement` attribute will add `left` and `right` CSS properties bas
 
 ### Automatic positioning
 
-The tooltip will be positioned around the outside edge of the `tool-tipper` component that caused it display by chosing the most appropriate compass point. For example: If the `tool-tipper` component is at the very bottom of the viewport, then the `tool-tip` component will be displayed _above_ the `tool-tipper` - so as to remain visible in the viewport.
+The tooltip will be positioned around the outside edge of the `tool-tipper` component that caused it display by chosing the most appropriate compass point. For example: If the `tool-tipper` component is at the very bottom of the viewport (south), then the `tool-tip` component will be displayed _above_ the `tool-tipper` (north) - so as to remain visible.
 
 ```handlebars
   {{tool-tipper/example tooltip=(component 'tool-tip/example')}}
