@@ -11,7 +11,7 @@ ember install ember-async-tooltips
 
 Demo coming soon, for now checkout and build the dummy application.
 
-<img src="docs/screenshot.png" width"512" height="319">
+<img src="docs/screenshot.png" width="512" height="319">
 
 ### Features
 * Manual positioning either: N, NE, E, SE, S, SW, W, NW
