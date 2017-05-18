@@ -13,12 +13,55 @@ Demo coming soon, for now checkout and build the dummy application.
 
 <img src="docs/screenshot.png" width="512" height="319">
 
+### Example
+
+When "Hover over me" is overed over, the `tool-tip/example` component will be rendered in a place of your chosing in the DOM.
+
+```handlebars
+{{#tool-tipper/example tooltip=(component 'tool-tip/example')}}
+  Hover over me
+{{/tool-tipper/example}}
+```
+
+Tooltips will be rendered here:
+
+```handlebars
+{{render-active-tooltips}}
+```
+
 ### Features
+
 * Manual positioning either: N, NE, E, SE, S, SW, W, NW
-* Automatic positioning: Viewport is split into rows and columns which help determine where a tooltip is positioned
-* Will show after a the specified hover delay
-* Can wait before showing, whilst async data is loaded and passed to them
-* The hover delay is subtracted from the time it takes to load the async data
+* Automatic positioning: Viewport is split into rows and columns which help determine where a tooltip should be optimally positioned
+* Can specify delay before the tooltip will show/hide on a per-tooltip or per-class basis
+* Can optionally wait for async data to be loaded and passed to the tooltips without negatively affecting the hover delay.
+
+### Prerequisites
+
+1. It is assumed that all your tooltips will animate in and out. For this reason
+  you are required to add the following styles:
+
+  ```css
+  .your-tooltip.is-showing {
+    animation: your-show-animation;
+  }
+
+  .your-tooltip.is-hiding {
+    animation: your-hide-animation;
+  }
+  ```
+
+2. In order to detect when a tooltip has animated out your application must be
+   informed of animation events. Add the following to `app/app.js`
+
+  ```javascript
+  customEvents: {
+    webkitAnimationEnd: 'animationEnd',
+    msAnimationEnd: 'animationEnd',
+    oAnimationEnd: 'animationEnd',
+    animationend: 'animationEnd'
+  }
+  ```
 
 ### Recommended usage
 
@@ -65,34 +108,6 @@ export default ToolTipComponent.extend({
   {{! tool-tip/user.hbs }}
   Hello {{data.user.name}}
 ```
-
-
-### Prerequisites
-
-1. It is assumed that all your tooltips will animate in and out. For this reason
-  you are required to add the following styles:
-
-  ```css
-  .your-tooltip.is-showing {
-    animation: your-show-animation;
-  }
-
-  .your-tooltip.is-hiding {
-    animation: your-hide-animation;
-  }
-  ```
-
-2. In order to detect when a tooltip has animated out your application must be
-   informed of animation events. Add the following to `app/app.js`
-
-  ```javascript
-  customEvents: {
-    webkitAnimationEnd: 'animationEnd',
-    msAnimationEnd: 'animationEnd',
-    oAnimationEnd: 'animationEnd',
-    animationend: 'animationEnd'
-  }
-  ```
 
 ### Manual positioning
 
