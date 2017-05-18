@@ -3,6 +3,7 @@ import Component from 'ember-component';
 import computed from 'ember-computed';
 import inject from 'ember-service/inject';
 import { debounce } from 'ember-runloop';
+import { isPresent } from 'ember-utils';
 import { trySet } from 'ember-metal/set';
 
 export default Component.extend({
@@ -21,7 +22,7 @@ export default Component.extend({
 
   didReceiveAttrs() {
     this._super(...arguments);
-    this.set('hoverDelay', this.getWithDefault('hover-delay', 0));
+    this._setCustomHoverDelay();
   },
 
   typeAttr: computed(function() {
@@ -66,6 +67,12 @@ export default Component.extend({
       const delay = wait > max ? 0 : max - wait;
       return delay;
     });
+  },
+
+  _setCustomHoverDelay() {
+    const defaultDelay = this.getWithDefault('hoverDelay', 0);
+    const customDelay  = this.get('hover-delay');
+    this.set('hoverDelay', isPresent(customDelay) ? customDelay : defaultDelay);
   },
 
   _scheduleShowTooltipFromHover(delay) {
