@@ -11,7 +11,7 @@ import { placementBoundary } from 'ember-async-tooltips/utils/placement';
 export default Controller.extend({
   columns: 3,
   rows: 3,
-  hoverDelay: 500,
+  hoverDelay: 0,
   loadDelay: 0,
 
   boundary: computed('columns', 'rows', function() {
