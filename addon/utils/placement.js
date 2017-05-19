@@ -1,4 +1,5 @@
 const { round } = Math;
+const { keys } = Object;
 
 export function placementToString(placement = {}) {
   let string = '';
@@ -26,6 +27,12 @@ export function determinePlacement($element, boundary) {
     S: y > boundary.bottom,
     W: x < boundary.left
   };
+}
+
+export function hasPlacement(placement = {}) {
+  return keys(placement).filter(point => {
+    return !!placement[point];
+  }).length > 0;
 }
 
 export function placementBoundary($container, columns = 3, rows = 3) {

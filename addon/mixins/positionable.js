@@ -5,7 +5,8 @@ import {
   determinePlacement,
   placementBoundary,
   placementToString,
-  stringToPlacement
+  stringToPlacement,
+  hasPlacement
 } from '../utils/placement';
 
 export default Mixin.create({
@@ -54,15 +55,21 @@ export default Mixin.create({
     const $reference = this.$reference();
     const $window    = jQuery(window);
     const boundary   = this.placementBoundary($window);
-    const placement  = determinePlacement($reference, boundary);
-    const center     = !placement.N && !placement.S;
+    let placement    = determinePlacement($reference, boundary);
+    const center     = !hasPlacement(placement);
 
-    return {
+    placement = {
       N: placement.S,
       E: placement.E,
-      S: placement.N || center,
+      S: placement.N,
       W: placement.W
     };
+
+    if (center) {
+      placement.S = true;
+    }
+
+    return placement;
   },
 
   _placementClassNames(placement) {

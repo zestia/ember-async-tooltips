@@ -5,11 +5,13 @@ import {
   placementCoords,
   placementBoundary,
   placementToString,
-  stringToPlacement
+  stringToPlacement,
+  hasPlacement
 } from 'ember-async-tooltips/utils/placement';
 
 let $element, $reference, $fixture;
 
+const center    = { N: false, E: false, S: false, W: false };
 const north     = { N: true,  E: false, S: false, W: false };
 const northEast = { N: true,  E: true,  S: false, W: false };
 const east      = { N: false, E: true,  S: false, W: false };
@@ -110,6 +112,22 @@ test('#stringToPlacement', function(assert) {
   assert.deepEqual(stringToPlacement('SW'), southWest);
   assert.deepEqual(stringToPlacement('W'), west);
   assert.deepEqual(stringToPlacement('NW'), northWest);
+});
+
+
+test('#hasPlacement', function(assert) {
+  assert.expect(10);
+
+  assert.strictEqual(hasPlacement(north), true);
+  assert.strictEqual(hasPlacement(northEast), true);
+  assert.strictEqual(hasPlacement(east), true);
+  assert.strictEqual(hasPlacement(southEast), true);
+  assert.strictEqual(hasPlacement(south), true);
+  assert.strictEqual(hasPlacement(southWest), true);
+  assert.strictEqual(hasPlacement(west), true);
+  assert.strictEqual(hasPlacement(northWest), true);
+  assert.strictEqual(hasPlacement(center), false);
+  assert.strictEqual(hasPlacement(), false);
 });
 
 
