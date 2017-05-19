@@ -56,7 +56,7 @@
   ],
   "ember-addon": {
     "configPath": "tests/dummy/config",
-    "demoURL": "https://amk221.github.io/ember-async-tooltips",
+    "demoURL": "https://amk221.github.io/ember-async-tooltips"
   },
   "bugs": {
     "url": "https://github.com/amk221/ember-async-tooltips/issues"
