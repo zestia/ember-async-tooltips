@@ -9,9 +9,11 @@ ember install ember-async-tooltips
 
 ### Demo
 
-Demo coming soon, for now checkout and build the dummy application.
+https://amk221.github.io/ember-async-tooltips
 
-<img src="docs/screenshot.png" width="512" height="319">
+<a href="https://amk221.github.io/ember-async-tooltips">
+  <img src="docs/screenshot.png" width="512" height="319">
+</a>
 
 ### Example
 
