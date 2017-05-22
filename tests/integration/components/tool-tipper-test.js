@@ -52,3 +52,18 @@ test('as a button', function(assert) {
   assert.equal(this.$('.tooltipper').attr('type'), 'foo',
     'can specify type of button');
 });
+
+
+test('tabindex', function(assert) {
+  assert.expect(2);
+
+  this.render(hbs`{{tool-tipper}}`);
+
+  assert.strictEqual(this.$('.tooltipper').attr('tabindex'), undefined,
+    'no default tabindex');
+
+  this.render(hbs`{{tool-tipper tabindex=-1}}`);
+
+  assert.strictEqual(this.$('.tooltipper').attr('tabindex'), '-1',
+    'can set tabindex attribute');
+});

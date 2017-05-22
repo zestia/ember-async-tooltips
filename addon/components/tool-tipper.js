@@ -11,6 +11,7 @@ export default Component.extend({
   classNames: ['tooltipper'],
   classNameBindings: ['instance:has-tooltip'],
   attributeBindings: [
+    'tabindex',
     'href',
     'target',
     'rel',
