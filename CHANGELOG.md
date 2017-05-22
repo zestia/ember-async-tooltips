@@ -1,5 +1,9 @@
 # Changelog
 
+0.1.3
+
+* move ember-improved-cp to dependencies
+
 0.1.2
 
 * Add support for tabindex attribute to tooltipper component
