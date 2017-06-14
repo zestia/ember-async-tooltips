@@ -92,10 +92,8 @@ import ToolTipComponent from 'ember-async-tooltips/components/tool-tip';
 
 export default ToolTipComponent.extend({
   classNames: ['user-tooltip'],
-
-  placementBoundary($container) {
-    return this._super($container, 3, 2);
-  }
+  columns: 3,
+  rows: 2
 });
 ```
 

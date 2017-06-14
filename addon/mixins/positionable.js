@@ -37,7 +37,7 @@ export default Mixin.create({
     this.$().css({ left, top });
   },
 
-  placementBoundary($container) {
+  _placementBoundary($container) {
     return placementBoundary($container, this.get('columns'), this.get('rows'));
   },
 
@@ -54,7 +54,7 @@ export default Mixin.create({
   _autoPlacement() {
     const $reference = this.$reference();
     const $window    = jQuery(window);
-    const boundary   = this.placementBoundary($window);
+    const boundary   = this._placementBoundary($window);
     let placement    = determinePlacement($reference, boundary);
     const center     = !hasPlacement(placement);
 
