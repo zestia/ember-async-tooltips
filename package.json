@@ -1,6 +1,6 @@
 {
   "name": "ember-async-tooltips",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Render tooltips asyncronously on hover",
   "directories": {
     "doc": "doc",
