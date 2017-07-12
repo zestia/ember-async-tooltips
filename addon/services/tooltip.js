@@ -1,5 +1,5 @@
-import Service from 'ember-service';
-import { A as emberA } from 'ember-array/utils';
+import Service from '@ember/service';
+import { A as emberA } from '@ember/array';
 
 /**
  * This service keeps track of which tooltippers are active (being hovered over)

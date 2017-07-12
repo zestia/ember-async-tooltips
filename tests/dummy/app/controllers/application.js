@@ -1,10 +1,10 @@
 import Ember from 'ember';
 import RSVP from 'rsvp';
-import Controller from 'ember-controller';
+import Controller from '@ember/controller';
 import jQuery from 'jquery';
-import computed from 'ember-improved-cp/read-only';
-import { htmlSafe } from 'ember-string';
-import { later } from 'ember-runloop';
+import { computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
+import { later } from '@ember/runloop';
 const { escapeExpression } = Ember.Handlebars.Utils;
 import { placementBoundary } from 'ember-async-tooltips/utils/placement';
 

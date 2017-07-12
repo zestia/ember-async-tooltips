@@ -1,10 +1,9 @@
 import RSVP from 'rsvp';
-import Component from 'ember-component';
-import computed from 'ember-improved-cp/read-only';
-import inject from 'ember-service/inject';
-import { debounce } from 'ember-runloop';
-import { isPresent } from 'ember-utils';
-import { trySet } from 'ember-metal/set';
+import Component from '@ember/component';
+import { computed, trySet } from '@ember/object';
+import { inject } from '@ember/service';
+import { debounce } from '@ember/runloop';
+import { isPresent } from '@ember/utils';
 
 export default Component.extend({
   tagName: 'span',

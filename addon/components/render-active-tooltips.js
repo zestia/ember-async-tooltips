@@ -1,6 +1,6 @@
-import Component from 'ember-component';
-import inject from 'ember-service/inject';
-import { readOnly } from 'ember-improved-cp/read-only';
+import Component from '@ember/component';
+import { inject } from '@ember/service';
+import { readOnly } from '@ember/object/computed';
 import layout from '../templates/components/render-active-tooltips';
 
 export default Component.extend({

@@ -1,6 +1,6 @@
-import getOwner from 'ember-owner/get';
+import { getOwner } from '@ember/application';
 import { test, moduleFor } from 'ember-qunit';
-import Component from 'ember-component';
+import Component from '@ember/component';
 
 let tooltipService, fooTooltipper, barTooltipper;
 

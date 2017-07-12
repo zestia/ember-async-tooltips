@@ -1,6 +1,6 @@
 import RSVP from 'rsvp';
-import Component from 'ember-component';
-import { scheduleOnce } from 'ember-runloop';
+import Component from '@ember/component';
+import { scheduleOnce } from '@ember/runloop';
 import Positionable from '../mixins/positionable';
 import layout from '../templates/components/tool-tip';
 
