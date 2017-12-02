@@ -1,5 +1,9 @@
 # Changelog
 
+1.0.4
+
+* Upgrade dependencies
+
 1.0.3
 
 * Upgrade dependencies
