@@ -1,8 +1,10 @@
 import { test, moduleForComponent } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
-import TooltipComponent from 'ember-async-tooltips/components/tool-tip';
-import TooltipperComponent from 'ember-async-tooltips/components/tool-tipper';
+import TooltipComponent
+  from '@zestia/ember-async-tooltips/components/tool-tip';
+import TooltipperComponent
+  from '@zestia/ember-async-tooltips/components/tool-tipper';
 
 
 moduleForComponent('render-active-tooltips', {

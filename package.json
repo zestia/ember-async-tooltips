@@ -1,6 +1,6 @@
 {
-  "name": "ember-async-tooltips",
-  "version": "1.0.4",
+  "name": "@zestia/ember-async-tooltips",
+  "version": "1.0.5",
   "description": "Render tooltips asyncronously on hover",
   "directories": {
     "doc": "doc",
@@ -13,12 +13,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/amk221/ember-async-tooltips.git"
+    "url": "https://github.com/zestia/ember-async-tooltips.git"
   },
   "engines": {
     "node": ">= 0.12.0"
   },
-  "author": "Andrew Kirwin",
+  "author": "Zestia",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "2.6.0",
@@ -56,11 +56,11 @@
   ],
   "ember-addon": {
     "configPath": "tests/dummy/config",
-    "demoURL": "https://amk221.github.io/ember-async-tooltips"
+    "demoURL": "https://zestia.github.io/ember-async-tooltips"
   },
   "bugs": {
-    "url": "https://github.com/amk221/ember-async-tooltips/issues"
+    "url": "https://github.com/zestia/ember-async-tooltips/issues"
   },
-  "homepage": "https://github.com/amk221/ember-async-tooltips",
+  "homepage": "https://github.com/zestia/ember-async-tooltips",
   "configPath": "tests/dummy/config"
 }

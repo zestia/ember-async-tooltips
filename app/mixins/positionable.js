@@ -1,1 +1,1 @@
-export { default } from 'ember-async-tooltips/mixins/positionable';
+export { default } from '@zestia/ember-async-tooltips/mixins/positionable';

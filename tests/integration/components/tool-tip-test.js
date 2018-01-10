@@ -1,6 +1,6 @@
 import { test, moduleForComponent } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import ToolTipComponent from 'ember-async-tooltips/components/tool-tip';
+import ToolTipComponent from '@zestia/ember-async-tooltips/components/tool-tip';
 
 
 moduleForComponent('tool-tip', {

@@ -1,1 +1,1 @@
-export { default } from 'ember-async-tooltips/components/tool-tipper';
+export { default } from '@zestia/ember-async-tooltips/components/tool-tipper';

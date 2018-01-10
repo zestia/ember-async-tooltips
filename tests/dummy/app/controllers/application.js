@@ -5,7 +5,9 @@ import jQuery from 'jquery';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
 import { later } from '@ember/runloop';
-import { placementBoundary } from 'ember-async-tooltips/utils/placement';
+import {
+  placementBoundary
+} from '@zestia/ember-async-tooltips/utils/placement';
 const { escapeExpression } = Ember.Handlebars.Utils;
 
 export default Controller.extend({

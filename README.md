@@ -1,17 +1,17 @@
-# ember-async-tooltips
+# @zestia/ember-async-tooltips
 
-<a href="http://emberobserver.com/addons/ember-async-tooltips"><img src="http://emberobserver.com/badges/ember-async-tooltips.svg"></a> &nbsp; <a href="https://david-dm.org/amk221/ember-async-tooltips#badge-embed"><img src="https://david-dm.org/amk221/ember-async-tooltips.svg"></a> &nbsp; <a href="https://david-dm.org/amk221/ember-async-tooltips#dev-badge-embed"><img src="https://david-dm.org/amk221/ember-async-tooltips/dev-status.svg"></a> &nbsp; <a href="https://codeclimate.com/github/amk221/ember-async-tooltips"><img src="https://codeclimate.com/github/amk221/ember-async-tooltips/badges/gpa.svg" /></a> &nbsp; <a href="http://travis-ci.org/amk221/ember-async-tooltips"><img src="https://travis-ci.org/amk221/ember-async-tooltips.svg?branch=master"></a>
+<a href="http://emberobserver.com/addons/ember-async-tooltips"><img src="http://emberobserver.com/badges/ember-async-tooltips.svg"></a> &nbsp; <a href="https://david-dm.org/zestia/ember-async-tooltips#badge-embed"><img src="https://david-dm.org/zestia/ember-async-tooltips.svg"></a> &nbsp; <a href="https://david-dm.org/zestia/ember-async-tooltips#dev-badge-embed"><img src="https://david-dm.org/zestia/ember-async-tooltips/dev-status.svg"></a> &nbsp; <a href="http://travis-ci.org/zestia/ember-async-tooltips"><img src="https://travis-ci.org/zestia/ember-async-tooltips.svg?branch=master"></a>
 
 ### Installation
 ```
-ember install ember-async-tooltips
+ember install @zestia/ember-async-tooltips
 ```
 
 ### Demo
 
-https://amk221.github.io/ember-async-tooltips
+https://zestia.github.io/ember-async-tooltips
 
-<a href="https://amk221.github.io/ember-async-tooltips">
+<a href="https://zestia.github.io/ember-async-tooltips">
   <img src="docs/screenshot.png" width="512" height="319">
 </a>
 
@@ -78,7 +78,7 @@ For example, the following configuration creates a new tooltip that:
 
 ```javascript
 // tool-tipper/user.js
-import ToolTipperComponent from 'ember-async-tooltips/components/tool-tipper';
+import ToolTipperComponent from '@zestia/ember-async-tooltips/components/tool-tipper';
 
 export default ToolTipperComponent.extend({
   classNames: ['user-tooltipper'],
@@ -88,7 +88,7 @@ export default ToolTipperComponent.extend({
 
 ```javascript
 // tool-tip/user.js
-import ToolTipComponent from 'ember-async-tooltips/components/tool-tip';
+import ToolTipComponent from '@zestia/ember-async-tooltips/components/tool-tip';
 
 export default ToolTipComponent.extend({
   classNames: ['user-tooltip'],

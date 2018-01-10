@@ -7,7 +7,7 @@ import {
   placementToString,
   stringToPlacement,
   hasPlacement
-} from 'ember-async-tooltips/utils/placement';
+} from '@zestia/ember-async-tooltips/utils/placement';
 
 let $element, $reference, $fixture;
 

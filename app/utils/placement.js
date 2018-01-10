@@ -1,1 +1,1 @@
-export { default } from 'ember-async-tooltips/utils/placement';
+export { default } from '@zestia/ember-async-tooltips/utils/placement';

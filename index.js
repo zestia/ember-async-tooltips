@@ -2,5 +2,5 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-async-tooltips'
+  name: '@zestia/ember-async-tooltips'
 };
