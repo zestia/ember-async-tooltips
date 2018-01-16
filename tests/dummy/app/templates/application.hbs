@@ -1,38 +1,38 @@
 <div class="controls">
   <label class="control">
     Placement
-    <select onchange={{action (mut placement) value='target.value' on='change'}} class="position">
-      <option value=''>Auto</option>
-      <option value='N'>North</option>
-      <option value='NE'>North East</option>
-      <option value='E'>East</option>
-      <option value='SE'>South East</option>
-      <option value='S'>South</option>
-      <option value='SW'>South West</option>
-      <option value='W'>West</option>
-      <option value='NW'>North West</option>
+    <select onchange={{action (mut placement) value="target.value" on="change"}} class="position">
+      <option value="">Auto</option>
+      <option value="N">North</option>
+      <option value="NE">North East</option>
+      <option value="E">East</option>
+      <option value="SE">South East</option>
+      <option value="S">South</option>
+      <option value="SW">South West</option>
+      <option value="W">West</option>
+      <option value="NW">North West</option>
     </select>
   </label>
 
   <label class="control">
-    <input type="checkbox" onclick={{action 'setTranslateX' value='target.checked'}}>
+    <input type="checkbox" onclick={{action "setTranslateX" value="target.checked"}}>
     Translate X
   </label>
 
   <label class="control">
-    Columns <input type='number' min=2 class='number-input columns' value={{columns}} onchange={{action (mut columns) value='target.value'}}>
+    Columns <input type="number" min=2 class="number-input columns" value={{columns}} onchange={{action (mut columns) value="target.value"}}>
   </label>
 
   <label class="control">
-    Rows <input type='number' min=2 class='number-input rows' value={{rows}} onchange={{action (mut rows) value='target.value'}}>
+    Rows <input type="number" min=2 class="number-input rows" value={{rows}} onchange={{action (mut rows) value="target.value"}}>
   </label>
 
   <label class="control">
-    Hover delay <input type='number' min=1 class='number-input hover-delay' value={{hoverDelay}} onchange={{action (mut hoverDelay) value='target.value'}}>
+    Hover delay <input type="number" min=1 class="number-input hover-delay" value={{hoverDelay}} onchange={{action (mut hoverDelay) value="target.value"}}>
   </label>
 
   <label class="control">
-    Load delay <input type='number' min=1 class='number-input load-delay' value={{loadDelay}} onchange={{action (mut loadDelay) value='target.value'}}>
+    Load delay <input type="number" min=1 class="number-input load-delay" value={{loadDelay}} onchange={{action (mut loadDelay) value="target.value"}}>
   </label>
 </div>
 
@@ -44,6 +44,7 @@
   </tr>
   <tr class="row">
     <td class="cell w"></td>
+    {{! template-lint-disable inline-styles }}
     <td class="cell c" style={{boundaryStyles}}></td>
     <td class="cell e"></td>
   </tr>
@@ -57,11 +58,11 @@
 {{#tool-tipper
   tabindex=-1
   draggable=true
-  dragEnd=(action 'reposition')
-  on-load=(action 'load')
+  dragEnd=(action "reposition")
+  on-load=(action "load")
   hover-delay=hoverDelay
-  tooltip=(component 'tool-tip'
-    text='Hello World'
+  tooltip=(component "tool-tip"
+    text="Hello World"
     placement=placement
     columns=columns
     rows=rows

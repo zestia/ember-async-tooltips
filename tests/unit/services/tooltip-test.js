@@ -2,7 +2,9 @@ import { getOwner } from '@ember/application';
 import { test, moduleFor } from 'ember-qunit';
 import Component from '@ember/component';
 
-let tooltipService, fooTooltipper, barTooltipper;
+let tooltipService;
+let fooTooltipper;
+let barTooltipper;
 
 
 moduleFor('service:tooltip', {
@@ -52,7 +54,3 @@ test('#deactivate', function(assert) {
   assert.deepEqual(tooltipService.get('tooltippers'), [],
     'removes specific tooltipper component instances from the array');
 });
-
-
-
-

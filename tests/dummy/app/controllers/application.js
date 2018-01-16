@@ -2,7 +2,9 @@ import Ember from 'ember';
 import RSVP from 'rsvp';
 import Controller from '@ember/controller';
 import jQuery from 'jquery';
+/* eslint-disable */
 import { computed } from '@ember/object';
+/* eslint-enable */
 import { htmlSafe } from '@ember/string';
 import { later } from '@ember/runloop';
 import {

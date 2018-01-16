@@ -1,6 +1,8 @@
 import RSVP from 'rsvp';
 import Component from '@ember/component';
+/* eslint-disable */
 import { computed, trySet } from '@ember/object';
+/* eslint-enable */
 import { inject } from '@ember/service';
 import { debounce } from '@ember/runloop';
 import { isPresent } from '@ember/utils';

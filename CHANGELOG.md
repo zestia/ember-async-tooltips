@@ -1,5 +1,9 @@
 # Changelog
 
+1.0.6
+
+* Lint everything
+
 1.0.4
 
 * Upgrade dependencies

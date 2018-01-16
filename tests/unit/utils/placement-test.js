@@ -9,7 +9,9 @@ import {
   hasPlacement
 } from '@zestia/ember-async-tooltips/utils/placement';
 
-let $element, $reference, $fixture;
+let $element;
+let $reference;
+let $fixture;
 
 const center    = { N: false, E: false, S: false, W: false };
 const north     = { N: true,  E: false, S: false, W: false };
