@@ -25,7 +25,7 @@ test('as a hyperlink', function(assert) {
   assert.expect(3);
 
   this.render(hbs`
-    {{tool-tipper tagName='a' href='foo' rel='bar' target='baz'}}
+    {{tool-tipper tagName="a" href="foo" rel="bar" target="baz"}}
   `);
 
   assert.equal(this.$('.tooltipper').attr('href'), 'foo',
@@ -42,12 +42,12 @@ test('as a hyperlink', function(assert) {
 test('as a button', function(assert) {
   assert.expect(2);
 
-  this.render(hbs`{{tool-tipper tagName='button'}}`);
+  this.render(hbs`{{tool-tipper tagName="button"}}`);
 
   assert.equal(this.$('.tooltipper').attr('type'), 'button',
     'renders as a non-submittion button by default');
 
-  this.render(hbs`{{tool-tipper tagName='button' type='foo'}}`);
+  this.render(hbs`{{tool-tipper tagName="button" type="foo"}}`);
 
   assert.equal(this.$('.tooltipper').attr('type'), 'foo',
     'can specify type of button');

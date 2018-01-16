@@ -40,7 +40,7 @@ test('it renders tooltip components', function(assert) {
   this.render(hbs`
 
     <div class="in">
-      {{foo-tooltipper tooltip=(component 'foo-tooltip' my-attr='foo')}}
+      {{foo-tooltipper tooltip=(component "foo-tooltip" my-attr="foo")}}
     </div>
 
     <div class="out">

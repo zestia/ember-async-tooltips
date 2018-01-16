@@ -12,7 +12,7 @@ moduleForComponent('tool-tip', {
 test('it renders', function(assert) {
   assert.expect(4);
 
-  this.render(hbs`{{tool-tip text='Hello World'}}`);
+  this.render(hbs`{{tool-tip text="Hello World"}}`);
 
   const $el = this.$('.tooltip');
 
@@ -40,7 +40,7 @@ test('on insert action', function(assert) {
       'reference to itself');
   });
 
-  this.render(hbs`{{tool-tip on-insert=(action 'inserted')}}`);
+  this.render(hbs`{{tool-tip on-insert=(action "inserted")}}`);
 });
 
 
@@ -53,7 +53,7 @@ test('on mouse leave action', function(assert) {
       'when a the mouse leaves a tooltip it sends an action');
   });
 
-  this.render(hbs`{{tool-tip on-mouse-leave=(action 'mouseExited')}}`);
+  this.render(hbs`{{tool-tip on-mouse-leave=(action "mouseExited")}}`);
 
   this.$('.tooltip').trigger('mouseout');
 });
