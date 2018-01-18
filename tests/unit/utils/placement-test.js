@@ -168,27 +168,34 @@ test('#determinePlacement', function(assert) {
 
   const boundary = placementBoundary(fixture);
 
-  reference.css({ top: 0, left: '50%', bottom: 'auto', right: 'auto' });
+  const move = options => {
+    reference.style.top    = options.top;
+    reference.style.left   = options.left;
+    reference.style.bottom = options.bottom;
+    reference.style.right  = options.right;
+  };
+
+  move({ top: 0, left: '50%', bottom: 'auto', right: 'auto' });
   assert.deepEqual(determinePlacement(reference, boundary), north);
 
-  reference.css({ top: 0, left: 'auto', bottom: 'auto', right: 0 });
+  move({ top: 0, left: 'auto', bottom: 'auto', right: 0 });
   assert.deepEqual(determinePlacement(reference, boundary), northEast);
 
-  reference.css({ top: '50%', left: 'auto', bottom: 'auto', right: 0 });
+  move({ top: '50%', left: 'auto', bottom: 'auto', right: 0 });
   assert.deepEqual(determinePlacement(reference, boundary), east);
 
-  reference.css({ top: 'auto', left: 'auto', bottom: 0, right: 0 });
+  move({ top: 'auto', left: 'auto', bottom: 0, right: 0 });
   assert.deepEqual(determinePlacement(reference, boundary), southEast);
 
-  reference.css({ top: 'auto', left: '50%', bottom: 0, right: 'auto' });
+  move({ top: 'auto', left: '50%', bottom: 0, right: 'auto' });
   assert.deepEqual(determinePlacement(reference, boundary), south);
 
-  reference.css({ top: 'auto', left: 0, bottom: 0, right: 'auto' });
+  move({ top: 'auto', left: 0, bottom: 0, right: 'auto' });
   assert.deepEqual(determinePlacement(reference, boundary), southWest);
 
-  reference.css({ top: '50%', left: 0, bottom: 'auto', right: 'auto' });
+  move({ top: '50%', left: 0, bottom: 'auto', right: 'auto' });
   assert.deepEqual(determinePlacement(reference, boundary), west);
 
-  reference.css({ top: 0, left: 0, bottom: 'auto', right: 'auto' });
+  move({ top: 0, left: 0, bottom: 'auto', right: 'auto' });
   assert.deepEqual(determinePlacement(reference, boundary), northWest);
 });
