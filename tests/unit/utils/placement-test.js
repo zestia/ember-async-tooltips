@@ -130,7 +130,6 @@ test('#placementBoundary', function(assert) {
   assert.expect(2);
 
   const container = document.createElement('div');
-  container.style.boxSizing = 'border-box';
   container.style.width = '100px';
   container.style.height = '50px';
   container.style.overflow = 'scroll';

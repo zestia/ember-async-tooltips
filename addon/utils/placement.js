@@ -18,7 +18,8 @@ export function stringToPlacement(string) {
 }
 
 export function determinePlacement(element, boundary) {
-  const { left: x, top: y } = _getOffset(element);
+  const x = element.offsetLeft;
+  const y = element.offsetTop;
 
   return {
     N: y < boundary.top,
@@ -49,9 +50,8 @@ export function placementBoundary(container, columns = 3, rows = 3) {
 }
 
 export function placementCoords(element, reference, string) {
-  const refO   = _getOffset(reference);
-  const refX   = refO.left;
-  const refY   = refO.top;
+  const refX   = reference.offsetLeft;
+  const refY   = reference.offsetTop;
   const refH   = reference.offsetHeight;
   const refW   = reference.offsetWidth;
   const elH    = element.offsetHeight;
@@ -76,14 +76,4 @@ export function placementCoords(element, reference, string) {
   }
 
   return coords.map(round);
-}
-
-function _getOffset(element) {
-  const rect = element.getBoundingClientRect();
-  const win = element.ownerDocument.defaultView;
-
-  return {
-    top:  rect.top + win.pageYOffset,
-    left: rect.left + win.pageXOffset
-  };
 }
