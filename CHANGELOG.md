@@ -1,9 +1,12 @@
 # Changelog
 
+1.0.8
+
+* Fix travis builds
+
 1.0.7
 
-* Fix dependencies
-* Fix travis builds
+* Upgrade dependencies
 
 1.0.6
 
