@@ -10,7 +10,7 @@ import { isPresent } from '@ember/utils';
 export default Component.extend({
   tagName: 'span',
   classNames: ['tooltipper'],
-  classNameBindings: ['instance:has-tooltip'],
+  classNameBindings: ['_tooltip:has-tooltip'],
   attributeBindings: [
     'tabindex',
     'href',
@@ -96,20 +96,20 @@ export default Component.extend({
   },
 
   _attemptHideTooltipFromHover() {
-    if (this.get('instance') && !this.get('instance.isOver')) {
+    if (this.get('_tooltip') && !this.get('_tooltip.isOver')) {
       this._attemptHideTooltip();
     }
   },
 
   _attemptShowTooltip() {
-    if (!this.get('isDestroyed') && !this.get('instance')) {
+    if (!this.get('isDestroyed') && !this.get('_tooltip')) {
       this._renderTooltip();
     }
   },
 
   _attemptHideTooltip() {
-    if (!this.get('isDestroyed') && this.get('instance')) {
-      this.get('instance').hide();
+    if (!this.get('isDestroyed') && this.get('_tooltip')) {
+      this.get('_tooltip').hide();
     }
   },
 
@@ -123,7 +123,7 @@ export default Component.extend({
 
   actions: {
     tooltipInserted(tooltip) {
-      this.set('instance', tooltip);
+      this.set('_tooltip', tooltip);
     },
 
     tooltipExited() {
@@ -132,7 +132,7 @@ export default Component.extend({
 
     tooltipHidden() {
       this._destroyTooltip();
-      this.set('instance', null);
+      this.set('_tooltip', null);
     }
   }
 });
