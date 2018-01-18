@@ -29,8 +29,8 @@ export default Mixin.create({
 
     this.setProperties(this._placementClassNames(placement));
 
-    this.set('element.style.top', top);
-    this.set('element.style.left', left);
+    this.set('element.style.top', `${top}px`);
+    this.set('element.style.left', `${left}px`);
   },
 
   _placementBoundary(container) {
