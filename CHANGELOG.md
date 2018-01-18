@@ -1,5 +1,10 @@
 # Changelog
 
+2.0.0
+
+* Remove Positionable Mixin
+* Reduce reliance on jQuery
+
 1.0.8
 
 * Fix travis builds

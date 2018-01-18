@@ -1,13 +1,26 @@
 import { Promise } from 'rsvp';
 import Component from '@ember/component';
 import { scheduleOnce } from '@ember/runloop';
-import Positionable from '../mixins/positionable';
 import layout from '../templates/components/tool-tip';
+import {
+  placementCoords,
+  determinePlacement,
+  placementBoundary,
+  placementToString,
+  stringToPlacement,
+  hasPlacement
+} from '../utils/placement';
 
-export default Component.extend(Positionable, {
+export default Component.extend({
   layout,
   classNames: ['tooltip'],
-  classNameBindings: ['isShowing:is-showing:is-hiding'],
+  classNameBindings: [
+    'isShowing:is-showing:is-hiding',
+    'isNorth',
+    'isEast',
+    'isSouth',
+    'isWest'
+  ],
 
   ariaRole: 'tooltip',
   isShowing: true,
@@ -20,8 +33,12 @@ export default Component.extend(Positionable, {
 
   didRender() {
     this._super(...arguments);
-    scheduleOnce('afterRender', this, 'position');
+    scheduleOnce('afterRender', this, '_position');
   },
+
+  'on-hide'() {},
+  'on-insert'() {},
+  'on-mouse-leave'() {},
 
   mouseEnter() {
     this._super(...arguments);
@@ -31,10 +48,7 @@ export default Component.extend(Positionable, {
   mouseLeave() {
     this._super(...arguments);
     this.set('isOver', false);
-    const action = this.get('on-mouse-leave');
-    if (typeof action === 'function') {
-      action();
-    }
+    this.get('on-mouse-leave')();
   },
 
   _show() {
@@ -55,10 +69,67 @@ export default Component.extend(Positionable, {
   },
 
   _inserted() {
-    const action = this.get('on-insert');
-    if (typeof action === 'function') {
-      action(this);
+    this.get('on-insert')(this);
+  },
+
+  _position() {
+    if (!this.get('tooltipper')) {
+      return;
     }
+
+    const tooltip     = this.get('element');
+    const tooltipper  = this.get('tooltipper.element');
+    const placement   = this._determinePlacement();
+    const string      = placementToString(placement);
+    const [left, top] = placementCoords(tooltip, tooltipper, string);
+
+    this.setProperties(this._placementClassNames(placement));
+
+    tooltip.style.top  = `${top}px`;
+    tooltip.style.left = `${left}px`;
+  },
+
+  _placementBoundary(container) {
+    return placementBoundary(container, this.get('columns'), this.get('rows'));
+  },
+
+  _determinePlacement() {
+    const string = this.get('placement');
+
+    if (string) {
+      return stringToPlacement(string);
+    } else {
+      return this._autoPlacement();
+    }
+  },
+
+  _autoPlacement() {
+    const tooltipper = this.get('tooltipper.element');
+    const boundary   = this._placementBoundary(document.documentElement);
+    const placement  = determinePlacement(tooltipper, boundary);
+    const center     = !hasPlacement(placement);
+
+    const flippedPlacement = {
+      N: placement.S,
+      E: placement.E,
+      S: placement.N,
+      W: placement.W
+    };
+
+    if (center) {
+      flippedPlacement.S = true;
+    }
+
+    return flippedPlacement;
+  },
+
+  _placementClassNames(placement) {
+    return {
+      isNorth: placement.N,
+      isEast:  placement.E,
+      isSouth: placement.S,
+      isWest:  placement.W
+    };
   },
 
   actions: {
