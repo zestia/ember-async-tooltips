@@ -1,4 +1,4 @@
-import RSVP from 'rsvp';
+import { resolve } from 'rsvp';
 import Component from '@ember/component';
 /* eslint-disable */
 import { computed, trySet } from '@ember/object';
@@ -61,7 +61,7 @@ export default Component.extend({
     if (typeof loader === 'function') {
       return loader().then(data => trySet(this, 'data', data));
     } else {
-      return RSVP.resolve();
+      return resolve();
     }
   },
 

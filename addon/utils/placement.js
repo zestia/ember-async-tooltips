@@ -17,9 +17,8 @@ export function stringToPlacement(string) {
   };
 }
 
-export function determinePlacement($element, boundary) {
-  const x = $element.offset().left;
-  const y = $element.offset().top;
+export function determinePlacement(element, boundary) {
+  const { left: x, top: y } = _getOffset(element);
 
   return {
     N: y < boundary.top,
@@ -35,11 +34,13 @@ export function hasPlacement(placement = {}) {
   }).length > 0;
 }
 
-export function placementBoundary($container, columns = 3, rows = 3) {
-  const scrollLeft = $container.scrollLeft();
-  const scrollTop  = $container.scrollTop();
-  const column     = $container.width() / columns;
-  const row        = $container.height() / rows;
+export function placementBoundary(container, columns = 3, rows = 3) {
+  const scrollLeft = container.scrollLeft;
+  const scrollTop  = container.scrollTop;
+  const column     = container.offsetWidth;
+  const row        = container.offsetHeight / rows;
+
+  console.log(scrollLeft, scrollTop, column, row);
 
   return {
     left:   round(column + scrollLeft),
@@ -49,13 +50,14 @@ export function placementBoundary($container, columns = 3, rows = 3) {
   };
 }
 
-export function placementCoords($element, $reference, string) {
-  const refX   = $reference.offset().left;
-  const refY   = $reference.offset().top;
-  const refH   = $reference.outerHeight();
-  const refW   = $reference.outerWidth();
-  const elH    = $element.outerHeight();
-  const elW    = $element.outerWidth();
+export function placementCoords(element, reference, string) {
+  const refO   = _getOffset(reference);
+  const refX   = refO.left;
+  const refY   = refO.top;
+  const refH   = reference.offsetHeight; //
+  const refW   = reference.offsetWidth;  //
+  const elH    = element.offsetHeight;
+  const elW    = element.offsetWidth;
   const vrt    = refY + refH / 2 - elH / 2;
   const hrz    = refX + refW / 2 - elW / 2;
   const top    = refY - elH;
@@ -76,4 +78,14 @@ export function placementCoords($element, $reference, string) {
   }
 
   return coords.map(round);
+}
+
+function _getOffset(element) {
+  const rect = element.getBoundingClientRect();
+  const win = element.ownerDocument.defaultView;
+
+  return {
+    top:  rect.top + win.pageYOffset,
+    left: rect.left + win.pageXOffset
+  };
 }

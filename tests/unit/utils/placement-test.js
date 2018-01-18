@@ -1,5 +1,4 @@
 import { module, test } from 'qunit';
-import jQuery from 'jquery';
 import {
   determinePlacement,
   placementCoords,
@@ -9,9 +8,10 @@ import {
   hasPlacement
 } from '@zestia/ember-async-tooltips/utils/placement';
 
-let $element;
-let $reference;
-let $fixture;
+let body;
+let element;
+let reference;
+let fixture;
 
 const center    = { N: false, E: false, S: false, W: false };
 const north     = { N: true,  E: false, S: false, W: false };
@@ -26,51 +26,44 @@ const northWest = { N: true,  E: false, S: false, W: true };
 
 module('placement utils', {
   beforeEach() {
-    $fixture = jQuery('<div />', {
-      id: 'placement-fixture',
-      css: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0
-      }
-    });
+    body = document.querySelector('body');
 
-    $element = jQuery('<div />', {
-      id: 'element',
-      css: {
-        width: '10px',
-        height: '20px',
-        margin: '1px',
-        padding: '2px',
-        position: 'fixed',
-        background: 'red'
-      }
-    });
+    fixture = document.createElement('div');
+    fixture.setAttribute('id', 'placement-fixture');
+    fixture.style.position = 'absolute';
+    fixture.style.top = '0px';
+    fixture.style.left = '0px';
+    fixture.style.right = '0px';
+    fixture.style.bottom = '0px';
 
-    $reference = jQuery('<div />', {
-      id: 'reference',
-      css: {
-        width: '30px',
-        height: '40px',
-        margin: '3px',
-        padding: '4px',
-        position: 'fixed',
-        top: '100px',
-        left: '100px',
-        background: 'blue'
-      }
-    });
+    element = document.createElement('div');
+    element.setAttribute('id', 'element');
+    element.style.width = '10px';
+    element.style.height = '20px';
+    element.style.margin = '1px';
+    element.style.padding = '2px';
+    element.style.position = 'fixed';
+    element.style.background = 'red';
 
-    jQuery('body').append($fixture);
-    $fixture.append($reference);
-    $fixture.append($element);
+    reference = document.createElement('div');
+    reference.setAttribute('id', 'reference');
+    reference.style.width = '30px';
+    reference.style.height = '40px';
+    reference.style.margin = '3px';
+    reference.style.padding = '4px';
+    reference.style.position = 'fixed';
+    reference.style.background = 'blue';
+    reference.style.top = '100px';
+    reference.style.left = '100px';
+
+    fixture.append(reference);
+    fixture.append(element);
+    body.appendChild(fixture);
   },
   afterEach() {
-    $element.remove();
-    $reference.remove();
-    $fixture.remove();
+    fixture.removeChild(reference);
+    fixture.removeChild(element);
+    body.removeChild(fixture);
   }
 });
 
@@ -78,14 +71,14 @@ module('placement utils', {
 test('#placementCoords', function(assert) {
   assert.expect(8);
 
-  assert.deepEqual(placementCoords($element, $reference, 'N'), [115, 79]);
-  assert.deepEqual(placementCoords($element, $reference, 'NE'), [141, 79]);
-  assert.deepEqual(placementCoords($element, $reference, 'E'), [141, 115]);
-  assert.deepEqual(placementCoords($element, $reference, 'SE'), [141, 151]);
-  assert.deepEqual(placementCoords($element, $reference, 'S'), [115, 151]);
-  assert.deepEqual(placementCoords($element, $reference, 'SW'), [89, 151]);
-  assert.deepEqual(placementCoords($element, $reference, 'W'), [89, 115]);
-  assert.deepEqual(placementCoords($element, $reference, 'NW'), [89, 79]);
+  assert.deepEqual(placementCoords(element, reference, 'N'), [115, 79]);
+  assert.deepEqual(placementCoords(element, reference, 'NE'), [141, 79]);
+  assert.deepEqual(placementCoords(element, reference, 'E'), [141, 115]);
+  assert.deepEqual(placementCoords(element, reference, 'SE'), [141, 151]);
+  assert.deepEqual(placementCoords(element, reference, 'S'), [115, 151]);
+  assert.deepEqual(placementCoords(element, reference, 'SW'), [89, 151]);
+  assert.deepEqual(placementCoords(element, reference, 'W'), [89, 115]);
+  assert.deepEqual(placementCoords(element, reference, 'NW'), [89, 79]);
 });
 
 
@@ -136,73 +129,66 @@ test('#hasPlacement', function(assert) {
 test('#placementBoundary', function(assert) {
   assert.expect(2);
 
-  const $container = jQuery('<div/>', {
-    css: {
-      boxSizing: 'border-box',
-      width: '100px',
-      height: '50px',
-      overflow: 'scroll'
-    }
-  });
+  const container = document.createElement('div');
+  container.style.boxSizing = 'border-box';
+  container.style.width = '100px';
+  container.style.height = '50px';
+  container.style.overflow = 'scroll';
 
-  const $overflowingContent = jQuery('<div/>', {
-    css: {
-      width: '120px',
-      height: '60px'
-    }
-  });
+  const overflowingContent = document.createElement('div');
+  overflowingContent.style.width = '120px';
+  overflowingContent.style.height = '60px';
 
-  $fixture.append($container);
+  container.appendChild(overflowingContent);
+  fixture.appendChild(container);
 
-  $container
-    .append($overflowingContent)
-    .scrollTop(10)
-    .scrollLeft(20);
+  container.scrollTop = 10;
+  container.scrollLeft = 20;
 
-  assert.deepEqual(placementBoundary($container), {
+  assert.deepEqual(placementBoundary(container), {
     top: 27,
     left: 53,
     bottom: 43,
     right: 87
   }, 'computes the boundary points within the container element');
 
-  assert.deepEqual(placementBoundary($container, 2, 4), {
+  assert.deepEqual(placementBoundary(container, 2, 4), {
     top: 23,
     left: 70,
     bottom: 48,
     right: 70
   }, 'can customise the boundary points');
 
-  $container.remove();
+  fixture.removeChild(container);
 });
 
 
 test('#determinePlacement', function(assert) {
   assert.expect(8);
 
-  const boundary = placementBoundary($fixture);
+  const boundary = placementBoundary(fixture);
 
-  $reference.css({ top: 0, left: '50%', bottom: 'auto', right: 'auto' });
-  assert.deepEqual(determinePlacement($reference, boundary), north);
+  reference.css({ top: 0, left: '50%', bottom: 'auto', right: 'auto' });
+  assert.deepEqual(determinePlacement(reference, boundary), north);
 
-  $reference.css({ top: 0, left: 'auto', bottom: 'auto', right: 0 });
-  assert.deepEqual(determinePlacement($reference, boundary), northEast);
+  reference.css({ top: 0, left: 'auto', bottom: 'auto', right: 0 });
+  assert.deepEqual(determinePlacement(reference, boundary), northEast);
 
-  $reference.css({ top: '50%', left: 'auto', bottom: 'auto', right: 0 });
-  assert.deepEqual(determinePlacement($reference, boundary), east);
+  reference.css({ top: '50%', left: 'auto', bottom: 'auto', right: 0 });
+  assert.deepEqual(determinePlacement(reference, boundary), east);
 
-  $reference.css({ top: 'auto', left: 'auto', bottom: 0, right: 0 });
-  assert.deepEqual(determinePlacement($reference, boundary), southEast);
+  reference.css({ top: 'auto', left: 'auto', bottom: 0, right: 0 });
+  assert.deepEqual(determinePlacement(reference, boundary), southEast);
 
-  $reference.css({ top: 'auto', left: '50%', bottom: 0, right: 'auto' });
-  assert.deepEqual(determinePlacement($reference, boundary), south);
+  reference.css({ top: 'auto', left: '50%', bottom: 0, right: 'auto' });
+  assert.deepEqual(determinePlacement(reference, boundary), south);
 
-  $reference.css({ top: 'auto', left: 0, bottom: 0, right: 'auto' });
-  assert.deepEqual(determinePlacement($reference, boundary), southWest);
+  reference.css({ top: 'auto', left: 0, bottom: 0, right: 'auto' });
+  assert.deepEqual(determinePlacement(reference, boundary), southWest);
 
-  $reference.css({ top: '50%', left: 0, bottom: 'auto', right: 'auto' });
-  assert.deepEqual(determinePlacement($reference, boundary), west);
+  reference.css({ top: '50%', left: 0, bottom: 'auto', right: 'auto' });
+  assert.deepEqual(determinePlacement(reference, boundary), west);
 
-  $reference.css({ top: 0, left: 0, bottom: 'auto', right: 'auto' });
-  assert.deepEqual(determinePlacement($reference, boundary), northWest);
+  reference.css({ top: 0, left: 0, bottom: 'auto', right: 'auto' });
+  assert.deepEqual(determinePlacement(reference, boundary), northWest);
 });

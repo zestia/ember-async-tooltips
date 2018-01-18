@@ -1,5 +1,4 @@
 import Mixin from '@ember/object/mixin';
-import jQuery from 'jquery';
 import {
   placementCoords,
   determinePlacement,
@@ -17,28 +16,25 @@ export default Mixin.create({
     'isWest'
   ],
 
-  $reference() {
-    return jQuery(this.get('reference-element'));
-  },
-
   position() {
-    const $reference = this.$reference();
+    const reference = this.get('reference-element');
 
-    if (!$reference.length) {
+    if (!reference) {
       return;
     }
 
     const placement   = this._determinePlacement();
     const string      = placementToString(placement);
-    const [left, top] = placementCoords(this.$(), $reference, string);
+    const [left, top] = placementCoords(this.get('element'), reference, string);
 
     this.setProperties(this._placementClassNames(placement));
 
-    this.$().css({ left, top });
+    this.set('element.style.top', top);
+    this.set('element.style.left', left);
   },
 
-  _placementBoundary($container) {
-    return placementBoundary($container, this.get('columns'), this.get('rows'));
+  _placementBoundary(container) {
+    return placementBoundary(container, this.get('columns'), this.get('rows'));
   },
 
   _determinePlacement() {
@@ -52,11 +48,10 @@ export default Mixin.create({
   },
 
   _autoPlacement() {
-    const $reference = this.$reference();
-    const $window    = jQuery(window);
-    const boundary   = this._placementBoundary($window);
-    let placement    = determinePlacement($reference, boundary);
-    const center     = !hasPlacement(placement);
+    const reference = this.get('reference-element');
+    const boundary  = this._placementBoundary(window);
+    let placement   = determinePlacement(reference, boundary);
+    const center    = !hasPlacement(placement);
 
     placement = {
       N: placement.S,

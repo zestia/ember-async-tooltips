@@ -1,4 +1,4 @@
-import RSVP from 'rsvp';
+import { Promise } from 'rsvp';
 import Component from '@ember/component';
 import { scheduleOnce } from '@ember/runloop';
 import Positionable from '../mixins/positionable';
@@ -42,7 +42,7 @@ export default Component.extend(Positionable, {
   },
 
   _hide() {
-    return new RSVP.Promise(resolve => {
+    return new Promise(resolve => {
       this.one('animationEnd', resolve);
       this.set('isShowing', false);
     });

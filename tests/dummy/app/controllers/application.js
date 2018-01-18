@@ -1,7 +1,6 @@
 import Ember from 'ember';
-import RSVP from 'rsvp';
+import { Promise } from 'rsvp';
 import Controller from '@ember/controller';
-import jQuery from 'jquery';
 /* eslint-disable */
 import { computed } from '@ember/object';
 /* eslint-enable */
@@ -19,8 +18,7 @@ export default Controller.extend({
   loadDelay: 0,
 
   boundary: computed('columns', 'rows', function() {
-    const $container = jQuery(window);
-    return placementBoundary($container, this.get('columns'), this.get('rows'));
+    return placementBoundary(window, this.get('columns'), this.get('rows'));
   }),
 
   boundaryStyles: computed('boundary', function() {
@@ -35,22 +33,21 @@ export default Controller.extend({
 
   actions: {
     setTranslateX(translateX) {
-      jQuery(':root').toggleClass('translate-x', translateX);
+      const root = document.querySelector(':root');
+      root.classList.toggle('translate-x', translateX);
     },
 
     reposition(e) {
-      const $el  = jQuery(e.target);
-      const top  = e.pageY - $el.outerHeight();
+      const element = e.target;
+      const top = e.pageY - element.offsetHeight;
       const left = e.pageX;
-      $el.css({
-        top: `${top}px`,
-        left: `${left}px`,
-        position: 'absolute'
-      });
+      element.style.top = `${top}px`;
+      element.style.left = `${left}px`;
+      element.style.position = 'absolute';
     },
 
     load() {
-      return new RSVP.Promise(resolve => {
+      return new Promise(resolve => {
         later(resolve, this.get('loadDelay'));
       });
     }
