@@ -37,10 +37,8 @@ export function hasPlacement(placement = {}) {
 export function placementBoundary(container, columns = 3, rows = 3) {
   const scrollLeft = container.scrollLeft;
   const scrollTop  = container.scrollTop;
-  const column     = container.offsetWidth;
+  const column     = container.offsetWidth / columns;
   const row        = container.offsetHeight / rows;
-
-  console.log(scrollLeft, scrollTop, column, row);
 
   return {
     left:   round(column + scrollLeft),
@@ -54,8 +52,8 @@ export function placementCoords(element, reference, string) {
   const refO   = _getOffset(reference);
   const refX   = refO.left;
   const refY   = refO.top;
-  const refH   = reference.offsetHeight; //
-  const refW   = reference.offsetWidth;  //
+  const refH   = reference.offsetHeight;
+  const refW   = reference.offsetWidth;
   const elH    = element.offsetHeight;
   const elW    = element.offsetWidth;
   const vrt    = refY + refH / 2 - elH / 2;

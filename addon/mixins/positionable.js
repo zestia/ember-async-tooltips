@@ -49,7 +49,7 @@ export default Mixin.create({
 
   _autoPlacement() {
     const reference = this.get('reference-element');
-    const boundary  = this._placementBoundary(window);
+    const boundary  = this._placementBoundary(document.documentElement);
     let placement   = determinePlacement(reference, boundary);
     const center    = !hasPlacement(placement);
 
