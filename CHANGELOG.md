@@ -1,20 +1,25 @@
 # Changelog
 
+1.0.7
+
+* Fix dependencies
+* Fix travis builds
+
 1.0.6
 
 * Lint everything
 
 1.0.4
 
-* Upgrade dependencies
+* Upgrade devDependencies
 
 1.0.3
 
-* Upgrade dependencies
+* Upgrade devDependencies
 
 1.0.2
 
-* Upgrade dependencies
+* Upgrade devDependencies
 
 1.0.1
 
