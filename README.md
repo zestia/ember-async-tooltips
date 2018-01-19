@@ -15,6 +15,10 @@ https://zestia.github.io/ember-async-tooltips
   <img src="docs/screenshot.png" width="512" height="319">
 </a>
 
+### Notes
+
+* Does not use jQuery
+
 ### Example
 
 When `tool-tipper/example` is hovered over, the `tool-tip/example` component will be rendered in a place of your chosing in the DOM.
