@@ -1,5 +1,9 @@
 # Changelog
 
+2.0.1
+
+* Upgrade ember-cli
+
 2.0.0
 
 * Remove Positionable Mixin
