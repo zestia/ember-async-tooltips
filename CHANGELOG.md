@@ -1,5 +1,10 @@
 # Changelog
 
+3.0.0
+
+* Refactor to make sure correct element offsets are used
+* Changes to arguments signatures in placement utils
+
 2.0.0
 
 * Remove Positionable Mixin

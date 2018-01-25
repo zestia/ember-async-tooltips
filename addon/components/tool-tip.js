@@ -81,7 +81,7 @@ export default Component.extend({
     const tooltipper  = this.get('_tooltipper.element');
     const placement   = this._determinePlacement();
     const string      = placementToString(placement);
-    const [left, top] = placementCoords(tooltip, tooltipper, string);
+    const [left, top] = placementCoords(string, tooltip, tooltipper);
 
     this.setProperties(this._placementClassNames(placement));
 
@@ -89,8 +89,8 @@ export default Component.extend({
     tooltip.style.left = `${left}px`;
   },
 
-  _placementBoundary(container) {
-    return placementBoundary(container, this.get('columns'), this.get('rows'));
+  _placementBoundary() {
+    return placementBoundary(this.get('columns'), this.get('rows'));
   },
 
   _determinePlacement() {
@@ -105,7 +105,7 @@ export default Component.extend({
 
   _autoPlacement() {
     const tooltipper = this.get('_tooltipper.element');
-    const boundary   = this._placementBoundary(document.documentElement);
+    const boundary   = this._placementBoundary();
     const placement  = determinePlacement(tooltipper, boundary);
     const center     = !hasPlacement(placement);
 

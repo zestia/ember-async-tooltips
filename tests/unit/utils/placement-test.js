@@ -8,6 +8,7 @@ import {
   hasPlacement
 } from '@zestia/ember-async-tooltips/utils/placement';
 
+let fakeDoc;
 let body;
 let element;
 let reference;
@@ -26,6 +27,17 @@ const northWest = { N: true,  E: false, S: false, W: true };
 
 module('placement utils', {
   beforeEach() {
+    fakeDoc = {
+      scrollLeft: 50,
+      scrollTop: 100,
+      getBoundingClientRect() {
+        return {
+          width: 800,
+          height: 600
+        };
+      }
+    };
+
     body = document.querySelector('body');
 
     fixture = document.createElement('div');
@@ -71,14 +83,78 @@ module('placement utils', {
 test('#placementCoords', function(assert) {
   assert.expect(8);
 
-  assert.deepEqual(placementCoords(element, reference, 'N'), [115, 79]);
-  assert.deepEqual(placementCoords(element, reference, 'NE'), [141, 79]);
-  assert.deepEqual(placementCoords(element, reference, 'E'), [141, 115]);
-  assert.deepEqual(placementCoords(element, reference, 'SE'), [141, 151]);
-  assert.deepEqual(placementCoords(element, reference, 'S'), [115, 151]);
-  assert.deepEqual(placementCoords(element, reference, 'SW'), [89, 151]);
-  assert.deepEqual(placementCoords(element, reference, 'W'), [89, 115]);
-  assert.deepEqual(placementCoords(element, reference, 'NW'), [89, 79]);
+  assert.deepEqual(placementCoords('N',  element, reference, fakeDoc), [165, 179]);
+  assert.deepEqual(placementCoords('NE', element, reference, fakeDoc), [191, 179]);
+  assert.deepEqual(placementCoords('E',  element, reference, fakeDoc), [191, 215]);
+  assert.deepEqual(placementCoords('SE', element, reference, fakeDoc), [191, 251]);
+  assert.deepEqual(placementCoords('S',  element, reference, fakeDoc), [165, 251]);
+  assert.deepEqual(placementCoords('SW', element, reference, fakeDoc), [139, 251]);
+  assert.deepEqual(placementCoords('W',  element, reference, fakeDoc), [139, 215]);
+  assert.deepEqual(placementCoords('NW', element, reference, fakeDoc), [139, 179]);
+});
+
+
+test('#determinePlacement', function(assert) {
+  assert.expect(8);
+
+  const boundary = placementBoundary();
+
+  const move = options => {
+    reference.style.top    = options.top;
+    reference.style.left   = options.left;
+    reference.style.bottom = options.bottom;
+    reference.style.right  = options.right;
+  };
+
+  move({ top: 0, left: '50%', bottom: 'auto', right: 'auto' });
+  assert.deepEqual(determinePlacement(reference, boundary), north);
+
+  move({ top: 0, left: 'auto', bottom: 'auto', right: 0 });
+  assert.deepEqual(determinePlacement(reference, boundary), northEast);
+
+  move({ top: '50%', left: 'auto', bottom: 'auto', right: 0 });
+  assert.deepEqual(determinePlacement(reference, boundary), east);
+
+  move({ top: 'auto', left: 'auto', bottom: 0, right: 0 });
+  assert.deepEqual(determinePlacement(reference, boundary), southEast);
+
+  move({ top: 'auto', left: '50%', bottom: 0, right: 'auto' });
+  assert.deepEqual(determinePlacement(reference, boundary), south);
+
+  move({ top: 'auto', left: 0, bottom: 0, right: 'auto' });
+  assert.deepEqual(determinePlacement(reference, boundary), southWest);
+
+  move({ top: '50%', left: 0, bottom: 'auto', right: 'auto' });
+  assert.deepEqual(determinePlacement(reference, boundary), west);
+
+  move({ top: 0, left: 0, bottom: 'auto', right: 'auto' });
+  assert.deepEqual(determinePlacement(reference, boundary), northWest);
+});
+
+
+test('#placementBoundary', function(assert) {
+  assert.expect(3);
+
+  assert.deepEqual(placementBoundary(undefined, undefined, fakeDoc), {
+    top: 300,
+    left: 317,
+    bottom: 500,
+    right: 583
+  }, 'computes the boundary points within the document, defaults to 3 rows & 3 cols');
+
+  assert.deepEqual(placementBoundary(2, 4, fakeDoc), {
+    top: 250,
+    left: 450,
+    bottom: 550,
+    right: 450
+  }, 'can customise the boundary points');
+
+  assert.deepEqual(placementBoundary(6, 1, fakeDoc), {
+    top: 700,
+    left: 183,
+    bottom: 100,
+    right: 717
+  }, 'can customise the boundary points');
 });
 
 
@@ -123,78 +199,4 @@ test('#hasPlacement', function(assert) {
   assert.strictEqual(hasPlacement(northWest), true);
   assert.strictEqual(hasPlacement(center), false);
   assert.strictEqual(hasPlacement(), false);
-});
-
-
-test('#placementBoundary', function(assert) {
-  assert.expect(2);
-
-  const container = document.createElement('div');
-  container.style.width = '100px';
-  container.style.height = '50px';
-  container.style.overflow = 'scroll';
-
-  const overflowingContent = document.createElement('div');
-  overflowingContent.style.width = '120px';
-  overflowingContent.style.height = '60px';
-
-  container.appendChild(overflowingContent);
-  fixture.appendChild(container);
-
-  container.scrollTop = 10;
-  container.scrollLeft = 20;
-
-  assert.deepEqual(placementBoundary(container), {
-    top: 27,
-    left: 53,
-    bottom: 43,
-    right: 87
-  }, 'computes the boundary points within the container element');
-
-  assert.deepEqual(placementBoundary(container, 2, 4), {
-    top: 23,
-    left: 70,
-    bottom: 48,
-    right: 70
-  }, 'can customise the boundary points');
-
-  fixture.removeChild(container);
-});
-
-
-test('#determinePlacement', function(assert) {
-  assert.expect(8);
-
-  const boundary = placementBoundary(fixture);
-
-  const move = options => {
-    reference.style.top    = options.top;
-    reference.style.left   = options.left;
-    reference.style.bottom = options.bottom;
-    reference.style.right  = options.right;
-  };
-
-  move({ top: 0, left: '50%', bottom: 'auto', right: 'auto' });
-  assert.deepEqual(determinePlacement(reference, boundary), north);
-
-  move({ top: 0, left: 'auto', bottom: 'auto', right: 0 });
-  assert.deepEqual(determinePlacement(reference, boundary), northEast);
-
-  move({ top: '50%', left: 'auto', bottom: 'auto', right: 0 });
-  assert.deepEqual(determinePlacement(reference, boundary), east);
-
-  move({ top: 'auto', left: 'auto', bottom: 0, right: 0 });
-  assert.deepEqual(determinePlacement(reference, boundary), southEast);
-
-  move({ top: 'auto', left: '50%', bottom: 0, right: 'auto' });
-  assert.deepEqual(determinePlacement(reference, boundary), south);
-
-  move({ top: 'auto', left: 0, bottom: 0, right: 'auto' });
-  assert.deepEqual(determinePlacement(reference, boundary), southWest);
-
-  move({ top: '50%', left: 0, bottom: 'auto', right: 'auto' });
-  assert.deepEqual(determinePlacement(reference, boundary), west);
-
-  move({ top: 0, left: 0, bottom: 'auto', right: 'auto' });
-  assert.deepEqual(determinePlacement(reference, boundary), northWest);
 });
