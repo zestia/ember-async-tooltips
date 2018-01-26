@@ -73,7 +73,7 @@ module('tool-tipper', function(hooks) {
     await triggerEvent('.tooltipper', 'mouseover');
 
     assert.strictEqual(loaded, true,
-      'fires an onload action when moused over');
+      'fires an on-load action when moused over');
 
     await render(hbs`{{tool-tipper}}`);
 
