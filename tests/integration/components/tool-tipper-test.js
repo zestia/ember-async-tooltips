@@ -1,69 +1,82 @@
-import { test, moduleForComponent } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
+module('tool-tipper', function(hooks) {
+  setupRenderingTest(hooks);
 
-moduleForComponent('tool-tipper', {
-  integration: true
-});
+  test('it renders', async function(assert) {
+    assert.expect(2);
 
+    await render(hbs`{{tool-tipper}}`);
 
+    assert.equal(this.$('.tooltipper').length, 1,
+      'tool-tipper components have an appropriate class name');
 
-test('it renders', function(assert) {
-  assert.expect(2);
+    assert.equal(this.$('.tooltipper').prop('tagName'), 'SPAN',
+      'renders as an inline element by default');
+  });
 
-  this.render(hbs`{{tool-tipper}}`);
+  test('as a hyperlink', async function(assert) {
+    assert.expect(3);
 
-  assert.equal(this.$('.tooltipper').length, 1,
-    'tool-tipper components have an appropriate class name');
+    await render(hbs`{{tool-tipper tagName="a" href="foo" rel="bar" target="baz"}}`);
 
-  assert.equal(this.$('.tooltipper').prop('tagName'), 'SPAN',
-    'renders as an inline element by default');
-});
+    assert.equal(this.$('.tooltipper').attr('href'), 'foo',
+      'can set href attribute');
 
+    assert.equal(this.$('.tooltipper').attr('rel'), 'bar',
+      'can set rel attribute');
 
-test('as a hyperlink', function(assert) {
-  assert.expect(3);
+    assert.equal(this.$('.tooltipper').attr('target'), 'baz',
+      'can set target attribute');
+  });
 
-  this.render(hbs`
-    {{tool-tipper tagName="a" href="foo" rel="bar" target="baz"}}
-  `);
+  test('as a button', async function(assert) {
+    assert.expect(2);
 
-  assert.equal(this.$('.tooltipper').attr('href'), 'foo',
-    'can set href attribute');
+    await render(hbs`{{tool-tipper tagName="button"}}`);
 
-  assert.equal(this.$('.tooltipper').attr('rel'), 'bar',
-    'can set rel attribute');
+    assert.equal(this.$('.tooltipper').attr('type'), 'button',
+      'renders as a non-submittion button by default');
 
-  assert.equal(this.$('.tooltipper').attr('target'), 'baz',
-    'can set target attribute');
-});
+    await render(hbs`{{tool-tipper tagName="button" type="foo"}}`);
 
+    assert.equal(this.$('.tooltipper').attr('type'), 'foo',
+      'can specify type of button');
+  });
 
-test('as a button', function(assert) {
-  assert.expect(2);
+  test('tabindex', async function(assert) {
+    assert.expect(2);
 
-  this.render(hbs`{{tool-tipper tagName="button"}}`);
+    await render(hbs`{{tool-tipper}}`);
 
-  assert.equal(this.$('.tooltipper').attr('type'), 'button',
-    'renders as a non-submittion button by default');
+    assert.strictEqual(this.$('.tooltipper').attr('tabindex'), undefined,
+      'no default tabindex');
 
-  this.render(hbs`{{tool-tipper tagName="button" type="foo"}}`);
+    await render(hbs`{{tool-tipper tabindex=-1}}`);
 
-  assert.equal(this.$('.tooltipper').attr('type'), 'foo',
-    'can specify type of button');
-});
+    assert.strictEqual(this.$('.tooltipper').attr('tabindex'), '-1',
+      'can set tabindex attribute');
+  });
 
+  test('on-load action', async function(assert) {
+    assert.expect(1);
 
-test('tabindex', function(assert) {
-  assert.expect(2);
+    let loaded;
 
-  this.render(hbs`{{tool-tipper}}`);
+    this.set('load', () => loaded = true);
 
-  assert.strictEqual(this.$('.tooltipper').attr('tabindex'), undefined,
-    'no default tabindex');
+    await render(hbs`{{tool-tipper on-load=(action load)}}`);
 
-  this.render(hbs`{{tool-tipper tabindex=-1}}`);
+    await triggerEvent('.tooltipper', 'mouseover');
 
-  assert.strictEqual(this.$('.tooltipper').attr('tabindex'), '-1',
-    'can set tabindex attribute');
+    assert.strictEqual(loaded, true,
+      'fires an onload action when moused over');
+
+    await render(hbs`{{tool-tipper}}`);
+
+    await triggerEvent('.tooltipper', 'mouseover');
+  });
 });

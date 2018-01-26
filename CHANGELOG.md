@@ -1,5 +1,9 @@
 # Changelog
 
+3.0.1
+
+* Make on-load action more tollerant if no provided, or if it doesn't return a promise.
+
 3.0.0
 
 * Refactor to make sure correct element offsets are used

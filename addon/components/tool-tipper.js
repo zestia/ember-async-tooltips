@@ -36,9 +36,7 @@ export default Component.extend({
     this._destroyTooltip();
   },
 
-  'on-load'() {
-    return resolve();
-  },
+  'on-load'() {},
 
   mouseEnter() {
     this._super(...arguments);
@@ -61,7 +59,7 @@ export default Component.extend({
   },
 
   _load() {
-    return this.get('on-load')().then(data => trySet(this, 'data', data));
+    return resolve(this.get('on-load')()).then(data => trySet(this, 'data', data));
   },
 
   _loadWithDelay() {
