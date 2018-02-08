@@ -1,5 +1,9 @@
 # Changelog
 
+4.0.0
+
+* Moved position utils to a separate module
+
 3.0.1
 
 * Make on-load action more tollerant if not provided, or if it doesn't return a promise.

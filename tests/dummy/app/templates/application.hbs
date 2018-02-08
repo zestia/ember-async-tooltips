@@ -1,7 +1,7 @@
 <div class="controls">
   <label class="control">
-    Placement
-    <select onchange={{action (mut placement) value="target.value" on="change"}} class="position">
+    Position
+    <select onchange={{action (mut position) value="target.value" on="change"}} class="position">
       <option value="">Auto</option>
       <option value="N">North</option>
       <option value="NE">North East</option>
@@ -63,7 +63,7 @@
   hover-delay=hoverDelay
   tooltip=(component "tool-tip"
     text="Hello World"
-    placement=placement
+    position=position
     columns=columns
     rows=rows
   )}}

@@ -2,14 +2,7 @@ import { Promise } from 'rsvp';
 import Component from '@ember/component';
 import { scheduleOnce } from '@ember/runloop';
 import layout from '../templates/components/tool-tip';
-import {
-  placementCoords,
-  determinePlacement,
-  placementBoundary,
-  placementToString,
-  stringToPlacement,
-  hasPlacement
-} from '../utils/placement';
+const pos = window.positionUtils;
 
 export default Component.extend({
   layout,
@@ -79,56 +72,61 @@ export default Component.extend({
 
     const tooltip     = this.get('element');
     const tooltipper  = this.get('_tooltipper.element');
-    const placement   = this._determinePlacement();
-    const string      = placementToString(placement);
-    const [left, top] = placementCoords(string, tooltip, tooltipper);
+    const position    = this._tooltipPosition();
+    const string      = pos.positionToString(position);
+    const doc         = document.documentElement;
+    const [left, top] = pos.positionCoords(string, tooltip, tooltipper, doc);
 
-    this.setProperties(this._placementClassNames(placement));
+    this.setProperties(this._positionClassNames(position));
 
     tooltip.style.top  = `${top}px`;
     tooltip.style.left = `${left}px`;
   },
 
-  _placementBoundary() {
-    return placementBoundary(this.get('columns'), this.get('rows'));
+  _tooltipBoundary() {
+    const doc = document.documentElement;
+    return pos.positionBoundary(doc, this.get('columns'), this.get('rows'));
   },
 
-  _determinePlacement() {
-    const string = this.get('placement');
+  _tooltipPosition() {
+    const string = this.get('position');
 
     if (string) {
-      return stringToPlacement(string);
+      return pos.stringToPosition(string);
     } else {
-      return this._autoPlacement();
+      return this._autoPosition();
     }
   },
 
-  _autoPlacement() {
+  _tooltipperPosition() {
     const tooltipper = this.get('_tooltipper.element');
-    const boundary   = this._placementBoundary();
-    const placement  = determinePlacement(tooltipper, boundary);
-    const center     = !hasPlacement(placement);
+    const boundary = this._tooltipBoundary();
+    return pos.elementPosition(tooltipper, boundary);
+  },
 
-    const flippedPlacement = {
-      N: placement.S,
-      E: placement.E,
-      S: placement.N,
-      W: placement.W
+  _autoPosition() {
+    const before = this._tooltipperPosition();
+
+    const after = {
+      N: before.S,
+      E: before.E,
+      S: before.N,
+      W: before.W
     };
 
-    if (center) {
-      flippedPlacement.S = true;
+    if (!pos.hasDirection(after)) {
+      after.S = true;
     }
 
-    return flippedPlacement;
+    return after;
   },
 
-  _placementClassNames(placement) {
+  _positionClassNames(position) {
     return {
-      isNorth: placement.N,
-      isEast:  placement.E,
-      isSouth: placement.S,
-      isWest:  placement.W
+      isNorth: position.N,
+      isEast:  position.E,
+      isSouth: position.S,
+      isWest:  position.W
     };
   },
 

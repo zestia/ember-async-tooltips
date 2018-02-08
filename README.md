@@ -115,10 +115,10 @@ export default ToolTipComponent.extend({
 
 ### Manual positioning
 
-Setting the `placement` attribute will add `left` and `right` CSS properties based upon the compass points. This will position the `tool-tip` around the outside edge of the `tool-tipper` component that caused it to display.
+Setting the `position` attribute will add `left` and `right` CSS properties based upon the compass points. This will position the `tool-tip` around the outside edge of the `tool-tipper` component that caused it to display.
 
 ```handlebars
-  {{tool-tipper/example tooltip=(component "tool-tip/example" placement="NW")}}
+  {{tool-tipper/example tooltip=(component "tool-tip/example" position="NW")}}
 ```
 
 ### Automatic positioning

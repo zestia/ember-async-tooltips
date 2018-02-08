@@ -1,59 +1,53 @@
-import { test, moduleForComponent } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import ToolTipComponent from '@zestia/ember-async-tooltips/components/tool-tip';
 
+module('tool-tip', function(hooks) {
+  setupRenderingTest(hooks);
 
-moduleForComponent('tool-tip', {
-  integration: true
-});
+  test('it renders', async function(assert) {
+    assert.expect(4);
 
+    await render(hbs`{{tool-tip text="Hello World"}}`);
 
+    const $el = this.$('.tooltip');
 
-test('it renders', function(assert) {
-  assert.expect(4);
+    assert.equal($el.length, 1,
+      'tooltips have an appropriate class name');
 
-  this.render(hbs`{{tool-tip text="Hello World"}}`);
+    assert.ok($el.hasClass('is-showing'),
+      'a tooltip will be showing by default (to animate itself in)');
 
-  const $el = this.$('.tooltip');
+    assert.equal($el.attr('role'), 'tooltip',
+      'tooltip components have a suitable aria role');
 
-  assert.equal($el.length, 1,
-    'tooltips have an appropriate class name');
-
-  assert.ok($el.hasClass('is-showing'),
-    'a tooltip will be showing by default (to animate itself in)');
-
-  assert.equal($el.attr('role'), 'tooltip',
-    'tooltip components have a suitable aria role');
-
-  assert.equal(this.$('.tooltip').html(), 'Hello World',
-    'renders value of text attribute');
-});
-
-
-
-test('on insert action', function(assert) {
-  assert.expect(1);
-
-  this.on('inserted', function(tooltip) {
-    assert.ok(tooltip instanceof ToolTipComponent,
-      'when a tooltip is inserted into the DOM, it sends an action with a ' +
-      'reference to itself');
+    assert.equal(this.$('.tooltip').html(), 'Hello World',
+      'renders value of text attribute');
   });
 
-  this.render(hbs`{{tool-tip on-insert=(action "inserted")}}`);
-});
+  test('on insert action', async function(assert) {
+    assert.expect(1);
 
+    this.set('inserted', tooltip => {
+      assert.ok(tooltip instanceof ToolTipComponent,
+        'when a tooltip is inserted into the DOM, it sends an action with a ' +
+        'reference to itself');
+    });
 
-
-test('on mouse leave action', function(assert) {
-  assert.expect(1);
-
-  this.on('mouseExited', function() {
-    assert.ok(true,
-      'when a the mouse leaves a tooltip it sends an action');
+    await render(hbs`{{tool-tip on-insert=(action inserted)}}`);
   });
 
-  this.render(hbs`{{tool-tip on-mouse-leave=(action "mouseExited")}}`);
+  test('on mouse leave action', async function(assert) {
+    assert.expect(1);
 
-  this.$('.tooltip').trigger('mouseout');
+    this.set('mouseExited', function() {
+      assert.ok(true, 'when a the mouse leaves a tooltip it sends an action');
+    });
+
+    await render(hbs`{{tool-tip on-mouse-leave=(action mouseExited)}}`);
+
+    this.$('.tooltip').trigger('mouseout');
+  });
 });

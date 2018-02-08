@@ -6,10 +6,8 @@ import { computed } from '@ember/object';
 /* eslint-enable */
 import { htmlSafe } from '@ember/string';
 import { later } from '@ember/runloop';
-import {
-  placementBoundary
-} from '@zestia/ember-async-tooltips/utils/placement';
 const { escapeExpression } = Ember.Handlebars.Utils;
+const pos = window.positionUtils;
 
 export default Controller.extend({
   columns: 3,
@@ -18,7 +16,8 @@ export default Controller.extend({
   loadDelay: 0,
 
   boundary: computed('columns', 'rows', function() {
-    return placementBoundary(this.get('columns'), this.get('rows'));
+    const doc = document.documentElement;
+    return pos.positionBoundary(doc, this.get('columns'), this.get('rows'));
   }),
 
   boundaryStyles: computed('boundary', function() {
