@@ -5,30 +5,43 @@ import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 /* eslint-enable */
 import { htmlSafe } from '@ember/string';
-import { later } from '@ember/runloop';
+import { later, debounce, bind } from '@ember/runloop';
 const { escapeExpression } = Ember.Handlebars.Utils;
 const pos = window.positionUtils;
 
 export default Controller.extend({
-  columns: 3,
-  rows: 3,
-  hoverDelay: 0,
-  loadDelay: 0,
+  init() {
+    this._super(...arguments);
+    this.set('columns', 3);
+    this.set('rows', 3);
+    this.set('hoverDelay', 0);
+    this.set('loadDelay', 0);
+    this._updateBoundary();
+    window.onresize = bind(this, '_resized');
+  },
 
-  boundary: computed('columns', 'rows', function() {
+  _resized() {
+    debounce(this, '_updateBoundary', 200);
+  },
+
+  _boundary() {
     const doc = document.documentElement;
     return pos.positionBoundary(doc, this.get('columns'), this.get('rows'));
-  }),
+  },
 
-  boundaryStyles: computed('boundary', function() {
-    const { top, right, bottom, left } = this.get('boundary');
+  _boundaryStyles() {
+    const { top, right, bottom, left } = this._boundary();
     const width  = right  - left || 1;
     const height = bottom - top  || 1;
     return htmlSafe(escapeExpression(`
       width: ${width}px;
       height: ${height}px;
     `));
-  }),
+  },
+
+  _updateBoundary() {
+    this.set('boundaryStyles', this._boundaryStyles());
+  },
 
   actions: {
     setTranslateX(translateX) {
