@@ -44,9 +44,31 @@ export default Controller.extend({
   },
 
   actions: {
+    setPosition(position) {
+      this.set('position', position);
+    },
+
     setTranslateX(translateX) {
       const root = document.querySelector(':root');
       root.classList.toggle('translate-x', translateX);
+    },
+
+    setRows(rows) {
+      this.set('rows', rows);
+      this._updateBoundary();
+    },
+
+    setColumns(columns) {
+      this.set('columns', columns);
+      this._updateBoundary();
+    },
+
+    setHoverDelay(hoverDelay) {
+      this.set('hoverDelay', hoverDelay);
+    },
+
+    setLoadDelay(loadDelay) {
+      this.set('loadDelay', loadDelay);
     },
 
     reposition(e) {

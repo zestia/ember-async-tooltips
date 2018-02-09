@@ -1,7 +1,7 @@
 <div class="controls">
   <label class="control">
     Position
-    <select onchange={{action (mut position) value="target.value" on="change"}} class="position">
+    <select onchange={{action "setPosition" value="target.value"}} class="position">
       <option value="">Auto</option>
       <option value="N">North</option>
       <option value="NE">North East</option>
@@ -20,19 +20,19 @@
   </label>
 
   <label class="control">
-    Columns <input type="number" min=2 class="number-input columns" value={{columns}} onchange={{action (mut columns) value="target.value"}}>
+    Columns <input type="number" min=2 class="number-input columns" value={{columns}} oninput={{action "setColumns" value="target.value"}}>
   </label>
 
   <label class="control">
-    Rows <input type="number" min=2 class="number-input rows" value={{rows}} onchange={{action (mut rows) value="target.value"}}>
+    Rows <input type="number" min=2 class="number-input rows" value={{rows}} oninput={{action "setRows" value="target.value"}}>
   </label>
 
   <label class="control">
-    Hover delay <input type="number" min=1 class="number-input hover-delay" value={{hoverDelay}} onchange={{action (mut hoverDelay) value="target.value"}}>
+    Hover delay <input type="number" min=1 class="number-input hover-delay" value={{hoverDelay}} oninput={{action "setHoverDelay" value="target.value"}}>
   </label>
 
   <label class="control">
-    Load delay <input type="number" min=1 class="number-input load-delay" value={{loadDelay}} onchange={{action (mut loadDelay) value="target.value"}}>
+    Load delay <input type="number" min=1 class="number-input load-delay" value={{loadDelay}} oninput={{action "setLoadDelay" value="target.value"}}>
   </label>
 </div>
 
