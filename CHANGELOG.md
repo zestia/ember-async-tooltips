@@ -1,8 +1,13 @@
 # Changelog
 
+4.0.1
+
+* Upgrade position utils
+
 4.0.0
 
 * Moved position utils to a separate module
+* Changed `placement` attribute to `position`
 
 3.0.1
 
