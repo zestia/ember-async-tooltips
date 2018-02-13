@@ -1,5 +1,9 @@
 # Changelog
 
+4.0.2
+
+* Upgrade position utils
+
 4.0.1
 
 * Upgrade position utils
