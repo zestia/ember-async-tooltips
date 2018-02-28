@@ -18,11 +18,14 @@ module('render-active-tooltips', function(hooks) {
   });
 
   test('it renders tooltip components', async function(assert) {
-    assert.expect(6);
+    assert.expect(8);
 
     const FooTooltipComponent = TooltipComponent.extend({
       classNames: ['foo-tooltip'],
-      layout: hbs`Hello World ({{my-attr}})`
+      layout: hbs`
+        Hello World ({{my-attr}})<br>
+        <button class="hide-from-tooltip" onclick={{action "hide"}}></button>
+      `
     });
 
     const FooTooltipperComponent = TooltipperComponent.extend({
@@ -35,8 +38,8 @@ module('render-active-tooltips', function(hooks) {
     await render(hbs`
       <div class="in">
         {{#foo-tooltipper tooltip=(component "foo-tooltip" my-attr="foo") as |tt|}}
-          <button class="show" onclick={{action tt.showTooltip}}></button>
-          <button class="hide" onclick={{action tt.hideTooltip}}></button>
+          <button class="show-from-tooltipper" onclick={{action tt.showTooltip}}></button>
+          <button class="hide-from-tooltipper" onclick={{action tt.hideTooltip}}></button>
         {{/foo-tooltipper}}
       </div>
 
@@ -69,20 +72,36 @@ module('render-active-tooltips', function(hooks) {
     assert.equal(this.$('.out .foo-tooltip').length, 0,
       'the tooltip is destroyed after its hide animation');
 
-    this.$('.show').trigger('click');
+    this.$('.show-from-tooltipper').trigger('click');
 
     await settled();
 
     assert.equal(this.$('.foo-tooltip').length, 1,
-      'tooltip can be manually shown');
+      'tooltip can be manually shown by tooltipper');
 
-    this.$('.hide').trigger('click');
+    this.$('.hide-from-tooltipper').trigger('click');
 
     this.$('.foo-tooltip').trigger('animationEnd');
 
     await settled();
 
     assert.equal(this.$('.foo-tooltip').length, 0,
-      'tooltip can be manually hidden');
+      'tooltip can be manually hidden by tooltipper');
+
+    this.$('.foo-tooltipper').trigger('mouseover');
+
+    await settled();
+
+    assert.equal(this.$('.foo-tooltip').length, 1,
+      'precondition: tooltip shown');
+
+    this.$('.hide-from-tooltip').trigger('click');
+
+    this.$('.foo-tooltip').trigger('animationEnd');
+
+    await settled();
+
+    assert.equal(this.$('.foo-tooltip').length, 0,
+      'tooltip can be hidden by itself');
   });
 });

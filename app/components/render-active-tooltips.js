@@ -1,3 +1,1 @@
-export {
-  default
-} from '@zestia/ember-async-tooltips/components/render-active-tooltips';
+export { default } from '@zestia/ember-async-tooltips/components/render-active-tooltips';

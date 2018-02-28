@@ -105,7 +105,7 @@ export default Component.extend({
 
   _attemptHideTooltip() {
     if (!this.get('isDestroyed') && this.get('_tooltip')) {
-      this.get('_tooltip').hide();
+      this.get('_tooltip').send('hide');
     }
   },
 

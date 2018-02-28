@@ -1,8 +1,12 @@
 # Changelog
 
+4.0.4
+
+* Expose `hide` action from tooltip
+
 4.0.3
 
-* Add the ability to manually show and hide a tooltip
+* Expose `hideTooltip` and `showTooltip` actions from tooltiper
 
 4.0.2
 
