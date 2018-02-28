@@ -1,5 +1,9 @@
 # Changelog
 
+4.0.3
+
+* Add the ability to manually show and hide a tooltip
+
 4.0.2
 
 * Upgrade position utils

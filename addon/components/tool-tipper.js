@@ -1,13 +1,15 @@
-import { resolve } from 'rsvp';
-import Component from '@ember/component';
 /* eslint-disable */
 import { computed, trySet } from '@ember/object';
 /* eslint-enable */
+import { resolve } from 'rsvp';
+import Component from '@ember/component';
+import layout from '../templates/components/tool-tipper';
 import { inject } from '@ember/service';
 import { debounce } from '@ember/runloop';
 import { isPresent } from '@ember/utils';
 
 export default Component.extend({
+  layout,
   tagName: 'span',
   classNames: ['tooltipper'],
   classNameBindings: ['_tooltip:has-tooltip'],
@@ -23,7 +25,9 @@ export default Component.extend({
   tooltipService: inject('tooltip'),
 
   typeAttr: computed(function() {
-    return this.get('type') ? this.get('type') : 'button';
+    if (this.get('tagName') === 'button') {
+      return this.getWithDefault('type', 'button');
+    }
   }),
 
   didReceiveAttrs() {
@@ -50,12 +54,6 @@ export default Component.extend({
     this._super(...arguments);
     this.set('isOver', false);
     this._scheduleHideTooltipFromHover();
-  },
-
-  showTooltip() {
-    this._load().then(() => {
-      this._attemptShowTooltip();
-    });
   },
 
   _load() {
@@ -131,6 +129,14 @@ export default Component.extend({
     tooltipHidden() {
       this._destroyTooltip();
       this.set('_tooltip', null);
+    },
+
+    hideTooltip() {
+      this._attemptHideTooltip();
+    },
+
+    showTooltip() {
+      this._attemptShowTooltip();
     }
   }
 });

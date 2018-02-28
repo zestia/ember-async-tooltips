@@ -128,3 +128,14 @@ The tooltip will be positioned around the outside edge of the `tool-tipper` comp
 ```handlebars
   {{tool-tipper/example tooltip=(component "tool-tip/example")}}
 ```
+
+### Manual showing/hiding
+
+The tooltipper yields the ability to show or hide its tooltip.
+
+```handlebars
+  {{#tool-tipper/example tooltip=(component "tool-tip/example") as |tt|}}
+    <button onclick={{action tt.hideTooltip}}>Hide</button>
+    <button onclick={{action tt.showTooltip}}>Show</button>
+  {{/tool-tipper/example}}
+```

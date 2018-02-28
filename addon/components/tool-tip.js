@@ -128,11 +128,5 @@ export default Component.extend({
       isSouth: position.S,
       isWest:  position.W
     };
-  },
-
-  actions: {
-    hide() {
-      this.hide();
-    }
   }
 });

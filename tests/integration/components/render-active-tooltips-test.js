@@ -18,7 +18,7 @@ module('render-active-tooltips', function(hooks) {
   });
 
   test('it renders tooltip components', async function(assert) {
-    assert.expect(4);
+    assert.expect(6);
 
     const FooTooltipComponent = TooltipComponent.extend({
       classNames: ['foo-tooltip'],
@@ -34,7 +34,10 @@ module('render-active-tooltips', function(hooks) {
 
     await render(hbs`
       <div class="in">
-        {{foo-tooltipper tooltip=(component "foo-tooltip" my-attr="foo")}}
+        {{#foo-tooltipper tooltip=(component "foo-tooltip" my-attr="foo") as |tt|}}
+          <button class="show" onclick={{action tt.showTooltip}}></button>
+          <button class="hide" onclick={{action tt.hideTooltip}}></button>
+        {{/foo-tooltipper}}
       </div>
 
       <div class="out">
@@ -50,7 +53,7 @@ module('render-active-tooltips', function(hooks) {
     await settled();
 
     assert.equal(this.$('.out .foo-tooltip').length, 1,
-      'the tooltip is rendered');
+      'the tooltip is rendered elsewhere');
 
     this.$('.foo-tooltipper').trigger('mouseout');
 
@@ -65,5 +68,21 @@ module('render-active-tooltips', function(hooks) {
 
     assert.equal(this.$('.out .foo-tooltip').length, 0,
       'the tooltip is destroyed after its hide animation');
+
+    this.$('.show').trigger('click');
+
+    await settled();
+
+    assert.equal(this.$('.foo-tooltip').length, 1,
+      'tooltip can be manually shown');
+
+    this.$('.hide').trigger('click');
+
+    this.$('.foo-tooltip').trigger('animationEnd');
+
+    await settled();
+
+    assert.equal(this.$('.foo-tooltip').length, 0,
+      'tooltip can be manually hidden');
   });
 });

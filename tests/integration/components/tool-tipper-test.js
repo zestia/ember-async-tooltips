@@ -7,7 +7,7 @@ module('tool-tipper', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(2);
+    assert.expect(3);
 
     await render(hbs`{{tool-tipper}}`);
 
@@ -16,6 +16,9 @@ module('tool-tipper', function(hooks) {
 
     assert.equal(this.$('.tooltipper').prop('tagName'), 'SPAN',
       'renders as an inline element by default');
+
+    assert.strictEqual(this.$('.tooltipper').attr('type'), undefined,
+      'is not a button');
   });
 
   test('as a hyperlink', async function(assert) {
