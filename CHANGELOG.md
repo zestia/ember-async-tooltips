@@ -1,5 +1,9 @@
 # Changelog
 
+4.0.5
+
+* Caches data when loading tooltip, so `on-load` will only fire once
+
 4.0.4
 
 * Expose `hide` action from tooltip

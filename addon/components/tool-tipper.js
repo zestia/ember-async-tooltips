@@ -57,7 +57,14 @@ export default Component.extend({
   },
 
   _load() {
-    return resolve(this.get('on-load')()).then(data => trySet(this, 'data', data));
+    if (this.get('isLoaded')) {
+      return resolve();
+    } else {
+      return resolve(this.get('on-load')()).then(data => {
+        trySet(this, 'data', data);
+        trySet(this, 'isLoaded', true);
+      });
+    }
   },
 
   _loadWithDelay() {

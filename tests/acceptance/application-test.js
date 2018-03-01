@@ -1,47 +1,48 @@
-/* eslint-disable max-len */
-
-import { test } from 'qunit';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 import { positionClasses } from '../../tests/helpers/utils';
-import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
+import { visit, find, triggerEvent, fillIn } from '@ember/test-helpers';
 
-moduleForAcceptance('tooltips');
+module('tooltips', function(hooks) {
+  setupApplicationTest(hooks);
 
+  test('manual positioning', async function(assert) {
+    assert.expect(8);
 
-test('manual positioning', function(assert) {
-  assert.expect(8);
-  visit('/');
+    await visit('/');
 
-  andThen(() => fillIn('.position', 'N'));
+    await triggerEvent('.tooltipper', 'mouseover');
 
-  andThen(() => triggerEvent('.tooltipper', 'mouseover'));
+    await fillIn('.position', 'N');
 
-  andThen(() => assert.deepEqual(positionClasses(find('.tooltip')), ['is-north']));
+    assert.deepEqual(positionClasses(find('.tooltip')), ['is-north']);
 
-  andThen(() => fillIn('.position', 'NE'));
+    await fillIn('.position', 'NE');
 
-  andThen(() => assert.deepEqual(positionClasses(find('.tooltip')), ['is-north', 'is-east']));
+    assert.deepEqual(positionClasses(find('.tooltip')), ['is-north', 'is-east']);
 
-  andThen(() => fillIn('.position', 'E'));
+    await fillIn('.position', 'E');
 
-  andThen(() => assert.deepEqual(positionClasses(find('.tooltip')), ['is-east']));
+    assert.deepEqual(positionClasses(find('.tooltip')), ['is-east']);
 
-  andThen(() => fillIn('.position', 'SE'));
+    await fillIn('.position', 'SE');
 
-  andThen(() => assert.deepEqual(positionClasses(find('.tooltip')), ['is-east', 'is-south']));
+    assert.deepEqual(positionClasses(find('.tooltip')), ['is-east', 'is-south']);
 
-  andThen(() => fillIn('.position', 'S'));
+    await fillIn('.position', 'S');
 
-  andThen(() => assert.deepEqual(positionClasses(find('.tooltip')), ['is-south']));
+    assert.deepEqual(positionClasses(find('.tooltip')), ['is-south']);
 
-  andThen(() => fillIn('.position', 'SW'));
+    await fillIn('.position', 'SW');
 
-  andThen(() => assert.deepEqual(positionClasses(find('.tooltip')), ['is-south', 'is-west']));
+    assert.deepEqual(positionClasses(find('.tooltip')), ['is-south', 'is-west']);
 
-  andThen(() => fillIn('.position', 'W'));
+    await fillIn('.position', 'W');
 
-  andThen(() => assert.deepEqual(positionClasses(find('.tooltip')), ['is-west']));
+    assert.deepEqual(positionClasses(find('.tooltip')), ['is-west']);
 
-  andThen(() => fillIn('.position', 'NW'));
+    await fillIn('.position', 'NW');
 
-  andThen(() => assert.deepEqual(positionClasses(find('.tooltip')), ['is-north', 'is-west']));
+    assert.deepEqual(positionClasses(find('.tooltip')), ['is-north', 'is-west']);
+  });
 });
