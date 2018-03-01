@@ -2,7 +2,9 @@
 
 4.0.5
 
-* Caches data when loading tooltip, so `on-load` will only fire once
+* Caches data when loading tooltip, so `on-load` will only fire once.
+  * This caches the data on a per-tooltipper basis.
+  * If you have multiple instances of the same tooltipper on a page, you will still have to have your own caching strategy for that.
 
 4.0.4
 
