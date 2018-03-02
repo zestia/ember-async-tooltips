@@ -1,5 +1,6 @@
 /* eslint-disable */
 import { computed, trySet } from '@ember/object';
+import { bool } from '@ember/object/computed';
 /* eslint-enable */
 import { resolve } from 'rsvp';
 import Component from '@ember/component';
@@ -12,7 +13,10 @@ export default Component.extend({
   layout,
   tagName: 'span',
   classNames: ['tooltipper'],
-  classNameBindings: ['_tooltip:has-tooltip'],
+  classNameBindings: [
+    'hasTooltip',
+    'isLoading'
+  ],
   attributeBindings: [
     'tabindex',
     'href',
@@ -23,6 +27,7 @@ export default Component.extend({
   ],
 
   tooltipService: inject('tooltip'),
+  hasTooltip: bool('_tooltip'),
 
   typeAttr: computed(function() {
     if (this.get('tagName') === 'button') {
@@ -60,9 +65,12 @@ export default Component.extend({
     if (this.get('isLoaded')) {
       return resolve();
     } else {
+      this.set('isLoading', true);
       return resolve(this.get('on-load')()).then(data => {
         trySet(this, 'data', data);
         trySet(this, 'isLoaded', true);
+      }).finally(() => {
+        trySet(this, 'isLoading', false);
       });
     }
   },

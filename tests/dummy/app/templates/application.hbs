@@ -34,6 +34,8 @@
   <label class="control">
     Load delay <input type="number" min=1 class="number-input load-delay" value={{loadDelay}} oninput={{action "setLoadDelay" value="target.value"}}>
   </label>
+
+  <a href="#" {{action "rerender"}}>Rerender</a>
 </div>
 
 <table class="grid">
@@ -55,20 +57,22 @@
   </tr>
 </table>
 
-{{#tool-tipper
-  tabindex=-1
-  draggable=true
-  dragEnd=(action "reposition")
-  on-load=(action "load")
-  hover-delay=hoverDelay
-  tooltip=(component "tool-tip"
-    text="Hello World"
-    position=position
-    columns=columns
-    rows=rows
-  )}}
-  Hover over me
-{{/tool-tipper}}
+{{#if showTooltipper}}
+  {{#tool-tipper
+    tabindex=-1
+    draggable=true
+    dragEnd=(action "reposition")
+    on-load=(action "load")
+    hover-delay=hoverDelay
+    tooltip=(component "tool-tip"
+      text="Hello World"
+      position=position
+      columns=columns
+      rows=rows
+    )}}
+    Hover over me
+  {{/tool-tipper}}
+{{/if}}
 
 {{render-active-tooltips}}
 

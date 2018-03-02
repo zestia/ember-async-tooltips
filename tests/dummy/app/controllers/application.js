@@ -5,7 +5,7 @@ import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 /* eslint-enable */
 import { htmlSafe } from '@ember/string';
-import { later, debounce, bind } from '@ember/runloop';
+import { run, later, debounce, bind } from '@ember/runloop';
 const { escapeExpression } = Ember.Handlebars.Utils;
 const pos = window.positionUtils;
 
@@ -15,7 +15,8 @@ export default Controller.extend({
     this.set('columns', 3);
     this.set('rows', 3);
     this.set('hoverDelay', 0);
-    this.set('loadDelay', 0);
+    this.set('loadDelay', 1000);
+    this.set('showTooltipper', true);
     this._updateBoundary();
     window.onresize = bind(this, '_resized');
   },
@@ -44,6 +45,11 @@ export default Controller.extend({
   },
 
   actions: {
+    rerender() {
+      run(() => this.set('showTooltipper', false));
+      run(() => this.set('showTooltipper', true));
+    },
+
     setPosition(position) {
       this.set('position', position);
     },

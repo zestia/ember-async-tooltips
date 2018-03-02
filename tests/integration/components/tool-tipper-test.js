@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, triggerEvent } from '@ember/test-helpers';
+import { settled, render, triggerEvent } from '@ember/test-helpers';
+import { defer } from 'rsvp';
 import hbs from 'htmlbars-inline-precompile';
 
 module('tool-tipper', function(hooks) {
@@ -65,21 +66,34 @@ module('tool-tipper', function(hooks) {
   });
 
   test('on-load action', async function(assert) {
-    assert.expect(1);
+    assert.expect(3);
 
-    let loaded;
+    let count = 0;
 
-    this.set('load', () => loaded = true);
+    const deferred = defer();
+
+    this.set('load', () => {
+      count++;
+      return deferred.promise;
+    });
 
     await render(hbs`{{tool-tipper on-load=(action load)}}`);
 
     await triggerEvent('.tooltipper', 'mouseover');
 
-    assert.strictEqual(loaded, true,
-      'fires an on-load action when moused over');
+    assert.ok(this.$('.tooltipper').hasClass('is-loading'),
+      'has a loading class whilst loading the data');
 
-    await render(hbs`{{tool-tipper}}`);
+    deferred.resolve();
+
+    await settled();
+
+    assert.ok(!this.$('.tooltipper').hasClass('is-loading'),
+      'loading class is removed when loading is complete');
 
     await triggerEvent('.tooltipper', 'mouseover');
+
+    assert.equal(count, 1,
+      'only loads once');
   });
 });

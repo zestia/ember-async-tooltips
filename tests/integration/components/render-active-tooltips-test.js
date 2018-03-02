@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled } from '@ember/test-helpers';
@@ -20,7 +18,7 @@ module('render-active-tooltips', function(hooks) {
   });
 
   test('it renders tooltip components', async function(assert) {
-    assert.expect(9);
+    assert.expect(8);
 
     const FooTooltipComponent = TooltipComponent.extend({
       classNames: ['foo-tooltip'],
@@ -37,13 +35,9 @@ module('render-active-tooltips', function(hooks) {
     this.owner.register('component:foo-tooltip',    FooTooltipComponent);
     this.owner.register('component:foo-tooltipper', FooTooltipperComponent);
 
-    let calledLoad = 0;
-
-    this.set('load', () => calledLoad++);
-
     await render(hbs`
       <div class="in">
-        {{#foo-tooltipper on-load=(action load) tooltip=(component "foo-tooltip" my-attr="foo") as |tt|}}
+        {{#foo-tooltipper tooltip=(component "foo-tooltip" my-attr="foo") as |tt|}}
           <button class="show-from-tooltipper" onclick={{action tt.showTooltip}}></button>
           <button class="hide-from-tooltipper" onclick={{action tt.hideTooltip}}></button>
         {{/foo-tooltipper}}
@@ -109,8 +103,5 @@ module('render-active-tooltips', function(hooks) {
 
     assert.equal(this.$('.foo-tooltip').length, 0,
       'tooltip can be hidden by itself');
-
-    assert.equal(calledLoad, 1,
-      'tooltipper only loads content required to display its tooltip once');
   });
 });

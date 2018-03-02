@@ -1,5 +1,9 @@
 # Changelog
 
+4.0.6
+
+* Adds an `is-loading` class to the tooltipper whilst it is loading the content required to display its tooltip
+
 4.0.5
 
 * Caches data when loading tooltip, so `on-load` will only fire once.

@@ -58,6 +58,10 @@
   user-select: none;
 }
 
+.tooltipper.is-loading {
+  background-color: green;
+}
+
 .tooltip {
   position: absolute;
   background-color: red;
