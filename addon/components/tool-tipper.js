@@ -10,13 +10,18 @@ import { debounce } from '@ember/runloop';
 import { isPresent } from '@ember/utils';
 
 export default Component.extend({
+  tooltipService: inject('tooltip'),
+
   layout,
   tagName: 'span',
+
   classNames: ['tooltipper'],
+
   classNameBindings: [
     'hasTooltip',
     'isLoading'
   ],
+
   attributeBindings: [
     'tabindex',
     'href',
@@ -26,7 +31,6 @@ export default Component.extend({
     'draggable'
   ],
 
-  tooltipService: inject('tooltip'),
   hasTooltip: bool('_tooltip'),
 
   typeAttr: computed(function() {
@@ -45,7 +49,28 @@ export default Component.extend({
     this._destroyTooltip();
   },
 
-  'on-load'() {},
+  actions: {
+    tooltipInserted(tooltip) {
+      this.set('_tooltip', tooltip);
+    },
+
+    tooltipExited() {
+      this._scheduleHideTooltipFromHover();
+    },
+
+    tooltipHidden() {
+      this._destroyTooltip();
+      this.set('_tooltip', null);
+    },
+
+    hideTooltip() {
+      this._attemptHideTooltip();
+    },
+
+    showTooltip() {
+      this._attemptShowTooltip();
+    }
+  },
 
   mouseEnter() {
     this._super(...arguments);
@@ -66,7 +91,7 @@ export default Component.extend({
       return resolve();
     } else {
       this.set('isLoading', true);
-      return resolve(this.get('on-load')()).then(data => {
+      return resolve(this.getWithDefault('on-load', () => {})()).then(data => {
         trySet(this, 'data', data);
         trySet(this, 'isLoaded', true);
       }).finally(() => {
@@ -130,28 +155,5 @@ export default Component.extend({
 
   _destroyTooltip() {
     this.get('tooltipService').deactivate(this);
-  },
-
-  actions: {
-    tooltipInserted(tooltip) {
-      this.set('_tooltip', tooltip);
-    },
-
-    tooltipExited() {
-      this._scheduleHideTooltipFromHover();
-    },
-
-    tooltipHidden() {
-      this._destroyTooltip();
-      this.set('_tooltip', null);
-    },
-
-    hideTooltip() {
-      this._attemptHideTooltip();
-    },
-
-    showTooltip() {
-      this._attemptShowTooltip();
-    }
   }
 });

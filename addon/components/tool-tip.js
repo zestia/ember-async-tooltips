@@ -29,9 +29,13 @@ export default Component.extend({
     scheduleOnce('afterRender', this, '_position');
   },
 
-  '-on-hide'() {},
-  '-on-insert'() {},
-  '-on-mouse-leave'() {},
+  actions: {
+    hide() {
+      this._hide().then(() => {
+        this.getWithDefault('-on-hide', () => {})();
+      });
+    }
+  },
 
   mouseEnter() {
     this._super(...arguments);
@@ -41,7 +45,7 @@ export default Component.extend({
   mouseLeave() {
     this._super(...arguments);
     this.set('isOver', false);
-    this.get('-on-mouse-leave')();
+    this.getWithDefault('-on-mouse-leave', () => {})();
   },
 
   _show() {
@@ -56,7 +60,7 @@ export default Component.extend({
   },
 
   _inserted() {
-    this.get('-on-insert')(this);
+    this.getWithDefault('-on-insert', () => {})(this);
   },
 
   _position() {
@@ -122,13 +126,5 @@ export default Component.extend({
       isSouth: position.S,
       isWest:  position.W
     };
-  },
-
-  actions: {
-    hide() {
-      this._hide().then(() => {
-        this.get('-on-hide')();
-      });
-    }
   }
 });

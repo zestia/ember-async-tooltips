@@ -6,8 +6,8 @@ import { inject } from '@ember/service';
 import layout from '../templates/components/render-active-tooltips';
 
 export default Component.extend({
+  tooltipService: inject('tooltip'),
   layout,
   tagName: '',
-  tooltipService: inject('tooltip'),
   tooltippers: readOnly('tooltipService.tooltippers')
 });

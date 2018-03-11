@@ -21,29 +21,6 @@ export default Controller.extend({
     window.onresize = bind(this, '_resized');
   },
 
-  _resized() {
-    debounce(this, '_updateBoundary', 200);
-  },
-
-  _boundary() {
-    const doc = document.documentElement;
-    return pos.positionBoundary(doc, this.get('columns'), this.get('rows'));
-  },
-
-  _boundaryStyles() {
-    const { top, right, bottom, left } = this._boundary();
-    const width  = right  - left || 1;
-    const height = bottom - top  || 1;
-    return htmlSafe(escapeExpression(`
-      width: ${width}px;
-      height: ${height}px;
-    `));
-  },
-
-  _updateBoundary() {
-    this.set('boundaryStyles', this._boundaryStyles());
-  },
-
   actions: {
     rerender() {
       run(() => this.set('showTooltipper', false));
@@ -91,5 +68,28 @@ export default Controller.extend({
         later(resolve, this.get('loadDelay'));
       });
     }
+  },
+
+  _resized() {
+    debounce(this, '_updateBoundary', 200);
+  },
+
+  _boundary() {
+    const doc = document.documentElement;
+    return pos.positionBoundary(doc, this.get('columns'), this.get('rows'));
+  },
+
+  _boundaryStyles() {
+    const { top, right, bottom, left } = this._boundary();
+    const width  = right  - left || 1;
+    const height = bottom - top  || 1;
+    return htmlSafe(escapeExpression(`
+      width: ${width}px;
+      height: ${height}px;
+    `));
+  },
+
+  _updateBoundary() {
+    this.set('boundaryStyles', this._boundaryStyles());
   }
 });
