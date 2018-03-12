@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, find, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import ToolTipComponent from '@zestia/ember-async-tooltips/components/tool-tip';
 
@@ -12,18 +12,18 @@ module('tool-tip', function(hooks) {
 
     await render(hbs`{{tool-tip text="Hello World"}}`);
 
-    const $el = this.$('.tooltip');
+    const el = find('.tooltip');
 
-    assert.equal($el.length, 1,
+    assert.ok(el,
       'tooltips have an appropriate class name');
 
-    assert.ok($el.hasClass('is-showing'),
+    assert.ok(el.classList.contains('is-showing'),
       'a tooltip will be showing by default (to animate itself in)');
 
-    assert.equal($el.attr('role'), 'tooltip',
+    assert.equal(el.getAttribute('role'), 'tooltip',
       'tooltip components have a suitable aria role');
 
-    assert.equal(this.$('.tooltip').html(), 'Hello World',
+    assert.equal(el.innerHTML, 'Hello World',
       'renders value of text attribute');
   });
 
@@ -48,6 +48,6 @@ module('tool-tip', function(hooks) {
 
     await render(hbs`{{tool-tip -on-mouse-leave=(action mouseExited)}}`);
 
-    this.$('.tooltip').trigger('mouseout');
+    await triggerEvent('.tooltip', 'mouseout');
   });
 });

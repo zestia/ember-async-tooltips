@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, findAll, triggerEvent, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import TooltipComponent from '@zestia/ember-async-tooltips/components/tool-tip';
 import TooltipperComponent from '@zestia/ember-async-tooltips/components/tool-tipper';
@@ -13,7 +13,7 @@ module('render-active-tooltips', function(hooks) {
 
     await render(hbs`{{render-active-tooltips}}`);
 
-    assert.equal(this.$().html(), '<!---->',
+    assert.equal(this.get('element').innerHTML, '<!---->',
       'does not blow up if no tooltips are active');
   });
 
@@ -48,60 +48,48 @@ module('render-active-tooltips', function(hooks) {
       </div>
     `);
 
-    this.$('.in .foo-tooltipper').trigger('mouseover');
+    triggerEvent('.in .foo-tooltipper', 'mouseover');
 
-    assert.equal(this.$('.foo-tooltip').length, 0,
+    assert.equal(findAll('.foo-tooltip').length, 0,
       'tooltip is not rendered yet (still hovering over it)');
 
     await settled();
 
-    assert.equal(this.$('.out .foo-tooltip').length, 1,
+    assert.equal(findAll('.out .foo-tooltip').length, 1,
       'the tooltip is rendered elsewhere');
 
-    this.$('.foo-tooltipper').trigger('mouseout');
+    await triggerEvent('.foo-tooltipper', 'mouseout');
 
-    assert.equal(this.$('.foo-tooltip').length, 1,
+    assert.equal(findAll('.foo-tooltip').length, 1,
       'tooltip is not destroyed yet (due to hover delay)');
 
-    await settled();
+    await triggerEvent('.foo-tooltip', 'animationEnd');
 
-    this.$('.foo-tooltip').trigger('animationEnd');
-
-    await settled();
-
-    assert.equal(this.$('.out .foo-tooltip').length, 0,
+    assert.equal(findAll('.out .foo-tooltip').length, 0,
       'the tooltip is destroyed after its hide animation');
 
-    this.$('.show-from-tooltipper').trigger('click');
+    await click('.show-from-tooltipper');
 
-    await settled();
-
-    assert.equal(this.$('.foo-tooltip').length, 1,
+    assert.equal(findAll('.foo-tooltip').length, 1,
       'tooltip can be manually shown by tooltipper');
 
-    this.$('.hide-from-tooltipper').trigger('click');
+    await click('.hide-from-tooltipper');
 
-    this.$('.foo-tooltip').trigger('animationEnd');
+    await triggerEvent('.foo-tooltip', 'animationEnd');
 
-    await settled();
-
-    assert.equal(this.$('.foo-tooltip').length, 0,
+    assert.equal(findAll('.foo-tooltip').length, 0,
       'tooltip can be manually hidden by tooltipper');
 
-    this.$('.foo-tooltipper').trigger('mouseover');
+    await triggerEvent('.foo-tooltipper', 'mouseover');
 
-    await settled();
-
-    assert.equal(this.$('.foo-tooltip').length, 1,
+    assert.equal(findAll('.foo-tooltip').length, 1,
       'precondition: tooltip shown');
 
-    this.$('.hide-from-tooltip').trigger('click');
+    await click('.hide-from-tooltip');
 
-    this.$('.foo-tooltip').trigger('animationEnd');
+    await triggerEvent('.foo-tooltip', 'animationEnd');
 
-    await settled();
-
-    assert.equal(this.$('.foo-tooltip').length, 0,
+    assert.equal(findAll('.foo-tooltip').length, 0,
       'tooltip can be hidden by itself');
   });
 });
