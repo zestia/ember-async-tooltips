@@ -7,6 +7,7 @@ const pos = window.positionUtils;
 export default Component.extend({
   layout,
   classNames: ['tooltip'],
+
   classNameBindings: [
     'isShowing:is-showing:is-hiding',
     'isNorth',
@@ -15,7 +16,9 @@ export default Component.extend({
     'isWest'
   ],
 
-  ariaRole: 'tooltip',
+  attributeBindings: ['role'],
+
+  role: 'tooltip',
   isShowing: true,
   isOver: false,
 
