@@ -75,8 +75,7 @@ export default Component.extend({
     const tooltipper  = this.get('_tooltipper.element');
     const position    = this._tooltipPosition();
     const string      = pos.positionToString(position);
-    const doc         = document.documentElement;
-    const [left, top] = pos.positionCoords(string, tooltip, tooltipper, doc);
+    const [left, top] = pos.positionCoords(string, tooltip, tooltipper, window);
 
     this.setProperties(this._positionClassNames(position));
 

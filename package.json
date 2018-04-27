@@ -54,7 +54,7 @@
   "dependencies": {
     "ember-cli-babel": "^6.6.0",
     "ember-cli-htmlbars": "^2.0.1",
-    "@zestia/position-utils": "^0.0.4"
+    "@zestia/position-utils": "^0.0.5"
   },
   "keywords": [
     "ember-addon",

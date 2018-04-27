@@ -1,5 +1,10 @@
 # Changelog
 
+4.0.7
+
+* Fix positioning of tooltips not working in Safari when the document has been scrolled.
+* Fix demo app in Safari
+
 4.0.6
 
 * Adds an `is-loading` class to the tooltipper whilst it is loading the content required to display its tooltip

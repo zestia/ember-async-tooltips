@@ -55,12 +55,21 @@ export default Controller.extend({
     },
 
     reposition(e) {
+      const { x, y } = this.get('lastCoord');
       const element = e.target;
-      const top = e.pageY - element.offsetHeight;
-      const left = e.pageX;
+      const top = y - element.offsetHeight;
+      const left = x;
       element.style.top = `${top}px`;
       element.style.left = `${left}px`;
       element.style.position = 'absolute';
+    },
+
+    storeLastCoord(e) {
+      const { pageX: x, pageY: y } = e;
+
+      if (x && y) {
+        this.set('lastCoord', { x, y });
+      }
     },
 
     load() {
