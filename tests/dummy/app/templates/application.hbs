@@ -39,22 +39,24 @@
 </div>
 
 <table class="grid">
-  <tr class="row">
-    <td class="cell nw"></td>
-    <td class="cell n"></td>
-    <td class="cell ne"></td>
-  </tr>
-  <tr class="row">
-    <td class="cell w"></td>
-    {{! template-lint-disable inline-styles }}
-    <td class="cell c" style={{boundaryStyles}}></td>
-    <td class="cell e"></td>
-  </tr>
-  <tr class="row">
-    <td class="cell sw"></td>
-    <td class="cell s"></td>
-    <td class="cell se"></td>
-  </tr>
+  <tbody>
+    <tr class="row">
+      <td class="cell nw"></td>
+      <td class="cell n"></td>
+      <td class="cell ne"></td>
+    </tr>
+    <tr class="row">
+      <td class="cell w"></td>
+      {{! template-lint-disable inline-styles }}
+      <td class="cell c" style={{boundaryStyles}}></td>
+      <td class="cell e"></td>
+    </tr>
+    <tr class="row">
+      <td class="cell sw"></td>
+      <td class="cell s"></td>
+      <td class="cell se"></td>
+    </tr>
+  </tbody>
 </table>
 
 {{#if showTooltipper}}
