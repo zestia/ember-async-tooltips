@@ -7,7 +7,6 @@ import Component from '@ember/component';
 import layout from '../templates/components/tool-tipper';
 import { inject } from '@ember/service';
 import { debounce } from '@ember/runloop';
-import { isPresent } from '@ember/utils';
 
 export default Component.extend({
   tooltipService: inject('tooltip'),
@@ -31,6 +30,9 @@ export default Component.extend({
     'draggable'
   ],
 
+  hoverDelayIn: 0,
+  hoverDelayOut: 0,
+
   onLoad() {},
 
   hasTooltip: bool('_tooltip'),
@@ -40,11 +42,6 @@ export default Component.extend({
       return this.type || 'button';
     }
   }),
-
-  didReceiveAttrs() {
-    this._super(...arguments);
-    this._setCustomHoverDelay();
-  },
 
   willDestroyElement() {
     this._super(...arguments);
@@ -107,16 +104,10 @@ export default Component.extend({
     return this._load().then(() => {
       const end   = Date.now();
       const wait  = end - start;
-      const max   = this.hoverDelay;
+      const max   = this.hoverDelayIn;
       const delay = wait > max ? 0 : max - wait;
       return delay;
     });
-  },
-
-  _setCustomHoverDelay() {
-    const defaultDelay = this.getWithDefault('hoverDelay', 0);
-    const customDelay  = this['hover-delay'];
-    this.set('hoverDelay', isPresent(customDelay) ? customDelay : defaultDelay);
   },
 
   _scheduleShowTooltipFromHover(delay) {
@@ -124,7 +115,7 @@ export default Component.extend({
   },
 
   _scheduleHideTooltipFromHover() {
-    debounce(this, '_attemptHideTooltipFromHover', this.hoverDelay);
+    debounce(this, '_attemptHideTooltipFromHover', this.hoverDelayOut);
   },
 
   _attemptShowTooltipFromHover() {

@@ -1,5 +1,10 @@
 # Changelog
 
+5.0.0
+
+* Switched to camelcase args
+* Split hover delay into in and out for finer control
+
 4.0.7
 
 * Fix positioning of tooltips not working in Safari when the document has been scrolled.
