@@ -143,10 +143,10 @@ export default Component.extend({
   },
 
   _renderTooltip() {
-    this.tooltipService.activate(this);
+    this.get('tooltipService').activate(this);
   },
 
   _destroyTooltip() {
-    this.tooltipService.deactivate(this);
+    this.get('tooltipService').deactivate(this);
   }
 });
