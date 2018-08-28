@@ -103,7 +103,7 @@ export default ToolTipComponent.extend({
 
 ```handlebars
   {{! application.hbs }}
-  {{#tool-tipper/user on-load=(action "loadUser" user.id) tooltip=(component "tool-tip/user")}}
+  {{#tool-tipper/user onLoad=(action "loadUser" user.id) tooltip=(component "tool-tip/user")}}
     {{user.name}}
   {{/tool-tipper/user}}
 ```

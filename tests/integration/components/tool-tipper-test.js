@@ -65,7 +65,7 @@ module('tool-tipper', function(hooks) {
       'can set tabindex attribute');
   });
 
-  test('on-load action', async function(assert) {
+  test('onLoad action', async function(assert) {
     assert.expect(3);
 
     let count = 0;
@@ -77,7 +77,7 @@ module('tool-tipper', function(hooks) {
       return deferred.promise;
     });
 
-    await render(hbs`{{tool-tipper on-load=(action load)}}`);
+    await render(hbs`{{tool-tipper onLoad=(action load)}}`);
 
     await triggerEvent('.tooltipper', 'mouseover');
 

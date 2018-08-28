@@ -31,11 +31,13 @@ export default Component.extend({
     'draggable'
   ],
 
+  onLoad() {},
+
   hasTooltip: bool('_tooltip'),
 
   typeAttr: computed(function() {
-    if (this.get('tagName') === 'button') {
-      return this.getWithDefault('type', 'button');
+    if (this.tagName === 'button') {
+      return this.type || 'button';
     }
   }),
 
@@ -87,11 +89,11 @@ export default Component.extend({
   },
 
   _load() {
-    if (this.get('isLoaded')) {
+    if (this.isLoaded) {
       return resolve();
     } else {
       this.set('isLoading', true);
-      return resolve(this.getWithDefault('on-load', () => {})()).then(data => {
+      return resolve(this.onLoad()).then(data => {
         trySet(this, 'data', data);
         trySet(this, 'isLoaded', true);
       }).finally(() => {
@@ -105,7 +107,7 @@ export default Component.extend({
     return this._load().then(() => {
       const end   = Date.now();
       const wait  = end - start;
-      const max   = this.get('hoverDelay');
+      const max   = this.hoverDelay;
       const delay = wait > max ? 0 : max - wait;
       return delay;
     });
@@ -113,7 +115,7 @@ export default Component.extend({
 
   _setCustomHoverDelay() {
     const defaultDelay = this.getWithDefault('hoverDelay', 0);
-    const customDelay  = this.get('hover-delay');
+    const customDelay  = this['hover-delay'];
     this.set('hoverDelay', isPresent(customDelay) ? customDelay : defaultDelay);
   },
 
@@ -122,38 +124,38 @@ export default Component.extend({
   },
 
   _scheduleHideTooltipFromHover() {
-    debounce(this, '_attemptHideTooltipFromHover', this.get('hoverDelay'));
+    debounce(this, '_attemptHideTooltipFromHover', this.hoverDelay);
   },
 
   _attemptShowTooltipFromHover() {
-    if (this.get('isOver')) {
+    if (this.isOver) {
       this._attemptShowTooltip();
     }
   },
 
   _attemptHideTooltipFromHover() {
-    if (this.get('_tooltip') && !this.get('_tooltip.isOver')) {
+    if (this._tooltip && !this._tooltip.isOver) {
       this._attemptHideTooltip();
     }
   },
 
   _attemptShowTooltip() {
-    if (!this.get('isDestroyed') && !this.get('_tooltip')) {
+    if (!this.isDestroyed && !this._tooltip) {
       this._renderTooltip();
     }
   },
 
   _attemptHideTooltip() {
-    if (!this.get('isDestroyed') && this.get('_tooltip')) {
-      this.get('_tooltip').send('hide');
+    if (!this.isDestroyed && this._tooltip) {
+      this._tooltip.send('hide');
     }
   },
 
   _renderTooltip() {
-    this.get('tooltipService').activate(this);
+    this.tooltipService.activate(this);
   },
 
   _destroyTooltip() {
-    this.get('tooltipService').deactivate(this);
+    this.tooltipService.deactivate(this);
   }
 });

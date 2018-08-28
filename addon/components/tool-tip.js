@@ -22,6 +22,9 @@ export default Component.extend({
   isShowing: true,
   isOver: false,
 
+  _onInsert() {},
+  _onMouseLeave() {},
+
   didInsertElement() {
     this._super(...arguments);
     scheduleOnce('afterRender', this, '_inserted');
@@ -34,9 +37,7 @@ export default Component.extend({
 
   actions: {
     hide() {
-      this._hide().then(() => {
-        this.getWithDefault('-on-hide', () => {})();
-      });
+      this._hide().then(() => this._onHide());
     }
   },
 
@@ -48,7 +49,7 @@ export default Component.extend({
   mouseLeave() {
     this._super(...arguments);
     this.set('isOver', false);
-    this.getWithDefault('-on-mouse-leave', () => {})();
+    this._onMouseLeave();
   },
 
   _show() {
@@ -63,16 +64,16 @@ export default Component.extend({
   },
 
   _inserted() {
-    this.getWithDefault('-on-insert', () => {})(this);
+    this._onInsert(this);
   },
 
   _position() {
-    if (!this.get('_tooltipper')) {
+    if (!this._tooltipper) {
       return;
     }
 
-    const tooltip     = this.get('element');
-    const tooltipper  = this.get('_tooltipper.element');
+    const tooltip     = this.element;
+    const tooltipper  = this._tooltipper.element;
     const position    = this._tooltipPosition();
     const string      = pos.positionToString(position);
     const [left, top] = pos.positionCoords(string, tooltip, tooltipper, window);
@@ -85,11 +86,11 @@ export default Component.extend({
 
   _tooltipBoundary() {
     const doc = document.documentElement;
-    return pos.positionBoundary(doc, this.get('columns'), this.get('rows'));
+    return pos.positionBoundary(doc, this.columns, this.rows);
   },
 
   _tooltipPosition() {
-    const string = this.get('position');
+    const string = this.position;
 
     if (string) {
       return pos.stringToPosition(string);
@@ -99,7 +100,7 @@ export default Component.extend({
   },
 
   _tooltipperPosition() {
-    const tooltipper = this.get('_tooltipper.element');
+    const tooltipper = this._tooltipper.element;
     const boundary = this._tooltipBoundary();
     return pos.elementPosition(tooltipper, boundary);
   },

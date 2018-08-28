@@ -14,10 +14,10 @@ export default Service.extend({
   },
 
   activate(tooltipper) {
-    this.get('tooltippers').addObject(tooltipper);
+    this.tooltippers.addObject(tooltipper);
   },
 
   deactivate(tooltipper) {
-    this.get('tooltippers').removeObject(tooltipper);
+    this.tooltippers.removeObject(tooltipper);
   }
 });

@@ -23,7 +23,7 @@ module('render-active-tooltips', function(hooks) {
     const FooTooltipComponent = TooltipComponent.extend({
       classNames: ['foo-tooltip'],
       layout: hbs`
-        Hello World ({{my-attr}})<br>
+        Hello World ({{@myAttr}})<br>
         <button class="hide-from-tooltip" onclick={{action "hide"}}></button>
       `
     });
@@ -37,7 +37,7 @@ module('render-active-tooltips', function(hooks) {
 
     await render(hbs`
       <div class="in">
-        {{#foo-tooltipper tooltip=(component "foo-tooltip" my-attr="foo") as |tt|}}
+        {{#foo-tooltipper tooltip=(component "foo-tooltip" myMattr="foo") as |tt|}}
           <button class="show-from-tooltipper" onclick={{action tt.showTooltip}}></button>
           <button class="hide-from-tooltipper" onclick={{action tt.hideTooltip}}></button>
         {{/foo-tooltipper}}
