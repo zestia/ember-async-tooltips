@@ -30,8 +30,8 @@ export default Component.extend({
     'draggable'
   ],
 
-  hoverDelayIn: 0,
-  hoverDelayOut: 0,
+  showDelay: 0,
+  hideDelay: 0,
 
   onLoad() {},
 
@@ -104,7 +104,7 @@ export default Component.extend({
     return this._load().then(() => {
       const end   = Date.now();
       const wait  = end - start;
-      const max   = this.hoverDelayIn;
+      const max   = this.showDelay;
       const delay = wait > max ? 0 : max - wait;
       return delay;
     });
@@ -115,7 +115,7 @@ export default Component.extend({
   },
 
   _scheduleHideTooltipFromHover() {
-    debounce(this, '_attemptHideTooltipFromHover', this.hoverDelayOut);
+    debounce(this, '_attemptHideTooltipFromHover', this.hideDelay);
   },
 
   _attemptShowTooltipFromHover() {

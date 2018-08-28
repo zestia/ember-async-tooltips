@@ -86,8 +86,8 @@ import ToolTipperComponent from '@zestia/ember-async-tooltips/components/tool-ti
 
 export default ToolTipperComponent.extend({
   classNames: ['user-tooltipper'],
-  hoverDelayIn: 300
-  hoverDelayOut: 0
+  showDelay: 300
+  hideDelay: 0
 });
 ```
 

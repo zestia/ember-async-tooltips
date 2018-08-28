@@ -14,8 +14,8 @@ export default Controller.extend({
     this._super(...arguments);
     this.set('columns', 3);
     this.set('rows', 3);
-    this.set('hoverDelayIn', 0);
-    this.set('hoverDelayOut', 0);
+    this.set('showDelay', 0);
+    this.set('hideDelay', 0);
     this.set('loadDelay', 1000);
     this.set('showTooltipper', true);
     this._updateBoundary();
@@ -47,12 +47,12 @@ export default Controller.extend({
       this._updateBoundary();
     },
 
-    setHoverDelayIn(hoverDelay) {
-      this.set('hoverDelayIn', hoverDelay);
+    setShowDelay(delay) {
+      this.set('showDelay', delay);
     },
 
-    setHoverDelayOut(hoverDelay) {
-      this.set('hoverDelayOut', hoverDelay);
+    setHideDelay(delay) {
+      this.set('hideDelay', delay);
     },
 
     setLoadDelay(loadDelay) {

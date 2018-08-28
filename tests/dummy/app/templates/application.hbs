@@ -28,7 +28,7 @@
   </label>
 
   <span class="control">
-    <label> Hover delay <input type="number" min=1 class="number-input hover-delay" title="In" value={{hoverDelayIn}} oninput={{action "setHoverDelayIn" value="target.value"}}></label><input type="number" min=1 class="number-input hover-delay" title="Out" value={{hoverDelayOut}} oninput={{action "setHoverDelayOut" value="target.value"}}>
+    <label> Hover delay <input type="number" min=1 class="number-input hover-delay" title="In" value={{showDelay}} oninput={{action "setShowDelay" value="target.value"}}></label><input type="number" min=1 class="number-input hover-delay" title="Out" value={{hideDelay}} oninput={{action "setHideDelay" value="target.value"}}>
   </span>
 
   <label class="control">
@@ -66,8 +66,8 @@
     drag=(action "storeLastCoord")
     dragEnd=(action "reposition")
     onLoad=(action "load")
-    hoverDelayIn=hoverDelayIn
-    hoverDelayOut=hoverDelayOut
+    showDelay=showDelay
+    hideDelay=hideDelay
     tooltip=(component "tool-tip"
       text="Hello World"
       position=position
