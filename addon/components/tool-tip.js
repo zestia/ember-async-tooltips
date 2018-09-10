@@ -22,8 +22,11 @@ export default Component.extend({
   isShowing: true,
   isOver: false,
 
+  _tooltipper: null,
+
   _onInsert() {},
   _onMouseLeave() {},
+  _onHide() {},
 
   didInsertElement() {
     this._super(...arguments);

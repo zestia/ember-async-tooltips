@@ -33,6 +33,8 @@ export default Component.extend({
   showDelay: 0,
   hideDelay: 0,
 
+  _tooltip: null,
+
   onLoad() {},
 
   hasTooltip: bool('_tooltip'),
