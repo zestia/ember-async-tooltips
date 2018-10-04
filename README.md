@@ -21,12 +21,12 @@ https://zestia.github.io/ember-async-tooltips
 
 ### Example
 
-When `tool-tipper/example` is hovered over, the `tool-tip/example` component will be rendered in a place of your chosing in the DOM.
+When `example-tool-tipper` is hovered over, the `example-tool-tip` component will be rendered in a place of your chosing in the DOM.
 
 ```handlebars
-{{#tool-tipper/example tooltip=(component "tool-tip/example")}}
+<ExamplToolTipper @tooltip={{component "example-tool-tip"}}>
   Hover over me
-{{/tool-tipper/example}}
+</ExampleToolTipper>
 ```
 
 Tooltips will be rendered here:
@@ -104,14 +104,14 @@ export default ToolTipComponent.extend({
 
 ```handlebars
   {{! application.hbs }}
-  {{#tool-tipper/user onLoad=(action "loadUser" user.id) tooltip=(component "tool-tip/user")}}
-    {{user.name}}
-  {{/tool-tipper/user}}
+  <UserToolTipper @onLoad={{action "loadUser" this.user.id}} @tooltip={{component "user-tool-tip"}}>
+    {{this.user.name}}
+  </UserToolTipper>
 ```
 
 ```handlebars
-  {{! tool-tip/user.hbs }}
-  Hello {{data.user.name}}
+  {{! user-tool-tip.hbs }}
+  Hello {{this.data.user.name}}
 ```
 
 ### Manual positioning
@@ -119,7 +119,7 @@ export default ToolTipComponent.extend({
 Setting the `position` argument will add `left` and `right` CSS properties based upon the compass points. This will position the `tool-tip` around the outside edge of the `tool-tipper` component that caused it to display.
 
 ```handlebars
-  {{tool-tipper/example tooltip=(component "tool-tip/example" position="NW")}}
+  <ExampleToolTipper @tooltip={{component "example-tool-tip" position="NW"}} />
 ```
 
 ### Automatic positioning
@@ -127,7 +127,7 @@ Setting the `position` argument will add `left` and `right` CSS properties based
 The tooltip will be positioned around the outside edge of the `tool-tipper` component that caused it display by chosing the most appropriate compass point. For example: If the `tool-tipper` component is at the very bottom of the viewport (south), then the `tool-tip` component will be displayed _above_ the `tool-tipper` (north) - so as to remain visible.
 
 ```handlebars
-  {{tool-tipper/example tooltip=(component "tool-tip/example")}}
+  <ExampleToolTipper @tooltip={{component "example-tool-tip"}} />
 ```
 
 ### Manual showing/hiding
@@ -135,8 +135,8 @@ The tooltip will be positioned around the outside edge of the `tool-tipper` comp
 The tooltipper yields the ability to show or hide its tooltip.
 
 ```handlebars
-  {{#tool-tipper/example tooltip=(component "tool-tip/example") as |tt|}}
+  <ExampleToolTipper @tooltip={{component "example-tool-tip"}} as |tt|>
     <button onclick={{action tt.hideTooltip}}>Hide</button>
     <button onclick={{action tt.showTooltip}}>Show</button>
-  {{/tool-tipper/example}}
+  </ExampleToolTipper>
 ```
