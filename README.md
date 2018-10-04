@@ -81,7 +81,7 @@ For example, the following configuration creates a new tooltip that:
 
 
 ```javascript
-// tool-tipper/user.js
+// user-tool-tipper.js
 import ToolTipperComponent from '@zestia/ember-async-tooltips/components/tool-tipper';
 
 export default ToolTipperComponent.extend({
@@ -92,7 +92,7 @@ export default ToolTipperComponent.extend({
 ```
 
 ```javascript
-// tool-tip/user.js
+// user-tool-tip.js
 import ToolTipComponent from '@zestia/ember-async-tooltips/components/tool-tip';
 
 export default ToolTipComponent.extend({
