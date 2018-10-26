@@ -174,6 +174,7 @@ export default ToolTipperComponent.extend({
 An alternative example is use in a child component...
 
 ```handlebars
+{{! parent-component/template.hbs }}
 <ToolTipper
   @showDelay={{200}}
   @hideDelay={{200}}
