@@ -25,7 +25,7 @@ module('tool-tipper', function(hooks) {
   test('as a hyperlink', async function(assert) {
     assert.expect(3);
 
-    await render(hbs`<ToolTipper @tagName="a" href="foo" rel="bar" target="baz" />`);
+    await render(hbs`{{tool-tipper tagName="a" href="foo" rel="bar" target="baz"}}`);
 
     assert.equal(find('.tooltipper').getAttribute('href'), 'foo',
       'can set href attribute');
@@ -40,12 +40,12 @@ module('tool-tipper', function(hooks) {
   test('as a button', async function(assert) {
     assert.expect(2);
 
-    await render(hbs`<ToolTipper @tagName="button" />`);
+    await render(hbs`{{tool-tipper tagName="button"}}`);
 
     assert.equal(find('.tooltipper').getAttribute('type'), 'button',
       'renders as a non-submittion button by default');
 
-    await render(hbs`<ToolTipper @tagName="button" type="foo" />`);
+    await render(hbs`{{tool-tipper tagName="button" type="foo"}}`);
 
     assert.equal(find('.tooltipper').getAttribute('type'), 'foo',
       'can specify type of button');
@@ -59,7 +59,7 @@ module('tool-tipper', function(hooks) {
     assert.strictEqual(find('.tooltipper').getAttribute('tabindex'), null,
       'no default tabindex');
 
-    await render(hbs`<ToolTipper tabindex="-1" />`);
+    await render(hbs`{{tool-tipper tabindex="-1"}}`);
 
     assert.strictEqual(find('.tooltipper').getAttribute('tabindex'), '-1',
       'can set tabindex attribute');
