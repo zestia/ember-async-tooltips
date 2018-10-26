@@ -6,23 +6,15 @@ const pos = window.positionUtils;
 
 export default Component.extend({
   layout,
+
   classNames: ['tooltip'],
-
-  classNameBindings: [
-    'isShowing:is-showing:is-hiding',
-    'isNorth',
-    'isEast',
-    'isSouth',
-    'isWest'
-  ],
-
+  classNameBindings: ['isShowing:is-showing:is-hiding', 'isNorth', 'isEast', 'isSouth', 'isWest'],
   attributeBindings: ['role'],
 
   role: 'tooltip',
   isShowing: true,
   isOver: false,
-
-  _tooltipper: null,
+  tooltipperInstance: null,
 
   _onInsert() {},
   _onMouseLeave() {},
@@ -40,7 +32,7 @@ export default Component.extend({
 
   actions: {
     hide() {
-      this._hide().then(() => this._onHide());
+      return this._hide().then(() => this._onHide());
     }
   },
 
@@ -71,19 +63,19 @@ export default Component.extend({
   },
 
   _position() {
-    if (!this._tooltipper) {
+    if (!this.tooltipperInstance) {
       return;
     }
 
-    const tooltip     = this.element;
-    const tooltipper  = this._tooltipper.getElement();
-    const position    = this._tooltipPosition();
-    const string      = pos.positionToString(position);
+    const tooltip = this.element;
+    const tooltipper = this.tooltipperInstance.referenceElement;
+    const position = this._tooltipPosition();
+    const string = pos.positionToString(position);
     const [left, top] = pos.positionCoords(string, tooltip, tooltipper, window);
 
     this.setProperties(this._positionClassNames(position));
 
-    tooltip.style.top  = `${top}px`;
+    tooltip.style.top = `${top}px`;
     tooltip.style.left = `${left}px`;
   },
 
@@ -103,7 +95,7 @@ export default Component.extend({
   },
 
   _tooltipperPosition() {
-    const tooltipper = this._tooltipper.element;
+    const tooltipper = this.tooltipperInstance.referenceElement;
     const boundary = this._tooltipBoundary();
     return pos.elementPosition(tooltipper, boundary);
   },
@@ -128,9 +120,9 @@ export default Component.extend({
   _positionClassNames(position) {
     return {
       isNorth: position.N,
-      isEast:  position.E,
+      isEast: position.E,
       isSouth: position.S,
-      isWest:  position.W
+      isWest: position.W
     };
   }
 });

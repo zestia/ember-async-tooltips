@@ -12,32 +12,20 @@ export default Component.extend({
   tooltipService: inject('tooltip'),
 
   layout,
+
   tagName: 'span',
-
   classNames: ['tooltipper'],
-
-  classNameBindings: [
-    'hasTooltip',
-    'isLoading'
-  ],
-
-  attributeBindings: [
-    'tabindex',
-    'href',
-    'target',
-    'rel',
-    'typeAttr:type',
-    'draggable'
-  ],
+  classNameBindings: ['hasTooltip', 'isLoading'],
+  attributeBindings: ['tabindex', 'href', 'target', 'rel', 'typeAttr:type', 'draggable'],
 
   showDelay: 0,
   hideDelay: 0,
 
-  _tooltip: null,
+  tooltipInstance: null,
 
   onLoad() {},
 
-  hasTooltip: bool('_tooltip'),
+  hasTooltip: bool('tooltipInstance'),
 
   typeAttr: computed(function() {
     if (this.tagName === 'button') {
@@ -47,6 +35,11 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
+
+    if (!this.referenceElement) {
+      this.set('referenceElement', this.element);
+    }
+
     this._listen();
   },
 
@@ -58,7 +51,7 @@ export default Component.extend({
 
   actions: {
     tooltipInserted(tooltip) {
-      this.set('_tooltip', tooltip);
+      this.set('tooltipInstance', tooltip);
     },
 
     tooltipExited() {
@@ -67,7 +60,7 @@ export default Component.extend({
 
     tooltipHidden() {
       this._destroyTooltip();
-      this.set('_tooltip', null);
+      this.set('tooltipInstance', null);
     },
 
     hideTooltip() {
@@ -82,21 +75,13 @@ export default Component.extend({
   _listen() {
     this.set('_mouseEnterHandler', bind(this, '_mouseEnter'));
     this.set('_mouseLeaveHandler', bind(this, '_mouseLeave'));
-    this.getElement().addEventListener('mouseenter', this._mouseEnterHandler);
-    this.getElement().addEventListener('mouseleave', this._mouseLeaveHandler);
+    this.referenceElement.addEventListener('mouseenter', this._mouseEnterHandler);
+    this.referenceElement.addEventListener('mouseleave', this._mouseLeaveHandler);
   },
 
   _stopListening() {
-    this.getElement().removeEventListener('mouseenter', this._mouseEnterHandler);
-    this.getElement().removeEventListener('mouseleave', this._mouseLeaveHandler);
-  },
-
-  getElement() {
-    if (this.referenceElement instanceof HTMLElement) {
-      return this.referenceElement;
-    } else {
-      return this.element;
-    }
+    this.referenceElement.removeEventListener('mouseenter', this._mouseEnterHandler);
+    this.referenceElement.removeEventListener('mouseleave', this._mouseLeaveHandler);
   },
 
   _mouseEnter() {
@@ -117,21 +102,23 @@ export default Component.extend({
       return resolve();
     } else {
       this.set('isLoading', true);
-      return resolve(this.onLoad()).then(data => {
-        trySet(this, 'data', data);
-        trySet(this, 'isLoaded', true);
-      }).finally(() => {
-        trySet(this, 'isLoading', false);
-      });
+      return resolve(this.onLoad())
+        .then(data => {
+          trySet(this, 'data', data);
+          trySet(this, 'isLoaded', true);
+        })
+        .finally(() => {
+          trySet(this, 'isLoading', false);
+        });
     }
   },
 
   _loadWithDelay() {
     const start = Date.now();
     return this._load().then(() => {
-      const end   = Date.now();
-      const wait  = end - start;
-      const max   = this.showDelay;
+      const end = Date.now();
+      const wait = end - start;
+      const max = this.showDelay;
       const delay = wait > max ? 0 : max - wait;
       return delay;
     });
@@ -152,20 +139,20 @@ export default Component.extend({
   },
 
   _attemptHideTooltipFromHover() {
-    if (this._tooltip && !this._tooltip.isOver && !this.isOver) {
+    if (this.tooltipInstance && !this.tooltipInstance.isOver && !this.isOver) {
       this._attemptHideTooltip();
     }
   },
 
   _attemptShowTooltip() {
-    if (!this.isDestroyed && !this._tooltip) {
+    if (!this.isDestroyed && !this.tooltipInstance) {
       this._renderTooltip();
     }
   },
 
   _attemptHideTooltip() {
-    if (!this.isDestroyed && this._tooltip) {
-      this._tooltip.send('hide');
+    if (!this.isDestroyed && this.tooltipInstance) {
+      this.tooltipInstance.send('hide');
     }
   },
 

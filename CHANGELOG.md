@@ -1,5 +1,9 @@
 # Changelog
 
+5.2.1
+
+* Introduce `tooltipService.hideActiveTooltips`. Useful if you want to manually force all tooltips to be hidden, perhaps on scroll for example
+
 5.2.0
 
 * Don't hide tooltip if moused out of tooltip, but still hovering over tooltipper
