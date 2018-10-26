@@ -1,5 +1,9 @@
 # Changelog
 
+5.1.0
+
+* Change `referenceElement` to be a property, rather than a function
+
 5.0.2
 
 * Introduce `referenceElement` to customise trigger element [more](https://github.com/zestia/ember-async-tooltips#custom-reference-element)

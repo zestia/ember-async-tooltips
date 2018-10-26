@@ -92,8 +92,8 @@ export default Component.extend({
   },
 
   getElement() {
-    if (typeof this.referenceElement === 'function') {
-      return this.referenceElement();
+    if (this.referenceElement instanceof HTMLElement) {
+      return this.referenceElement;
     } else {
       return this.element;
     }
