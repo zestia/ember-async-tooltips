@@ -79,7 +79,7 @@ module('tool-tipper', function(hooks) {
 
     await render(hbs`{{tool-tipper onLoad=(action load)}}`);
 
-    await triggerEvent('.tooltipper', 'mouseover');
+    await triggerEvent('.tooltipper', 'mouseenter');
 
     assert.ok(find('.tooltipper').classList.contains('is-loading'),
       'has a loading class whilst loading the data');
@@ -91,7 +91,7 @@ module('tool-tipper', function(hooks) {
     assert.ok(!find('.tooltipper').classList.contains('is-loading'),
       'loading class is removed when loading is complete');
 
-    await triggerEvent('.tooltipper', 'mouseover');
+    await triggerEvent('.tooltipper', 'mouseenter');
 
     assert.equal(count, 1,
       'only loads once');

@@ -11,7 +11,7 @@ module('tooltips', function(hooks) {
 
     await visit('/position');
 
-    await triggerEvent('.tooltipper', 'mouseover');
+    await triggerEvent('.tooltipper', 'mouseenter');
 
     await fillIn('.position', 'N');
 

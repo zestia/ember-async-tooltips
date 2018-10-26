@@ -48,7 +48,7 @@ module('render-active-tooltips', function(hooks) {
       </div>
     `);
 
-    triggerEvent('.in .foo-tooltipper', 'mouseover');
+    triggerEvent('.in .foo-tooltipper', 'mouseenter');
 
     assert.equal(findAll('.foo-tooltip').length, 0,
       'tooltip is not rendered yet (still hovering over it)');
@@ -58,7 +58,7 @@ module('render-active-tooltips', function(hooks) {
     assert.equal(findAll('.out .foo-tooltip').length, 1,
       'the tooltip is rendered elsewhere');
 
-    await triggerEvent('.foo-tooltipper', 'mouseout');
+    await triggerEvent('.foo-tooltipper', 'mouseleave');
 
     assert.equal(findAll('.foo-tooltip').length, 1,
       'tooltip is not destroyed yet (due to hover delay)');
@@ -80,7 +80,7 @@ module('render-active-tooltips', function(hooks) {
     assert.equal(findAll('.foo-tooltip').length, 0,
       'tooltip can be manually hidden by tooltipper');
 
-    await triggerEvent('.foo-tooltipper', 'mouseover');
+    await triggerEvent('.foo-tooltipper', 'mouseenter');
 
     assert.equal(findAll('.foo-tooltip').length, 1,
       'precondition: tooltip shown');

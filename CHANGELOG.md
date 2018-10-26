@@ -1,5 +1,9 @@
 # Changelog
 
+5.0.2
+
+* Introduce `referenceElement` to customise trigger element [more](https://github.com/zestia/ember-async-tooltips#custom-reference-element)
+
 5.0.1
 
 * Add noops

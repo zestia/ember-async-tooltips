@@ -42,7 +42,7 @@ module('tool-tip', function(hooks) {
   test('on mouse leave action', async function(assert) {
     assert.expect(1);
 
-    this.set('mouseExited', function() {
+    this.set('mouseExited', () => {
       assert.ok(true, 'when a the mouse leaves a tooltip it sends an action');
     });
 
