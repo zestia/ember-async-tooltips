@@ -152,7 +152,7 @@ export default Component.extend({
   },
 
   _attemptHideTooltipFromHover() {
-    if (this._tooltip && !this._tooltip.isOver) {
+    if (this._tooltip && !this._tooltip.isOver && !this.isOver) {
       this._attemptHideTooltip();
     }
   },

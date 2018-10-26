@@ -1,5 +1,9 @@
 # Changelog
 
+5.2.0
+
+* Don't hide tooltip if moused out of tooltip, but still hovering over tooltipper
+
 5.1.0
 
 * Change `referenceElement` to be a property, rather than a function
