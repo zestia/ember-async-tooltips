@@ -11,7 +11,7 @@ module('render-active-tooltips', function(hooks) {
   test('it renders', async function(assert) {
     assert.expect(1);
 
-    await render(hbs`{{render-active-tooltips}}`);
+    await render(hbs`<RenderActiveTooltips />`);
 
     assert.equal(this.get('element').innerHTML, '<!---->',
       'does not blow up if no tooltips are active');
@@ -23,7 +23,7 @@ module('render-active-tooltips', function(hooks) {
     const FooTooltipComponent = TooltipComponent.extend({
       classNames: ['foo-tooltip'],
       layout: hbs`
-        Hello World ({{@myAttr}})<br>
+        Hello World ({{@myArg}})<br>
         <button class="hide-from-tooltip" onclick={{action "hide"}}></button>
       `
     });
@@ -37,14 +37,14 @@ module('render-active-tooltips', function(hooks) {
 
     await render(hbs`
       <div class="in">
-        {{#foo-tooltipper tooltip=(component "foo-tooltip" myMattr="foo") as |tt|}}
+        <FooTooltipper @tooltip={{component "foo-tooltip" myArg="foo"}} as |tt|>
           <button class="show-from-tooltipper" onclick={{action tt.showTooltip}}></button>
           <button class="hide-from-tooltipper" onclick={{action tt.hideTooltip}}></button>
-        {{/foo-tooltipper}}
+        </FooTooltipper>
       </div>
 
       <div class="out">
-        {{render-active-tooltips}}
+        <RenderActiveTooltips />
       </div>
     `);
 

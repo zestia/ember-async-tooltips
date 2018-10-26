@@ -6,7 +6,7 @@ import { all } from 'rsvp';
  * This service keeps track of which tooltippers are active (being hovered over)
  * and therefore should have their tooltips rendered in the DOM.
  *
- * See: {{render-active-tooltips}}
+ * See: <RenderActiveTooltips />
  */
 export default Service.extend({
   init() {

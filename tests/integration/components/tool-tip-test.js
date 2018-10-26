@@ -10,7 +10,7 @@ module('tool-tip', function(hooks) {
   test('it renders', async function(assert) {
     assert.expect(4);
 
-    await render(hbs`{{tool-tip text="Hello World"}}`);
+    await render(hbs`<ToolTip @text="Hello World" />`);
 
     const el = find('.tooltip');
 
@@ -36,7 +36,7 @@ module('tool-tip', function(hooks) {
         'reference to itself');
     });
 
-    await render(hbs`{{tool-tip _onInsert=this.inserted}}`);
+    await render(hbs`<ToolTip @_onInsert={{this.inserted}} />`);
   });
 
   test('on mouse leave action', async function(assert) {
@@ -46,7 +46,7 @@ module('tool-tip', function(hooks) {
       assert.ok(true, 'when a the mouse leaves a tooltip it sends an action');
     });
 
-    await render(hbs`{{tool-tip _onMouseLeave=this.mouseExited}}`);
+    await render(hbs`<ToolTip @_onMouseLeave={{this.mouseExited}} />`);
 
     await triggerEvent('.tooltip', 'mouseout');
   });
