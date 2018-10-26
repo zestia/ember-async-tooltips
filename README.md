@@ -24,9 +24,9 @@ https://zestia.github.io/ember-async-tooltips
 When `example-tool-tipper` is hovered over, the `example-tool-tip` component will be rendered in a place of your chosing in the DOM.
 
 ```handlebars
-<ExamplToolTipper @tooltip={{component "example-tool-tip"}}>
+<ToolTipper @tooltip={{component "example-tool-tip"}}>
   Hover over me
-</ExampleToolTipper>
+</ToolTipper>
 ```
 
 Tooltips will be rendered here:
@@ -71,9 +71,7 @@ Tooltips will be rendered here:
 
 ### Recommended usage
 
-It is recommended that you don't use `tool-tip` and `tool-tipper` components directly, but instead extend them to create your own.
-
-For example, the following configuration creates a new tooltip that:
+The following configuration creates a new tooltip that:
 * Has custom automatic positioning: NW, N, NE, SE, S, SW.
   Excludes W and E - useful if you don't want to add CSS for these positions.
 * Has a custom hover delay (won't display the user tooltip until after 300ms has passed)
@@ -86,7 +84,7 @@ import ToolTipperComponent from '@zestia/ember-async-tooltips/components/tool-ti
 
 export default ToolTipperComponent.extend({
   classNames: ['user-tooltipper'],
-  showDelay: 300
+  showDelay: 300,
   hideDelay: 0
 });
 ```

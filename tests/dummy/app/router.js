@@ -7,7 +7,8 @@ const DummyRouter = Router.extend({
 });
 
 DummyRouter.map(function() {
-
+  this.route('simple');
+  this.route('position');
 });
 
 export default DummyRouter;
