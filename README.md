@@ -146,7 +146,7 @@ By extending a tooltipper, you can specify any element to be the reference eleme
 to attach to. For example:
 
 ```javascript
-// user-tool-tipper.js
+// custom-tool-tipper.js
 import ToolTipperComponent from '@zestia/ember-async-tooltips/components/tool-tipper';
 
 export default ToolTipperComponent.extend({
