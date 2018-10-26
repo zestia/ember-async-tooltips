@@ -6,7 +6,7 @@ import { resolve } from 'rsvp';
 import Component from '@ember/component';
 import layout from '../templates/components/tool-tipper';
 import { inject } from '@ember/service';
-import { debounce } from '@ember/runloop';
+import { debounce, bind } from '@ember/runloop';
 
 export default Component.extend({
   tooltipService: inject('tooltip'),
@@ -45,8 +45,14 @@ export default Component.extend({
     }
   }),
 
+  didInsertElement() {
+    this._super(...arguments);
+    this._listen();
+  },
+
   willDestroyElement() {
     this._super(...arguments);
+    this._stopListening();
     this._destroyTooltip();
   },
 
@@ -73,15 +79,34 @@ export default Component.extend({
     }
   },
 
-  mouseEnter() {
-    this._super(...arguments);
+  _listen() {
+    this.set('_mouseEnterHandler', bind(this, '_mouseEnter'));
+    this.set('_mouseLeaveHandler', bind(this, '_mouseLeave'));
+    this.getElement().addEventListener('mouseenter', this._mouseEnterHandler);
+    this.getElement().addEventListener('mouseleave', this._mouseLeaveHandler);
+  },
+
+  _stopListening() {
+    this.getElement().removeEventListener('mouseenter', this._mouseEnterHandler);
+    this.getElement().removeEventListener('mouseleave', this._mouseLeaveHandler);
+  },
+
+  getElement() {
+    if (typeof this.referenceElement === 'function') {
+      return this.referenceElement();
+    } else {
+      return this.element;
+    }
+  },
+
+  _mouseEnter() {
     this.set('isOver', true);
     this._loadWithDelay().then(delay => {
       this._scheduleShowTooltipFromHover(delay);
     });
   },
 
-  mouseLeave() {
+  _mouseLeave() {
     this._super(...arguments);
     this.set('isOver', false);
     this._scheduleHideTooltipFromHover();

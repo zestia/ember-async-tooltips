@@ -8,6 +8,7 @@ const DummyRouter = Router.extend({
 
 DummyRouter.map(function() {
   this.route('simple');
+  this.route('reference');
   this.route('position');
 });
 

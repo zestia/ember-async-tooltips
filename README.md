@@ -11,7 +11,7 @@ ember install @zestia/ember-async-tooltips
 
 https://zestia.github.io/ember-async-tooltips
 
-<a href="https://zestia.github.io/ember-async-tooltips">
+<a href="https://zestia.github.io/ember-async-tooltips/position">
   <img src="docs/screenshot.png" width="512" height="319">
 </a>
 
@@ -21,10 +21,10 @@ https://zestia.github.io/ember-async-tooltips
 
 ### Example
 
-When `example-tool-tipper` is hovered over, the `example-tool-tip` component will be rendered in a place of your chosing in the DOM.
+When the `tool-tipper` component is hovered over, the `my-tool-tip` component will be rendered in a place of your chosing in the DOM.
 
 ```handlebars
-<ToolTipper @tooltip={{component "example-tool-tip"}}>
+<ToolTipper @tooltip={{component "my-tool-tip"}}>
   Hover over me
 </ToolTipper>
 ```
@@ -117,7 +117,7 @@ export default ToolTipComponent.extend({
 Setting the `position` argument will add `left` and `right` CSS properties based upon the compass points. This will position the `tool-tip` around the outside edge of the `tool-tipper` component that caused it to display.
 
 ```handlebars
-  <ExampleToolTipper @tooltip={{component "example-tool-tip" position="NW"}} />
+  <ToolTipper @tooltip={{component "my-tool-tip" position="NW"}} />
 ```
 
 ### Automatic positioning
@@ -125,7 +125,7 @@ Setting the `position` argument will add `left` and `right` CSS properties based
 The tooltip will be positioned around the outside edge of the `tool-tipper` component that caused it display by chosing the most appropriate compass point. For example: If the `tool-tipper` component is at the very bottom of the viewport (south), then the `tool-tip` component will be displayed _above_ the `tool-tipper` (north) - so as to remain visible.
 
 ```handlebars
-  <ExampleToolTipper @tooltip={{component "example-tool-tip"}} />
+  <ToolTipper @tooltip={{component "my-tool-tip"}} />
 ```
 
 ### Manual showing/hiding
@@ -133,8 +133,38 @@ The tooltip will be positioned around the outside edge of the `tool-tipper` comp
 The tooltipper yields the ability to show or hide its tooltip.
 
 ```handlebars
-  <ExampleToolTipper @tooltip={{component "example-tool-tip"}} as |tt|>
+  <ToolTipper @tooltip={{component "my-tool-tip"}} as |tt|>
     <button onclick={{action tt.hideTooltip}}>Hide</button>
     <button onclick={{action tt.showTooltip}}>Show</button>
-  </ExampleToolTipper>
+  </ToolTipper>
+```
+
+
+### Custom reference element
+
+By extending a tooltipper, you can specify any element to be the reference element for the tooltip
+to attach to. For example:
+
+```javascript
+// user-tool-tipper.js
+import ToolTipperComponent from '@zestia/ember-async-tooltips/components/tool-tipper';
+
+export default ToolTipperComponent.extend({
+  classNames: ['custom-tooltipper'],
+
+  referenceElement() {
+    // Show tool tip on hovering over the table row, rather than the tooltipper itself.
+    return this.element.parentNode.parentNode;;
+  }
+});
+```
+
+```handlebars
+<table>
+  <tr>
+    <td>
+      <CustomToolTipper @tooltip={{component "my-tool-tip"}} />
+    </td>
+  </tr>
+</table>
 ```
