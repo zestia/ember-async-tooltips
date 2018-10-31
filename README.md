@@ -133,7 +133,7 @@ The tooltip will be positioned around the outside edge of the `tool-tipper` comp
 The tooltipper yields the ability to show or hide its tooltip.
 
 ```handlebars
-  <ToolTipper @tooltip={{component "my-tooltip"}} as |tt|>
+  <ToolTipper @tooltip={{component "my-tooltip"}} @mouseEvents={{false}} as |tt|>
     <button onclick={{action tt.hideTooltip}}>Hide</button>
     <button onclick={{action tt.showTooltip}}>Show</button>
   </ToolTipper>

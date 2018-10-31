@@ -18,6 +18,7 @@ export default Component.extend({
   classNameBindings: ['hasTooltip', 'isLoading'],
   attributeBindings: ['tabindex', 'href', 'target', 'rel', 'typeAttr:type', 'draggable'],
 
+  mouseEvents: true,
   showDelay: 0,
   hideDelay: 0,
 
@@ -40,12 +41,18 @@ export default Component.extend({
       this.set('referenceElement', this.element);
     }
 
-    this._listen();
+    if (this.mouseEvents) {
+      this._listen();
+    }
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    this._stopListening();
+
+    if (this.mouseEvents) {
+      this._stopListening();
+    }
+
     this._destroyTooltip();
   },
 
@@ -55,7 +62,9 @@ export default Component.extend({
     },
 
     tooltipExited() {
-      this._scheduleHideTooltipFromHover();
+      if (this.mouseEvents) {
+        this._scheduleHideTooltipFromHover();
+      }
     },
 
     tooltipHidden() {

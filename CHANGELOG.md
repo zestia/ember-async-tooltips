@@ -1,5 +1,9 @@
 # Changelog
 
+5.2.2
+
+* Add `@mouseEvents={{bool}}` ability to disable the usual behaviour of mousing over a tooltipper to get its tooltip to display. Useful if you want to manually show a tooltip on click for example.
+
 5.2.1
 
 * Introduce `tooltipService.hideActiveTooltips`. Useful if you want to manually force all tooltips to be hidden, perhaps on scroll for example
