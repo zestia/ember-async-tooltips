@@ -1,83 +1,16 @@
-<div class="controls">
-  <label class="control">
-    Position
-    <select onchange={{action "setPosition" value="target.value"}} class="position">
-      <option value="">Auto</option>
-      <option value="N">North</option>
-      <option value="NE">North East</option>
-      <option value="E">East</option>
-      <option value="SE">South East</option>
-      <option value="S">South</option>
-      <option value="SW">South West</option>
-      <option value="W">West</option>
-      <option value="NW">North West</option>
-    </select>
-  </label>
+{{#if showLayout}}
+  <h1>@zestia/ember-async-tooltips</h1>
 
-  <label class="control">
-    <input type="checkbox" onclick={{action "setTranslateX" value="target.checked"}}>
-    Translate X
-  </label>
+  {{! template-lint-disable inline-styles }}
+  <a href="https://github.com/zestia/ember-async-tooltips"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
-  <label class="control">
-    Columns <input type="number" min="2" class="number-input columns" value={{columns}} oninput={{action "setColumns" value="target.value"}}>
-  </label>
+  <h2>Examples</h2>
 
-  <label class="control">
-    Rows <input type="number" min="2" class="number-input rows" value={{rows}} oninput={{action "setRows" value="target.value"}}>
-  </label>
-
-  <span class="control">
-    <label> Hover delay <input type="number" min="1" class="number-input hover-delay" title="In" value={{showDelay}} oninput={{action "setShowDelay" value="target.value"}}></label><input type="number" min="1" class="number-input hover-delay" title="Out" value={{hideDelay}} oninput={{action "setHideDelay" value="target.value"}}>
-  </span>
-
-  <label class="control">
-    Load delay <input type="number" min="1" class="number-input load-delay" value={{loadDelay}} oninput={{action "setLoadDelay" value="target.value"}}>
-  </label>
-
-  <a href="#" {{action "rerender"}}>Rerender</a>
-</div>
-
-<table class="grid">
-  <tbody>
-    <tr class="row">
-      <td class="cell nw"></td>
-      <td class="cell n"></td>
-      <td class="cell ne"></td>
-    </tr>
-    <tr class="row">
-      <td class="cell w"></td>
-      {{! template-lint-disable inline-styles }}
-      <td class="cell c" style={{boundaryStyles}}></td>
-      <td class="cell e"></td>
-    </tr>
-    <tr class="row">
-      <td class="cell sw"></td>
-      <td class="cell s"></td>
-      <td class="cell se"></td>
-    </tr>
-  </tbody>
-</table>
-
-{{#if showTooltipper}}
-  {{#tool-tipper
-    tabindex=-1
-    draggable=true
-    drag=(action "storeLastCoord")
-    dragEnd=(action "reposition")
-    onLoad=(action "load")
-    showDelay=showDelay
-    hideDelay=hideDelay
-    tooltip=(component "tool-tip"
-      text="Hello World"
-      position=position
-      columns=columns
-      rows=rows
-    )}}
-    Hover over me
-  {{/tool-tipper}}
+  {{link-to "Simple" "simple"}} |
+  {{link-to "Reference element" "reference"}} |
+  {{link-to "Positioning" "position"}}
 {{/if}}
 
-{{render-active-tooltips}}
-
 {{outlet}}
+
+<RenderActiveTooltips />

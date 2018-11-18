@@ -6,38 +6,27 @@ import { resolve } from 'rsvp';
 import Component from '@ember/component';
 import layout from '../templates/components/tool-tipper';
 import { inject } from '@ember/service';
-import { debounce } from '@ember/runloop';
+import { debounce, bind } from '@ember/runloop';
 
 export default Component.extend({
   tooltipService: inject('tooltip'),
 
   layout,
+
   tagName: 'span',
-
   classNames: ['tooltipper'],
+  classNameBindings: ['hasTooltip', 'isLoading'],
+  attributeBindings: ['tabindex', 'href', 'target', 'rel', 'typeAttr:type', 'draggable'],
 
-  classNameBindings: [
-    'hasTooltip',
-    'isLoading'
-  ],
-
-  attributeBindings: [
-    'tabindex',
-    'href',
-    'target',
-    'rel',
-    'typeAttr:type',
-    'draggable'
-  ],
-
+  mouseEvents: true,
   showDelay: 0,
   hideDelay: 0,
 
-  _tooltip: null,
+  tooltipInstance: null,
 
   onLoad() {},
 
-  hasTooltip: bool('_tooltip'),
+  hasTooltip: bool('tooltipInstance'),
 
   typeAttr: computed(function() {
     if (this.tagName === 'button') {
@@ -45,23 +34,42 @@ export default Component.extend({
     }
   }),
 
+  didInsertElement() {
+    this._super(...arguments);
+
+    if (!this.referenceElement) {
+      this.set('referenceElement', this.element);
+    }
+
+    if (this.mouseEvents) {
+      this._listen();
+    }
+  },
+
   willDestroyElement() {
     this._super(...arguments);
+
+    if (this.mouseEvents) {
+      this._stopListening();
+    }
+
     this._destroyTooltip();
   },
 
   actions: {
     tooltipInserted(tooltip) {
-      this.set('_tooltip', tooltip);
+      this.set('tooltipInstance', tooltip);
     },
 
     tooltipExited() {
-      this._scheduleHideTooltipFromHover();
+      if (this.mouseEvents) {
+        this._scheduleHideTooltipFromHover();
+      }
     },
 
     tooltipHidden() {
       this._destroyTooltip();
-      this.set('_tooltip', null);
+      this.set('tooltipInstance', null);
     },
 
     hideTooltip() {
@@ -73,15 +81,26 @@ export default Component.extend({
     }
   },
 
-  mouseEnter() {
-    this._super(...arguments);
+  _listen() {
+    this.set('_mouseEnterHandler', bind(this, '_mouseEnter'));
+    this.set('_mouseLeaveHandler', bind(this, '_mouseLeave'));
+    this.referenceElement.addEventListener('mouseenter', this._mouseEnterHandler);
+    this.referenceElement.addEventListener('mouseleave', this._mouseLeaveHandler);
+  },
+
+  _stopListening() {
+    this.referenceElement.removeEventListener('mouseenter', this._mouseEnterHandler);
+    this.referenceElement.removeEventListener('mouseleave', this._mouseLeaveHandler);
+  },
+
+  _mouseEnter() {
     this.set('isOver', true);
     this._loadWithDelay().then(delay => {
       this._scheduleShowTooltipFromHover(delay);
     });
   },
 
-  mouseLeave() {
+  _mouseLeave() {
     this._super(...arguments);
     this.set('isOver', false);
     this._scheduleHideTooltipFromHover();
@@ -92,21 +111,23 @@ export default Component.extend({
       return resolve();
     } else {
       this.set('isLoading', true);
-      return resolve(this.onLoad()).then(data => {
-        trySet(this, 'data', data);
-        trySet(this, 'isLoaded', true);
-      }).finally(() => {
-        trySet(this, 'isLoading', false);
-      });
+      return resolve(this.onLoad())
+        .then(data => {
+          trySet(this, 'data', data);
+          trySet(this, 'isLoaded', true);
+        })
+        .finally(() => {
+          trySet(this, 'isLoading', false);
+        });
     }
   },
 
   _loadWithDelay() {
     const start = Date.now();
     return this._load().then(() => {
-      const end   = Date.now();
-      const wait  = end - start;
-      const max   = this.showDelay;
+      const end = Date.now();
+      const wait = end - start;
+      const max = this.showDelay;
       const delay = wait > max ? 0 : max - wait;
       return delay;
     });
@@ -127,20 +148,20 @@ export default Component.extend({
   },
 
   _attemptHideTooltipFromHover() {
-    if (this._tooltip && !this._tooltip.isOver) {
+    if (this.tooltipInstance && !this.tooltipInstance.isOver && !this.isOver) {
       this._attemptHideTooltip();
     }
   },
 
   _attemptShowTooltip() {
-    if (!this.isDestroyed && !this._tooltip) {
+    if (!this.isDestroyed && !this.tooltipInstance) {
       this._renderTooltip();
     }
   },
 
   _attemptHideTooltip() {
-    if (!this.isDestroyed && this._tooltip) {
-      this._tooltip.send('hide');
+    if (!this.isDestroyed && this.tooltipInstance) {
+      this.tooltipInstance.send('hide');
     }
   },
 

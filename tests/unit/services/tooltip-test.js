@@ -14,8 +14,8 @@ module('service:tooltip', function(hooks) {
     this.owner.register('component:tool-tip/bar', Component);
 
     tooltipService = this.owner.lookup('service:tooltip');
-    fooTooltipper  = this.owner.lookup('component:tool-tip/foo');
-    barTooltipper  = this.owner.lookup('component:tool-tip/bar');
+    fooTooltipper = this.owner.lookup('component:tool-tip/foo');
+    barTooltipper = this.owner.lookup('component:tool-tip/bar');
   });
 
   test('#activate', function(assert) {
@@ -23,8 +23,11 @@ module('service:tooltip', function(hooks) {
 
     tooltipService.activate(fooTooltipper);
 
-    assert.deepEqual(tooltipService.get('tooltippers'), [fooTooltipper],
-      'adds the tooltipper instance to the array of active tooltippers');
+    assert.deepEqual(
+      tooltipService.get('tooltippers'),
+      [fooTooltipper],
+      'adds the tooltipper instance to the array of active tooltippers'
+    );
 
     tooltipService.activate(barTooltipper);
 
@@ -40,12 +43,14 @@ module('service:tooltip', function(hooks) {
 
     tooltipService.activate(fooTooltipper);
 
-    assert.deepEqual(tooltipService.get('tooltippers'), [fooTooltipper],
-      'precondition');
+    assert.deepEqual(tooltipService.get('tooltippers'), [fooTooltipper], 'precondition');
 
     tooltipService.deactivate(fooTooltipper);
 
-    assert.deepEqual(tooltipService.get('tooltippers'), [],
-      'removes specific tooltipper component instances from the array');
+    assert.deepEqual(
+      tooltipService.get('tooltippers'),
+      [],
+      'removes specific tooltipper component instances from the array'
+    );
   });
 });

@@ -1,5 +1,25 @@
 # Changelog
 
+5.2.2
+
+* Add `@mouseEvents={{bool}}` ability to disable the usual behaviour of mousing over a tooltipper to get its tooltip to display. Useful if you want to manually show a tooltip on click for example.
+
+5.2.1
+
+* Introduce `tooltipService.hideActiveTooltips`. Useful if you want to manually force all tooltips to be hidden, perhaps on scroll for example
+
+5.2.0
+
+* Don't hide tooltip if moused out of tooltip, but still hovering over tooltipper
+
+5.1.0
+
+* Change `referenceElement` to be a property, rather than a function
+
+5.0.2
+
+* Introduce `referenceElement` to customise trigger element [more](https://github.com/zestia/ember-async-tooltips#custom-reference-element)
+
 5.0.1
 
 * Add noops

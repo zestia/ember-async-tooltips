@@ -9,9 +9,9 @@ module('tooltips', function(hooks) {
   test('manual positioning', async function(assert) {
     assert.expect(8);
 
-    await visit('/');
+    await visit('/position');
 
-    await triggerEvent('.tooltipper', 'mouseover');
+    await triggerEvent('.tooltipper', 'mouseenter');
 
     await fillIn('.position', 'N');
 
