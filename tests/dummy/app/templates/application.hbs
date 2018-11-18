@@ -20,19 +20,19 @@
   </label>
 
   <label class="control">
-    Columns <input type="number" min=2 class="number-input columns" value={{columns}} oninput={{action "setColumns" value="target.value"}}>
+    Columns <input type="number" min="2" class="number-input columns" value={{columns}} oninput={{action "setColumns" value="target.value"}}>
   </label>
 
   <label class="control">
-    Rows <input type="number" min=2 class="number-input rows" value={{rows}} oninput={{action "setRows" value="target.value"}}>
+    Rows <input type="number" min="2" class="number-input rows" value={{rows}} oninput={{action "setRows" value="target.value"}}>
   </label>
 
   <span class="control">
-    <label> Hover delay <input type="number" min=1 class="number-input hover-delay" title="In" value={{showDelay}} oninput={{action "setShowDelay" value="target.value"}}></label><input type="number" min=1 class="number-input hover-delay" title="Out" value={{hideDelay}} oninput={{action "setHideDelay" value="target.value"}}>
+    <label> Hover delay <input type="number" min="1" class="number-input hover-delay" title="In" value={{showDelay}} oninput={{action "setShowDelay" value="target.value"}}></label><input type="number" min="1" class="number-input hover-delay" title="Out" value={{hideDelay}} oninput={{action "setHideDelay" value="target.value"}}>
   </span>
 
   <label class="control">
-    Load delay <input type="number" min=1 class="number-input load-delay" value={{loadDelay}} oninput={{action "setLoadDelay" value="target.value"}}>
+    Load delay <input type="number" min="1" class="number-input load-delay" value={{loadDelay}} oninput={{action "setLoadDelay" value="target.value"}}>
   </label>
 
   <a href="#" {{action "rerender"}}>Rerender</a>
