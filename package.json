@@ -1,6 +1,6 @@
 {
   "name": "@zestia/ember-async-tooltips",
-  "version": "5.2.2",
+  "version": "5.2.3",
   "description": "Render tooltips asyncronously on hover",
   "directories": {
     "doc": "doc",
@@ -42,7 +42,6 @@
     "ember-cli-test-loader": "2.2.0",
     "ember-cli-uglify": "2.1.0",
     "ember-cli-update": "0.27.18",
-    "ember-cli": "3.5.0",
     "ember-cli": "3.5.1",
     "ember-disable-prototype-extensions": "1.1.3",
     "ember-load-initializers": "2.0.0",
