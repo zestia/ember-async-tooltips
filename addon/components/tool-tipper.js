@@ -78,6 +78,14 @@ export default Component.extend({
 
     showTooltip() {
       this._attemptShowTooltip();
+    },
+
+    toggleTooltip() {
+      if (this.tooltipInstance) {
+        this.send('hideTooltip');
+      } else {
+        this.send('showTooltip');
+      }
     }
   },
 

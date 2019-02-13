@@ -21,7 +21,7 @@ module('render-active-tooltips', function(hooks) {
   });
 
   test('it renders tooltip components', async function(assert) {
-    assert.expect(8);
+    assert.expect(10);
 
     const FooTooltipComponent = TooltipComponent.extend({
       classNames: ['foo-tooltip'],
@@ -43,6 +43,7 @@ module('render-active-tooltips', function(hooks) {
         <FooTooltipper @tooltip={{component "foo-tooltip" myArg="foo"}} as |tt|>
           <button class="show-from-tooltipper" onclick={{action tt.showTooltip}}></button>
           <button class="hide-from-tooltipper" onclick={{action tt.hideTooltip}}></button>
+          <button class="toggle-from-tooltipper" onclick={{action tt.toggleTooltip}}></button>
         </FooTooltipper>
       </div>
 
@@ -90,5 +91,15 @@ module('render-active-tooltips', function(hooks) {
     await triggerEvent('.foo-tooltip', 'animationEnd');
 
     assert.dom('.foo-tooltip').doesNotExist('tooltip can be hidden by itself');
+
+    await click('.toggle-from-tooltipper');
+
+    assert.dom('.foo-tooltip').exists({ count: 1 }, 'tooltip can be manually shown (toggled)');
+
+    await click('.toggle-from-tooltipper');
+
+    await triggerEvent('.foo-tooltip', 'animationEnd');
+
+    assert.dom('.foo-tooltip').doesNotExist('tooltip can be manually hidden (toggled)');
   });
 });

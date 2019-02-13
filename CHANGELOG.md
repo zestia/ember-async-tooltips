@@ -1,5 +1,13 @@
 # Changelog
 
+5.2.4
+
+* Add `tooltipper.toggleTooltip` action
+
+5.2.3
+
+* Upgrade ember-cli
+
 5.2.2
 
 * Add `@mouseEvents={{bool}}` ability to disable the usual behaviour of mousing over a tooltipper to get its tooltip to display. Useful if you want to manually show a tooltip on click for example.
