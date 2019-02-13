@@ -33,8 +33,8 @@ export default Controller.extend({
     },
 
     setTranslateX(translateX) {
-      const root = document.querySelector(':root');
-      root.classList.toggle('translate-x', translateX);
+      const app = document.querySelector('.ember-application');
+      app.classList.toggle('translate-x', translateX);
     },
 
     setRows(rows) {

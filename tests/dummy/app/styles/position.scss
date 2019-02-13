@@ -50,11 +50,11 @@
     pointer-events: none;
   }
 
-  .translate-x .tooltip.is-east {
+  &.translate-x .tooltip.is-east {
     transform: translateX(-100%);
   }
 
-  .translate-x .tooltip.is-west {
+  &.translate-x .tooltip.is-west {
     transform: translateX(100%);
   }
 
