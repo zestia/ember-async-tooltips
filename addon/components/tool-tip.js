@@ -19,6 +19,8 @@ export default Component.extend({
   attributeBindings: ['role'],
 
   role: 'tooltip',
+  rows: 3,
+  columns: 3,
   isShowing: true,
   isOver: false,
   tooltipperInstance: null,
