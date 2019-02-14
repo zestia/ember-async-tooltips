@@ -38,7 +38,7 @@ Tooltips will be rendered here:
 ### Features
 
 * [Manual positioning](#manual-positioning) either: N, NE, E, SE, S, SW, W, NW
-* [Automatic positioning](#automatic-positioning): Viewport is split into rows and columns which help determine where a tooltip should be optimally positioned
+* [Automatic positioning](#automatic-positioning): Viewport is split into rows and columns which help determine where a tooltip should be optimally positioned (see the [demo](https://zestia.github.io/ember-async-tooltips))
 * Can specify delay before the tooltip will show/hide on a per-tooltip or per-class basis
 * Can optionally wait for async data to be loaded and passed to the tooltips without negatively affecting the hover delay.
 

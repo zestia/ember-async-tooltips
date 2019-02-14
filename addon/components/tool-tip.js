@@ -2,7 +2,14 @@ import { Promise } from 'rsvp';
 import Component from '@ember/component';
 import { scheduleOnce } from '@ember/runloop';
 import layout from '../templates/components/tool-tip';
-const pos = window.positionUtils;
+import autoPosition from '../utils/auto-position';
+const {
+  positionToString,
+  positionCoords,
+  positionBoundary,
+  stringToPosition,
+  elementPosition
+} = window.positionUtils;
 
 export default Component.extend({
   layout,
@@ -70,8 +77,8 @@ export default Component.extend({
     const tooltip = this.element;
     const tooltipper = this.tooltipperInstance.referenceElement;
     const position = this._tooltipPosition();
-    const string = pos.positionToString(position);
-    const [left, top] = pos.positionCoords(string, tooltip, tooltipper, window);
+    const string = positionToString(position);
+    const [left, top] = positionCoords(string, tooltip, tooltipper, window);
 
     this.setProperties(this._positionClassNames(position));
 
@@ -81,40 +88,23 @@ export default Component.extend({
 
   _tooltipBoundary() {
     const doc = document.documentElement;
-    return pos.positionBoundary(doc, this.columns, this.rows);
+    return positionBoundary(doc, this.columns, this.rows);
   },
 
   _tooltipPosition() {
     const string = this.position;
 
     if (string) {
-      return pos.stringToPosition(string);
+      return stringToPosition(string);
     } else {
-      return this._autoPosition();
+      return autoPosition(this._tooltipperPosition());
     }
   },
 
   _tooltipperPosition() {
     const tooltipper = this.tooltipperInstance.referenceElement;
     const boundary = this._tooltipBoundary();
-    return pos.elementPosition(tooltipper, boundary);
-  },
-
-  _autoPosition() {
-    const before = this._tooltipperPosition();
-
-    const after = {
-      N: before.S,
-      E: before.E,
-      S: before.N,
-      W: before.W
-    };
-
-    if (!pos.hasDirection(after)) {
-      after.S = true;
-    }
-
-    return after;
+    return elementPosition(tooltipper, boundary);
   },
 
   _positionClassNames(position) {

@@ -1,5 +1,9 @@
 # Changelog
 
+6.0.0
+
+* Change auto positioning algorithm so that: If a tooltipper is determined to be positioned in _just the west or east_ of the screen, then its tooltip will be placed in the opposite of that position.
+
 5.2.4
 
 * Add `tooltipper.toggleTooltip` action
