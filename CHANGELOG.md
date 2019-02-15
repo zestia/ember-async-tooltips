@@ -1,5 +1,10 @@
 # Changelog
 
+7.0.0
+
+* Switch from compass points like `NE` to position strings, like `top right`
+* Add more positions
+
 6.0.1
 
 * Add default rows and columns that result in the viewport being split up into 9 boxes, resulting in all possible positions.
