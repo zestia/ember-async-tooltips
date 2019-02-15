@@ -11,7 +11,7 @@ ember install @zestia/ember-async-tooltips
 
 https://zestia.github.io/ember-async-tooltips
 
-<a href="https://zestia.github.io/ember-async-tooltips/position">
+<a href="https://zestia.github.io/ember-async-tooltips">
   <img src="docs/screenshot.png" width="512" height="319">
 </a>
 
@@ -38,7 +38,7 @@ Tooltips will be rendered here:
 ### Features
 
 * [Manual positioning](#manual-positioning)
-* [Automatic positioning](#automatic-positioning): Viewport is split into rows and columns which help determine where a tooltip should be optimally positioned (see the [demo](https://zestia.github.io/ember-async-tooltips))
+* [Automatic positioning](#automatic-positioning): Viewport is split into rows and columns which help determine where a tooltip should be optimally positioned (see the [demo](https://zestia.github.io/ember-async-tooltips/#/position))
 * Can specify delay before the tooltip will show/hide on a per-tooltip or per-class basis
 * Can optionally wait for async data to be loaded and passed to the tooltips without negatively affecting the hover delay.
 
