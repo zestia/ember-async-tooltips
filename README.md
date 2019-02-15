@@ -117,7 +117,7 @@ export default ToolTipComponent.extend({
 Setting the `position` argument will add `left` and `right` CSS properties based upon the position. This will position the `tool-tip` around the outside edge of the `tool-tipper` component that caused it to display.
 
 ```handlebars
-  <ToolTipper @tooltip={{component "my-tooltip" position="NW"}} />
+  <ToolTipper @tooltip={{component "my-tooltip" position="right middle"}} />
 ```
 
 ### Automatic positioning
