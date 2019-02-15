@@ -37,7 +37,7 @@ Tooltips will be rendered here:
 
 ### Features
 
-* [Manual positioning](#manual-positioning) either: N, NE, E, SE, S, SW, W, NW
+* [Manual positioning](#manual-positioning)
 * [Automatic positioning](#automatic-positioning): Viewport is split into rows and columns which help determine where a tooltip should be optimally positioned (see the [demo](https://zestia.github.io/ember-async-tooltips))
 * Can specify delay before the tooltip will show/hide on a per-tooltip or per-class basis
 * Can optionally wait for async data to be loaded and passed to the tooltips without negatively affecting the hover delay.
@@ -72,8 +72,8 @@ Tooltips will be rendered here:
 ### Recommended usage
 
 The following configuration creates a new tooltip that:
-* Has custom automatic positioning: NW, N, NE, SE, S, SW.
-  Excludes W and E - useful if you don't want to add CSS for these positions.
+* Has custom automatic positioning.
+  Excludes left and right - useful if you don't want to add CSS for these positions.
 * Has a custom hover delay (won't display the user tooltip until after 300ms has passed)
 * Loads the user _during_ the alotted hover delay time period, or extending the delay if it wasn't retreived in time
 
@@ -114,7 +114,7 @@ export default ToolTipComponent.extend({
 
 ### Manual positioning
 
-Setting the `position` argument will add `left` and `right` CSS properties based upon the compass points. This will position the `tool-tip` around the outside edge of the `tool-tipper` component that caused it to display.
+Setting the `position` argument will add `left` and `right` CSS properties based upon the position. This will position the `tool-tip` around the outside edge of the `tool-tipper` component that caused it to display.
 
 ```handlebars
   <ToolTipper @tooltip={{component "my-tooltip" position="NW"}} />
@@ -122,7 +122,7 @@ Setting the `position` argument will add `left` and `right` CSS properties based
 
 ### Automatic positioning
 
-The tooltip will be positioned around the outside edge of the `tool-tipper` component that caused it display by chosing the most appropriate compass point. For example: If the `tool-tipper` component is at the very bottom of the viewport (south), then the `tool-tip` component will be displayed _above_ the `tool-tipper` (north) - so as to remain visible.
+The tooltip will be positioned around the outside edge of the `tool-tipper` component that caused it display by chosing the most appropriate position. For example: If the `tool-tipper` component is at the very bottom of the viewport, then the `tool-tip` component will be displayed _above_ the `tool-tipper` - so as to remain visible.
 
 ```handlebars
   <ToolTipper @tooltip={{component "my-tooltip"}} />
