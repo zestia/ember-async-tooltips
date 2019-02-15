@@ -3,19 +3,19 @@ import Component from '@ember/component';
 import { scheduleOnce } from '@ember/runloop';
 import layout from '../templates/components/tool-tip';
 import autoPosition from '../utils/auto-position';
-const {
-  positionToString,
-  positionCoords,
-  positionBoundary,
-  stringToPosition,
-  elementPosition
-} = window.positionUtils;
+import { dasherize } from '@ember/string';
+const { positionCoords, positionBoundary, elementPosition } = window.positionUtils;
 
 export default Component.extend({
   layout,
 
   classNames: ['tooltip'],
-  classNameBindings: ['isShowing:is-showing:is-hiding', 'isNorth', 'isEast', 'isSouth', 'isWest'],
+
+  classNameBindings: [
+    'isShowing:is-showing:is-hiding',
+    'positionClass'
+  ],
+
   attributeBindings: ['role'],
 
   role: 'tooltip',
@@ -79,10 +79,9 @@ export default Component.extend({
     const tooltip = this.element;
     const tooltipper = this.tooltipperInstance.referenceElement;
     const position = this._tooltipPosition();
-    const string = positionToString(position);
-    const [left, top] = positionCoords(string, tooltip, tooltipper, window);
+    const [left, top] = positionCoords(position, tooltip, tooltipper, window);
 
-    this.setProperties(this._positionClassNames(position));
+    this.set('positionClass', this._classForPosition(position));
 
     tooltip.style.top = `${top}px`;
     tooltip.style.left = `${left}px`;
@@ -94,10 +93,8 @@ export default Component.extend({
   },
 
   _tooltipPosition() {
-    const string = this.position;
-
-    if (string) {
-      return stringToPosition(string);
+    if (this.position) {
+      return this.position;
     } else {
       return autoPosition(this._tooltipperPosition());
     }
@@ -109,12 +106,7 @@ export default Component.extend({
     return elementPosition(tooltipper, boundary);
   },
 
-  _positionClassNames(position) {
-    return {
-      isNorth: position.N,
-      isEast: position.E,
-      isSouth: position.S,
-      isWest: position.W
-    };
+  _classForPosition(position) {
+    return `is-${dasherize(position)}`;
   }
 });

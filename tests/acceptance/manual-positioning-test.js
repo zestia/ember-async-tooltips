@@ -1,48 +1,63 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-import { positionClasses } from '../../tests/helpers/utils';
-import { visit, find, triggerEvent, fillIn } from '@ember/test-helpers';
+import { visit, triggerEvent, fillIn } from '@ember/test-helpers';
 
 module('tooltips', function(hooks) {
   setupApplicationTest(hooks);
 
   test('manual positioning', async function(assert) {
-    assert.expect(8);
+    assert.expect(12);
 
     await visit('/position');
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    await fillIn('.position', 'N');
+    await fillIn('.position', 'top left');
 
-    assert.deepEqual(positionClasses(find('.tooltip')), ['is-north']);
+    assert.dom('.tooltip').hasClass('is-top-left');
 
-    await fillIn('.position', 'NE');
+    await fillIn('.position', 'top center');
 
-    assert.deepEqual(positionClasses(find('.tooltip')), ['is-north', 'is-east']);
+    assert.dom('.tooltip').hasClass('is-top-center');
 
-    await fillIn('.position', 'E');
+    await fillIn('.position', 'top right');
 
-    assert.deepEqual(positionClasses(find('.tooltip')), ['is-east']);
+    assert.dom('.tooltip').hasClass('is-top-right');
 
-    await fillIn('.position', 'SE');
+    await fillIn('.position', 'right middle');
 
-    assert.deepEqual(positionClasses(find('.tooltip')), ['is-east', 'is-south']);
+    assert.dom('.tooltip').hasClass('is-right-middle');
 
-    await fillIn('.position', 'S');
+    await fillIn('.position', 'right top');
 
-    assert.deepEqual(positionClasses(find('.tooltip')), ['is-south']);
+    assert.dom('.tooltip').hasClass('is-right-top');
 
-    await fillIn('.position', 'SW');
+    await fillIn('.position', 'right bottom');
 
-    assert.deepEqual(positionClasses(find('.tooltip')), ['is-south', 'is-west']);
+    assert.dom('.tooltip').hasClass('is-right-bottom');
 
-    await fillIn('.position', 'W');
+    await fillIn('.position', 'bottom right');
 
-    assert.deepEqual(positionClasses(find('.tooltip')), ['is-west']);
+    assert.dom('.tooltip').hasClass('is-bottom-right');
 
-    await fillIn('.position', 'NW');
+    await fillIn('.position', 'bottom center');
 
-    assert.deepEqual(positionClasses(find('.tooltip')), ['is-north', 'is-west']);
+    assert.dom('.tooltip').hasClass('is-bottom-center');
+
+    await fillIn('.position', 'bottom left');
+
+    assert.dom('.tooltip').hasClass('is-bottom-left');
+
+    await fillIn('.position', 'left middle');
+
+    assert.dom('.tooltip').hasClass('is-left-middle');
+
+    await fillIn('.position', 'left top');
+
+    assert.dom('.tooltip').hasClass('is-left-top');
+
+    await fillIn('.position', 'left bottom');
+
+    assert.dom('.tooltip').hasClass('is-left-bottom');
   });
 });

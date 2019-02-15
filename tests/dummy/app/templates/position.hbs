@@ -2,21 +2,20 @@
   <label class="control">
     Position
     <select onchange={{action "setPosition" value="target.value"}} class="position">
-      <option value="">Auto</option>
-      <option value="N">North</option>
-      <option value="NE">North East</option>
-      <option value="E">East</option>
-      <option value="SE">South East</option>
-      <option value="S">South</option>
-      <option value="SW">South West</option>
-      <option value="W">West</option>
-      <option value="NW">North West</option>
+      <option value="">auto</option>
+      <option>top left</option>
+      <option>top center</option>
+      <option>top right</option>
+      <option>right middle</option>
+      <option>right top</option>
+      <option>right bottom</option>
+      <option>bottom right</option>
+      <option>bottom center</option>
+      <option>bottom left</option>
+      <option>left middle</option>
+      <option>left top</option>
+      <option>left bottom</option>
     </select>
-  </label>
-
-  <label class="control">
-    <input type="checkbox" onclick={{action "setTranslateX" value="target.checked"}}>
-    Translate X
   </label>
 
   <label class="control">
@@ -41,20 +40,20 @@
 <table class="grid">
   <tbody>
     <tr class="row">
-      <td class="cell nw"></td>
-      <td class="cell n"></td>
-      <td class="cell ne"></td>
+      <td class="cell">top left</td>
+      <td class="cell">top center</td>
+      <td class="cell">top right</td>
     </tr>
     <tr class="row">
-      <td class="cell w"></td>
+      <td class="cell">left middle</td>
       {{! template-lint-disable inline-styles }}
-      <td class="cell c" style={{this.boundaryStyles}}></td>
-      <td class="cell e"></td>
+      <td class="cell" style={{this.boundaryStyles}}></td>
+      <td class="cell">right middle</td>
     </tr>
     <tr class="row">
-      <td class="cell sw"></td>
-      <td class="cell s"></td>
-      <td class="cell se"></td>
+      <td class="cell">bottom left</td>
+      <td class="cell">bottom center</td>
+      <td class="cell">bottom right</td>
     </tr>
   </tbody>
 </table>

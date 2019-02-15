@@ -1,16 +1,22 @@
-const { hasDirection } = window.positionUtils;
-
-export default function autoPosition(before = {}) {
-  const after = {
-    N: Boolean(before.S),
-    E: Boolean(before.N || before.S ? before.E : before.W),
-    S: Boolean(before.N),
-    W: Boolean(before.N || before.S ? before.W : before.E)
-  };
-
-  if (!hasDirection(after)) {
-    after.S = true;
+export default function autoPosition(before) {
+  switch (before) {
+    case 'middle center':
+      return 'bottom center';
+    case 'top center':
+      return 'bottom center';
+    case 'top left':
+      return 'bottom left';
+    case 'top right':
+      return 'bottom right';
+    case 'bottom center':
+      return 'top center';
+    case 'bottom left':
+      return 'top left';
+    case 'bottom right':
+      return 'top right';
+    case 'left middle':
+      return 'right middle';
+    case 'right middle':
+      return 'left middle';
   }
-
-  return after;
 }

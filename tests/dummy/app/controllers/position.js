@@ -7,34 +7,28 @@ import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
 import { run, later, debounce, bind } from '@ember/runloop';
 const { escapeExpression } = Ember.Handlebars.Utils;
-const pos = window.positionUtils;
+const { positionBoundary } = window.positionUtils;
 
 export default Controller.extend({
   init() {
     this._super(...arguments);
-    this.set('columns', 3);
-    this.set('rows', 3);
-    this.set('showDelay', 0);
-    this.set('hideDelay', 0);
-    this.set('loadDelay', 1000);
-    this.set('showTooltipper', true);
+    this._reset();
     this._updateBoundary();
     window.onresize = bind(this, '_resized');
   },
 
   actions: {
     rerender() {
+      this._reset();
+
       run(() => this.set('showTooltipper', false));
       run(() => this.set('showTooltipper', true));
+
+      this._updateBoundary();
     },
 
     setPosition(position) {
       this.set('position', position);
-    },
-
-    setTranslateX(translateX) {
-      const app = document.querySelector('.ember-application');
-      app.classList.toggle('translate-x', translateX);
     },
 
     setRows(rows) {
@@ -60,7 +54,7 @@ export default Controller.extend({
     },
 
     reposition(e) {
-      const { x, y } = this.get('lastCoord');
+      const { x, y } = this.lastCoord;
       const element = e.target;
       const top = y - element.offsetHeight;
       const left = x;
@@ -79,9 +73,18 @@ export default Controller.extend({
 
     load() {
       return new Promise(resolve => {
-        later(resolve, this.get('loadDelay'));
+        later(resolve, this.loadDelay);
       });
     }
+  },
+
+  _reset() {
+    this.set('columns', 3);
+    this.set('rows', 3);
+    this.set('showDelay', 0);
+    this.set('hideDelay', 0);
+    this.set('loadDelay', 1000);
+    this.set('showTooltipper', true);
   },
 
   _resized() {
@@ -90,7 +93,7 @@ export default Controller.extend({
 
   _boundary() {
     const doc = document.documentElement;
-    return pos.positionBoundary(doc, this.get('columns'), this.get('rows'));
+    return positionBoundary(doc, this.columns, this.rows);
   },
 
   _boundaryStyles() {
