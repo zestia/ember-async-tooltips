@@ -97,9 +97,9 @@ export default Controller.extend({
   _reset() {
     this.set('columns', 3);
     this.set('rows', 3);
-    this.set('showDelay', 0);
+    this.set('showDelay', 500);
     this.set('hideDelay', 0);
-    this.set('loadDelay', 1000);
+    this.set('loadDelay', 500);
     this.set('showTooltipper', true);
   },
 
