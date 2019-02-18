@@ -54,26 +54,42 @@ export default Controller.extend({
     },
 
     reposition(e) {
-      const { x, y } = this.lastCoord;
+      const [x, y] = this.lastPos;
+      const [t, l] = this.startPos;
+
       const element = e.target;
-      const top = y - element.offsetHeight;
-      const left = x;
+      const top = y - l;
+      const left = x - t;
+
       element.style.top = `${top}px`;
       element.style.left = `${left}px`;
-      element.style.position = 'absolute';
     },
 
-    storeLastCoord(e) {
-      const { pageX: x, pageY: y } = e;
+    storeStartPos(e) {
+      const pos = e.target.getBoundingClientRect();
+
+      this.set('startPos', [
+        e.clientX - pos.left,
+        e.clientY - pos.top
+      ]);
+    },
+
+    storeLastPos(e) {
+      const { clientX: x, clientY: y } = e;
 
       if (x && y) {
-        this.set('lastCoord', { x, y });
+        this.set('lastPos', [ x, y ]);
       }
     },
 
     load() {
+      this.set('isLoading', true);
+
       return new Promise(resolve => {
-        later(resolve, this.loadDelay);
+        later(() => {
+          this.set('isLoading', false);
+          resolve();
+        }, this.loadDelay);
       });
     }
   },

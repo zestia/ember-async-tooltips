@@ -20,47 +20,36 @@
 
   .tooltipper,
   .tooltip {
-    color: white;
     box-sizing: border-box;
-    padding: 5px;
   }
 
   .tooltipper {
-    background-color: blue;
+    background-color: silver;
     cursor: move;
     user-select: none;
     position: absolute;
     top: 35px;
     left: 10px;
-    width: 140px;
-    line-height: 50px;
+    min-width: 160px;
+    padding: 20px;
     text-align: center;
   }
 
-  .tooltipper.is-loading {
-    background-color: green;
-  }
-
   .tooltip {
-    background-color: red;
+    background-color: black;
+    color: white;
+    padding: 5px;
   }
 
   .grid {
     height: 100vh;
     width: 100%;
     table-layout: fixed;
-    background-color: #f1f1f1;
-    border-collapse: collapse;
   }
 
   .cell {
     vertical-align: middle;
     text-align: center;
-    transition: width 0.5s, height 0.5s;
-  }
-
-  .row:nth-child(even) .cell:nth-child(odd),
-  .row:nth-child(odd) .cell:nth-child(even) {
-    background-color: #e1e1e1;
+    transition: width 0.2s, height 0.2s;
   }
 }
