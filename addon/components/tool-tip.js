@@ -11,10 +11,7 @@ export default Component.extend({
 
   classNames: ['tooltip'],
 
-  classNameBindings: [
-    'isShowing:is-showing:is-hiding',
-    'positionClass'
-  ],
+  classNameBindings: ['isShowing:is-showing:is-hiding', 'positionClass'],
 
   attributeBindings: ['role'],
 

@@ -68,17 +68,14 @@ export default Controller.extend({
     storeStartPos(e) {
       const pos = e.target.getBoundingClientRect();
 
-      this.set('startPos', [
-        e.clientX - pos.left,
-        e.clientY - pos.top
-      ]);
+      this.set('startPos', [e.clientX - pos.left, e.clientY - pos.top]);
     },
 
     storeLastPos(e) {
       const { clientX: x, clientY: y } = e;
 
       if (x && y) {
-        this.set('lastPos', [ x, y ]);
+        this.set('lastPos', [x, y]);
       }
     },
 

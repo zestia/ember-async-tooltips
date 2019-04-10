@@ -1,5 +1,9 @@
 # Changelog
 
+7.0.1
+
+* Upgrade dependencies
+
 7.0.0
 
 * Switch from compass points like `NE` to position strings, like `top right`
