@@ -6,15 +6,17 @@ import { computed } from '@ember/object';
 /* eslint-enable */
 import { htmlSafe } from '@ember/string';
 import { run, later, debounce, bind } from '@ember/runloop';
+import { positionBoundary } from '@zestia/position-utils';
 const { escapeExpression } = Ember.Handlebars.Utils;
-const { positionBoundary } = window.positionUtils;
 
 export default Controller.extend({
+  window,
+
   init() {
     this._super(...arguments);
     this._reset();
     this._updateBoundary();
-    window.onresize = bind(this, '_resized');
+    this.window.onresize = bind(this, '_resized');
   },
 
   actions: {

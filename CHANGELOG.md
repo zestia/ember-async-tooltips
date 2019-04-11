@@ -1,5 +1,9 @@
 # Changelog
 
+7.0.2
+
+* Import position utils instead of using global
+
 7.0.1
 
 * Upgrade dependencies

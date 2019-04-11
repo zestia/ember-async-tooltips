@@ -4,7 +4,7 @@ import { scheduleOnce } from '@ember/runloop';
 import layout from '../templates/components/tool-tip';
 import autoPosition from '../utils/auto-position';
 import { dasherize } from '@ember/string';
-const { positionCoords, positionBoundary, elementPosition } = window.positionUtils;
+import { positionCoords, positionBoundary, elementPosition } from '@zestia/position-utils';
 
 export default Component.extend({
   layout,
