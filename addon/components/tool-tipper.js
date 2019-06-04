@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { computed, trySet } from '@ember/object';
+import { computed, trySet, set, get } from '@ember/object';
 import { bool } from '@ember/object/computed';
 /* eslint-enable */
 import { resolve } from 'rsvp';
@@ -38,7 +38,7 @@ export default Component.extend({
     this._super(...arguments);
 
     if (!this.referenceElement) {
-      this.set('referenceElement', this.element);
+      set(this, 'referenceElement', this.element);
     }
 
     if (this.mouseEvents) {
@@ -58,7 +58,7 @@ export default Component.extend({
 
   actions: {
     tooltipInserted(tooltip) {
-      this.set('tooltipInstance', tooltip);
+      set(this, 'tooltipInstance', tooltip);
     },
 
     tooltipExited() {
@@ -69,7 +69,7 @@ export default Component.extend({
 
     tooltipHidden() {
       this._destroyTooltip();
-      this.set('tooltipInstance', null);
+      set(this, 'tooltipInstance', null);
     },
 
     hideTooltip() {
@@ -90,8 +90,8 @@ export default Component.extend({
   },
 
   _listen() {
-    this.set('_mouseEnterHandler', bind(this, '_mouseEnter'));
-    this.set('_mouseLeaveHandler', bind(this, '_mouseLeave'));
+    set(this, '_mouseEnterHandler', bind(this, '_mouseEnter'));
+    set(this, '_mouseLeaveHandler', bind(this, '_mouseLeave'));
     this.referenceElement.addEventListener('mouseenter', this._mouseEnterHandler);
     this.referenceElement.addEventListener('mouseleave', this._mouseLeaveHandler);
   },
@@ -102,7 +102,7 @@ export default Component.extend({
   },
 
   _mouseEnter() {
-    this.set('isOver', true);
+    set(this, 'isOver', true);
     this._loadWithDelay().then(delay => {
       this._scheduleShowTooltipFromHover(delay);
     });
@@ -110,7 +110,7 @@ export default Component.extend({
 
   _mouseLeave() {
     this._super(...arguments);
-    this.set('isOver', false);
+    set(this, 'isOver', false);
     this._scheduleHideTooltipFromHover();
   },
 
@@ -118,7 +118,7 @@ export default Component.extend({
     if (this.isLoaded) {
       return resolve();
     } else {
-      this.set('isLoading', true);
+      set(this, 'isLoading', true);
       return resolve(this.onLoad())
         .then(data => {
           trySet(this, 'data', data);
@@ -174,10 +174,10 @@ export default Component.extend({
   },
 
   _renderTooltip() {
-    this.get('tooltipService').activate(this);
+    get(this, 'tooltipService').activate(this);
   },
 
   _destroyTooltip() {
-    this.get('tooltipService').deactivate(this);
+    get(this, 'tooltipService').deactivate(this);
   }
 });
