@@ -1,157 +1,161 @@
 # Changelog
 
-7.0.2
+## 7.0.3
 
-* Import position utils instead of using global
+- Upgrade dependencies
 
-7.0.1
+## 7.0.2
 
-* Upgrade dependencies
+- Import position utils instead of using global
 
-7.0.0
+## 7.0.1
 
-* Switch from compass points like `NE` to position strings, like `top right`
-* Add more positions
+- Upgrade dependencies
 
-6.0.1
+## 7.0.0
 
-* Add default rows and columns that result in the viewport being split up into 9 boxes, resulting in all possible positions.
+- Switch from compass points like `NE` to position strings, like `top right`
+- Add more positions
 
-6.0.0
+## 6.0.1
 
-* Change auto positioning algorithm so that: If a tooltipper is determined to be positioned in _just the west or east_ of the screen, then its tooltip will be placed in the opposite of that position.
+- Add default rows and columns that result in the viewport being split up into 9 boxes, resulting in all possible positions.
 
-5.2.4
+## 6.0.0
 
-* Add `tooltipper.toggleTooltip` action
+- Change auto positioning algorithm so that: If a tooltipper is determined to be positioned in _just the west or east_ of the screen, then its tooltip will be placed in the opposite of that position.
 
-5.2.3
+## 5.2.4
 
-* Upgrade ember-cli
+- Add `tooltipper.toggleTooltip` action
 
-5.2.2
+## 5.2.3
 
-* Add `@mouseEvents={{bool}}` ability to disable the usual behaviour of mousing over a tooltipper to get its tooltip to display. Useful if you want to manually show a tooltip on click for example.
+- Upgrade ember-cli
 
-5.2.1
+## 5.2.2
 
-* Introduce `tooltipService.hideActiveTooltips`. Useful if you want to manually force all tooltips to be hidden, perhaps on scroll for example
+- Add `@mouseEvents={{bool}}` ability to disable the usual behaviour of mousing over a tooltipper to get its tooltip to display. Useful if you want to manually show a tooltip on click for example.
 
-5.2.0
+## 5.2.1
 
-* Don't hide tooltip if moused out of tooltip, but still hovering over tooltipper
+- Introduce `tooltipService.hideActiveTooltips`. Useful if you want to manually force all tooltips to be hidden, perhaps on scroll for example
 
-5.1.0
+## 5.2.0
 
-* Change `referenceElement` to be a property, rather than a function
+- Don't hide tooltip if moused out of tooltip, but still hovering over tooltipper
 
-5.0.2
+## 5.1.0
 
-* Introduce `referenceElement` to customise trigger element [more](https://github.com/zestia/ember-async-tooltips#custom-reference-element)
+- Change `referenceElement` to be a property, rather than a function
 
-5.0.1
+## 5.0.2
 
-* Add noops
+- Introduce `referenceElement` to customise trigger element [more](https://github.com/zestia/ember-async-tooltips#custom-reference-element)
 
-5.0.0
+## 5.0.1
 
-* Switched to camelcase args
-* Split `hoverDelay` into `showDelay` and `hideDelay` for finer control
+- Add noops
 
-4.0.7
+## 5.0.0
 
-* Fix positioning of tooltips not working in Safari when the document has been scrolled.
-* Fix demo app in Safari
+- Switched to camelcase args
+- Split `hoverDelay` into `showDelay` and `hideDelay` for finer control
 
-4.0.6
+## 4.0.7
 
-* Adds an `is-loading` class to the tooltipper whilst it is loading the content required to display its tooltip
+- Fix positioning of tooltips not working in Safari when the document has been scrolled.
+- Fix demo app in Safari
 
-4.0.5
+## 4.0.6
 
-* Caches data when loading tooltip, so `on-load` will only fire once.
-  * This caches the data on a per-tooltipper basis.
-  * If you have multiple instances of the same tooltipper on a page, you will still have to have your own caching strategy for that.
+- Adds an `is-loading` class to the tooltipper whilst it is loading the content required to display its tooltip
 
-4.0.4
+## 4.0.5
 
-* Expose `hide` action from tooltip
+- Caches data when loading tooltip, so `on-load` will only fire once.
+  - This caches the data on a per-tooltipper basis.
+  - If you have multiple instances of the same tooltipper on a page, you will still have to have your own caching strategy for that.
 
-4.0.3
+## 4.0.4
 
-* Expose `hideTooltip` and `showTooltip` actions from tooltiper
+- Expose `hide` action from tooltip
 
-4.0.2
+## 4.0.3
 
-* Upgrade position utils
+- Expose `hideTooltip` and `showTooltip` actions from tooltiper
 
-4.0.1
+## 4.0.2
 
-* Upgrade position utils
+- Upgrade position utils
 
-4.0.0
+## 4.0.1
 
-* Moved position utils to a separate module
-* Changed `placement` attribute to `position`
+- Upgrade position utils
 
-3.0.1
+## 4.0.0
 
-* Make on-load action more tollerant if not provided, or if it doesn't return a promise.
+- Moved position utils to a separate module
+- Changed `placement` attribute to `position`
 
-3.0.0
+## 3.0.1
 
-* Refactor to make sure correct element offsets are used
-* Changes to arguments signatures in placement utils
+- Make on-load action more tollerant if not provided, or if it doesn't return a promise.
 
-2.0.0
+## 3.0.0
 
-* Remove Positionable Mixin
-* Reduce reliance on jQuery
+- Refactor to make sure correct element offsets are used
+- Changes to arguments signatures in placement utils
 
-1.0.8
+## 2.0.0
 
-* Fix travis builds
+- Remove Positionable Mixin
+- Reduce reliance on jQuery
 
-1.0.7
+## 1.0.8
 
-* Upgrade dependencies
+- Fix travis builds
 
-1.0.6
+## 1.0.7
 
-* Lint everything
+- Upgrade dependencies
 
-1.0.4
+## 1.0.6
 
-* Upgrade devDependencies
+- Lint everything
 
-1.0.3
+## 1.0.4
 
-* Upgrade devDependencies
+- Upgrade devDependencies
 
-1.0.2
+## 1.0.3
 
-* Upgrade devDependencies
+- Upgrade devDependencies
 
-1.0.1
+## 1.0.2
 
-* Skipped
+- Upgrade devDependencies
 
-1.0.0
+## 1.0.1
 
-* Update how custom placements are set
+- Skipped
 
-0.1.3
+## 1.0.0
 
-* Move ember-improved-cp to dependencies
+- Update how custom placements are set
 
-0.1.2
+## 0.1.3
 
-* Add support for tabindex attribute to tooltipper component
+- Move ember-improved-cp to dependencies
 
-0.1.1
+## 0.1.2
 
-* Fix east/west
+- Add support for tabindex attribute to tooltipper component
 
-0.1.0
+## 0.1.1
 
-* Initial release
+- Fix east/west
+
+## 0.1.0
+
+- Initial release
