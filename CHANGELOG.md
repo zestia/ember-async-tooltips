@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.2.0
+
+- Bring auto position util back into this component.
+
 ## 7.1.0
 
 - Small internal refactoring / linting
