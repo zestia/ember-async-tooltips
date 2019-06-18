@@ -13,11 +13,7 @@ module('render-active-tooltips', function(hooks) {
 
     await render(hbs`<RenderActiveTooltips />`);
 
-    assert.equal(
-      this.get('element').innerHTML,
-      '<!---->',
-      'does not blow up if no tooltips are active'
-    );
+    assert.equal(this.element.innerHTML, '<!---->', 'does not blow up if no tooltips are active');
   });
 
   test('it renders tooltip components', async function(assert) {

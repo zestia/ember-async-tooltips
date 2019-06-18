@@ -1,7 +1,5 @@
-/* eslint-disable */
-import { computed, trySet, set, get } from '@ember/object';
-import { bool } from '@ember/object/computed';
-/* eslint-enable */
+/* eslint-disable ember/no-get */
+import { trySet, set, get } from '@ember/object';
 import { resolve } from 'rsvp';
 import Component from '@ember/component';
 import layout from '../templates/components/tool-tipper';
@@ -15,8 +13,8 @@ export default Component.extend({
 
   tagName: 'span',
   classNames: ['tooltipper'],
-  classNameBindings: ['hasTooltip', 'isLoading'],
-  attributeBindings: ['tabindex', 'href', 'target', 'rel', 'typeAttr:type', 'draggable'],
+  classNameBindings: ['tooltipInstance:has-tooltip', 'isLoading'],
+  attributeBindings: ['tabindex', 'href', 'target', 'rel', 'type', 'draggable'],
 
   mouseEvents: true,
   showDelay: 0,
@@ -25,14 +23,6 @@ export default Component.extend({
   tooltipInstance: null,
 
   onLoad() {},
-
-  hasTooltip: bool('tooltipInstance'),
-
-  typeAttr: computed(function() {
-    if (this.tagName === 'button') {
-      return this.type || 'button';
-    }
-  }),
 
   didInsertElement() {
     this._super(...arguments);

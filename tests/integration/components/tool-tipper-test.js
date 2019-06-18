@@ -34,13 +34,7 @@ module('tool-tipper', function(hooks) {
   });
 
   test('as a button', async function(assert) {
-    assert.expect(2);
-
-    await render(hbs`{{tool-tipper tagName="button"}}`);
-
-    assert
-      .dom('.tooltipper')
-      .hasAttribute('type', 'button', 'renders as a non-submittion button by default');
+    assert.expect(1);
 
     await render(hbs`{{tool-tipper tagName="button" type="foo"}}`);
 

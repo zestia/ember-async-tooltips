@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.1.0
+
+- Small internal refactoring / linting
+- Phase out the automatic-determining of button type attribute. Out of scope of this project.
+
+## 7.0.4
+
+- Move auto position util to external library
+
 ## 7.0.3
 
 - Upgrade dependencies

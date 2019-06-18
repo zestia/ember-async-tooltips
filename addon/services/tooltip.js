@@ -27,7 +27,7 @@ export default Service.extend({
       this.tooltippers.reduce((promises, tooltipper) => {
         const tooltip = tooltipper.tooltipInstance;
 
-        if (tooltipper.hasTooltip) {
+        if (tooltip) {
           promises.push(tooltip.actions.hide.call(tooltip));
         }
 
