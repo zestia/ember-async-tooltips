@@ -2,9 +2,13 @@ import { Promise } from 'rsvp';
 import Component from '@ember/component';
 import { scheduleOnce } from '@ember/runloop';
 import layout from '../templates/components/tool-tip';
-import autoPosition from '../utils/auto-position';
 import { dasherize } from '@ember/string';
-import { positionCoords, positionBoundary, elementPosition } from '@zestia/position-utils';
+import {
+  positionCoords,
+  positionBoundary,
+  elementPosition,
+  autoPosition
+} from '@zestia/position-utils';
 
 export default Component.extend({
   layout,
