@@ -2,7 +2,7 @@
 
 ## 7.2.0
 
-- Bring auto position util back into this component.
+- Update position library
 
 ## 7.1.0
 

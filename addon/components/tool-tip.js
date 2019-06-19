@@ -4,7 +4,7 @@ import { scheduleOnce } from '@ember/runloop';
 import layout from '../templates/components/tool-tip';
 import { dasherize } from '@ember/string';
 import autoPosition from '../utils/auto-position';
-import { positionCoords, positionBoundary, elementPosition } from '@zestia/position-utils';
+import { positionCoords, elementPosition } from '@zestia/position-utils';
 
 export default Component.extend({
   layout,
@@ -76,17 +76,12 @@ export default Component.extend({
     const tooltip = this.element;
     const tooltipper = this.tooltipperInstance.referenceElement;
     const position = this._tooltipPosition();
-    const [left, top] = positionCoords(position, tooltip, tooltipper, window);
+    const [left, top] = positionCoords(position, tooltip, tooltipper);
 
     this.set('positionClass', this._classForPosition(position));
 
     tooltip.style.top = `${top}px`;
     tooltip.style.left = `${left}px`;
-  },
-
-  _tooltipBoundary() {
-    const doc = document.documentElement;
-    return positionBoundary(doc, this.columns, this.rows);
   },
 
   _tooltipPosition() {
@@ -99,8 +94,8 @@ export default Component.extend({
 
   _tooltipperPosition() {
     const tooltipper = this.tooltipperInstance.referenceElement;
-    const boundary = this._tooltipBoundary();
-    return elementPosition(tooltipper, boundary);
+    const doc = document.documentElement;
+    return elementPosition(tooltipper, doc, this.columns, this.rows);
   },
 
   _classForPosition(position) {

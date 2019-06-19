@@ -18,14 +18,6 @@
     </select>
   </label>
 
-  <label class="control">
-    Columns <input type="number" min="2" class="number-input columns" value={{this.columns}} oninput={{action "setColumns" value="target.value"}}>
-  </label>
-
-  <label class="control">
-    Rows <input type="number" min="2" class="number-input rows" value={{this.rows}} oninput={{action "setRows" value="target.value"}}>
-  </label>
-
   <span class="control">
     <label> Hover delay <input type="number" min="1" class="number-input hover-delay" title="In" value={{this.showDelay}} oninput={{action "setShowDelay" value="target.value"}}></label><input type="number" min="1" class="number-input hover-delay" title="Out" value={{this.hideDelay}} oninput={{action "setHideDelay" value="target.value"}}>
   </span>
@@ -34,7 +26,7 @@
     Load delay <input type="number" min="1" class="number-input load-delay" value={{this.loadDelay}} oninput={{action "setLoadDelay" value="target.value"}}>
   </label>
 
-  <a href="#" {{action "rerender"}}>Reset</a>
+  <small><a href="#" {{action "unload"}}>Unload</a></small>
 </div>
 
 <table class="grid">
@@ -46,8 +38,7 @@
     </tr>
     <tr class="row">
       <td class="cell">left middle</td>
-      {{! template-lint-disable inline-styles }}
-      <td class="cell" style={{this.boundaryStyles}}></td>
+      <td class="cell"></td>
       <td class="cell">right middle</td>
     </tr>
     <tr class="row">
@@ -67,12 +58,7 @@
     @onLoad={{action "load"}}
     @showDelay={{this.showDelay}}
     @hideDelay={{this.hideDelay}}
-    @tooltip={{component "tool-tip"
-      text="Hello World"
-      position=this.position
-      columns=this.columns
-      rows=this.rows
-    }}>
+    @tooltip={{component "tool-tip" text="Hello World" position=this.position}}>
     Hover over me
     {{#if this.isLoading}}
       <br>

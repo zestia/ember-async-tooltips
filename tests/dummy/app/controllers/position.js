@@ -1,46 +1,26 @@
-import Ember from 'ember';
 import { Promise } from 'rsvp';
 import Controller from '@ember/controller';
-/* eslint-disable */
-import { computed } from '@ember/object';
-/* eslint-enable */
-import { htmlSafe } from '@ember/string';
-import { run, later, debounce, bind } from '@ember/runloop';
-import { positionBoundary } from '@zestia/position-utils';
-const { escapeExpression } = Ember.Handlebars.Utils;
+import { run, later } from '@ember/runloop';
 
 export default Controller.extend({
   window,
 
   init() {
     this._super(...arguments);
-    this._reset();
-    this._updateBoundary();
-    this.window.onresize = bind(this, '_resized');
+    this.set('showDelay', 500);
+    this.set('hideDelay', 0);
+    this.set('loadDelay', 500);
+    this.set('showTooltipper', true);
   },
 
   actions: {
-    rerender() {
-      this._reset();
-
+    unload() {
       run(() => this.set('showTooltipper', false));
       run(() => this.set('showTooltipper', true));
-
-      this._updateBoundary();
     },
 
     setPosition(position) {
       this.set('position', position);
-    },
-
-    setRows(rows) {
-      this.set('rows', rows);
-      this._updateBoundary();
-    },
-
-    setColumns(columns) {
-      this.set('columns', columns);
-      this._updateBoundary();
     },
 
     setShowDelay(delay) {
@@ -91,39 +71,5 @@ export default Controller.extend({
         }, this.loadDelay);
       });
     }
-  },
-
-  _reset() {
-    this.set('columns', 3);
-    this.set('rows', 3);
-    this.set('showDelay', 500);
-    this.set('hideDelay', 0);
-    this.set('loadDelay', 500);
-    this.set('showTooltipper', true);
-  },
-
-  _resized() {
-    debounce(this, '_updateBoundary', 200);
-  },
-
-  _boundary() {
-    const doc = document.documentElement;
-    return positionBoundary(doc, this.columns, this.rows);
-  },
-
-  _boundaryStyles() {
-    const { top, right, bottom, left } = this._boundary();
-    const width = right - left || 1;
-    const height = bottom - top || 1;
-    return htmlSafe(
-      escapeExpression(`
-      width: ${width}px;
-      height: ${height}px;
-    `)
-    );
-  },
-
-  _updateBoundary() {
-    this.set('boundaryStyles', this._boundaryStyles());
   }
 });
