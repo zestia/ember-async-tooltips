@@ -19,7 +19,7 @@ module('tooltips', function(hooks) {
 
     assert.dom('.tooltip').exists();
 
-    await run(() => this.tooltipService.hideActiveTooltips());
+    await run(() => this.tooltipService.hideTooltips());
 
     assert.dom('.tooltip').doesNotExist();
   });

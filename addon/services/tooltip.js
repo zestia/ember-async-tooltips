@@ -3,10 +3,10 @@ import { A as emberA } from '@ember/array';
 import { all } from 'rsvp';
 
 /**
- * This service keeps track of which tooltippers are active (being hovered over)
+ * This service keeps track of which tooltippers are being hovered over
  * and therefore should have their tooltips rendered in the DOM.
  *
- * See: <RenderActiveTooltips />
+ * See: <RenderTooltips />
  */
 export default Service.extend({
   init() {
@@ -22,7 +22,7 @@ export default Service.extend({
     this.tooltippers.removeObject(tooltipper);
   },
 
-  hideActiveTooltips() {
+  hideTooltips() {
     return all(
       this.tooltippers.reduce((promises, tooltipper) => {
         const tooltip = tooltipper.tooltipInstance;

@@ -1,5 +1,10 @@
 # Changelog
 
+## 8.0.0
+
+- Rename `<RenderActiveTooltips />` to `<RenderTooltips />`
+- Rename `hideActiveTooltips` to `hideTooltips`
+
 ## 7.2.0
 
 - Update position library

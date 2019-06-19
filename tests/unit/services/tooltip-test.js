@@ -26,7 +26,7 @@ module('service:tooltip', function(hooks) {
     assert.deepEqual(
       tooltipService.get('tooltippers'),
       [fooTooltipper],
-      'adds the tooltipper instance to the array of active tooltippers'
+      'adds the tooltipper instance to the array of tooltippers'
     );
 
     tooltipService.activate(barTooltipper);

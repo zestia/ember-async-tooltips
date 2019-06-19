@@ -1,9 +1,9 @@
 # @zestia/ember-async-tooltips
 
-<a href="https://badge.fury.io/js/%40zestia%2Fember-async-tooltips"><img src="https://badge.fury.io/js/%40zestia%2Fember-async-tooltips.svg" alt="npm version" height="18"></a> &nbsp; <a href="http://travis-ci.org/zestia/ember-async-tooltips"><img src="https://travis-ci.org/zestia/ember-async-tooltips.svg?branch=master"></a> &nbsp; <a href="https://david-dm.org/zestia/ember-async-tooltips#badge-embed"><img src="https://david-dm.org/zestia/ember-async-tooltips.svg"></a> &nbsp; <a href="https://david-dm.org/zestia/ember-async-tooltips#dev-badge-embed"><img src="https://david-dm.org/zestia/ember-async-tooltips/dev-status.svg"></a> &nbsp; <a href="https://emberobserver.com/addons/@zestia/ember-async-tooltips"><img src="https://emberobserver.com/badges/-zestia-ember-async-tooltips.svg"></a> 
-
+<a href="https://badge.fury.io/js/%40zestia%2Fember-async-tooltips"><img src="https://badge.fury.io/js/%40zestia%2Fember-async-tooltips.svg" alt="npm version" height="18"></a> &nbsp; <a href="http://travis-ci.org/zestia/ember-async-tooltips"><img src="https://travis-ci.org/zestia/ember-async-tooltips.svg?branch=master"></a> &nbsp; <a href="https://david-dm.org/zestia/ember-async-tooltips#badge-embed"><img src="https://david-dm.org/zestia/ember-async-tooltips.svg"></a> &nbsp; <a href="https://david-dm.org/zestia/ember-async-tooltips#dev-badge-embed"><img src="https://david-dm.org/zestia/ember-async-tooltips/dev-status.svg"></a> &nbsp; <a href="https://emberobserver.com/addons/@zestia/ember-async-tooltips"><img src="https://emberobserver.com/badges/-zestia-ember-async-tooltips.svg"></a>
 
 ### Installation
+
 ```
 ember install @zestia/ember-async-tooltips
 ```
@@ -18,7 +18,7 @@ https://zestia.github.io/ember-async-tooltips
 
 ### Notes
 
-* Does not use jQuery
+- Does not use jQuery
 
 ### Example
 
@@ -33,51 +33,51 @@ When the `tool-tipper` component is hovered over, the `my-tooltip` component wil
 Tooltips will be rendered here:
 
 ```handlebars
-<RenderActiveTooltips />
+<RenderTooltips />
 ```
 
 ### Features
 
-* [Manual positioning](#manual-positioning)
-* [Automatic positioning](#automatic-positioning): Viewport is split into rows and columns which help determine where a tooltip should be optimally positioned (see the [demo](https://zestia.github.io/ember-async-tooltips/#/position))
-* Can specify delay before the tooltip will show/hide on a per-tooltip or per-class basis
-* Can optionally wait for async data to be loaded and passed to the tooltips _without negatively affecting the hover delay_.
+- [Manual positioning](#manual-positioning)
+- [Automatic positioning](#automatic-positioning): Viewport is split into rows and columns which help determine where a tooltip should be optimally positioned (see the [demo](https://zestia.github.io/ember-async-tooltips/#/position))
+- Can specify delay before the tooltip will show/hide on a per-tooltip or per-class basis
+- Can optionally wait for async data to be loaded and passed to the tooltips _without negatively affecting the hover delay_.
 
 ### Prerequisites
 
 1. It is assumed that all your tooltips will animate in and out. For this reason
-  you are required to add the following styles:
+   you are required to add the following styles:
 
-  ```css
-  .your-tooltip.is-showing {
-    animation: your-show-animation;
-  }
+```css
+.your-tooltip.is-showing {
+  animation: your-show-animation;
+}
 
-  .your-tooltip.is-hiding {
-    animation: your-hide-animation;
-  }
-  ```
+.your-tooltip.is-hiding {
+  animation: your-hide-animation;
+}
+```
 
 2. In order to detect when a tooltip has animated out your application must be
    informed of animation events. Add the following to `app/app.js`
 
-  ```javascript
-  customEvents: {
-    webkitAnimationEnd: 'animationEnd',
-    msAnimationEnd: 'animationEnd',
-    oAnimationEnd: 'animationEnd',
-    animationend: 'animationEnd'
-  }
-  ```
+```javascript
+customEvents: {
+  webkitAnimationEnd: 'animationEnd',
+  msAnimationEnd: 'animationEnd',
+  oAnimationEnd: 'animationEnd',
+  animationend: 'animationEnd'
+}
+```
 
 ### Recommended usage
 
 The following configuration creates a new tooltip that:
-* Has custom automatic positioning.
-  Excludes left and right - useful if you don't want to add CSS for these positions.
-* Has a custom hover delay (won't display the user tooltip until after 300ms has passed)
-* Loads the user _during_ the alotted hover delay time period, or extending the delay if it wasn't retreived in time
 
+- Has custom automatic positioning.
+  Excludes left and right - useful if you don't want to add CSS for these positions.
+- Has a custom hover delay (won't display the user tooltip until after 300ms has passed)
+- Loads the user _during_ the alotted hover delay time period, or extending the delay if it wasn't retreived in time
 
 ```javascript
 // user-tooltipper.js
@@ -141,7 +141,6 @@ The tooltipper yields the ability to show or hide its tooltip.
   </ToolTipper>
 ```
 
-
 ### Custom reference element
 
 By extending a tooltipper, you can specify any element to be the reference element for the tooltip
@@ -157,7 +156,7 @@ export default ToolTipperComponent.extend({
 
   referenceElement: computed(function() {
     // Show tool tip on hovering over the table row, rather than the tooltipper itself.
-    return this.element.parentNode.parentNode;;
+    return this.element.parentNode.parentNode;
   })
 });
 ```

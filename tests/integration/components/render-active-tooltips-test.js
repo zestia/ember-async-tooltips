@@ -5,15 +5,15 @@ import hbs from 'htmlbars-inline-precompile';
 import TooltipComponent from '@zestia/ember-async-tooltips/components/tool-tip';
 import TooltipperComponent from '@zestia/ember-async-tooltips/components/tool-tipper';
 
-module('render-active-tooltips', function(hooks) {
+module('render-tooltips', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
     assert.expect(1);
 
-    await render(hbs`<RenderActiveTooltips />`);
+    await render(hbs`<RenderTooltips />`);
 
-    assert.equal(this.element.innerHTML, '<!---->', 'does not blow up if no tooltips are active');
+    assert.equal(this.element.innerHTML, '<!---->', 'does not blow up');
   });
 
   test('it renders tooltip components', async function(assert) {
@@ -44,7 +44,7 @@ module('render-active-tooltips', function(hooks) {
       </div>
 
       <div class="out">
-        <RenderActiveTooltips />
+        <RenderTooltips />
       </div>
     `);
 
