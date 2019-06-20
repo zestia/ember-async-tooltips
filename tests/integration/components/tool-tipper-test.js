@@ -8,7 +8,7 @@ module('tool-tipper', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(3);
+    assert.expect(2);
 
     await render(hbs`<ToolTipper />`);
 
