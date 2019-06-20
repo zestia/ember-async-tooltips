@@ -9,12 +9,12 @@ module('autoPosition', function(hooks) {
     assert.equal(autoPosition('top right'), 'bottom right');
     assert.equal(autoPosition('top center'), 'bottom center');
 
-    assert.equal(autoPosition('bottom left'), 'top left');
-    assert.equal(autoPosition('bottom right'), 'top right');
-    assert.equal(autoPosition('bottom center'), 'top center');
-
     assert.equal(autoPosition('middle left'), 'right middle');
     assert.equal(autoPosition('middle right'), 'left middle');
     assert.equal(autoPosition('middle center'), 'bottom center');
+
+    assert.equal(autoPosition('bottom left'), 'top left');
+    assert.equal(autoPosition('bottom right'), 'top right');
+    assert.equal(autoPosition('bottom center'), 'top center');
   });
 });
