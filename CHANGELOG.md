@@ -1,9 +1,5 @@
 # Changelog
 
-## 8.0.5
-
-- Upgrade deps
-
 ## 8.0.4
 
 - Upgrade deps
