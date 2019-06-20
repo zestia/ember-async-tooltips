@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { settled, render, triggerEvent, find } from '@ember/test-helpers';
+import { settled, render, triggerEvent } from '@ember/test-helpers';
 import { defer } from 'rsvp';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -8,15 +8,13 @@ module('tool-tipper', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(2);
+    assert.expect(1);
 
     await render(hbs`<ToolTipper />`);
 
     assert
       .dom('.tooltipper')
       .exists({ count: 1 }, 'tool-tipper components have an appropriate class name');
-
-    assert.strictEqual(find('.tooltipper').getAttribute('type'), null, 'is not a button');
   });
 
   test('as a hyperlink', async function(assert) {
@@ -44,15 +42,11 @@ module('tool-tipper', function(hooks) {
 
     await render(hbs`<ToolTipper />`);
 
-    assert.strictEqual(find('.tooltipper').getAttribute('tabindex'), null, 'no default tabindex');
+    assert.dom('.tooltipper').doesNotHaveAttribute('tabindex', 'no default tabindex');
 
     await render(hbs`{{tool-tipper tabindex="-1"}}`);
 
-    assert.strictEqual(
-      find('.tooltipper').getAttribute('tabindex'),
-      '-1',
-      'can set tabindex attribute'
-    );
+    assert.dom('.tooltipper').hasAttribute('tabindex', '-1', 'can set tabindex attribute');
   });
 
   test('onLoad action', async function(assert) {
@@ -77,10 +71,9 @@ module('tool-tipper', function(hooks) {
 
     await settled();
 
-    assert.ok(
-      !find('.tooltipper').classList.contains('is-loading'),
-      'loading class is removed when loading is complete'
-    );
+    assert
+      .dom('.tooltipper')
+      .doesNotHaveClass('is-loading', 'loading class is removed when loading is complete');
 
     await triggerEvent('.tooltipper', 'mouseenter');
 

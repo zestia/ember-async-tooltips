@@ -12,21 +12,17 @@ module('tool-tip', function(hooks) {
 
     await render(hbs`<ToolTip @text="Hello World" />`);
 
-    const el = find('.tooltip');
-
-    assert.ok(el, 'tooltips have an appropriate class name');
+    assert.dom('.tooltip').exists('tooltips have an appropriate class name');
 
     assert
-      .dom(el)
+      .dom('.tooltip')
       .hasClass('is-showing', 'a tooltip will be showing by default (to animate itself in)');
 
-    assert.equal(
-      el.getAttribute('role'),
-      'tooltip',
-      'tooltip components have a suitable aria role'
-    );
+    assert
+      .dom('.tooltip')
+      .hasAttribute('role', 'tooltip', 'tooltip components have a suitable aria role');
 
-    assert.equal(el.innerHTML, 'Hello World', 'renders value of text attribute');
+    assert.equal(find('.tooltip').innerHTML, 'Hello World', 'renders value of text attribute');
   });
 
   test('on insert action', async function(assert) {

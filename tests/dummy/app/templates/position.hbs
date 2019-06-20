@@ -58,11 +58,11 @@
     @onLoad={{action "load"}}
     @showDelay={{this.showDelay}}
     @hideDelay={{this.hideDelay}}
-    @tooltip={{component "tool-tip" text="Hello World" position=this.position}}>
-    Hover over me
-    {{#if this.isLoading}}
-      <br>
-      Loading...
+    @tooltip={{component "tool-tip" text="Hello World" position=this.position}} as |tooltipper|>
+    {{#if tooltipper.isLoading}}
+      Loading…
+    {{else}}
+      Hello World!
     {{/if}}
   </ToolTipper>
 {{/if}}
