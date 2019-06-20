@@ -16,13 +16,14 @@ https://zestia.github.io/ember-async-tooltips
 
 - [Manual positioning](#manual-positioning) ✔︎
 - [Automatic positioning](#automatic-positioning) ✔︎
-- Customisable show/hide delays ✔︎
-- Pre-loads any required data ✔︎
+- [Customisable show/hide delays](#showinghiding) ✔︎
+- [Customisable reference element](#custom-reference-element) ✔︎
+- [Pre-loads any required data]() ✔︎
 - Does not use jQuery ✔︎
 
 ### Example
 
-When the tool-tipper component is hovered over, and any loading that needs to take place has finished, then the tooltip component will be rendered in a place of your chosing in the DOM.
+When the tooltipper component is hovered over, and any loading that needs to take place has finished, then the tooltip component will be rendered in a place of your chosing in the DOM.
 
 ```handlebars
 <ToolTipper @tooltip={{component "tooltip"}}>
@@ -40,7 +41,7 @@ Please see the [positioning library](https://github.com/zestia/position-utils#ze
 
 #### Manual positioning
 
-Setting the `@position` argument will compute `top` and `left` CSS properties to position the tool-tip around the outside edge of the tool-tipper component that caused it to display.
+Setting the `@position` argument will compute `top` and `left` CSS properties to position the tooltip around the outside edge of the tooltipper component that caused it to display.
 
 ```handlebars
 <ToolTipper @tooltip={{component "tooltip" position="bottom left"}} />
@@ -48,11 +49,40 @@ Setting the `@position` argument will compute `top` and `left` CSS properties to
 
 #### Automatic positioning
 
-By omitting the `@position` argument, the tool-tip will be positioned automatically around the outside edge of the tool-tipper. For example: If the tool-tipper component is at the very bottom of the viewport, then the tool-tip component will be displayed _above_ it - so as to remain visible.
+By omitting the `@position` argument, the tooltip will be positioned automatically around the outside edge of the tooltipper. For example: If the tooltipper component is at the very bottom of the viewport, then the tooltip component will be displayed _above_ it - so as to remain visible.
 
 ```handlebars
 <ToolTipper @tooltip={{component "tooltip"}} />
 ```
+
+You can control this behaviour to some degree by changing how the viewport is split into sections.
+
+<details>
+  <summary>View code</summary>
+
+#### Example 1
+
+```javascript
+// my-tooltip.js
+import ToolTipComponent from '@zestia/ember-async-tooltips/components/tool-tip';
+
+export default ToolTipComponent.extend({
+  classNames: ['my-tooltip'],
+  columns: 3,
+  rows: 2
+});
+```
+
+#### Example 2
+
+```handlebars
+<ToolTipper
+  @rows={{5}}
+  @columns={{5}}
+  @tooltip={{component "tooltip"}} />
+```
+
+</details>
 
 ### Showing/hiding
 
@@ -119,16 +149,9 @@ export default ToolTipperComponent.extend({
 
 </details>
 
-### Example usage
+### Preloading data
 
-The following configuration creates a _new_ tooltip that:
-
-- Has custom automatic positioning.
-  (`columns` and `rows` have been set, [more info here](https://github.com/zestia/position-utils#zestiaposition-utils))
-- Has a custom hover delay
-  (`showDelay` and `hideDelay` have been set. The tool-tipper won't display the tooltip until after 300ms has passed)
-- Loads the user _during_ the alotted show delay time, or extending that delay if it wasn't retreived in time
-  (`@onLoad` has been set and promises to load the user)
+The following configuration waits until after 300ms has passed before showing the tooltip. But which is loading some data during that time period. The show delay will be extended _only if_ the data wasn't retreived in time.
 
 <details>
   <summary>View code</summary>
@@ -141,17 +164,6 @@ export default ToolTipperComponent.extend({
   classNames: ['user-tooltipper'],
   showDelay: 300,
   hideDelay: 0
-});
-```
-
-```javascript
-// user-tooltip.js
-import ToolTipComponent from '@zestia/ember-async-tooltips/components/tool-tip';
-
-export default ToolTipComponent.extend({
-  classNames: ['user-tooltip'],
-  columns: 3,
-  rows: 2
 });
 ```
 
