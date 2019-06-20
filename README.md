@@ -76,10 +76,7 @@ export default ToolTipComponent.extend({
 #### Example 2
 
 ```handlebars
-<ToolTipper
-  @rows={{5}}
-  @columns={{5}}
-  @tooltip={{component "tooltip"}} />
+<ToolTipper @tooltip={{component "tooltip" rows=5 columns=5}} />
 ```
 
 </details>
