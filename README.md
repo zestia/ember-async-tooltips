@@ -100,7 +100,7 @@ By default, tooltips will display when hovering over a tooltipper. But tooltippe
 
 ### Custom reference element
 
-By default the tooltipper is the reference element that the tooltip will be positioned next to. But, you can specify any element to be the reference element.
+By default the tooltipper is the reference element that the causes the tooltip to show or hide and is also the element that the tooltip will be positioned next to. But, you can specify any element to be the reference element.
 
 <details>
   <summary>View code</summary>
