@@ -148,7 +148,9 @@ export default ToolTipperComponent.extend({
 
 ### Preloading data
 
-The following configuration waits until after 300ms has passed before showing the tooltip. But which is loading some data during that time period. The show delay will be extended _only if_ the data wasn't retreived in time.
+When a tooltipper is hovered over, `@onLoad` will be fired. You can respond to this action by returning a promise. This is a good way preload data to pass to the tooltip, that has yet to display.
+
+The following configuration waits for 300ms before showing a tooltip, during this time it is loading some data. The show delay will _only be extended_ if the data wasn't retreived in time.
 
 <details>
   <summary>View code</summary>
@@ -180,37 +182,39 @@ export default ToolTipperComponent.extend({
 
 ### Prerequisites
 
-- It is assumed that all your tooltips will animate in and out. For this reason
-  you are _required_ to add the following styles.
+1\. It is assumed that all your tooltips will animate in and out. For this reason
+you are _required_ to add the following styles.
 
-  <details>
-    <summary>View code</summary>
+<details>
+  <summary>View code</summary>
 
-  ```css
-  .your-tooltip.is-showing {
-    animation: your-show-animation;
-  }
+```css
+.your-tooltip.is-showing {
+  animation: your-show-animation;
+}
 
-  .your-tooltip.is-hiding {
-    animation: your-hide-animation;
-  }
-  ```
+.your-tooltip.is-hiding {
+  animation: your-hide-animation;
+}
+```
 
-  </details>
+</details>
 
-- In order to detect when a tooltip has animated out your application must be
-  informed of animation events. Add the following to `app/app.js`
+<br>
 
-  <details>
-    <summary>View code</summary>
+2\. In order to detect when a tooltip has animated out your application must be
+informed of animation events. Add the following to `app/app.js`
 
-  ```javascript
-  customEvents: {
-    webkitAnimationEnd: 'animationEnd',
-    msAnimationEnd: 'animationEnd',
-    oAnimationEnd: 'animationEnd',
-    animationend: 'animationEnd'
-  }
-  ```
+<details>
+  <summary>View code</summary>
 
-  </details>
+```javascript
+customEvents: {
+  webkitAnimationEnd: 'animationEnd',
+  msAnimationEnd: 'animationEnd',
+  oAnimationEnd: 'animationEnd',
+  animationend: 'animationEnd'
+}
+```
+
+</details>
