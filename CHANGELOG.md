@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.0.4
+
+- Upgrade deps
+
 ## 8.0.3
 
 - Re-release
