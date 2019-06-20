@@ -126,7 +126,7 @@ export default ToolTipperComponent.extend({
 <table>
   <tr>
     <td>
-      {{! This tooltip will display when hovering over the table row }}
+      {{! The tooltip will display when hovering over the table row }}
       <CustomToolTipper @tooltip={{component "custom-tooltip"}} />
     </td>
   </tr>
