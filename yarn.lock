@@ -1045,10 +1045,10 @@
     eslint-plugin-promise "^4.1.1"
     eslint-plugin-standard "^4.0.0"
 
-"@zestia/position-utils@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@zestia/position-utils/-/position-utils-2.1.0.tgz#c615cf2f4fbee66f4aa48bed7ddba700f83f353b"
-  integrity sha512-3zlBO+nUoRrhU+I9ayvyjaRybrRODL3QsvtITwfgFSkTj/wvA9yaVxxSmmIgyukaAxCd5jQiMvC7ZokDGqfuxA==
+"@zestia/position-utils@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@zestia/position-utils/-/position-utils-2.2.0.tgz#274450bf14f3b9893621bab7fb86fd3c5b7b843e"
+  integrity sha512-ZyUYdeCyNNIVq4S0nUrdffPe8/MLdTHCcaapxm1JJ7ClXtHkhkUl0nlpgyTHNwFiFqn5CSClvzdbW57ICZQjew==
 
 "@zestia/prettier-config@0.0.3":
   version "0.0.3"
