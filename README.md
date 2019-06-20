@@ -116,7 +116,7 @@ export default ToolTipperComponent.extend({
   classNames: ['custom-tooltipper'],
 
   referenceElement: computed(function() {
-    // Show tool tip on hovering over the table row, rather than the tooltipper itself.
+    // Show the tooltip when hovering over the table row, rather than the tooltipper itself.
     return this.element.parentNode.parentNode;
   })
 });
