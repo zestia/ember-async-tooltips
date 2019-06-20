@@ -23,7 +23,7 @@ https://zestia.github.io/ember-async-tooltips
 
 ### Example
 
-When the tooltipper component is hovered over, and any loading that needs to take place has finished, then the tooltip component will be rendered in a place of your chosing in the DOM.
+When the tooltipper is hovered over, and any loading that needs to take place has finished, then the tooltip will be rendered in a place of your chosing in the DOM.
 
 ```handlebars
 <ToolTipper @tooltip={{component "tooltip"}}>
@@ -41,7 +41,7 @@ Please see the [positioning library](https://github.com/zestia/position-utils#ze
 
 #### Manual positioning
 
-Setting the `@position` argument will compute `top` and `left` CSS properties to position the tooltip around the outside edge of the tooltipper component that caused it to display.
+Setting the `@position` argument will compute `top` and `left` CSS properties to position the tooltip around the outside edge of the tooltipper that caused it to display.
 
 ```handlebars
 <ToolTipper @tooltip={{component "tooltip" position="bottom left"}} />
@@ -49,7 +49,7 @@ Setting the `@position` argument will compute `top` and `left` CSS properties to
 
 #### Automatic positioning
 
-By omitting the `@position` argument, the tooltip will be positioned automatically around the outside edge of the tooltipper. For example: If the tooltipper component is at the very bottom of the viewport, then the tooltip component will be displayed _above_ it - so as to remain visible.
+By omitting the `@position` argument, the tooltip will be positioned automatically around the outside edge of the tooltipper. For example: If the tooltipper is at the very bottom of the viewport, then the tooltip will be displayed _above_ it - so as to remain visible.
 
 ```handlebars
 <ToolTipper @tooltip={{component "tooltip"}} />
