@@ -148,9 +148,9 @@ export default ToolTipperComponent.extend({
 
 ### Preloading data
 
-When a tooltipper is hovered over, `@onLoad` will be fired. You can respond to this action by returning a promise. This is a good way preload data to pass to the tooltip, that has yet to display.
+When a tooltipper is hovered over, `@onLoad` will be fired. You can respond to this action by returning a promise. The result of that promise will be available in the tooltip's template as `this.data`. This is a good way preload any data required for the tooltip to display.
 
-The following configuration waits for 300ms before showing a tooltip, during this time it is loading some data. The show delay will _only be extended_ if the data wasn't retreived in time.
+The following example waits for 300ms before showing a tooltip, during this time it is loading some data. The show delay will _only be extended_ if the data wasn't retreived in time.
 
 <details>
   <summary>View code</summary>
@@ -168,8 +168,8 @@ export default ToolTipperComponent.extend({
 
 ```handlebars
   {{! application.hbs }}
-  <UserToolTipper @onLoad={{action "loadUser" this.user.id}} @tooltip={{component "user-tooltip"}}>
-    {{this.user.name}}
+  <UserToolTipper @onLoad={{action "loadUser" "joe-bloggs"} @tooltip={{component "user-tooltip"}}>
+    Joe Bloggs
   </UserToolTipper>
 ```
 
