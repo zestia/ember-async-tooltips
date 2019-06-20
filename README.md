@@ -13,7 +13,7 @@ ember install @zestia/ember-async-tooltips
 https://zestia.github.io/ember-async-tooltips
 
 <a href="https://zestia.github.io/ember-async-tooltips">
-  <img src="docs/screenshot.png" width="512" height="319">
+  <img src="docs/screenshot.png" width="500" height="352">
 </a>
 
 ### Notes
