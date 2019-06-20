@@ -113,6 +113,9 @@ export default Component.extend({
           trySet(this, 'data', data);
           trySet(this, 'isLoaded', true);
         })
+        .catch(error => {
+          trySet(this, 'error', error);
+        })
         .finally(() => {
           trySet(this, 'isLoading', false);
         });
