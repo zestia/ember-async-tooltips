@@ -30,7 +30,7 @@
     position: absolute;
     top: 35px;
     left: 10px;
-    min-width: 160px;
+    width: 160px;
     padding: 20px;
     text-align: center;
   }
@@ -39,12 +39,15 @@
     background-color: black;
     color: white;
     padding: 5px;
+    width: 100px;
+    text-align: center;
   }
 
   .grid {
     height: 100vh;
     width: 100%;
     table-layout: fixed;
+    border-collapse: collapse;
   }
 
   .cell {
