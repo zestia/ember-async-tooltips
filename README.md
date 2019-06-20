@@ -55,7 +55,7 @@ By omitting the `@position` argument, the tooltip will be positioned automatical
 <ToolTipper @tooltip={{component "tooltip"}} />
 ```
 
-You can control this behaviour to some degree by changing how the viewport is split into sections.
+You can control this behaviour to some degree by changing how the viewport is [split into sections](https://github.com/zestia/position-utils#zestiaposition-utils).
 
 <details>
   <summary>View code</summary>
