@@ -1,5 +1,9 @@
 # Changelog
 
+# 8.0.1
+
+- Upgrade deps
+
 ## 8.0.0
 
 - Rename `<RenderActiveTooltips />` to `<RenderTooltips />`
