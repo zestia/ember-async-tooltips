@@ -168,7 +168,7 @@ export default ToolTipperComponent.extend({
 
 ```handlebars
   {{! application.hbs }}
-  <UserToolTipper @onLoad={{action "loadUser" "joe-bloggs"} @tooltip={{component "user-tooltip"}}>
+  <UserToolTipper @onLoad={{action "loadUser" "joe-bloggs"}} @tooltip={{component "user-tooltip"}}>
     Joe Bloggs
   </UserToolTipper>
 ```
