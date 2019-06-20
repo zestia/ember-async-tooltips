@@ -1,6 +1,14 @@
 # Changelog
 
-# 8.0.1
+## 8.0.3
+
+- Re-release
+
+## 8.0.2
+
+- Fudged release numbers
+
+## 8.0.1
 
 - Upgrade deps
 
