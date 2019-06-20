@@ -16,8 +16,6 @@ module('tool-tipper', function(hooks) {
       .dom('.tooltipper')
       .exists({ count: 1 }, 'tool-tipper components have an appropriate class name');
 
-    assert.equal(find('.tooltipper').tagName, 'SPAN', 'renders as an inline element by default');
-
     assert.strictEqual(find('.tooltipper').getAttribute('type'), null, 'is not a button');
   });
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.0.5
+
+- Change default tag for tooltippers from a span to a div. This moves the responsilbility of block/inline to the consumer of this addon
+
 ## 8.0.4
 
 - Upgrade deps

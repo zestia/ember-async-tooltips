@@ -11,7 +11,6 @@ export default Component.extend({
 
   layout,
 
-  tagName: 'span',
   classNames: ['tooltipper'],
   classNameBindings: ['tooltipInstance:has-tooltip', 'isLoading'],
   attributeBindings: ['tabindex', 'href', 'target', 'rel', 'type', 'draggable'],
