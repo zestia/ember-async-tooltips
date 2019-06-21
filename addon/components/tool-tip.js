@@ -4,7 +4,7 @@ import { scheduleOnce } from '@ember/runloop';
 import layout from '../templates/components/tool-tip';
 import { dasherize } from '@ember/string';
 import autoPosition from '../utils/auto-position';
-import { positionCoords, elementPosition } from '@zestia/position-utils';
+import { position, coords } from '@zestia/position-utils';
 
 export default Component.extend({
   layout,
@@ -75,30 +75,15 @@ export default Component.extend({
 
     const tooltip = this.element;
     const tooltipper = this.tooltipperInstance.referenceElement;
-    const position = this._tooltipPosition();
-    const [left, top] = positionCoords(position, tooltip, tooltipper);
+    const container = document.documentElement;
+    const tooltipperPosition = position(tooltipper, container, this.columns, this.rows);
+    const tooltipPosition = this.position ? this.position : autoPosition(tooltipperPosition);
+    const tooltipCoords = coords(tooltipPosition, tooltip, tooltipper);
+    const { top, left } = tooltipCoords;
 
-    this.set('positionClass', this._classForPosition(position));
+    this.set('positionClass', `is-${dasherize(tooltipPosition)}`);
 
     tooltip.style.top = `${top}px`;
     tooltip.style.left = `${left}px`;
-  },
-
-  _tooltipPosition() {
-    if (this.position) {
-      return this.position;
-    } else {
-      return autoPosition(this._tooltipperPosition());
-    }
-  },
-
-  _tooltipperPosition() {
-    const tooltipper = this.tooltipperInstance.referenceElement;
-    const doc = document.documentElement;
-    return elementPosition(tooltipper, doc, this.columns, this.rows);
-  },
-
-  _classForPosition(position) {
-    return `is-${dasherize(position)}`;
   }
 });

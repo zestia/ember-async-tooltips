@@ -1,5 +1,5 @@
-export default function autoPosition(reference) {
-  switch (reference) {
+export default function autoPosition(position) {
+  switch (position) {
     case 'top left':
       return 'bottom left';
     case 'top center':

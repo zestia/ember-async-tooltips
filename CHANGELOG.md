@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.0.1
+
+- Upgrade position utils
+
 ## 9.0.0
 
 - Change default tag for tooltippers from a span to a div. This moves the responsilbility of block/inline to the consumer of this addon
