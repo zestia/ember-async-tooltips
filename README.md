@@ -84,9 +84,12 @@ export default ToolTipComponent.extend({
 ### Showing/hiding
 
 By default, tooltips will display when hovering over a tooltipper. But tooltippers also yield the ability to show or hide its tooltip manually.
+Additionally, you can customise the show/hide delays.
 
 <details>
   <summary>View code</summary>
+
+#### Example 1
 
 ```handlebars
 <ToolTipper @tooltip={{component "tooltip"}} @mouseEvents={{false}} as |tooltipper|>
@@ -94,6 +97,15 @@ By default, tooltips will display when hovering over a tooltipper. But tooltippe
   <button onclick={{action tooltipper.showTooltip}}>Show</button>
   <button onclick={{action tooltipper.toggleTooltip}}>Toggle</button>
 </ToolTipper>
+```
+
+#### Example 2
+
+```handlebars
+<ToolTipper
+  @tooltip={{component "tooltip"}}
+  @showDelay={{500}}
+  @hideDelay={{0}} />
 ```
 
 </details>
@@ -138,8 +150,6 @@ export default ToolTipperComponent.extend({
 ```handlebars
 {{! parent-component/template.hbs }}
 <ToolTipper
-  @showDelay={{200}}
-  @hideDelay={{200}}
   @referenceElement={{this.element}}
   @tooltip={{component "tooltip"}} />
 ```
