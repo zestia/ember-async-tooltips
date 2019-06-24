@@ -42,6 +42,7 @@ Please see the [positioning library](https://github.com/zestia/position-utils#ze
 #### Manual positioning
 
 Setting the `@position` argument will compute `top` and `left` CSS properties to position the tooltip around the outside edge of the tooltipper that caused it to display.
+By default, if the tooltip won't fit into the viewport, it will be flipped in an attempt to keep it visible. You can disable this behaviour by setting `@flip` to false.
 
 ```handlebars
 <ToolTipper @tooltip={{component "tooltip" position="bottom left"}} />

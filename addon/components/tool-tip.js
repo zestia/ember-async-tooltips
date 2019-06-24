@@ -18,6 +18,7 @@ export default Component.extend({
   role: 'tooltip',
   rows: 3,
   columns: 3,
+  flip: true,
   isShowing: true,
   isOver: false,
   tooltipperInstance: null,
@@ -75,13 +76,13 @@ export default Component.extend({
 
     const tooltip = this.element;
     const tooltipper = this.tooltipperInstance.referenceElement;
-    const container = document.documentElement;
+    const container = this.flip ? document.documentElement : null;
     const tooltipperPosition = position(tooltipper, container, this.columns, this.rows);
     const tooltipPosition = this.position ? this.position : autoPosition(tooltipperPosition);
-    const tooltipCoords = coords(tooltipPosition, tooltip, tooltipper);
-    const { top, left } = tooltipCoords;
+    const tooltipCoords = coords(tooltipPosition, tooltip, tooltipper, container);
+    const { top, left, position: finalPosition } = tooltipCoords;
 
-    this.set('positionClass', `is-${dasherize(tooltipPosition)}`);
+    this.set('positionClass', `is-${dasherize(finalPosition)}`);
 
     tooltip.style.top = `${top}px`;
     tooltip.style.left = `${left}px`;

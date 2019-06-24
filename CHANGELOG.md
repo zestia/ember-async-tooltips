@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.1.0
+
+- Introduce flipping behaviour
+
 ## 9.0.1
 
 - Upgrade position utils
