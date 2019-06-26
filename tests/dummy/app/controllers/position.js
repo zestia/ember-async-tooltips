@@ -23,6 +23,10 @@ export default Controller.extend({
       this.set('position', position);
     },
 
+    setAdjust(bool) {
+      this.set('adjust', bool);
+    },
+
     setShowDelay(delay) {
       this.set('showDelay', delay);
     },

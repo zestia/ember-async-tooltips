@@ -18,6 +18,11 @@
     </select>
   </label>
 
+  <label class="control" title="Adjust position if the tooltip does not fit in the viewport">
+    <input type="checkbox" onclick={{action "setAdjust" value="target.checked"}}>
+    Adjust
+  </label>
+
   <span class="control">
     <label> Hover delay <input type="number" min="1" class="number-input hover-delay" title="In" value={{this.showDelay}} oninput={{action "setShowDelay" value="target.value"}}></label><input type="number" min="1" class="number-input hover-delay" title="Out" value={{this.hideDelay}} oninput={{action "setHideDelay" value="target.value"}}>
   </span>
@@ -58,11 +63,16 @@
     @onLoad={{action "load"}}
     @showDelay={{this.showDelay}}
     @hideDelay={{this.hideDelay}}
-    @tooltip={{component "tool-tip" text="Hello World" position=this.position}} as |tooltipper|>
+    @tooltip={{component "tool-tip"
+      text="Hello World"
+      position=this.position
+      adjust=this.adjust}} as |tooltipper|>
+
     {{#if tooltipper.isLoading}}
       Loading…
     {{else}}
       Hello World!
     {{/if}}
+
   </ToolTipper>
 {{/if}}
