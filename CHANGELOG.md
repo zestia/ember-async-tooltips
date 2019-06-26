@@ -1,9 +1,5 @@
 # Changelog
 
-## 9.2.0
-
-- Upgrade deps
-
 ## 9.1.0
 
 - Introduce position adjustment behaviour. See `@adjust` in readme.
