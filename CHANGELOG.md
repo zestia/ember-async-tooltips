@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.1.1
+
+- Upgrade position utils
+
 ## 9.1.0
 
 - Introduce position adjustment behaviour. See `@adjust` in readme.
