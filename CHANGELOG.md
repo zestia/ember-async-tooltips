@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.1.2
+
+- Upgrade dependencies
+
 ## 9.1.1
 
 - Upgrade position utils
