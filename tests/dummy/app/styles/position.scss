@@ -1,9 +1,6 @@
 /* stylelint-disable sh-waqar/declaration-use-variable, color-no-hex */
 
 .ember-application:not(.has-layout) {
-  padding: 0;
-  margin: 0;
-
   .controls {
     position: fixed;
     top: 5px;
@@ -18,13 +15,9 @@
     max-width: 40px;
   }
 
-  .tooltipper,
-  .tooltip {
-    box-sizing: border-box;
-  }
-
   .tooltipper {
     background-color: silver;
+    box-sizing: border-box;
     cursor: move;
     user-select: none;
     position: absolute;
@@ -37,6 +30,7 @@
 
   .tooltip {
     background-color: black;
+    box-sizing: border-box;
     color: white;
     padding: 5px;
     width: 100px;
