@@ -1,6 +1,9 @@
 /* stylelint-disable sh-waqar/declaration-use-variable, color-no-hex */
 
 .ember-application:not(.has-layout) {
+  padding-left: 0;
+  padding-right: 0;
+
   .controls {
     position: fixed;
     top: 5px;
