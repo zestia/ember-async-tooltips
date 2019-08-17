@@ -1,7 +1,11 @@
 /* stylelint-disable selector-max-type */
 
+:root {
+  --grey: gray;
+}
+
 table,
 td,
 tr {
-  border: 1px solid gray;
+  border: 1px solid var(--grey);
 }
