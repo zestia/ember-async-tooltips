@@ -1,6 +1,11 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, triggerEvent, click } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  triggerEvent,
+  click
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import TooltipComponent from '@zestia/ember-async-tooltips/components/tool-tip';
 import TooltipperComponent from '@zestia/ember-async-tooltips/components/tool-tipper';
