@@ -77,9 +77,25 @@ export default Component.extend({
     const tooltip = this.element;
     const tooltipper = this.tooltipperInstance.referenceElement;
     const container = this.adjust ? window : null;
-    const tooltipperPosition = getPosition(tooltipper, window, this.columns, this.rows);
-    const tooltipPosition = this.position ? this.position : autoPosition(tooltipperPosition);
-    const tooltipCoords = getCoords(tooltipPosition, tooltip, tooltipper, container);
+
+    const tooltipperPosition = getPosition(
+      tooltipper,
+      window,
+      this.columns,
+      this.rows
+    );
+
+    const tooltipPosition = this.position
+      ? this.position
+      : autoPosition(tooltipperPosition);
+
+    const tooltipCoords = getCoords(
+      tooltipPosition,
+      tooltip,
+      tooltipper,
+      container
+    );
+
     const { top, left, position: adjustedPosition } = tooltipCoords;
 
     this.set('positionClass', `is-${dasherize(adjustedPosition)}`);

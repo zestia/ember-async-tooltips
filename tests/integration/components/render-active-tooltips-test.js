@@ -1,11 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  settled,
-  triggerEvent,
-  click
-} from '@ember/test-helpers';
+import { render, settled, triggerEvent, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import TooltipComponent from '@zestia/ember-async-tooltips/components/tool-tip';
 import TooltipperComponent from '@zestia/ember-async-tooltips/components/tool-tipper';
@@ -55,17 +50,24 @@ module('render-tooltips', function(hooks) {
 
     triggerEvent('.in .foo-tooltipper', 'mouseenter');
 
-    assert.dom('.foo-tooltip').doesNotExist('tooltip is not rendered yet (still hovering over it)');
+    assert
+      .dom('.foo-tooltip')
+      .doesNotExist('tooltip is not rendered yet (still hovering over it)');
 
     await settled();
 
-    assert.dom('.out .foo-tooltip').exists({ count: 1 }, 'the tooltip is rendered elsewhere');
+    assert
+      .dom('.out .foo-tooltip')
+      .exists({ count: 1 }, 'the tooltip is rendered elsewhere');
 
     await triggerEvent('.foo-tooltipper', 'mouseleave');
 
     assert
       .dom('.foo-tooltip')
-      .exists({ count: 1 }, 'tooltip is not destroyed yet (due to hover delay)');
+      .exists(
+        { count: 1 },
+        'tooltip is not destroyed yet (due to hover delay)'
+      );
 
     await triggerEvent('.foo-tooltip', 'animationEnd');
 
@@ -75,17 +77,23 @@ module('render-tooltips', function(hooks) {
 
     await click('.show-from-tooltipper');
 
-    assert.dom('.foo-tooltip').exists({ count: 1 }, 'tooltip can be manually shown by tooltipper');
+    assert
+      .dom('.foo-tooltip')
+      .exists({ count: 1 }, 'tooltip can be manually shown by tooltipper');
 
     await click('.hide-from-tooltipper');
 
     await triggerEvent('.foo-tooltip', 'animationEnd');
 
-    assert.dom('.foo-tooltip').doesNotExist('tooltip can be manually hidden by tooltipper');
+    assert
+      .dom('.foo-tooltip')
+      .doesNotExist('tooltip can be manually hidden by tooltipper');
 
     await triggerEvent('.foo-tooltipper', 'mouseenter');
 
-    assert.dom('.foo-tooltip').exists({ count: 1 }, 'precondition: tooltip shown');
+    assert
+      .dom('.foo-tooltip')
+      .exists({ count: 1 }, 'precondition: tooltip shown');
 
     await click('.hide-from-tooltip');
 
@@ -95,12 +103,16 @@ module('render-tooltips', function(hooks) {
 
     await click('.toggle-from-tooltipper');
 
-    assert.dom('.foo-tooltip').exists({ count: 1 }, 'tooltip can be manually shown (toggled)');
+    assert
+      .dom('.foo-tooltip')
+      .exists({ count: 1 }, 'tooltip can be manually shown (toggled)');
 
     await click('.toggle-from-tooltipper');
 
     await triggerEvent('.foo-tooltip', 'animationEnd');
 
-    assert.dom('.foo-tooltip').doesNotExist('tooltip can be manually hidden (toggled)');
+    assert
+      .dom('.foo-tooltip')
+      .doesNotExist('tooltip can be manually hidden (toggled)');
   });
 });

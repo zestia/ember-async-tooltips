@@ -15,19 +15,30 @@ module('tool-tipper', function(hooks) {
 
     assert
       .dom('.tooltipper')
-      .exists({ count: 1 }, 'tool-tipper components have an appropriate class name');
+      .exists(
+        { count: 1 },
+        'tool-tipper components have an appropriate class name'
+      );
   });
 
   test('as a hyperlink', async function(assert) {
     assert.expect(3);
 
-    await render(hbs`{{tool-tipper tagName="a" href="foo" rel="bar" target="baz"}}`);
+    await render(
+      hbs`{{tool-tipper tagName="a" href="foo" rel="bar" target="baz"}}`
+    );
 
-    assert.dom('.tooltipper').hasAttribute('href', 'foo', 'can set href attribute');
+    assert
+      .dom('.tooltipper')
+      .hasAttribute('href', 'foo', 'can set href attribute');
 
-    assert.dom('.tooltipper').hasAttribute('rel', 'bar', 'can set rel attribute');
+    assert
+      .dom('.tooltipper')
+      .hasAttribute('rel', 'bar', 'can set rel attribute');
 
-    assert.dom('.tooltipper').hasAttribute('target', 'baz', 'can set target attribute');
+    assert
+      .dom('.tooltipper')
+      .hasAttribute('target', 'baz', 'can set target attribute');
   });
 
   test('as a button', async function(assert) {
@@ -35,7 +46,9 @@ module('tool-tipper', function(hooks) {
 
     await render(hbs`{{tool-tipper tagName="button" type="foo"}}`);
 
-    assert.dom('.tooltipper').hasAttribute('type', 'foo', 'can specify type of button');
+    assert
+      .dom('.tooltipper')
+      .hasAttribute('type', 'foo', 'can specify type of button');
   });
 
   test('tabindex', async function(assert) {
@@ -43,11 +56,15 @@ module('tool-tipper', function(hooks) {
 
     await render(hbs`<ToolTipper />`);
 
-    assert.dom('.tooltipper').doesNotHaveAttribute('tabindex', 'no default tabindex');
+    assert
+      .dom('.tooltipper')
+      .doesNotHaveAttribute('tabindex', 'no default tabindex');
 
     await render(hbs`{{tool-tipper tabindex="-1"}}`);
 
-    assert.dom('.tooltipper').hasAttribute('tabindex', '-1', 'can set tabindex attribute');
+    assert
+      .dom('.tooltipper')
+      .hasAttribute('tabindex', '-1', 'can set tabindex attribute');
   });
 
   test('onLoad action', async function(assert) {
@@ -70,7 +87,9 @@ module('tool-tipper', function(hooks) {
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    assert.dom('.tooltipper').hasClass('is-loading', 'has a loading class whilst loading the data');
+    assert
+      .dom('.tooltipper')
+      .hasClass('is-loading', 'has a loading class whilst loading the data');
     assert.dom('.tooltipper').hasText('loading', 'yields loading state');
 
     deferred.resolve();
@@ -79,9 +98,14 @@ module('tool-tipper', function(hooks) {
 
     assert
       .dom('.tooltipper')
-      .doesNotHaveClass('is-loading', 'loading class is removed when loading is complete');
+      .doesNotHaveClass(
+        'is-loading',
+        'loading class is removed when loading is complete'
+      );
 
-    assert.dom('.tooltipper').doesNotIncludeText('loading', 'yields loading state has finished');
+    assert
+      .dom('.tooltipper')
+      .doesNotIncludeText('loading', 'yields loading state has finished');
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
@@ -116,7 +140,9 @@ module('tool-tipper', function(hooks) {
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    assert.dom('.tooltip').hasText('foo', 'data is loaded and passed to the tooltip');
+    assert
+      .dom('.tooltip')
+      .hasText('foo', 'data is loaded and passed to the tooltip');
   });
 
   test('onLoad failure', async function(assert) {
@@ -151,7 +177,13 @@ module('tool-tipper', function(hooks) {
     await triggerEvent('.tooltipper', 'mouseenter');
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    assert.equal(count, 2, 'load is attempted more than once, if previously failed');
-    assert.dom('.tooltip').hasText('bar', 'can determine when data failed to load');
+    assert.equal(
+      count,
+      2,
+      'load is attempted more than once, if previously failed'
+    );
+    assert
+      .dom('.tooltip')
+      .hasText('bar', 'can determine when data failed to load');
   });
 });

@@ -16,13 +16,24 @@ module('tool-tip', function(hooks) {
 
     assert
       .dom('.tooltip')
-      .hasClass('is-showing', 'a tooltip will be showing by default (to animate itself in)');
+      .hasClass(
+        'is-showing',
+        'a tooltip will be showing by default (to animate itself in)'
+      );
 
     assert
       .dom('.tooltip')
-      .hasAttribute('role', 'tooltip', 'tooltip components have a suitable aria role');
+      .hasAttribute(
+        'role',
+        'tooltip',
+        'tooltip components have a suitable aria role'
+      );
 
-    assert.equal(find('.tooltip').innerHTML, 'Hello World', 'renders value of text attribute');
+    assert.equal(
+      find('.tooltip').innerHTML,
+      'Hello World',
+      'renders value of text attribute'
+    );
   });
 
   test('on insert action', async function(assert) {

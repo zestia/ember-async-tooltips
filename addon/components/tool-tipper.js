@@ -81,13 +81,28 @@ export default Component.extend({
   _listen() {
     set(this, '_mouseEnterHandler', bind(this, '_mouseEnter'));
     set(this, '_mouseLeaveHandler', bind(this, '_mouseLeave'));
-    this.referenceElement.addEventListener('mouseenter', this._mouseEnterHandler);
-    this.referenceElement.addEventListener('mouseleave', this._mouseLeaveHandler);
+
+    this.referenceElement.addEventListener(
+      'mouseenter',
+      this._mouseEnterHandler
+    );
+
+    this.referenceElement.addEventListener(
+      'mouseleave',
+      this._mouseLeaveHandler
+    );
   },
 
   _stopListening() {
-    this.referenceElement.removeEventListener('mouseenter', this._mouseEnterHandler);
-    this.referenceElement.removeEventListener('mouseleave', this._mouseLeaveHandler);
+    this.referenceElement.removeEventListener(
+      'mouseenter',
+      this._mouseEnterHandler
+    );
+
+    this.referenceElement.removeEventListener(
+      'mouseleave',
+      this._mouseLeaveHandler
+    );
   },
 
   _mouseEnter() {

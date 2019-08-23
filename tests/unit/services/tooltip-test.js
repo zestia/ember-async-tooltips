@@ -43,7 +43,11 @@ module('service:tooltip', function(hooks) {
 
     tooltipService.activate(fooTooltipper);
 
-    assert.deepEqual(tooltipService.get('tooltippers'), [fooTooltipper], 'precondition');
+    assert.deepEqual(
+      tooltipService.get('tooltippers'),
+      [fooTooltipper],
+      'precondition'
+    );
 
     tooltipService.deactivate(fooTooltipper);
 
