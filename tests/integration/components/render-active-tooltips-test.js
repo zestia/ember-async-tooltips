@@ -23,7 +23,7 @@ module('render-tooltips', function(hooks) {
       classNames: ['foo-tooltip'],
       layout: hbs`
         Hello World ({{@myArg}})<br>
-        <button class="hide-from-tooltip" onclick={{action "hide"}}></button>
+        <button class="hide-from-tooltip" {{on "click" (action "hide")}}></button>
       `
     });
 
@@ -37,9 +37,9 @@ module('render-tooltips', function(hooks) {
     await render(hbs`
       <div class="in">
         <FooTooltipper @tooltip={{component "foo-tooltip" myArg="foo"}} as |tt|>
-          <button class="show-from-tooltipper" onclick={{action tt.showTooltip}}></button>
-          <button class="hide-from-tooltipper" onclick={{action tt.hideTooltip}}></button>
-          <button class="toggle-from-tooltipper" onclick={{action tt.toggleTooltip}}></button>
+          <button class="show-from-tooltipper" {{on "click" tt.showTooltip}}></button>
+          <button class="hide-from-tooltipper" {{on "click" tt.hideTooltip}}></button>
+          <button class="toggle-from-tooltipper" {{on "click" tt.toggleTooltip}}></button>
         </FooTooltipper>
       </div>
 

@@ -94,9 +94,9 @@ Additionally, you can customise the show/hide delays.
 
 ```handlebars
 <ToolTipper @tooltip={{component "tooltip"}} @mouseEvents={{false}} as |tooltipper|>
-  <button onclick={{action tooltipper.hideTooltip}}>Hide</button>
-  <button onclick={{action tooltipper.showTooltip}}>Show</button>
-  <button onclick={{action tooltipper.toggleTooltip}}>Toggle</button>
+  <button {{on "click" tooltipper.hideTooltip}}>Hide</button>
+  <button {{on "click" tooltipper.showTooltip}}>Show</button>
+  <button {{on "click" tooltipper.toggleTooltip}}>Toggle</button>
 </ToolTipper>
 ```
 
