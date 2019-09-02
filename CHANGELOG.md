@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.1.4
+
+- Upgrade dependencies
+
 ## 9.1.3
 
 - Upgrade dependencies
