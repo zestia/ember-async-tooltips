@@ -1,5 +1,11 @@
-<br><br>
+<br><br><br><br>
 
-<ToolTipper @tooltip={{component "simple-tooltip"}}>
+<Tooltipper @tooltip={{component "simple-tooltip"}}>
   Hover over me
-</ToolTipper>
+</Tooltipper>
+
+<br><br><br><br>
+
+<Tooltipper @tooltip={{component "simple-tooltip"}} @mouseEvents={{false}} as |tooltipper|>
+  <button type="button" onclick={{tooltipper.showTooltip}}>Click me</button>
+</Tooltipper>

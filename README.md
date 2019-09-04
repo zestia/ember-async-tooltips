@@ -65,7 +65,7 @@ You can control this behaviour to some degree by changing how the viewport is [s
 
 ```javascript
 // my-tooltip.js
-import ToolTipComponent from '@zestia/ember-async-tooltips/components/tool-tip';
+import ToolTipComponent from '@zestia/ember-async-tooltips/components/tooltip';
 
 export default ToolTipComponent.extend({
   classNames: ['my-tooltip'],
