@@ -6,6 +6,8 @@
     (if this.isLoading " is-loading")
     (if this.renderTooltip " has-tooltip")
   }}
+  aria-describedby={{concat "tooltip-" this.identifier}}
+  id={{concat "tooltipper-" this.identifier}}
   ...attributes>
 
   {{yield (hash
@@ -22,14 +24,16 @@
       {{will-destroy (action "willDestroyTooltip")}}
       {{on "mouseenter" (action "onMouseEnterTooltip")}}
       {{on "mouseleave" (action "onMouseLeaveTooltip")}}
-      @data={{this.loadedData}}
-      @dataError={{this.loadError}}
       class={{concat
         "tooltip"
         " is-" (if this.isShowingTooltip "showing" "hiding")
         " is-" (if this.coords.position this.tooltipPosition "unpositioned")
       }}
+      id={{concat "tooltip-" this.identifier}}
       style={{this.tooltipStyle}}
-      role="tooltip" />
+      role="tooltip"
+      @hide={{action "hideTooltip"}}
+      @data={{this.loadedData}}
+      @dataError={{this.loadError}}/>
   {{/if}}
 </div>

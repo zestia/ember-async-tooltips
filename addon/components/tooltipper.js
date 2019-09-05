@@ -6,6 +6,7 @@ import { debounce } from '@ember/runloop';
 import { htmlSafe, dasherize } from '@ember/string';
 import autoPosition from '../utils/auto-position';
 import { getPosition, getCoords } from '@zestia/position-utils';
+import { guidFor } from '@ember/object/internals';
 
 export default Component.extend({
   layout,
@@ -25,13 +26,14 @@ export default Component.extend({
   // State
 
   coords: null,
-  loadedData: null,
-  loadError: null,
+  identifier: null,
   isLoaded: false,
   isLoading: false,
   isOverReferenceElement: false,
   isOverTooltip: false,
   isShowingTooltip: false,
+  loadedData: null,
+  loadError: null,
   referenceElement: null,
   renderTooltip: false,
   tooltipElement: null,
@@ -59,6 +61,7 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     set(this, 'coords', {});
+    set(this, 'identifier', guidFor(this).replace('ember', ''));
   },
 
   actions: {
@@ -103,7 +106,7 @@ export default Component.extend({
     // Public API Actions
 
     hideTooltip() {
-      this._attemptHideTooltip();
+      return this._attemptHideTooltip();
     },
 
     showTooltip() {
