@@ -55,12 +55,12 @@ export default Component.extend({
   }),
 
   tooltipPosition: computed('coords.position', function() {
-    return dasherize(this.coords.position || '');
+    return dasherize(this.coords.position);
   }),
 
   init() {
     this._super(...arguments);
-    set(this, 'coords', {});
+    set(this, 'coords', { top: 0, left: 0, position: '' });
     set(this, 'identifier', guidFor(this).replace('ember', ''));
   },
 
