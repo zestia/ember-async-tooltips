@@ -55,18 +55,17 @@
 </table>
 
 {{#if this.showTooltipper}}
-  <ToolTipper
+  <Tooltipper
     draggable="true"
-    @drag={{action "storeLastPos"}}
-    @dragStart={{action "storeStartPos"}}
-    @dragEnd={{action "reposition"}}
+    ondrag={{action "storeLastPos"}}
+    ondragstart={{action "storeStartPos"}}
+    ondragend={{action "reposition"}}
     @onLoad={{action "load"}}
     @showDelay={{this.showDelay}}
     @hideDelay={{this.hideDelay}}
-    @tooltip={{component "tool-tip"
-      text="Hello World"
-      position=this.position
-      adjust=this.adjust}} as |tooltipper|>
+    @position={{this.position}}
+    @adjust={{this.adjust}}
+    @tooltip={{component "tooltip" text="Hello World"}} as |tooltipper|>
 
     {{#if tooltipper.isLoading}}
       Loading…
@@ -74,5 +73,5 @@
       Hello World!
     {{/if}}
 
-  </ToolTipper>
+  </Tooltipper>
 {{/if}}

@@ -1,12 +1,1 @@
-<@component
-  {{did-insert (action "didInsertElement")}}
-  {{did-update (action "didUpdateElement")}}
-  {{will-destroy (action "willDestroyElement")}}
-  class={{concat
-    "tooltip"
-    (if this.isShowing " is-showing" " is-hiding")
-    " " this.positionClass
-  }}
-  style={{this.style}}
-  role="tooltip"
-  ...attributes />
+<div ...attributes>{{@text}}</div>

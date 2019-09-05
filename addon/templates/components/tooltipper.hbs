@@ -1,12 +1,13 @@
 <div
-  {{did-insert (action "didInsertElement")}}
-  {{will-destroy (action "willDestroyElement")}}
+  {{did-insert (action "didInsertTooltipper")}}
+  {{will-destroy (action "willDestroyTooltipper")}}
   class={{concat
     "tooltipper"
     (if this.isLoading " is-loading")
     (if this.renderTooltip " has-tooltip")
   }}
   ...attributes>
+
   {{yield (hash
     isLoading=this.isLoading
     showTooltip=(action "showTooltip")
@@ -15,13 +16,20 @@
   )}}
 
   {{#if this.renderTooltip}}
-    <Tooltip
+    <this.tooltipComponent
+      {{did-insert (action "didInsertTooltip")}}
+      {{did-update (action "didUpdateTooltip")}}
       {{will-destroy (action "willDestroyTooltip")}}
       {{on "mouseenter" (action "onMouseEnterTooltip")}}
       {{on "mouseleave" (action "onMouseLeaveTooltip")}}
-      @component={{@tooltip}}
-      @referenceElement={{this.referenceElement}}
-      @_onInit={{action "onInitTooltip"}}
-      @_onHide={{action "onHideTooltip"}} />
+      @data={{this.loadedData}}
+      @dataError={{this.loadError}}
+      class={{concat
+        "tooltip"
+        " is-" (if this.isShowingTooltip "showing" "hiding")
+        " is-" (if this.coords.position this.tooltipPosition "unpositioned")
+      }}
+      style={{this.tooltipStyle}}
+      role="tooltip" />
   {{/if}}
 </div>

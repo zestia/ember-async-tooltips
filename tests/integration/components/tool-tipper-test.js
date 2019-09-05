@@ -135,7 +135,6 @@ module('tool-tipper', function(hooks) {
         @onLoad={{action this.load}}
         @tooltip={{component "my-tooltip"}} />
 
-      <RenderTooltips />
     `);
 
     await triggerEvent('.tooltipper', 'mouseenter');
