@@ -22,16 +22,26 @@ export default Component.extend({
   domElement: null,
   isShowing: true,
   tooltipperInstance: null,
+  adjustedPosition: '',
+  coords: null,
+
+  _onInit() {},
 
   // Computed state
 
   style: computed('coords', function() {
-    return htmlSafe(`top: ${this.coodrs.top}px; left: ${this.coords.left}px`);
+    return htmlSafe(`top: ${this.coords.top}px; left: ${this.coords.left}px`);
   }),
 
   positionClass: computed('adjustedPosition', function() {
     return `is-${dasherize(this.adjustedPosition)}`;
   }),
+
+  init() {
+    this._super(...arguments);
+    set(this, 'coords', {});
+    this._onInit(this);
+  },
 
   actions: {
     // Internal actions
@@ -39,18 +49,15 @@ export default Component.extend({
     didInsertElement(element) {
       set(this, 'domElement', element);
 
-      this._onInsert(this);
+      this._position();
+    },
+
+    didUpdateElement() {
       this._position();
     },
 
     willDestroyElement() {
       set(this, 'domElement', null);
-
-      this._onDestroy();
-    },
-
-    didUpdateElement() {
-      this._position();
     },
 
     // Public Actions
@@ -64,7 +71,7 @@ export default Component.extend({
 
   _hide() {
     return new Promise(resolve => {
-      this.domElement.addEventListener('animationend', { once: true }, resolve);
+      this.domElement.addEventListener('animationend', resolve, { once: true });
       set(this, 'isShowing', false);
     });
   },
@@ -83,7 +90,7 @@ export default Component.extend({
     const refPosition = getPosition(reference, window, this.columns, this.rows);
 
     // The position of the tooltip should be the one provided, or one based
-    // upon the position of the element the tooltip is for.
+    // upon the position of the reference element, that the tooltip is for.
     const position = this.position ? this.position : autoPosition(refPosition);
 
     // Compute the coordinates required to place the tooltip near the reference

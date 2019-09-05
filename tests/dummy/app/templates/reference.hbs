@@ -4,8 +4,11 @@
   <tbody>
     <tr>
       <td>
-        <CustomTooltipper @tooltip={{component "simple-tooltip"}} />
         Hover over me
+
+        <Tooltipper
+          @tooltip={{component "simple-tooltip"}}
+          @onGetReferenceElement={{action "getReferenceElement"}} />
       </td>
       <td>
         Cell 2

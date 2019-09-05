@@ -11,7 +11,6 @@ export default Component.extend({
   // Arguments
 
   mouseEvents: true,
-  referenceElement: null,
   showDelay: 0,
   hideDelay: 0,
 
@@ -24,13 +23,10 @@ export default Component.extend({
 
   onLoad() {},
 
-  computedReferenceElement: computed(function() {
-    return this.referenceElement || this.domElement;
-  }),
-
   actions: {
     didInsertElement(element) {
       set(this, 'domElement', element);
+      set(this, 'referenceElement', this._getReferenceElement());
 
       this._setupReferenceElement();
     },
@@ -43,7 +39,7 @@ export default Component.extend({
       this._registerTooltip(tooltip);
     },
 
-    onDestroyTooltip() {
+    willDestroyTooltip() {
       this._deregisterTooltip();
     },
 
@@ -54,7 +50,9 @@ export default Component.extend({
     onMouseLeaveTooltip() {
       set(this, 'isOverTooltip', false);
 
-      this._scheduleHideTooltipFromHover();
+      if (this.mouseEvents) {
+        this._scheduleHideTooltipFromHover();
+      }
     },
 
     onHideTooltip() {
@@ -134,8 +132,8 @@ export default Component.extend({
     });
   },
 
-  _scheduleShowTooltipFromHover(delay) {
-    debounce(this, '_attemptShowTooltipFromHover', delay);
+  _scheduleShowTooltipFromHover(showDelay) {
+    debounce(this, '_attemptShowTooltipFromHover', showDelay);
   },
 
   _scheduleHideTooltipFromHover() {
@@ -143,13 +141,17 @@ export default Component.extend({
   },
 
   _attemptShowTooltipFromHover() {
-    if (this.isOverTooltipper) {
+    if (this.isOverReferenceElement) {
       this._attemptShowTooltip();
     }
   },
 
   _attemptHideTooltipFromHover() {
-    if (this.tooltipInstance && !this.tooltipInstance.isOver && !this.isOver) {
+    if (
+      this.tooltipInstance &&
+      !this.isOverTooltip &&
+      !this.isOverReferenceElement
+    ) {
       this._attemptHideTooltip();
     }
   },
@@ -182,15 +184,27 @@ export default Component.extend({
     set(this, 'tooltipInstance', null);
   },
 
+  _getReferenceElement() {
+    let element = this.domElement;
+
+    const action = this.onGetReferenceElement;
+
+    if (typeof action === 'function') {
+      element = action(this.domElement);
+    }
+
+    return element;
+  },
+
   _setupReferenceElement() {
     if (this.mouseEvents) {
-      this._startListening(this.computedReferenceElement);
+      this._startListening(this.referenceElement);
     }
   },
 
   _teardownReferenceElement() {
     if (this.mouseEvents) {
-      this._stopListening(this.computedReferenceElement);
+      this._stopListening(this.referenceElement);
     }
   }
 });

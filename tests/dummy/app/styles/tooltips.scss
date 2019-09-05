@@ -3,9 +3,9 @@
 }
 
 .tooltip.is-showing {
-  animation: fade-in 250ms;
+  animation: fade-in 250ms backwards;
 }
 
 .tooltip.is-hiding {
-  animation: fade-out 250ms;
+  animation: fade-out 250ms forwards;
 }

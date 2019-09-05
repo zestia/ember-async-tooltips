@@ -4,7 +4,7 @@
   class={{concat
     "tooltipper"
     (if this.isLoading " is-loading")
-    (if this.tooltipInstance " has-tooltip")
+    (if this.renderTooltip " has-tooltip")
   }}
   ...attributes>
   {{yield (hash
@@ -16,12 +16,12 @@
 
   {{#if this.renderTooltip}}
     <Tooltip
-      {{if this.mouseEvents (on "mouseenter" (action "onMouseEnterTooltip"))}}
-      {{if this.mouseEvents (on "mouseleave" (action "onMouseLeaveTooltip"))}}
+      {{will-destroy (action "willDestroyTooltip")}}
+      {{on "mouseenter" (action "onMouseEnterTooltip")}}
+      {{on "mouseleave" (action "onMouseLeaveTooltip")}}
       @component={{@tooltip}}
-      @referenceElement={{this.computedReferenceElement}}
+      @referenceElement={{this.referenceElement}}
       @_onInit={{action "onInitTooltip"}}
-      @_onDestroy={{action "onDestroyTooltip"}}
       @_onHide={{action "onHideTooltip"}} />
   {{/if}}
 </div>
