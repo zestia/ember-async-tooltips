@@ -1,14 +1,17 @@
-import { computed, trySet, set } from '@ember/object';
-import { resolve } from 'rsvp';
 import Component from '@ember/component';
-import layout from '../templates/components/tooltipper';
+import { computed, trySet, set } from '@ember/object';
 import { debounce } from '@ember/runloop';
-import { htmlSafe, dasherize } from '@ember/string';
-import autoPosition from '../utils/auto-position';
 import { getPosition, getCoords } from '@zestia/position-utils';
 import { guidFor } from '@ember/object/internals';
+import { htmlSafe, dasherize } from '@ember/string';
+import { inject } from '@ember/service';
+import { resolve } from 'rsvp';
+import autoPosition from '../utils/auto-position';
+import layout from '../templates/components/tooltipper';
 
 export default Component.extend({
+  tooltipService: inject('tooltip'),
+
   layout,
   tagName: '',
 
@@ -200,6 +203,8 @@ export default Component.extend({
   _showTooltip() {
     set(this, 'isShowingTooltip', true);
     set(this, 'renderTooltip', true);
+
+    this.tooltipService.add(this);
   },
 
   _attemptHideTooltipFromHover() {
@@ -226,6 +231,7 @@ export default Component.extend({
       set(this, 'isShowingTooltip', false);
     }).then(() => {
       set(this, 'renderTooltip', false);
+      this.tooltipService.remove(this);
     });
   },
 
