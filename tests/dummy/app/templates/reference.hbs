@@ -2,13 +2,15 @@
 
 <table>
   <tbody>
-    <tr>
+    <tr {{did-insert (fn (mut this.tr))}}>
       <td>
         Hover over me
 
-        <Tooltipper
-          @tooltip={{component "tooltip" text="Hello World"}}
-          @onGetReferenceElement={{action "getReferenceElement"}} />
+        {{#if this.tr}}
+          <Tooltipper
+            @tooltip={{component "tooltip" text="Hello World"}}
+            @referenceElement={{this.tr}} />
+        {{/if}}
       </td>
       <td>
         Cell 2

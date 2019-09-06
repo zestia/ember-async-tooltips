@@ -33,8 +33,8 @@ export default Component.extend({
   identifier: null,
   isLoaded: false,
   isLoading: false,
-  isOverReference: false,
-  isOverTooltip: false,
+  isOverReferenceElement: false,
+  isOverTooltipElement: false,
   isShowingTooltip: false,
   loadedData: null,
   loadEndTime: 0,
@@ -107,11 +107,11 @@ export default Component.extend({
     },
 
     onMouseEnterTooltip() {
-      set(this, 'isOverTooltip', true);
+      set(this, 'isOverTooltipElement', true);
     },
 
     onMouseLeaveTooltip() {
-      set(this, 'isOverTooltip', false);
+      set(this, 'isOverTooltipElement', false);
 
       if (this.mouseEvents) {
         this._scheduleHideTooltipFromHover();
@@ -159,13 +159,13 @@ export default Component.extend({
   },
 
   _mouseEnterReferenceElement() {
-    set(this, 'isOverReference', true);
+    set(this, 'isOverReferenceElement', true);
 
     this._load().then(() => this._scheduleShowTooltipFromHover());
   },
 
   _mouseLeaveReferenceElement() {
-    set(this, 'isOverReference', false);
+    set(this, 'isOverReferenceElement', false);
 
     this._scheduleHideTooltipFromHover();
   },
@@ -209,7 +209,7 @@ export default Component.extend({
   },
 
   _attemptShowTooltipFromHover() {
-    if (!this.isOverReference) {
+    if (!this.isOverReferenceElement) {
       return;
     }
 
@@ -236,7 +236,7 @@ export default Component.extend({
   },
 
   _attemptHideTooltipFromHover() {
-    if (this.isOverReference || this.isOverTooltip) {
+    if (this.isOverReferenceElement || this.isOverTooltipElement) {
       return;
     }
 
