@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import Component from '@ember/component';
+import Tooltipper from '@zestia/ember-async-tooltips/components/tooltipper';
 
 let tooltipService;
 let fooTooltipper;
@@ -10,18 +10,18 @@ module('service:tooltip', function(hooks) {
   setupTest(hooks);
 
   hooks.beforeEach(function() {
-    this.owner.register('component:tool-tip/foo', Component);
-    this.owner.register('component:tool-tip/bar', Component);
+    this.owner.register('component:foo-tooltipper', Tooltipper);
+    this.owner.register('component:bar-tooltipper', Tooltipper);
 
     tooltipService = this.owner.lookup('service:tooltip');
-    fooTooltipper = this.owner.lookup('component:tool-tip/foo');
-    barTooltipper = this.owner.lookup('component:tool-tip/bar');
+    fooTooltipper = this.owner.lookup('component:foo-tooltipper');
+    barTooltipper = this.owner.lookup('component:bar-tooltipper');
   });
 
-  test('#activate', function(assert) {
+  test('#add', function(assert) {
     assert.expect(2);
 
-    tooltipService.activate(fooTooltipper);
+    tooltipService.add(fooTooltipper);
 
     assert.deepEqual(
       tooltipService.get('tooltippers'),
@@ -29,7 +29,7 @@ module('service:tooltip', function(hooks) {
       'adds the tooltipper instance to the array of tooltippers'
     );
 
-    tooltipService.activate(barTooltipper);
+    tooltipService.add(barTooltipper);
 
     assert.deepEqual(
       tooltipService.get('tooltippers'),
@@ -38,10 +38,10 @@ module('service:tooltip', function(hooks) {
     );
   });
 
-  test('#deactivate', function(assert) {
+  test('#remove', function(assert) {
     assert.expect(2);
 
-    tooltipService.activate(fooTooltipper);
+    tooltipService.add(fooTooltipper);
 
     assert.deepEqual(
       tooltipService.get('tooltippers'),
@@ -49,7 +49,7 @@ module('service:tooltip', function(hooks) {
       'precondition'
     );
 
-    tooltipService.deactivate(fooTooltipper);
+    tooltipService.remove(fooTooltipper);
 
     assert.deepEqual(
       tooltipService.get('tooltippers'),

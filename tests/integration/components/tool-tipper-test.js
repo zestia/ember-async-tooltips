@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { settled, render, triggerEvent } from '@ember/test-helpers';
 import { defer, resolve, reject } from 'rsvp';
-import ToolTipComponent from '@zestia/ember-async-tooltips/components/tool-tip';
+import ToolTipComponent from '@zestia/ember-async-tooltips/components/tooltip';
 import hbs from 'htmlbars-inline-precompile';
 
 module('tool-tipper', function(hooks) {

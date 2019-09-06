@@ -8,14 +8,7 @@ import config from './config/environment';
 const app = Application.extend({
   modulePrefix: config.modulePrefix,
   podModulePrefix: config.podModulePrefix,
-  Resolver,
-
-  customEvents: {
-    webkitAnimationEnd: 'animationEnd',
-    msAnimationEnd: 'animationEnd',
-    oAnimationEnd: 'animationEnd',
-    animationend: 'animationEnd'
-  }
+  Resolver
 });
 
 loadInitializers(app, config.modulePrefix);

@@ -1,6 +1,5 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-import { run } from '@ember/runloop';
 import { visit, triggerEvent } from '@ember/test-helpers';
 
 module('tooltips', function(hooks) {
@@ -19,7 +18,9 @@ module('tooltips', function(hooks) {
 
     assert.dom('.tooltip').exists();
 
-    await run(() => this.tooltipService.hideTooltips());
+    await this.tooltipService.hideAllTooltips();
+
+    await triggerEvent('.tooltip', 'animationend');
 
     assert.dom('.tooltip').doesNotExist();
   });
