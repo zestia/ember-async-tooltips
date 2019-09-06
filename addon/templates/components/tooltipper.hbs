@@ -10,14 +10,14 @@
   id={{concat "tooltipper-" this.identifier}}
   ...attributes>
 
-  {{yield (hash
+  {{~yield (hash
     isLoading=this.isLoading
     showTooltip=(action "showTooltip")
     hideTooltip=(action "hideTooltip")
     toggleTooltip=(action "toggleTooltip")
-  )}}
+  )~}}
 
-  {{#if this.renderTooltip}}
+  {{~#if this.renderTooltip~}}
     <this.tooltipComponent
       {{did-insert (action "didInsertTooltip")}}
       {{did-update (action "didUpdateTooltip")}}
@@ -34,6 +34,6 @@
       role="tooltip"
       @hide={{action "hideTooltip"}}
       @data={{this.loadedData}}
-      @dataError={{this.loadError}}/>
-  {{/if}}
+      @dataError={{this.loadError}} />
+  {{~/if~}}
 </div>

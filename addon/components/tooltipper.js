@@ -39,11 +39,6 @@ export default Component.extend({
   tooltipElement: null,
   tooltipperElement: null,
 
-  // Actions
-
-  onLoad() {},
-  onGetReferenceElement() {},
-
   // Computed state
 
   tooltipComponent: computed(function() {
@@ -150,22 +145,22 @@ export default Component.extend({
   },
 
   _load() {
-    if (this.isLoaded) {
+    if (typeof this.onLoad !== 'function' || this.isLoaded) {
       return resolve();
-    } else {
-      set(this, 'isLoading', true);
-      return resolve(this.onLoad())
-        .then(data => {
-          trySet(this, 'loadedData', data);
-          trySet(this, 'isLoaded', true);
-        })
-        .catch(error => {
-          trySet(this, 'loadError', error);
-        })
-        .finally(() => {
-          trySet(this, 'isLoading', false);
-        });
     }
+
+    set(this, 'isLoading', true);
+    return resolve(this.onLoad())
+      .then(data => {
+        trySet(this, 'loadedData', data);
+        trySet(this, 'isLoaded', true);
+      })
+      .catch(error => {
+        trySet(this, 'loadError', error);
+      })
+      .finally(() => {
+        trySet(this, 'isLoading', false);
+      });
   },
 
   _loadWithDelay(delay) {
@@ -219,13 +214,13 @@ export default Component.extend({
   },
 
   _getReferenceElement() {
-    const element = this.onGetReferenceElement(this.tooltipperElement);
+    let element = this.tooltipperElement;
 
-    if (element) {
-      return element;
+    if (typeof this.onGetReferenceElement === 'function') {
+      element = this.onGetReferenceElement(this.tooltipperElement);
     }
 
-    return this.tooltipperElement;
+    return element;
   },
 
   _setupReferenceElement() {
