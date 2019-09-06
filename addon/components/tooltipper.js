@@ -23,6 +23,7 @@ export default Component.extend({
   mouseEvents: true,
   position: null,
   rows: 3,
+  show: null,
   showDelay: 0,
   tooltip: null,
 
@@ -32,11 +33,13 @@ export default Component.extend({
   identifier: null,
   isLoaded: false,
   isLoading: false,
-  isOverReferenceElement: false,
+  isOverReference: false,
   isOverTooltip: false,
   isShowingTooltip: false,
   loadedData: null,
+  loadEndTime: 0,
   loadError: null,
+  loadStartTime: 0,
   referenceElement: null,
   renderTooltip: false,
   tooltipElement: null,
@@ -56,10 +59,24 @@ export default Component.extend({
     return dasherize(this.coords.position);
   }),
 
+  loadDuration: computed('loadStartTime', 'loadEndTime', function() {
+    return this.loadEndTime - this.loadStartTime;
+  }),
+
+  showDelayRemainder: computed('loadStartTime', 'loadEndTime', function() {
+    return this.showDelay - this.loadDuration;
+  }),
+
   init() {
     this._super(...arguments);
     set(this, 'coords', { top: 0, left: 0, position: '' });
     set(this, 'identifier', guidFor(this).replace('ember', ''));
+  },
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+    this._attemptPositionTooltip();
+    this._toggleViaArgument();
   },
 
   actions: {
@@ -120,6 +137,14 @@ export default Component.extend({
     }
   },
 
+  _toggleViaArgument() {
+    if (this.show === true) {
+      this._attemptShowTooltip();
+    } else if (this.show === false) {
+      this._attemptHideTooltip();
+    }
+  },
+
   _startListening(element) {
     this._mouseEnterHandler = this._mouseEnterReferenceElement.bind(this);
     this._mouseLeaveHandler = this._mouseLeaveReferenceElement.bind(this);
@@ -134,15 +159,13 @@ export default Component.extend({
   },
 
   _mouseEnterReferenceElement() {
-    set(this, 'isOverReferenceElement', true);
+    set(this, 'isOverReference', true);
 
-    this._loadWithDelay(this.showDelay).then(remainingDelay => {
-      this._scheduleShowTooltipFromHover(remainingDelay);
-    });
+    this._load().then(() => this._scheduleShowTooltipFromHover());
   },
 
   _mouseLeaveReferenceElement() {
-    set(this, 'isOverReferenceElement', false);
+    set(this, 'isOverReference', false);
 
     this._scheduleHideTooltipFromHover();
   },
@@ -152,7 +175,9 @@ export default Component.extend({
       return resolve();
     }
 
+    set(this, 'loadStartTime', Date.now());
     set(this, 'isLoading', true);
+
     return resolve(this.onLoad())
       .then(data => {
         trySet(this, 'loadedData', data);
@@ -163,29 +188,28 @@ export default Component.extend({
       })
       .finally(() => {
         trySet(this, 'isLoading', false);
+        trySet(this, 'loadEndTime', Date.now());
       });
   },
 
-  _loadWithDelay(delay) {
-    const start = Date.now();
-    return this._load().then(() => {
-      const end = Date.now();
-      const wait = end - start;
-      const remainder = wait > delay ? 0 : delay - wait;
-      return remainder;
-    });
-  },
-
-  _scheduleShowTooltipFromHover(showDelay) {
-    debounce(this, '_attemptShowTooltipFromHover', showDelay);
+  _scheduleShowTooltipFromHover() {
+    debounce(this, '_attemptShowTooltipFromHover', this.showDelayRemainder);
   },
 
   _scheduleHideTooltipFromHover() {
     debounce(this, '_attemptHideTooltipFromHover', this.hideDelay);
   },
 
+  _attemptPositionTooltip() {
+    if (!this.referenceElement || !this.tooltipElement) {
+      return;
+    }
+
+    this._positionTooltip();
+  },
+
   _attemptShowTooltipFromHover() {
-    if (!this.isOverReferenceElement) {
+    if (!this.isOverReference) {
       return;
     }
 
@@ -193,14 +217,18 @@ export default Component.extend({
   },
 
   _attemptShowTooltip() {
-    if (this.isDestroyed || this.renderTooltip) {
+    if (this.renderTooltip) {
       return;
     }
 
-    this._showTooltip();
+    this._load().then(() => this._showTooltip());
   },
 
   _showTooltip() {
+    if (this.isDestroyed) {
+      return;
+    }
+
     set(this, 'isShowingTooltip', true);
     set(this, 'renderTooltip', true);
 
@@ -208,7 +236,7 @@ export default Component.extend({
   },
 
   _attemptHideTooltipFromHover() {
-    if (this.isOverReferenceElement) {
+    if (this.isOverReference || this.isOverTooltip) {
       return;
     }
 
@@ -216,7 +244,7 @@ export default Component.extend({
   },
 
   _attemptHideTooltip() {
-    if (this.isDestroyed || !this.renderTooltip) {
+    if (!this.renderTooltip) {
       return;
     }
 
@@ -224,6 +252,10 @@ export default Component.extend({
   },
 
   _hideTooltip() {
+    if (this.isDestroyed) {
+      return;
+    }
+
     return new Promise(resolve => {
       this.tooltipElement.addEventListener('animationend', resolve, {
         once: true
@@ -236,13 +268,7 @@ export default Component.extend({
   },
 
   _getReferenceElement() {
-    let element = this.tooltipperElement;
-
-    if (typeof this.onGetReferenceElement === 'function') {
-      element = this.onGetReferenceElement(this.tooltipperElement);
-    }
-
-    return element;
+    return this.referenceElement || this.tooltipperElement;
   },
 
   _setupReferenceElement() {
