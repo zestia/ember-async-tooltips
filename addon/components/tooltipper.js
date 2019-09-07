@@ -23,8 +23,8 @@ export default Component.extend({
   mouseEvents: true,
   position: null,
   rows: 3,
-  show: null,
   showDelay: 0,
+  showTooltip: null,
   tooltip: null,
 
   // State
@@ -138,9 +138,9 @@ export default Component.extend({
   },
 
   _toggleViaArgument() {
-    if (this.show === true) {
+    if (this.showTooltip === true) {
       this._attemptShowTooltip();
-    } else if (this.show === false) {
+    } else if (this.showTooltip === false) {
       this._attemptHideTooltip();
     }
   },
