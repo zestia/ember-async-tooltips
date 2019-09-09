@@ -6,7 +6,7 @@ import hbs from 'htmlbars-inline-precompile';
 module('tooltipper', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('basic rendering test', async function(assert) {
     assert.expect(4);
 
     await render(hbs`<Tooltipper class="foo-tooltipper" />`);

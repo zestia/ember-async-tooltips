@@ -6,7 +6,7 @@ import hbs from 'htmlbars-inline-precompile';
 module('tooltipper', function(hooks) {
   setupTooltipperTest(hooks);
 
-  test('is-showing/is-hiding class', async function(assert) {
+  test('showing / hiding class', async function(assert) {
     assert.expect(4);
 
     this.set('showTooltip', true);

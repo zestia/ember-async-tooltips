@@ -7,7 +7,7 @@ import { defer } from 'rsvp';
 module('tooltipper', function(hooks) {
   setupTooltipperTest(hooks);
 
-  test('onLoad action', async function(assert) {
+  test('loading data', async function(assert) {
     assert.expect(3);
 
     const deferred = defer();

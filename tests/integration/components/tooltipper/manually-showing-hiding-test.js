@@ -6,8 +6,8 @@ import hbs from 'htmlbars-inline-precompile';
 module('tooltipper', function(hooks) {
   setupTooltipperTest(hooks);
 
-  test('showTooltip arg', async function(assert) {
-    assert.expect(5);
+  test('manually showing / hiding test', async function(assert) {
+    assert.expect(3);
 
     await render(hbs`
       <Tooltipper
