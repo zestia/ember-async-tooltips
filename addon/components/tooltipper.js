@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed, trySet, set } from '@ember/object';
+import { computed, set, getWithDefault } from '@ember/object';
 import { debounce } from '@ember/runloop';
 import { getPosition, getCoords } from '@zestia/position-utils';
 import { guidFor } from '@ember/object/internals';
@@ -8,7 +8,6 @@ import { inject } from '@ember/service';
 import { resolve } from 'rsvp';
 import autoPosition from '../utils/auto-position';
 import layout from '../templates/components/tooltipper';
-const { abs } = Math;
 
 export default Component.extend({
   tooltipService: inject('tooltip'),
@@ -62,7 +61,7 @@ export default Component.extend({
 
   showDelayRemainder: computed('loadStartTime', 'loadEndTime', function() {
     const loadDelay = this.loadEndTime - this.loadStartTime;
-    const maxDelay = this.showDelay;
+    const maxDelay = getWithDefault(this, 'showDelay', 0);
     return loadDelay > maxDelay ? 0 : maxDelay - loadDelay;
   }),
 
