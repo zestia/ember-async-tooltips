@@ -4,7 +4,15 @@ import hbs from 'htmlbars-inline-precompile';
 
 const FooTooltip = Component.extend({
   tagName: '',
-  layout: hbs`<div class="foo-tooltip" ...attributes>Hello {{@data.name}}</div>`
+  layout: hbs`
+    <div class="foo-tooltip" ...attributes>
+      {{#if @error}}
+        {{@error.message}}
+      {{else}}
+        {{@data.greeting}}
+      {{/if}}
+    </div>
+  `
 });
 
 export default function setupTooltipperTest(hooks) {

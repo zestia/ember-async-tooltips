@@ -7,8 +7,8 @@ import { defer } from 'rsvp';
 module('tooltipper', function(hooks) {
   setupTooltipperTest(hooks);
 
-  test('loading data', async function(assert) {
-    assert.expect(3);
+  test('loading error', async function(assert) {
+    assert.expect(2);
 
     const deferred = defer();
 
@@ -23,12 +23,12 @@ module('tooltipper', function(hooks) {
 
     assert.dom('.tooltip').doesNotExist('not rendered tooltip yet');
 
-    deferred.resolve({ greeting: 'Hello World' });
+    deferred.reject({ message: 'Failed to load' });
 
     await settled();
 
     assert
       .dom('.tooltip')
-      .hasText('Hello World', 'the loaded data is passed to the tooltip');
+      .hasText('Failed to load', 'the error is passed to the tooltip');
   });
 });
