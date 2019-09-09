@@ -59,10 +59,13 @@ export default Component.extend({
     return dasherize(this.coords.position);
   }),
 
-  showDelayRemainder: computed('loadStartTime', 'loadEndTime', function() {
-    const loadDelay = this.loadEndTime - this.loadStartTime;
+  loadDelay: computed('loadStartTime', 'loadEndTime', function() {
+    return this.loadEndTime - this.loadStartTime;
+  }),
+
+  showDelayRemainder: computed('loadDelay', function() {
     const maxDelay = getWithDefault(this, 'showDelay', 0);
-    return loadDelay > maxDelay ? 0 : maxDelay - loadDelay;
+    return this.loadDelay > maxDelay ? 0 : maxDelay - this.loadDelay;
   }),
 
   init() {
@@ -229,11 +232,11 @@ export default Component.extend({
   },
 
   _attemptShowTooltipFromHover() {
-    if (!this.isOverReferenceElement) {
+    if (this.renderTooltip || !this.isOverReferenceElement) {
       return;
     }
 
-    this._attemptShowTooltip();
+    this._showTooltip();
   },
 
   _attemptShowTooltip() {
