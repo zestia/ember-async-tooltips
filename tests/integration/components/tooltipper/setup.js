@@ -20,5 +20,11 @@ export default function setupTooltipperTest(hooks) {
 
   hooks.beforeEach(function() {
     this.owner.register('component:custom-tooltip', CustomTooltip);
+
+    this.startTimer = () => (this.startTime = Date.now());
+
+    this.stopTimer = () => (this.stopTime = Date.now());
+
+    this.timeTaken = () => this.stopTime - this.startTime;
   });
 }
