@@ -8,7 +8,7 @@ module('tooltipper', function(hooks) {
   setupTooltipperTest(hooks);
 
   test('loading data', async function(assert) {
-    assert.expect(3);
+    assert.expect(2);
 
     const deferred = defer();
 
