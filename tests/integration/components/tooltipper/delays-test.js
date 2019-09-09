@@ -116,7 +116,7 @@ module('tooltipper', function(hooks) {
     this.stopTimer();
 
     assert.ok(
-      this.timeTaken() >= 100 && this.timeTaken() <= 110,
+      this.timeTaken() >= 100 && this.timeTaken() <= 120,
       'approximately 100ms hide delay'
     );
 
