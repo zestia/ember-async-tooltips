@@ -8,6 +8,7 @@ import { inject } from '@ember/service';
 import { resolve } from 'rsvp';
 import autoPosition from '../utils/auto-position';
 import layout from '../templates/components/tooltipper';
+const { abs } = Math;
 
 export default Component.extend({
   tooltipService: inject('tooltip'),
@@ -64,7 +65,7 @@ export default Component.extend({
   }),
 
   showDelayRemainder: computed('loadStartTime', 'loadEndTime', function() {
-    return this.showDelay - this.loadDuration;
+    return this.showDelay - abs(this.showDelay - this.loadDuration);
   }),
 
   init() {
