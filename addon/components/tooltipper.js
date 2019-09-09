@@ -60,12 +60,10 @@ export default Component.extend({
     return dasherize(this.coords.position);
   }),
 
-  loadDuration: computed('loadStartTime', 'loadEndTime', function() {
-    return this.loadEndTime - this.loadStartTime;
-  }),
-
   showDelayRemainder: computed('loadStartTime', 'loadEndTime', function() {
-    return this.showDelay - abs(this.showDelay - this.loadDuration);
+    const loadDelay = this.loadEndTime - this.loadStartTime;
+    const maxDelay = this.showDelay;
+    return loadDelay > maxDelay ? 0 : maxDelay - loadDelay;
   }),
 
   init() {
@@ -172,25 +170,47 @@ export default Component.extend({
   },
 
   _load() {
-    if (typeof this.onLoad !== 'function' || this.isLoaded) {
-      return resolve();
-    }
+    const action =
+      this.isLoaded || typeof this.onLoad !== 'function'
+        ? () => this.loadedData
+        : this.onLoad;
 
+    this._loadStarted();
+    return resolve(action())
+      .then(this._loadedData.bind(this))
+      .catch(this._loadError.bind(this))
+      .finally(this._loadFinished.bind(this));
+  },
+
+  _loadStarted() {
     set(this, 'loadStartTime', Date.now());
     set(this, 'isLoading', true);
+  },
 
-    return resolve(this.onLoad())
-      .then(data => {
-        trySet(this, 'loadedData', data);
-        trySet(this, 'isLoaded', true);
-      })
-      .catch(error => {
-        trySet(this, 'loadError', error);
-      })
-      .finally(() => {
-        trySet(this, 'isLoading', false);
-        trySet(this, 'loadEndTime', Date.now());
-      });
+  _loadFinished() {
+    if (this.isDestroyed) {
+      return;
+    }
+
+    set(this, 'isLoading', false);
+    set(this, 'loadEndTime', Date.now());
+  },
+
+  _loadedData(data) {
+    if (this.isDestroyed) {
+      return;
+    }
+
+    set(this, 'loadedData', data);
+    set(this, 'isLoaded', true);
+  },
+
+  _loadError(error) {
+    if (this.isDestroyed) {
+      return;
+    }
+
+    set(this, 'loadError', error);
   },
 
   _scheduleShowTooltipFromHover() {
