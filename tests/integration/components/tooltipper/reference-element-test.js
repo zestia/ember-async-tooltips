@@ -12,7 +12,7 @@ module('tooltipper', function(hooks) {
     await render(hbs`
       {{#if this.referenceElement}}
         <Tooltipper
-          @tooltip={{component "foo-tooltip"}}
+          @tooltip={{component "tooltip"}}
           @referenceElement={{this.referenceElement}} />
       {{/if}}
 

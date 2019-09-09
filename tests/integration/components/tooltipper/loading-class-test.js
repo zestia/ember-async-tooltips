@@ -17,7 +17,7 @@ module('tooltipper', function(hooks) {
     await render(hbs`
       <Tooltipper
         @onLoad={{this.loadTooltip}}
-        @tooltip={{component "foo-tooltip"}} />
+        @tooltip={{component "tooltip"}} />
     `);
 
     assert

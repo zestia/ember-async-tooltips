@@ -9,17 +9,17 @@ module('tooltipper', function(hooks) {
   test('basic rendering test', async function(assert) {
     assert.expect(4);
 
-    await render(hbs`<Tooltipper class="foo-tooltipper" />`);
+    await render(hbs`<Tooltipper class="example-tooltipper" />`);
 
     assert
-      .dom('.foo-tooltipper')
+      .dom('.example-tooltipper')
       .hasText(
         /^$/,
         'splats attributes, and renders text argument with correct whitespace'
       );
 
     assert
-      .dom('.foo-tooltipper')
+      .dom('.example-tooltipper')
       .hasClass('tooltipper', 'has an appropriate class name');
 
     const [id] = find('.tooltipper')

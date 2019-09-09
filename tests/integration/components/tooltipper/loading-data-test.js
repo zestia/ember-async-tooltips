@@ -18,7 +18,7 @@ module('tooltipper', function(hooks) {
       <Tooltipper
         @showTooltip={{true}}
         @onLoad={{this.loadTooltip}}
-        @tooltip={{component "foo-tooltip"}} />
+        @tooltip={{component "custom-tooltip"}} />
     `);
 
     assert.dom('.tooltip').doesNotExist('not rendered tooltip yet');

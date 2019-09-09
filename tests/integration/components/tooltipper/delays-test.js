@@ -22,7 +22,7 @@ module('tooltipper', function(hooks) {
 
     await render(hbs`
       <Tooltipper
-        @tooltip={{component "foo-tooltip"}}
+        @tooltip={{component "tooltip"}}
         @onLoad={{this.load}}
         @showDelay={{100}} />
     `);
@@ -60,7 +60,7 @@ module('tooltipper', function(hooks) {
 
     await render(hbs`
       <Tooltipper
-        @tooltip={{component "foo-tooltip"}}
+        @tooltip={{component "tooltip"}}
         @onLoad={{this.load}}
         @showDelay={{100}} />
     `);

@@ -1,43 +1,36 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('tooltipper', function(hooks) {
   setupTooltipperTest(hooks);
 
-  test('rendering tooltips test', async function(assert) {
-    assert.expect(5);
+  test('built in tooltip', async function(assert) {
+    assert.expect(1);
 
     await render(hbs`
       <Tooltipper
         @showTooltip={{true}}
-        @tooltip={{component "foo-tooltip" title="foo"}} />
+        @tooltip={{component "tooltip" text="Hello World"}} />
     `);
 
     assert
       .dom('.tooltipper > .tooltip')
-      .exists('tooltip is rendered as a child');
+      .hasText('Hello World', 'built in tooltip is rendered as a child');
+  });
+
+  test('custom tooltip', async function(assert) {
+    assert.expect(1);
+
+    await render(hbs`
+      <Tooltipper
+        @showTooltip={{true}}
+        @tooltip={{component "custom-tooltip"}} />
+    `);
 
     assert
-      .dom('.tooltip')
-      .hasAttribute('role', 'tooltip', 'has an appropriate aria role');
-
-    const [id] = find('.tooltipper')
-      .getAttribute('id')
-      .match(/\d+/);
-
-    assert
-      .dom('.tooltip')
-      .hasAttribute('id', `tooltip-${id}`, 'has an id based on its tooltipper');
-
-    assert.dom('.tooltip').hasClass('is-showing', 'will be showing by default');
-
-    assert
-      .dom('.tooltip')
-      .doesNotHaveAttribute(
-        'title',
-        "does not splat the attributes, because component help doesn't support this yet"
-      );
+      .dom('.tooltipper > .tooltip.custom-tooltip')
+      .exists('custom tooltip is rendered as a child');
   });
 });

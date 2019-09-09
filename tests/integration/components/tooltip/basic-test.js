@@ -11,19 +11,19 @@ module('tooltip', function(hooks) {
 
     await render(hbs`
       <Tooltip
-        class="foo-tooltip"
+        class="example-tooltip"
         @text="Hello World" />
     `);
 
     assert
-      .dom('.foo-tooltip')
+      .dom('.example-tooltip')
       .hasText(
         /^Hello World$/,
         'splats attributes, and renders text argument with correct whitespace'
       );
 
     assert
-      .dom('.foo-tooltip')
+      .dom('.example-tooltip')
       .doesNotHaveClass(
         'tooltip',
         "is a component that can be used as a tooltip, but currently isn't one"

@@ -9,7 +9,7 @@ module('tooltipper', function(hooks) {
   test('mouse over', async function(assert) {
     assert.expect(2);
 
-    await render(hbs`<Tooltipper @tooltip={{component "foo-tooltip"}} />`);
+    await render(hbs`<Tooltipper @tooltip={{component "tooltip"}} />`);
 
     assert.dom('.tooltip').doesNotExist('does not render too');
 
