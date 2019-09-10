@@ -1,8 +1,30 @@
 # Changelog
 
+## 10.0.0
+
+- Release changes from 9.1.5 beta
+
+## 9.1.5.beta-3
+
+- Further fixes to the show/hide delay in conjuction with the load delay
+- Add more tests
+
+## 9.1.5.beta-2
+
+- Fix show/hide delay in conjuction with load delay
+
+## 9.1.5.beta-1
+
+- Fix show/hide delay
+
 ## 9.1.5.beta-0
 
-- Changelog coming soon
+- Tooltips can now be any component, and do not have to extend a base Tooltip
+- No JavaScript file required (template only components preferred)
+- `tool-tipper` and `tool-tip` components renamed to `tooltipper` and `tooltip`
+- Tooltips now rendered inside Tooltippers by default
+- `<RenderTooltips />` component removed. If you still need this behaviour, please use [ember-in-element-polyfill](https://github.com/kaliber5/ember-in-element-polyfill) instead.
+- Internal migration to Angle Brackets / Named arguments / Splattributes
 
 ## 9.1.4
 
