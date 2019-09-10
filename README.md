@@ -23,17 +23,15 @@ https://zestia.github.io/ember-async-tooltips
 
 ### Example
 
-When the tooltipper is hovered over, and any loading that needs to take place has finished, then the tooltip will be rendered in a place of your chosing in the DOM.
+When the tooltipper is hovered over, and any loading that needs to take place has finished, then the tooltip will be rendered inside it.
 
 ```handlebars
-<ToolTipper @tooltip={{component "tooltip"}}>
+<ToolTipper @tooltip={{component "tooltip" @text="Hello World"}}>
   Hover over me
 </ToolTipper>
-
-{{! Tooltips will be rendered here: }}
-
-<RenderTooltips />
 ```
+
+You can replace the `@tooltip` argument with any custom component of your choosing.
 
 ### Positioning
 
@@ -45,7 +43,9 @@ Setting the `@position` argument will compute `top` and `left` CSS properties to
 By default, if the tooltip won't fit into the viewport, its position will be adjusted in an attempt to keep it visible. You can disable this behaviour by setting `@adjust` to false.
 
 ```handlebars
-<ToolTipper @tooltip={{component "tooltip" position="bottom left"}} />
+<ToolTipper
+  @position="bottom left"
+  @tooltip={{component "my-tooltip"}} />
 ```
 
 #### Automatic positioning
@@ -53,109 +53,44 @@ By default, if the tooltip won't fit into the viewport, its position will be adj
 By omitting the `@position` argument, the tooltip will be positioned automatically around the outside edge of the tooltipper. For example: If the tooltipper is at the very bottom of the viewport, then the tooltip will be displayed _above_ it - so as to remain visible.
 
 ```handlebars
-<ToolTipper @tooltip={{component "tooltip"}} />
+<ToolTipper @tooltip={{component "my-tooltip"}} />
 ```
 
 You can control this behaviour to some degree by changing how the viewport is [split into sections](https://github.com/zestia/position-utils#zestiaposition-utils).
 
-<details>
-  <summary>View code</summary>
-
-#### Example 1
-
-```javascript
-// my-tooltip.js
-import ToolTipComponent from '@zestia/ember-async-tooltips/components/tooltip';
-
-export default ToolTipComponent.extend({
-  classNames: ['my-tooltip'],
-  columns: 3,
-  rows: 2
-});
-```
-
-#### Example 2
-
 ```handlebars
-<ToolTipper @tooltip={{component "tooltip" rows=5 columns=5}} />
+<ToolTipper
+  @tooltip={{component "my-tooltip"}}
+  @rows={{2}}
+  @columns={{3}} />
 ```
-
-</details>
 
 ### Showing/hiding
 
 By default, tooltips will display when hovering over a tooltipper. But tooltippers also yield the ability to show or hide its tooltip manually.
 Additionally, you can customise the show/hide delays.
 
-<details>
-  <summary>View code</summary>
-
-#### Example 1
-
 ```handlebars
-<ToolTipper @tooltip={{component "tooltip"}} @mouseEvents={{false}} as |tooltipper|>
+<ToolTipper
+  @tooltip={{component "my-tooltip"}}
+  @showDelay={{500}}
+  @hideDelay={{0}}
+  @mouseEvents={{false}} as |tooltipper|>
   <button {{on "click" tooltipper.hideTooltip}}>Hide</button>
   <button {{on "click" tooltipper.showTooltip}}>Show</button>
   <button {{on "click" tooltipper.toggleTooltip}}>Toggle</button>
 </ToolTipper>
 ```
 
-#### Example 2
-
-```handlebars
-<ToolTipper
-  @tooltip={{component "tooltip"}}
-  @showDelay={{500}}
-  @hideDelay={{0}} />
-```
-
-</details>
-
 ### Custom reference element
 
-By default the tooltipper is the reference element that the causes the tooltip to show or hide, and is also the element that the tooltip will be positioned next to. But, you can specify any element to be the reference element.
-
-<details>
-  <summary>View code</summary>
-
-#### Example 1
-
-```javascript
-// custom-tooltipper.js
-import ToolTipperComponent from '@zestia/ember-async-tooltips/components/tool-tipper';
-import computed from '@ember/computed';
-
-export default ToolTipperComponent.extend({
-  classNames: ['custom-tooltipper'],
-
-  referenceElement: computed(function() {
-    // Show the tooltip when hovering over the table row, rather than the tooltipper itself.
-    return this.element.parentNode.parentNode;
-  })
-});
-```
+By default the tooltipper _is_ the reference element that the causes the tooltip to show or hide, and is also the element that the tooltip will be positioned next to. But, you can specify any element to be the reference element.
 
 ```handlebars
-<table>
-  <tr>
-    <td>
-      {{! The tooltip will display when hovering over the table row }}
-      <CustomToolTipper @tooltip={{component "custom-tooltip"}} />
-    </td>
-  </tr>
-</table>
-```
-
-#### Example 2
-
-```handlebars
-{{! parent-component/template.hbs }}
 <ToolTipper
-  @referenceElement={{this.element}}
-  @tooltip={{component "tooltip"}} />
+  @tooltip={{component "my-tooltip"}}
+  @referenceElement={{this.element.parentNode}} />
 ```
-
-</details>
 
 ### Preloading data
 
@@ -163,41 +98,29 @@ When a tooltipper is hovered over, `@onLoad` will be fired. You can respond to t
 
 The following example waits for 300ms before showing a tooltip, during this time it is loading some data. The show delay will _only be extended_ if the data wasn't retreived in time.
 
-<details>
-  <summary>View code</summary>
-
-```javascript
-// user-tooltipper.js
-import ToolTipperComponent from '@zestia/ember-async-tooltips/components/tool-tipper';
-
-export default ToolTipperComponent.extend({
-  classNames: ['user-tooltipper'],
-  showDelay: 300,
-  hideDelay: 0
-});
+```handlebars
+{{! application.hbs }}
+<UserToolTipper @id={{123}}>
+  Joe Bloggs
+</UserToolTipper>
 ```
 
 ```handlebars
-  {{! application.hbs }}
-  <UserToolTipper @onLoad={{action "loadUser" "joe-bloggs"}} @tooltip={{component "user-tooltip"}}>
-    Joe Bloggs
-  </UserToolTipper>
+{{! user-tooltipper/template.hbs }}
+<Tooltipper
+  @showDelay={{300}}
+  @onLoad={{action "loadUser" @id}}
+  @tooltip={{component "user-tooltip"}} />
 ```
 
 ```handlebars
-  {{! user-tooltip.hbs }}
-  Hello {{this.data.user.name}}
+{{! user-tooltip/template.hbs }}
+Hello {{this.data.user.name}}
 ```
-
-</details>
 
 ### Prerequisites
 
-1\. It is assumed that all your tooltips will animate in and out. For this reason
-you are _required_ to add the following styles.
-
-<details>
-  <summary>View code</summary>
+1\. It is assumed that all your tooltips will animate in and out. For this reason you are _required_ to add the following styles as a minimum.
 
 ```css
 .your-tooltip.is-showing {
@@ -208,24 +131,3 @@ you are _required_ to add the following styles.
   animation: your-hide-animation;
 }
 ```
-
-</details>
-
-<br>
-
-2\. In order to detect when a tooltip has animated out your application must be
-informed of animation events. Add the following to `app/app.js`
-
-<details>
-  <summary>View code</summary>
-
-```javascript
-customEvents: {
-  webkitAnimationEnd: 'animationEnd',
-  msAnimationEnd: 'animationEnd',
-  oAnimationEnd: 'animationEnd',
-  animationend: 'animationEnd'
-}
-```
-
-</details>

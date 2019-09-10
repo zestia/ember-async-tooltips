@@ -25,6 +25,7 @@
 - Tooltips now rendered inside Tooltippers by default
 - `<RenderTooltips />` component removed. If you still need this behaviour, please use [ember-in-element-polyfill](https://github.com/kaliber5/ember-in-element-polyfill) instead.
 - Internal migration to Angle Brackets / Named arguments / Splattributes
+- `customEvents` can be removed from `app/app.js`
 
 ## 9.1.4
 
