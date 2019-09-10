@@ -18,8 +18,8 @@
     </select>
   </label>
 
-  <label class="control" title="Adjust position if the tooltip does not fit in the viewport">
-    <input type="checkbox" onclick={{action "setAdjust" value="target.checked"}}>
+  <label class="control adjust-label {{if this.adjustDisabled "is-disabled"}}" title="Adjust position if the tooltip does not fit in the viewport">
+    <input type="checkbox" onclick={{action "setAdjust" value="target.checked"}} disabled={{this.adjustDisabled}}>
     Adjust
   </label>
 

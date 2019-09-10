@@ -1,6 +1,7 @@
 import { Promise } from 'rsvp';
 import Controller from '@ember/controller';
 import { run, later } from '@ember/runloop';
+import { equal } from '@ember/object/computed';
 
 export default Controller.extend({
   window,
@@ -10,8 +11,11 @@ export default Controller.extend({
     this.set('showDelay', 500);
     this.set('hideDelay', 0);
     this.set('loadDelay', 500);
+    this.set('position', 'auto');
     this.set('showTooltipper', true);
   },
+
+  adjustDisabled: equal('position', 'auto'),
 
   actions: {
     unload() {

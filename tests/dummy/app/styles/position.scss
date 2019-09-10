@@ -18,6 +18,10 @@
     max-width: 40px;
   }
 
+  .adjust-label.is-disabled {
+    opacity: 0.5;
+  }
+
   .tooltipper {
     background-color: silver;
     box-sizing: border-box;
