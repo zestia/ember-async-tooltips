@@ -11,11 +11,11 @@ export default Controller.extend({
     this.set('showDelay', 500);
     this.set('hideDelay', 0);
     this.set('loadDelay', 500);
-    this.set('position', 'auto');
+    this.set('position', '');
     this.set('showTooltipper', true);
   },
 
-  adjustDisabled: equal('position', 'auto'),
+  adjustDisabled: equal('position', ''),
 
   actions: {
     unload() {
