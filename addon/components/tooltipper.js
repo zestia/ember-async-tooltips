@@ -63,7 +63,7 @@ export default Component.extend({
     return this.loadEndTime - this.loadStartTime;
   }),
 
-  showDelayRemainder: computed('loadDelay', function() {
+  showDelayRemainder: computed('loadDelay', 'showDelay', function() {
     const maxDelay = getWithDefault(this, 'showDelay', 0);
     return this.loadDelay > maxDelay ? 0 : maxDelay - this.loadDelay;
   }),
