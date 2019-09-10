@@ -26,9 +26,9 @@ https://zestia.github.io/ember-async-tooltips
 When the tooltipper is hovered over, and any loading that needs to take place has finished, then the tooltip will be rendered inside it.
 
 ```handlebars
-<ToolTipper @tooltip={{component "tooltip" @text="Hello World"}}>
+<Tooltipper @tooltip={{component "tooltip" @text="Hello World"}}>
   Hover over me
-</ToolTipper>
+</Tooltipper>
 ```
 
 You can replace the `@tooltip` argument with any custom component of your choosing.
@@ -43,7 +43,7 @@ Setting the `@position` argument will compute `top` and `left` CSS properties to
 By default, if the tooltip won't fit into the viewport, its position will be adjusted in an attempt to keep it visible. You can disable this behaviour by setting `@adjust` to false.
 
 ```handlebars
-<ToolTipper
+<Tooltipper
   @position="bottom left"
   @tooltip={{component "my-tooltip"}} />
 ```
@@ -53,13 +53,13 @@ By default, if the tooltip won't fit into the viewport, its position will be adj
 By omitting the `@position` argument, the tooltip will be positioned automatically around the outside edge of the tooltipper. For example: If the tooltipper is at the very bottom of the viewport, then the tooltip will be displayed _above_ it - so as to remain visible.
 
 ```handlebars
-<ToolTipper @tooltip={{component "my-tooltip"}} />
+<Tooltipper @tooltip={{component "my-tooltip"}} />
 ```
 
 You can control this behaviour to some degree by changing how the viewport is [split into sections](https://github.com/zestia/position-utils#zestiaposition-utils).
 
 ```handlebars
-<ToolTipper
+<Tooltipper
   @tooltip={{component "my-tooltip"}}
   @rows={{2}}
   @columns={{3}} />
@@ -71,7 +71,7 @@ By default, tooltips will display when hovering over a tooltipper. But tooltippe
 Additionally, you can customise the show/hide delays.
 
 ```handlebars
-<ToolTipper
+<Tooltipper
   @tooltip={{component "my-tooltip"}}
   @showDelay={{500}}
   @hideDelay={{0}}
@@ -79,7 +79,7 @@ Additionally, you can customise the show/hide delays.
   <button {{on "click" tooltipper.hideTooltip}}>Hide</button>
   <button {{on "click" tooltipper.showTooltip}}>Show</button>
   <button {{on "click" tooltipper.toggleTooltip}}>Toggle</button>
-</ToolTipper>
+</Tooltipper>
 ```
 
 ### Custom reference element
@@ -87,7 +87,7 @@ Additionally, you can customise the show/hide delays.
 By default the tooltipper _is_ the reference element that the causes the tooltip to show or hide, and is also the element that the tooltip will be positioned next to. But, you can specify any element to be the reference element.
 
 ```handlebars
-<ToolTipper
+<Tooltipper
   @tooltip={{component "my-tooltip"}}
   @referenceElement={{this.element.parentNode}} />
 ```
@@ -100,9 +100,9 @@ The following example waits for 300ms before showing a tooltip, during this time
 
 ```handlebars
 {{! application.hbs }}
-<UserToolTipper @id={{123}}>
+<UserTooltipper @id={{123}}>
   Joe Bloggs
-</UserToolTipper>
+</UserTooltipper>
 ```
 
 ```handlebars
