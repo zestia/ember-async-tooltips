@@ -12,7 +12,7 @@ module('tooltipper', function(hooks) {
   });
 
   test('load less than show delay', async function(assert) {
-    assert.expect(5);
+    assert.expect(3);
 
     this.load = () => {
       return new Promise(resolve => {
@@ -40,23 +40,10 @@ module('tooltipper', function(hooks) {
       .exists('renders tooltip when mousing over the toolipper');
 
     assert.ok(this.timeTaken() >= 100, 'will render after the show delay');
-
-    const tooltipper = this.tooltipService.tooltippers[0];
-
-    assert.equal(
-      tooltipper.showDelayRemainder,
-      tooltipper.showDelay - tooltipper.loadDelay,
-      'subtracts the load delay time from the show delay time'
-    );
-
-    assert.ok(
-      tooltipper.showDelayRemainder > 0 && tooltipper.showDelayRemainder <= 50,
-      'correct approximate time to show tooltip'
-    );
   });
 
   test('load delay more than show delay', async function(assert) {
-    assert.expect(4);
+    assert.expect(3);
 
     this.load = () => {
       return new Promise(resolve => {
@@ -86,14 +73,6 @@ module('tooltipper', function(hooks) {
     assert.ok(
       this.timeTaken() >= 200,
       'will render after the load time, because it exceeded the show delay'
-    );
-
-    const tooltipper = this.tooltipService.tooltippers[0];
-
-    assert.equal(
-      tooltipper.showDelayRemainder,
-      0,
-      'load delay exceeded show delay, so show delay was ignored'
     );
   });
 

@@ -4,6 +4,15 @@
 
 - Release changes from 9.1.5 beta
 
+## 9.1.5.beta-5
+
+- Fix modifying dependant keys if destroyed
+- Add more tests
+
+## 9.1.5.beta-4
+
+- Fix calling `set` on destroyed object
+
 ## 9.1.5.beta-3
 
 - Further fixes to the show/hide delay in conjuction with the load delay

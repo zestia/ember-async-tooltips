@@ -6,8 +6,8 @@
     (if this.isLoading " is-loading")
     (if this.renderTooltip " has-tooltip")
   }}
-  aria-describedby={{concat "tooltip-" this.identifier}}
-  id={{concat "tooltipper-" this.identifier}}
+  aria-describedby={{concat "tooltip-" this.id}}
+  id={{concat "tooltipper-" this.id}}
   ...attributes>
 
   {{~yield (hash
@@ -29,7 +29,7 @@
         " is-" (if this.isShowingTooltip "showing" "hiding")
         " is-" (if this.coords.position this.tooltipPosition "unpositioned")
       }}
-      id={{concat "tooltip-" this.identifier}}
+      id={{concat "tooltip-" this.id}}
       style={{this.tooltipStyle}}
       role="tooltip"
       @hide={{action "hideTooltip"}}
