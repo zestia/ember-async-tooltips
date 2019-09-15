@@ -1,12 +1,6 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import {
-  render,
-  waitUntil,
-  getSettledState,
-  settled,
-  triggerEvent
-} from '@ember/test-helpers';
+import { render, settled, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('tooltipper', function(hooks) {
@@ -80,5 +74,25 @@ module('tooltipper', function(hooks) {
     await settled();
 
     assert.verifySteps(['loading data'], 'load action is only fired once once');
+  });
+
+  test('mouse enter / destroying', async function(assert) {
+    assert.expect(0);
+
+    this.set('showTooltipper', true);
+
+    await render(hbs`
+      {{#if this.showTooltipper}}
+        <Tooltipper
+          @showDelay={{200}}
+          @tooltip={{component "tooltip"}} />
+      {{/if}}
+    `);
+
+    triggerEvent('.tooltipper', 'mouseenter');
+
+    this.set('showTooltipper', false);
+
+    await settled();
   });
 });
