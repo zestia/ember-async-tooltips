@@ -76,7 +76,12 @@ Additionally, you can customise the show/hide delays.
 <Tooltipper
   @tooltip={{component "my-tooltip"}}
   @showDelay={{500}}
-  @hideDelay={{0}}
+  @hideDelay={{0}} />
+```
+
+```handlebars
+<Tooltipper
+  @tooltip={{component "my-tooltip"}}
   @mouseEvents={{false}} as |tooltipper|>
   <button {{on "click" tooltipper.hideTooltip}}>Hide</button>
   <button {{on "click" tooltipper.showTooltip}}>Show</button>
