@@ -33,7 +33,7 @@ When the tooltipper is hovered over, and any loading that needs to take place ha
 
 You can replace the `@tooltip` argument with any custom component of your choosing.
 
-(_Tip_: You can use [ember-in-element-polyfill](https://github.com/kaliber5/ember-in-element-polyfill) to render the tooltip elsewhere in your application.
+(_Tip_: You can use [ember-in-element-polyfill](https://github.com/kaliber5/ember-in-element-polyfill) to render the tooltip elsewhere in your application)
 
 ### Positioning
 
