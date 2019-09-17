@@ -122,7 +122,7 @@ The following example waits for 300ms before showing a tooltip, during this time
 
 ```handlebars
 {{! user-tooltip/template.hbs }}
-Hello {{this.data.user.name}}
+Hello {{@data.user.name}}
 ```
 
 ### Prerequisites
