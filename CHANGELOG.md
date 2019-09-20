@@ -4,6 +4,11 @@
 
 - Release changes from 9.1.5 beta
 
+# 9.1.5.beta-5
+
+- Allow reference element to be changed
+- Fix error if tooltipper is hidden, coordinates can't be computed
+
 ## 9.1.5.beta-4
 
 - Fix calling `set` on destroyed object

@@ -26,9 +26,11 @@ export default Component.extend({
   showDelay: 0,
   showTooltip: null,
   tooltip: null,
+  referenceElement: null,
 
   // State
 
+  computedReferenceElement: null,
   coords: null,
   hideTimer: null,
   id: null,
@@ -41,7 +43,6 @@ export default Component.extend({
   loadEndTime: 0,
   loadError: null,
   loadStartTime: 0,
-  referenceElement: null,
   renderTooltip: false,
   showTimer: null,
   tooltipElement: null,
@@ -49,7 +50,7 @@ export default Component.extend({
 
   // Computed state
 
-  tooltipComponent: computed(function() {
+  tooltipComponent: computed('tooltip', function() {
     return this.tooltip || 'tooltip';
   }),
 
@@ -78,6 +79,7 @@ export default Component.extend({
 
   didReceiveAttrs() {
     this._super(...arguments);
+    this._autoSetupReferenceElement();
     this._positionTooltip();
     this._toggleViaArgument();
   },
@@ -87,15 +89,13 @@ export default Component.extend({
 
     didInsertTooltipper(element) {
       set(this, 'tooltipperElement', element);
-      set(this, 'referenceElement', this._getReferenceElement());
-
-      this._setupReferenceElement();
+      this._autoSetupReferenceElement();
     },
 
     willDestroyTooltipper() {
       this._cancelShowTooltip();
       this._cancelHideTooltip();
-      this._teardownReferenceElement();
+      this._autoTearDownReferenceElement();
     },
 
     didInsertTooltip(element) {
@@ -295,7 +295,7 @@ export default Component.extend({
   },
 
   _hideTooltip() {
-    if (this.isDestroyed || !this.renderTooltip) {
+    if (this.isDestroyed || !this.tooltipElement) {
       return;
     }
 
@@ -303,6 +303,7 @@ export default Component.extend({
       this.tooltipElement.addEventListener('animationend', resolve, {
         once: true
       });
+
       set(this, 'isShowingTooltip', false);
     }).then(this._destroyTooltip.bind(this));
   },
@@ -317,33 +318,57 @@ export default Component.extend({
     set(this, 'renderTooltip', false);
   },
 
-  _getReferenceElement() {
-    return this.referenceElement || this.tooltipperElement;
+  _autoSetupReferenceElement() {
+    set(
+      this,
+      'computedReferenceElement',
+      this.referenceElement || this.tooltipperElement
+    );
+
+    if (
+      !this.computedReferenceElement ||
+      this.computedReferenceElement === this.previousReferenceElement
+    ) {
+      return;
+    }
+
+    if (this.previousReferenceElement) {
+      this._teardownReferenceElement(this.previousReferenceElement);
+    }
+
+    set(this, 'previousReferenceElement', this.computedReferenceElement);
+
+    this._setupReferenceElement(this.computedReferenceElement);
   },
 
-  _setupReferenceElement() {
+  _autoTearDownReferenceElement() {
+    this._teardownReferenceElement(this.computedReferenceElement);
+  },
+
+  _setupReferenceElement(element) {
     if (!this.mouseEvents) {
       return;
     }
 
-    this._startListening(this.referenceElement);
+    this._startListening(element);
   },
 
-  _teardownReferenceElement() {
+  _teardownReferenceElement(element) {
     if (!this.mouseEvents) {
       return;
     }
 
-    this._stopListening(this.referenceElement);
+    this._stopListening(element);
   },
 
   _positionTooltip() {
-    if (!this.referenceElement || !this.tooltipElement) {
+    const element = this.tooltipElement;
+    const reference = this.computedReferenceElement;
+
+    if (!element || !reference) {
       return;
     }
 
-    const element = this.tooltipElement;
-    const reference = this.referenceElement;
     const container = this.adjust ? window : null;
 
     // Get the rough position of the reference element in the window by
@@ -354,11 +379,14 @@ export default Component.extend({
     // upon the position of the reference element, that the tooltip is for.
     const position = this.position ? this.position : autoPosition(refPosition);
 
-    // Compute the coordinates required to place the tooltip near the reference
-    // element. And, if a container is provided, attempt to adjust the position
-    // further to make sure it is always visible.
-    const coords = getCoords(position, element, reference, container);
-
-    set(this, 'coords', coords);
+    try {
+      // Compute the coordinates required to place the tooltip near the reference
+      // element. And, if a container is provided, attempt to adjust the position
+      // further to make sure it is always visible.
+      set(this, 'coords', getCoords(position, element, reference, container));
+    } catch (error) {
+      // The reference element was probably hidden, therefore it's not possible
+      // to compute coordinates.
+    }
   }
 });
