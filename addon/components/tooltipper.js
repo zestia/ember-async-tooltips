@@ -43,6 +43,7 @@ export default Component.extend({
   loadEndTime: 0,
   loadError: null,
   loadStartTime: 0,
+  previousReferenceElement: null,
   renderTooltip: false,
   showTimer: null,
   tooltipElement: null,
