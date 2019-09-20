@@ -33,7 +33,7 @@ When the tooltipper is hovered over, and any loading that needs to take place ha
 
 You can replace the `@tooltip` argument with any custom component of your choosing.
 
-(_Tip_: You can use [ember-in-element-polyfill](https://github.com/kaliber5/ember-in-element-polyfill) to render the tooltip elsewhere in your application.
+(_Tip_: You can use [ember-in-element-polyfill](https://github.com/kaliber5/ember-in-element-polyfill) to render the tooltip elsewhere in your application)
 
 ### Positioning
 
@@ -76,7 +76,12 @@ Additionally, you can customise the show/hide delays.
 <Tooltipper
   @tooltip={{component "my-tooltip"}}
   @showDelay={{500}}
-  @hideDelay={{0}}
+  @hideDelay={{0}} />
+```
+
+```handlebars
+<Tooltipper
+  @tooltip={{component "my-tooltip"}}
   @mouseEvents={{false}} as |tooltipper|>
   <button {{on "click" tooltipper.hideTooltip}}>Hide</button>
   <button {{on "click" tooltipper.showTooltip}}>Show</button>
@@ -96,7 +101,7 @@ By default the tooltipper _is_ the reference element that the causes the tooltip
 
 ### Preloading data
 
-When a tooltipper is hovered over, `@onLoad` will be fired. You can respond to this action by returning a promise. The result of that promise will be available in the tooltip's template as `this.data`. This is a good way preload any data required for the tooltip to display.
+When a tooltipper is hovered over, `@onLoad` will be fired. You can respond to this action by returning a promise. The result of that promise will be available in the tooltip's template as `@data`. This is a good way preload any data required for the tooltip to display.
 
 The following example waits for 300ms before showing a tooltip, during this time it is loading some data. The show delay will _only be extended_ if the data wasn't retreived in time.
 
@@ -117,7 +122,7 @@ The following example waits for 300ms before showing a tooltip, during this time
 
 ```handlebars
 {{! user-tooltip/template.hbs }}
-Hello {{this.data.user.name}}
+Hello {{@data.user.name}}
 ```
 
 ### Prerequisites
