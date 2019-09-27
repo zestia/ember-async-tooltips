@@ -110,6 +110,7 @@ export default Component.extend({
 
     willDestroyTooltip() {
       set(this, 'tooltipElement', null);
+      set(this, 'isOverTooltipElement', false);
     },
 
     onMouseEnterTooltip() {

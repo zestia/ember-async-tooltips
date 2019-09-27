@@ -4,6 +4,10 @@
 
 - Release changes from 9.1.5 beta
 
+# 9.1.5.beta-6
+
+- Make sure tooltip state is reset when destroyed
+
 # 9.1.5.beta-5
 
 - Allow reference element to be changed
