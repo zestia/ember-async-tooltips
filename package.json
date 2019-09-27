@@ -1,6 +1,6 @@
 {
   "name": "@zestia/ember-async-tooltips",
-  "version": "9.1.5-beta.5",
+  "version": "9.1.5-beta.6",
   "description": "Render tooltips asyncronously on hover",
   "directories": {
     "doc": "doc",
