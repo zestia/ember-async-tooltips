@@ -18,6 +18,7 @@
   )~}}
 
   {{~#if this.renderTooltip~}}
+    {{! template-lint-disable no-inline-styles }}
     <this.tooltipComponent
       {{did-insert (action "didInsertTooltip")}}
       {{did-update (action "didUpdateTooltip")}}
