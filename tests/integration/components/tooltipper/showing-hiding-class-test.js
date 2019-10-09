@@ -20,25 +20,28 @@ module('tooltipper', function(hooks) {
     assert
       .dom('.tooltip')
       .hasClass(
-        'is-showing',
+        'tooltip--showing',
         'precondition: is showing class is added to trigger animations'
       );
 
     assert
       .dom('.tooltip')
-      .doesNotHaveClass('is-hiding', 'precondition: is not hiding');
+      .doesNotHaveClass('tooltip--hiding', 'precondition: is not hiding');
 
     this.set('showTooltip', false);
 
     assert
       .dom('.tooltip')
       .doesNotHaveClass(
-        'is-showing',
+        'tooltip--showing',
         'is showing class is removed to trigger animations'
       );
 
     assert
       .dom('.tooltip')
-      .hasClass('is-hiding', 'is hiding class is added to trigger animations');
+      .hasClass(
+        'tooltip--hiding',
+        'is hiding class is added to trigger animations'
+      );
   });
 });

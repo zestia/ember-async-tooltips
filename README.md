@@ -130,11 +130,11 @@ Hello {{@data.user.name}}
 1\. It is assumed that all your tooltips will animate in and out. For this reason you are _required_ to add the following styles as a minimum.
 
 ```css
-.your-tooltip.is-showing {
+.tooltip--showing {
   animation: your-show-animation;
 }
 
-.your-tooltip.is-hiding {
+.tooltip--hiding {
   animation: your-hide-animation;
 }
 ```

@@ -22,14 +22,17 @@ module('tooltipper', function(hooks) {
 
     assert
       .dom('.tooltipper')
-      .doesNotHaveClass('is-loading', 'precondition: no loading class');
+      .doesNotHaveClass(
+        'tooltipper--loading',
+        'precondition: no loading class'
+      );
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
     assert
       .dom('.tooltipper')
       .hasClass(
-        'is-loading',
+        'tooltipper--loading',
         'tooltipper has a loading class when loading data for the tooltip'
       );
 
@@ -40,7 +43,7 @@ module('tooltipper', function(hooks) {
     assert
       .dom('.tooltipper')
       .doesNotHaveClass(
-        'is-loading',
+        'tooltipper--loading',
         'loading class is removed once data is loaded'
       );
   });

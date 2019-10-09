@@ -1,5 +1,9 @@
 # Changelog
 
+## 11.0.0
+
+- Switch to BEM syntax
+
 ## 10.0.0
 
 - Release changes from 9.1.5 beta

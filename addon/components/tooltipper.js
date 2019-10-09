@@ -33,7 +33,6 @@ export default Component.extend({
   computedReferenceElement: null,
   coords: null,
   hideTimer: null,
-  id: null,
   isLoaded: false,
   isLoading: false,
   isOverReferenceElement: false,
@@ -50,6 +49,10 @@ export default Component.extend({
   tooltipperElement: null,
 
   // Computed state
+
+  id: computed(function() {
+    return guidFor(this).replace('ember', '');
+  }),
 
   tooltipComponent: computed('tooltip', function() {
     return this.tooltip || 'tooltip';
@@ -75,7 +78,6 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     set(this, 'coords', { top: 0, left: 0, position: '' });
-    set(this, 'id', guidFor(this).replace('ember', ''));
   },
 
   didReceiveAttrs() {

@@ -21,7 +21,7 @@ module('tooltipper', function(hooks) {
 
     assert
       .dom('.tooltip')
-      .hasClass('is-top-right', 'has initial position class name');
+      .hasClass('tooltip--top-right', 'has initial position class name');
 
     assert.dom('.tooltip').hasStyle(
       {
@@ -35,7 +35,7 @@ module('tooltipper', function(hooks) {
 
     assert
       .dom('.tooltip')
-      .hasClass('is-bottom-right', 'position class name is recomputed');
+      .hasClass('tooltip--bottom-right', 'position class name is recomputed');
 
     assert.dom('.tooltip').hasStyle(
       {

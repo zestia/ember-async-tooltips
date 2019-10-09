@@ -27,7 +27,9 @@ module('tooltipper', function(hooks) {
       .dom('.tooltip')
       .hasAttribute('id', `tooltip-${id}`, 'has an id based on its tooltipper');
 
-    assert.dom('.tooltip').hasClass('is-showing', 'will be showing by default');
+    assert
+      .dom('.tooltip')
+      .hasClass('tooltip--showing', 'will be showing by default');
 
     assert
       .dom('.tooltip')
