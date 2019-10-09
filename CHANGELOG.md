@@ -1,22 +1,22 @@
 # Changelog
 
-## 11.0.0
-
-- Switch to BEM syntax
-
 ## 10.0.0
 
 - Release changes from 9.1.5 beta
 
-# 9.1.5.beta-7
+## 9.1.5.beta-8
+
+- Switch to BEM syntax
+
+## 9.1.5.beta-7
 
 - Upgrade dependencies
 
-# 9.1.5.beta-6
+## 9.1.5.beta-6
 
 - Make sure tooltip state is reset when destroyed
 
-# 9.1.5.beta-5
+## 9.1.5.beta-5
 
 - Allow reference element to be changed
 - Fix error if tooltipper is hidden, coordinates can't be computed
