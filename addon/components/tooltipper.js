@@ -90,36 +90,36 @@ export default Component.extend({
   actions: {
     // Internal actions
 
-    didInsertTooltipper(element) {
+    handleInsertTooltipper(element) {
       set(this, 'tooltipperElement', element);
       this._autoSetupReferenceElement();
     },
 
-    willDestroyTooltipper() {
+    handleDestroyTooltipper() {
       this._cancelShowTooltip();
       this._cancelHideTooltip();
       this._autoTearDownReferenceElement();
     },
 
-    didInsertTooltip(element) {
+    handleInsertTooltip(element) {
       set(this, 'tooltipElement', element);
       this._positionTooltip();
     },
 
-    didUpdateTooltip() {
+    handleUpdateTooltip() {
       this._positionTooltip();
     },
 
-    willDestroyTooltip() {
+    handleDestroyTooltip() {
       set(this, 'tooltipElement', null);
       set(this, 'isOverTooltipElement', false);
     },
 
-    onMouseEnterTooltip() {
+    handleMouseEnterTooltip() {
       set(this, 'isOverTooltipElement', true);
     },
 
-    onMouseLeaveTooltip() {
+    handleMouseLeaveTooltip() {
       set(this, 'isOverTooltipElement', false);
 
       if (this.mouseEvents) {

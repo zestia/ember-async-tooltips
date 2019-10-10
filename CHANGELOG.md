@@ -4,13 +4,10 @@
 
 - Release changes from 9.1.5 beta
 
-## 9.1.5.beta-8
-
-- Switch to BEM syntax
-
 ## 9.1.5.beta-7
 
 - Upgrade dependencies
+- Switch to BEM syntax
 
 ## 9.1.5.beta-6
 

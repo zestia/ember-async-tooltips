@@ -1,6 +1,6 @@
 <div
-  {{did-insert (action "didInsertTooltipper")}}
-  {{will-destroy (action "willDestroyTooltipper")}}
+  {{did-insert (action "handleInsertTooltipper")}}
+  {{will-destroy (action "handleDestroyTooltipper")}}
   class={{concat
     "tooltipper"
     (if this.isLoading " tooltipper--loading")
@@ -20,11 +20,11 @@
   {{~#if this.renderTooltip~}}
     {{! template-lint-disable no-inline-styles }}
     <this.tooltipComponent
-      {{did-insert (action "didInsertTooltip")}}
-      {{did-update (action "didUpdateTooltip")}}
-      {{will-destroy (action "willDestroyTooltip")}}
-      {{on "mouseenter" (action "onMouseEnterTooltip")}}
-      {{on "mouseleave" (action "onMouseLeaveTooltip")}}
+      {{did-insert (action "handleInsertTooltip")}}
+      {{did-update (action "handleUpdateTooltip")}}
+      {{will-destroy (action "handleDestroyTooltip")}}
+      {{on "mouseenter" (action "handleMouseEnterTooltip")}}
+      {{on "mouseleave" (action "handleMouseLeaveTooltip")}}
       class={{concat
         "tooltip"
         " tooltip--" (if this.isShowingTooltip "showing" "hiding")
