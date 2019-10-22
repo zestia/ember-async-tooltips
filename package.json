@@ -1,26 +1,25 @@
 {
-  "name": "@zestia/ember-async-tooltips",
-  "version": "9.1.5-beta.7",
-  "description": "Render tooltips asyncronously on hover",
+  "name": "@zestia/ember-error-handling",
+  "private": true,
+  "version": "0.0.1",
+  "description": "An Error Handling service for Ember apps",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
   "scripts": {
     "build": "ember build",
-    "lint": "yarn lint:js && yarn lint:hbs && yarn lint:css",
+    "lint": "yarn lint:js && yarn lint:hbs",
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
-    "lint:css": "stylelint --allow-empty-input '**/*.{css,scss}'",
-    "prettier": "prettier '**/*.{js,json,css,scss,html,md}' --write",
+    "prettier": "prettier '**/*.{js,json,html,md}' --write",
     "start": "ember serve",
     "test": "ember test && yarn lint",
-    "test:all": "ember try:each",
-    "deploy": "ember build --environment production && ember github-pages:commit --message \"Deploy gh-pages from commit $(git rev-parse HEAD)\" && git push origin gh-pages:gh-pages"
+    "test:all": "ember try:each"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zestia/ember-async-tooltips.git"
+    "url": "https://github.com/zestia/ember-error-handling.git"
   },
   "engines": {
     "node": "8.* || >= 10.*"
@@ -32,14 +31,11 @@
     "@zestia/ember-template-lint-plugin": "2.0.4",
     "@zestia/eslint-config": "2.0.28",
     "@zestia/prettier-config": "0.0.5",
-    "@zestia/stylelint-config": "2.0.22",
     "broccoli-asset-rev": "3.0.0",
     "ember-cli-dependency-checker": "3.2.0",
     "ember-cli-github-pages": "0.2.2",
-    "ember-cli-htmlbars-inline-precompile": "3.0.1",
     "ember-cli-inject-live-reload": "2.0.2",
     "ember-cli-release-tag": "0.1.5",
-    "ember-cli-sass": "10.0.1",
     "ember-cli-sri": "2.1.1",
     "ember-cli-test-loader": "2.2.0",
     "ember-cli-uglify": "3.0.0",
@@ -56,35 +52,24 @@
     "eslint": "6.5.1",
     "loader.js": "4.7.0",
     "prettier": "1.18.2",
-    "qunit-dom": "0.9.0",
-    "sass": "1.23.0",
-    "stylelint": "11.1.1"
+    "qunit-dom": "0.9.0"
   },
   "dependencies": {
-    "@zestia/position-utils": "^5.0.2",
-    "@ember/render-modifiers": "1.0.2",
-    "ember-angle-bracket-invocation-polyfill": "^2.0.2",
-    "ember-auto-import": "^1.5.3",
-    "ember-cli-babel": "^7.12.0",
-    "ember-cli-htmlbars": "^4.0.5",
-    "ember-merge-helper": "^0.1.1",
-    "ember-named-arguments-polyfill": "^1.0.0",
-    "ember-on-modifier": "^1.0.0"
+    "ember-cli-babel": "^7.11.1",
+    "ember-cli-htmlbars": "^4.0.0"
   },
   "keywords": [
     "ember-addon",
-    "tooltips",
-    "mouseover",
-    "hover",
-    "async"
+    "error",
+    "handling"
   ],
   "ember-addon": {
     "configPath": "tests/dummy/config",
-    "demoURL": "https://zestia.github.io/ember-async-tooltips"
+    "demoURL": "https://zestia.github.io/ember-error-handling"
   },
   "bugs": {
-    "url": "https://github.com/zestia/ember-async-tooltips/issues"
+    "url": "https://github.com/zestia/ember-error-handling/issues"
   },
-  "homepage": "https://github.com/zestia/ember-async-tooltips",
+  "homepage": "https://github.com/zestia/ember-error-handling",
   "configPath": "tests/dummy/config"
 }

@@ -42,7 +42,7 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     ENV.locationType = 'hash';
-    ENV.rootURL = '/ember-async-tooltips/';
+    ENV.rootURL = '/ember-error-handling/';
   }
 
   return ENV;
