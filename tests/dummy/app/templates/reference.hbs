@@ -1,0 +1,23 @@
+<br><br>
+
+<table>
+  <tbody>
+    <tr {{did-insert (fn (mut this.tr))}}>
+      <td>
+        Hover over me
+
+        {{#if this.tr}}
+          <Tooltipper
+            @tooltip={{component "tooltip" text="Hello World"}}
+            @referenceElement={{this.tr}} />
+        {{/if}}
+      </td>
+      <td>
+        Cell 2
+      </td>
+      <td>
+        Cell 3
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,1 +1,1 @@
-export { default } from '@zestia/ember-error-handling/services/error-handling';
+export { default } from '@zestia/ember-async-tooltips/services/tooltip';

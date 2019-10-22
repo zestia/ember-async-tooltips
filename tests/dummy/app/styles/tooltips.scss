@@ -1,0 +1,11 @@
+.tooltip {
+  position: absolute;
+}
+
+.tooltip--showing {
+  animation: fade-in 250ms backwards;
+}
+
+.tooltip--hiding {
+  animation: fade-out 250ms forwards;
+}

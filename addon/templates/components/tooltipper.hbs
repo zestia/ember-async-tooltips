@@ -1,0 +1,40 @@
+<div
+  {{did-insert (action "handleInsertTooltipper")}}
+  {{will-destroy (action "handleDestroyTooltipper")}}
+  class={{concat
+    "tooltipper"
+    (if this.isLoading " tooltipper--loading")
+    (if this.renderTooltip " tooltipper--has-tooltip")
+  }}
+  aria-describedby={{concat "tooltip-" this.id}}
+  id={{concat "tooltipper-" this.id}}
+  ...attributes>
+
+  {{~yield (hash
+    isLoading=this.isLoading
+    showTooltip=(action "showTooltip")
+    hideTooltip=(action "hideTooltip")
+    toggleTooltip=(action "toggleTooltip")
+  )~}}
+
+  {{~#if this.renderTooltip~}}
+    {{! template-lint-disable no-inline-styles }}
+    <this.tooltipComponent
+      {{did-insert (action "handleInsertTooltip")}}
+      {{did-update (action "handleUpdateTooltip")}}
+      {{will-destroy (action "handleDestroyTooltip")}}
+      {{on "mouseenter" (action "handleMouseEnterTooltip")}}
+      {{on "mouseleave" (action "handleMouseLeaveTooltip")}}
+      class={{concat
+        "tooltip"
+        " tooltip--" (if this.isShowingTooltip "showing" "hiding")
+        " tooltip--" (if this.coords.position this.tooltipPosition "unpositioned")
+      }}
+      id={{concat "tooltip-" this.id}}
+      style={{this.tooltipStyle}}
+      role="tooltip"
+      @hide={{action "hideTooltip"}}
+      @data={{this.loadedData}}
+      @error={{this.loadError}} />
+  {{~/if~}}
+</div>
