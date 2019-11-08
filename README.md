@@ -116,7 +116,7 @@ The following example waits for 300ms before showing a tooltip, during this time
 {{! user-tooltipper/template.hbs }}
 <Tooltipper
   @showDelay={{300}}
-  @onLoad={{action "loadUser" @id}}
+  @onLoad={{fn this.loadUser @id}}
   @tooltip={{component "user-tooltip"}} />
 ```
 
