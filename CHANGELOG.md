@@ -4,7 +4,7 @@
 
 - Release changes from 9.1.5 beta
 
-## 9.1.5.beta-10
+## 9.1.5.beta.10
 
 - Upgrade dependencies
 
