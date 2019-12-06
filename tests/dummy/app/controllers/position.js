@@ -2,82 +2,91 @@ import { Promise } from 'rsvp';
 import Controller from '@ember/controller';
 import { run, later } from '@ember/runloop';
 import { equal } from '@ember/object/computed';
+import { action, set } from '@ember/object';
 
-export default Controller.extend({
-  window,
+export default class PositionController extends Controller {
+  window = window;
 
   init() {
-    this._super(...arguments);
-    this.set('showDelay', 500);
-    this.set('hideDelay', 0);
-    this.set('loadDelay', 500);
-    this.set('position', '');
-    this.set('showTooltipper', true);
-  },
+    super.init(...arguments);
+    set(this, 'showDelay', 500);
+    set(this, 'hideDelay', 0);
+    set(this, 'loadDelay', 500);
+    set(this, 'position', '');
+    set(this, 'showTooltipper', true);
+  }
 
-  adjustDisabled: equal('position', ''),
+  @equal('position', '') adjustDisabled;
 
-  actions: {
-    unload() {
-      run(() => this.set('showTooltipper', false));
-      run(() => this.set('showTooltipper', true));
-    },
+  @action
+  unload() {
+    run(() => this.set('showTooltipper', false));
+    run(() => this.set('showTooltipper', true));
+  }
 
-    setPosition(position) {
-      this.set('position', position);
-    },
+  @action
+  setPosition({ target: { value } }) {
+    set(this, 'position', value);
+  }
 
-    setAdjust(bool) {
-      this.set('adjust', bool);
-    },
+  @action
+  setAdjust({ target: { checked } }) {
+    set(this, 'adjust', checked);
+  }
 
-    setShowDelay(delay) {
-      this.set('showDelay', delay);
-    },
+  @action
+  setShowDelay({ target: { value } }) {
+    set(this, 'showDelay', value);
+  }
 
-    setHideDelay(delay) {
-      this.set('hideDelay', delay);
-    },
+  @action
+  setHideDelay({ target: { value } }) {
+    set(this, 'hideDelay', value);
+  }
 
-    setLoadDelay(loadDelay) {
-      this.set('loadDelay', loadDelay);
-    },
+  @action
+  setLoadDelay({ target: { value } }) {
+    set(this, 'loadDelay', value);
+  }
 
-    reposition(e) {
-      const [x, y] = this.lastPos;
-      const [t, l] = this.startPos;
+  @action
+  reposition(e) {
+    const [x, y] = this.lastPos;
+    const [t, l] = this.startPos;
 
-      const element = e.target;
-      const top = y - l;
-      const left = x - t;
+    const element = e.target;
+    const top = y - l;
+    const left = x - t;
 
-      element.style.top = `${top}px`;
-      element.style.left = `${left}px`;
-    },
+    element.style.top = `${top}px`;
+    element.style.left = `${left}px`;
+  }
 
-    storeStartPos(e) {
-      const pos = e.target.getBoundingClientRect();
+  @action
+  storeStartPos(e) {
+    const pos = e.target.getBoundingClientRect();
 
-      this.set('startPos', [e.clientX - pos.left, e.clientY - pos.top]);
-    },
+    set(this, 'startPos', [e.clientX - pos.left, e.clientY - pos.top]);
+  }
 
-    storeLastPos(e) {
-      const { clientX: x, clientY: y } = e;
+  @action
+  storeLastPos(e) {
+    const { clientX: x, clientY: y } = e;
 
-      if (x && y) {
-        this.set('lastPos', [x, y]);
-      }
-    },
-
-    load() {
-      this.set('isLoading', true);
-
-      return new Promise(resolve => {
-        later(() => {
-          this.set('isLoading', false);
-          resolve();
-        }, this.loadDelay);
-      });
+    if (x && y) {
+      set(this, 'lastPos', [x, y]);
     }
   }
-});
+
+  @action
+  load() {
+    set(this, 'isLoading', true);
+
+    return new Promise(resolve => {
+      later(() => {
+        set(this, 'isLoading', false);
+        resolve();
+      }, this.loadDelay);
+    });
+  }
+}
