@@ -1,20 +1,21 @@
 import Service from '@ember/service';
 import { A as emberA } from '@ember/array';
+import { set } from '@ember/object';
 import { all } from 'rsvp';
 
-export default Service.extend({
+export default class TooltipService extends Service {
   init() {
-    this._super(...arguments);
-    this.set('tooltippers', emberA());
-  },
+    super.init(...arguments);
+    set(this, 'tooltippers', emberA());
+  }
 
   add(tooltipper) {
     this.tooltippers.addObject(tooltipper);
-  },
+  }
 
   remove(tooltipper) {
     this.tooltippers.removeObject(tooltipper);
-  },
+  }
 
   hideAllTooltips() {
     return all(
@@ -24,4 +25,4 @@ export default Service.extend({
       }, [])
     );
   }
-});
+}
