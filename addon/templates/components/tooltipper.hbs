@@ -1,6 +1,6 @@
 <div
-  {{did-insert (action "handleInsertTooltipper")}}
-  {{will-destroy (action "handleDestroyTooltipper")}}
+  {{did-insert this.handleInsertTooltipper}}
+  {{will-destroy this.handleDestroyTooltipper}}
   class={{concat
     "tooltipper"
     (if this.isLoading " tooltipper--loading")
@@ -12,19 +12,19 @@
 
   {{~yield (hash
     isLoading=this.isLoading
-    showTooltip=(action "showTooltip")
-    hideTooltip=(action "hideTooltip")
-    toggleTooltip=(action "toggleTooltip")
+    showTooltip=this.showTooltip
+    hideTooltip=this.hideTooltip
+    toggleTooltip=this.toggleTooltip
   )~}}
 
   {{~#if this.renderTooltip~}}
     {{! template-lint-disable no-inline-styles }}
     <this.tooltipComponent
-      {{did-insert (action "handleInsertTooltip")}}
-      {{did-update (action "handleUpdateTooltip")}}
-      {{will-destroy (action "handleDestroyTooltip")}}
-      {{on "mouseenter" (action "handleMouseEnterTooltip")}}
-      {{on "mouseleave" (action "handleMouseLeaveTooltip")}}
+      {{did-insert this.handleInsertTooltip}}
+      {{did-update this.handleUpdateTooltip}}
+      {{will-destroy this.handleDestroyTooltip}}
+      {{on "mouseenter" this.handleMouseEnterTooltip}}
+      {{on "mouseleave" this.handleMouseLeaveTooltip}}
       class={{concat
         "tooltip"
         " tooltip--" (if this.isShowingTooltip "showing" "hiding")
@@ -33,7 +33,7 @@
       id={{concat "tooltip-" this.id}}
       style={{this.tooltipStyle}}
       role="tooltip"
-      @hide={{action "hideTooltip"}}
+      @hide={{this.hideTooltip}}
       @data={{this.loadedData}}
       @error={{this.loadError}} />
   {{~/if~}}
