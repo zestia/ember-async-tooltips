@@ -1,6 +1,24 @@
 # @zestia/ember-async-tooltips
 
-<a href="https://badge.fury.io/js/%40zestia%2Fember-async-tooltips"><img src="https://badge.fury.io/js/%40zestia%2Fember-async-tooltips.svg" alt="npm version" height="18"></a> &nbsp; <a href="http://travis-ci.org/zestia/ember-async-tooltips"><img src="https://travis-ci.org/zestia/ember-async-tooltips.svg?branch=master"></a> &nbsp; <a href="https://david-dm.org/zestia/ember-async-tooltips#badge-embed"><img src="https://david-dm.org/zestia/ember-async-tooltips.svg"></a> &nbsp; <a href="https://david-dm.org/zestia/ember-async-tooltips#dev-badge-embed"><img src="https://david-dm.org/zestia/ember-async-tooltips/dev-status.svg"></a> &nbsp; <a href="https://emberobserver.com/addons/@zestia/ember-async-tooltips"><img src="https://emberobserver.com/badges/-zestia-ember-async-tooltips.svg"></a>
+<p>
+  <a href="http://travis-ci.org/zestia/ember-async-tooltips">
+    <img src="https://travis-ci.org/zestia/ember-async-tooltips.svg?branch=master">
+  </a>
+
+  <a href="https://david-dm.org/zestia/ember-async-tooltips#badge-embed">
+    <img src="https://david-dm.org/zestia/ember-async-tooltips.svg">
+  </a>
+
+  <a href="https://david-dm.org/zestia/ember-async-tooltips#dev-badge-embed">
+    <img src="https://david-dm.org/zestia/ember-async-tooltips/dev-status.svg">
+  </a>
+
+  <a href="https://emberobserver.com/addons/@zestia/ember-async-tooltips">
+    <img src="https://emberobserver.com/badges/-zestia-ember-async-tooltips.svg">
+  </a>
+
+  <img src="https://img.shields.io/badge/Ember-%3E%3D%203.11-brightgreen">
+</p>
 
 ## Installation
 
