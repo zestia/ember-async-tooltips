@@ -147,7 +147,7 @@ export default class TooltipperComponent extends Component {
   }
 
   @action
-  showTooltip() {
+  __showTooltip() {
     this._showTooltip();
   }
 
