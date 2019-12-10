@@ -3,6 +3,7 @@
 ## 10.0.0
 
 - Release changes from 9.1.5 beta
+- Drop support for < Ember 3.11
 
 ## 9.1.5.beta.10
 
