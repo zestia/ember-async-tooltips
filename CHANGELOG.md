@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.0.1
+
+- Make it easier to compose new tooltips by defaulting `mouseEvents` argument to true
+
 ## 10.0.0
 
 - Release changes from 9.1.5 beta

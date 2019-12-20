@@ -81,6 +81,11 @@ export default class TooltipperComponent extends Component {
     return this.loadDelay > maxDelay ? 0 : maxDelay - this.loadDelay;
   }
 
+  @computed('mouseEvents')
+  get shouldUseMouseEvents() {
+    return this.mouseEvents !== false;
+  }
+
   init() {
     super.init(...arguments);
     set(this, 'coords', { top: 0, left: 0, position: '' });
@@ -134,7 +139,7 @@ export default class TooltipperComponent extends Component {
   handleMouseLeaveTooltip() {
     set(this, 'isOverTooltipElement', false);
 
-    if (this.mouseEvents) {
+    if (this.shouldUseMouseEvents) {
       this._scheduleHideTooltipFromHover();
     }
   }
@@ -364,7 +369,7 @@ export default class TooltipperComponent extends Component {
   }
 
   _setupReferenceElement(element) {
-    if (!this.mouseEvents) {
+    if (!this.shouldUseMouseEvents) {
       return;
     }
 
@@ -372,7 +377,7 @@ export default class TooltipperComponent extends Component {
   }
 
   _teardownReferenceElement(element) {
-    if (!this.mouseEvents) {
+    if (!this.shouldUseMouseEvents) {
       return;
     }
 
