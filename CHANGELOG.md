@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.0.3
+
+- Remove unnecessary whitespace
+
 ## 10.0.2
 
 - Upgrade dependencies

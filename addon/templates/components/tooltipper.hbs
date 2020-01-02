@@ -17,8 +17,8 @@
     toggleTooltip=this.toggleTooltip
   )~}}
 
+  {{! template-lint-disable no-inline-styles }}
   {{~#if this.renderTooltip~}}
-    {{! template-lint-disable no-inline-styles }}
     <this.tooltipComponent
       {{did-insert this.handleInsertTooltip}}
       {{did-update this.handleUpdateTooltip}}
