@@ -36,7 +36,7 @@ https://zestia.github.io/ember-async-tooltips/
 - [Automatic positioning](#automatic-positioning) ✔︎
 - [Customisable show/hide delays](#showinghiding) ✔︎
 - [Customisable reference element](#custom-reference-element) ✔︎
-- [Pre-loads any required data]() ✔︎
+- [Pre-loads any required data](#preloading-data) ✔︎
 - Does not use jQuery ✔︎
 
 ## Example
