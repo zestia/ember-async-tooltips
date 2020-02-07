@@ -65,7 +65,8 @@ By default, if the tooltip won't fit into the viewport, its position will be adj
 ```handlebars
 <Tooltipper
   @position="bottom left"
-  @tooltip={{component "my-tooltip"}} />
+  @tooltip={{component "my-tooltip"}}
+/>
 ```
 
 ### Automatic positioning
@@ -82,7 +83,8 @@ You can control this behaviour to some degree by changing how the viewport is [s
 <Tooltipper
   @tooltip={{component "my-tooltip"}}
   @rows={{2}}
-  @columns={{3}} />
+  @columns={{3}}
+/>
 ```
 
 ## Showing/hiding
@@ -94,13 +96,15 @@ Additionally, you can customise the show/hide delays.
 <Tooltipper
   @tooltip={{component "my-tooltip"}}
   @showDelay={{500}}
-  @hideDelay={{0}} />
+  @hideDelay={{0}}
+/>
 ```
 
 ```handlebars
 <Tooltipper
   @tooltip={{component "my-tooltip"}}
-  @mouseEvents={{false}} as |tooltipper|>
+  @mouseEvents={{false}} as |tooltipper|
+>
   <button {{on "click" tooltipper.hideTooltip}}>Hide</button>
   <button {{on "click" tooltipper.showTooltip}}>Show</button>
   <button {{on "click" tooltipper.toggleTooltip}}>Toggle</button>
@@ -114,7 +118,8 @@ By default the tooltipper _is_ the reference element that the causes the tooltip
 ```handlebars
 <Tooltipper
   @tooltip={{component "my-tooltip"}}
-  @referenceElement={{this.element.parentNode}} />
+  @referenceElement={{this.element.parentNode}}
+/>
 ```
 
 ## Preloading data
@@ -135,7 +140,8 @@ The following example waits for 300ms before showing a tooltip, during this time
 <Tooltipper
   @showDelay={{300}}
   @onLoad={{fn this.loadUser @id}}
-  @tooltip={{component "user-tooltip"}} />
+  @tooltip={{component "user-tooltip"}}
+/>
 ```
 
 ```handlebars
