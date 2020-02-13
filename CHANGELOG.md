@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.04
+
+- Upgrade dependencies
+
 ## 10.0.3
 
 - Remove unnecessary whitespace
