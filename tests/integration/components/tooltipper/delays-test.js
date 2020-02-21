@@ -94,9 +94,11 @@ module('tooltipper', function(hooks) {
 
     this.stopTimer();
 
+    const time = this.timeTaken();
+
     assert.ok(
-      this.timeTaken() >= 100 && this.timeTaken() <= 120,
-      'approximately 100ms hide delay'
+      time >= 100 && time <= 120,
+      `approximately 100ms hide delay (${time}ms)`
     );
 
     const willHide = triggerEvent('.tooltip', 'animationend');
