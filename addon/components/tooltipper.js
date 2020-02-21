@@ -7,12 +7,10 @@ import { htmlSafe, dasherize } from '@ember/string';
 import { inject } from '@ember/service';
 import { resolve } from 'rsvp';
 import autoPosition from '../utils/auto-position';
-import layout from '../templates/components/tooltipper';
 
 export default class TooltipperComponent extends Component {
   @inject('tooltip') tooltipService;
 
-  layout = layout;
   tagName = '';
 
   // Arguments
