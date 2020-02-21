@@ -14,20 +14,21 @@ export default class TooltipperComponent extends Component {
   @inject('tooltip') tooltipService;
 
   @tracked coords = { top: 0, left: 0, position: '' };
-  @tracked isLoaded = false;
   @tracked isLoading = false;
-  @tracked isOverReferenceElement = false;
-  @tracked isOverTooltipElement = false;
   @tracked isShowingTooltip = false;
-  @tracked loadedData = null;
-  @tracked loadEndTime = 0;
-  @tracked loadError = null;
-  @tracked loadStartTime = 0;
-  @tracked previousReferenceElement = null;
-  @tracked referenceElement = null;
   @tracked shouldRenderTooltip = false;
-  @tracked tooltipElement = null;
-  @tracked tooltipperElement = null;
+
+  isLoaded = false;
+  isOverReferenceElement = false;
+  isOverTooltipElement = false;
+  loadedData = null;
+  loadEndTime = 0;
+  loadError = null;
+  loadStartTime = 0;
+  previousReferenceElement = null;
+  referenceElement = null;
+  tooltipElement = null;
+  tooltipperElement = null;
 
   // Computed state
 
