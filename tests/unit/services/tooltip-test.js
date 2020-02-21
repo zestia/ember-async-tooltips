@@ -1,21 +1,17 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import Tooltipper from '@zestia/ember-async-tooltips/components/tooltipper';
-
-let tooltipService;
-let fooTooltipper;
-let barTooltipper;
 
 module('service:tooltip', function(hooks) {
   setupTest(hooks);
 
-  hooks.beforeEach(function() {
-    this.owner.register('component:foo-tooltipper', Tooltipper);
-    this.owner.register('component:bar-tooltipper', Tooltipper);
+  let tooltipService;
+  let fooTooltipper;
+  let barTooltipper;
 
+  hooks.beforeEach(function() {
     tooltipService = this.owner.lookup('service:tooltip');
-    fooTooltipper = this.owner.lookup('component:foo-tooltipper');
-    barTooltipper = this.owner.lookup('component:bar-tooltipper');
+    fooTooltipper = new (class FooTooltipper {})();
+    barTooltipper = new (class BarTooltipper {})();
   });
 
   test('#add', function(assert) {
@@ -24,7 +20,7 @@ module('service:tooltip', function(hooks) {
     tooltipService.add(fooTooltipper);
 
     assert.deepEqual(
-      tooltipService.get('tooltippers'),
+      tooltipService.tooltippers,
       [fooTooltipper],
       'adds the tooltipper instance to the array of tooltippers'
     );
@@ -32,7 +28,7 @@ module('service:tooltip', function(hooks) {
     tooltipService.add(barTooltipper);
 
     assert.deepEqual(
-      tooltipService.get('tooltippers'),
+      tooltipService.tooltippers,
       [fooTooltipper, barTooltipper],
       'pushes more tooltippers to the array'
     );
@@ -44,7 +40,7 @@ module('service:tooltip', function(hooks) {
     tooltipService.add(fooTooltipper);
 
     assert.deepEqual(
-      tooltipService.get('tooltippers'),
+      tooltipService.tooltippers,
       [fooTooltipper],
       'precondition'
     );
@@ -52,7 +48,7 @@ module('service:tooltip', function(hooks) {
     tooltipService.remove(fooTooltipper);
 
     assert.deepEqual(
-      tooltipService.get('tooltippers'),
+      tooltipService.tooltippers,
       [],
       'removes specific tooltipper component instances from the array'
     );

@@ -1,10 +1,11 @@
 <div
   {{did-insert this.handleInsertTooltipper}}
+  {{did-update this.handleUpdatedArguments @showTooltip @position @referenceElement}}
   {{will-destroy this.handleDestroyTooltipper}}
   class={{concat
     "tooltipper"
     (if this.isLoading " tooltipper--loading")
-    (if this.renderTooltip " tooltipper--has-tooltip")
+    (if this.shouldRenderTooltip " tooltipper--has-tooltip")
   }}
   aria-describedby={{concat "tooltip-" this.id}}
   id={{concat "tooltipper-" this.id}}
@@ -12,16 +13,15 @@
 
   {{~yield (hash
     isLoading=this.isLoading
-    showTooltip=this.__showTooltip
+    showTooltip=this.showTooltip
     hideTooltip=this.hideTooltip
     toggleTooltip=this.toggleTooltip
   )~}}
 
   {{! template-lint-disable no-inline-styles }}
-  {{~#if this.renderTooltip~}}
+  {{~#if this.shouldRenderTooltip~}}
     <this.tooltipComponent
       {{did-insert this.handleInsertTooltip}}
-      {{did-update this.handleUpdateTooltip}}
       {{will-destroy this.handleDestroyTooltip}}
       {{on "mouseenter" this.handleMouseEnterTooltip}}
       {{on "mouseleave" this.handleMouseLeaveTooltip}}
