@@ -30,8 +30,6 @@ export default class TooltipperComponent extends Component {
   tooltipElement = null;
   tooltipperElement = null;
 
-  // Computed state
-
   get id() {
     return guidFor(this).replace('ember', '');
   }
@@ -81,8 +79,6 @@ export default class TooltipperComponent extends Component {
     return this.args.mouseEvents !== false;
   }
 
-  // Internal actions
-
   @action
   handleInsertTooltipper(element) {
     this.tooltipperElement = element;
@@ -129,8 +125,6 @@ export default class TooltipperComponent extends Component {
       this._scheduleHideTooltipFromHover();
     }
   }
-
-  // Public API Actions
 
   @action
   hideTooltip() {
@@ -348,38 +342,51 @@ export default class TooltipperComponent extends Component {
     this._stopListening(element);
   }
 
-  _determinePosition(referencePosition) {
+  _getReferenceElementPosition(referenceElement) {
+    // Get the rough position of the reference element in the window by
+    // splitting it in to a grid of rows and columns and choosing a square.
+
+    return getPosition(referenceElement, window, this.columns, this.rows);
+  }
+
+  _decideToolipPosition(referencePosition) {
+    // The position of the tooltip should be the one provided, or one based
+    // upon the position of the reference element, that the tooltip is for.
+
     return isPresent(this.args.position)
       ? this.args.position
       : autoPosition(referencePosition);
   }
 
-  _positionTooltip() {
-    const element = this.tooltipElement;
-    const reference = this.referenceElement;
+  _recomputeCoords() {
+    try {
+      // Compute the coordinates required to place the tooltip element near the
+      // reference element. And, if a container element is provided, attempt to
+      // adjust the position further to make sure the tooltip element it is
+      // always visible inside the container.
+      this.coords = getCoords(...arguments);
+    } catch (error) {
+      // The reference element was probably hidden, therefore it's was
+      // not possible to compute coordinates.
+    }
+  }
 
-    if (!element || !reference) {
+  _positionTooltip() {
+    const { tooltipElement, referenceElement } = this;
+
+    if (!tooltipElement || !referenceElement) {
       return;
     }
 
     const container = this.shouldAdjust ? window : null;
+    const referencePosition = this._getReferenceElementPosition();
+    const tooltipPosition = this._decideToolipPosition(referencePosition);
 
-    // Get the rough position of the reference element in the window by
-    // splitting it in to a grid of rows and columns and choosing a square.
-    const refPosition = getPosition(reference, window, this.columns, this.rows);
-
-    // The position of the tooltip should be the one provided, or one based
-    // upon the position of the reference element, that the tooltip is for.
-    const position = this._determinePosition(refPosition);
-
-    try {
-      // Compute the coordinates required to place the tooltip near the reference
-      // element. And, if a container is provided, attempt to adjust the position
-      // further to make sure it is always visible.
-      this.coords = getCoords(position, element, reference, container);
-    } catch (error) {
-      // The reference element was probably hidden, therefore it's not possible
-      // to compute coordinates.
-    }
+    this._recomputeCoords(
+      tooltipPosition,
+      tooltipElement,
+      referenceElement,
+      container
+    );
   }
 }
