@@ -35,7 +35,7 @@ module('tooltipper', function(hooks) {
       .dom('.tooltip')
       .doesNotHaveAttribute(
         'title',
-        "does not splat the attributes, because component help doesn't support this yet"
+        "does not splat the attributes, because component helper doesn't support this yet"
       );
   });
 });
