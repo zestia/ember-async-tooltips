@@ -46,6 +46,10 @@ export default class TooltipperComponent extends Component {
     return isPresent(this.args.adjust) ? this.args.adjust : false;
   }
 
+  get shouldUseMouseEvents() {
+    return isPresent(this.args.mouseEvents) ? this.args.mouseEvents : true;
+  }
+
   get hideDelay() {
     return isPresent(this.args.hideDelay) ? this.args.hideDelay : 0;
   }
@@ -75,21 +79,17 @@ export default class TooltipperComponent extends Component {
     return this.loadDelay > maxDelay ? 0 : maxDelay - this.loadDelay;
   }
 
-  get shouldUseMouseEvents() {
-    return this.args.mouseEvents !== false;
-  }
-
   @action
   handleInsertTooltipper(element) {
     this.tooltipperElement = element;
     this._autoSetupReferenceElement();
-    this._toggleViaArgument();
+    this._maybeToggleViaArgument();
   }
 
   @action
   handleUpdatedArguments() {
     this._autoSetupReferenceElement();
-    this._toggleViaArgument();
+    this._maybeToggleViaArgument();
     this._positionTooltip();
   }
 
@@ -145,7 +145,7 @@ export default class TooltipperComponent extends Component {
     }
   }
 
-  _toggleViaArgument() {
+  _maybeToggleViaArgument() {
     if (this.args.showTooltip === true) {
       this._showTooltip();
     } else if (this.args.showTooltip === false) {
@@ -342,7 +342,7 @@ export default class TooltipperComponent extends Component {
     this._stopListening(element);
   }
 
-  _getReferenceElementPosition(referenceElement) {
+  _getReferencePosition(referenceElement) {
     // Get the rough position of the reference element in the window by
     // splitting it in to a grid of rows and columns and choosing a square.
 
@@ -379,7 +379,7 @@ export default class TooltipperComponent extends Component {
     }
 
     const container = this.shouldAdjust ? window : null;
-    const referencePosition = this._getReferenceElementPosition();
+    const referencePosition = this._getReferencePosition(referenceElement);
     const tooltipPosition = this._decideToolipPosition(referencePosition);
 
     this._recomputeCoords(
