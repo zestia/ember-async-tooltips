@@ -43,7 +43,7 @@ jobs:
       install:
         - npm install --no-package-lock
       script:
-        - npm test
+        - npm run test:ember
 
     # we recommend new addons test the current and previous LTS
     # as well as latest stable release (bonus points to beta/canary)
