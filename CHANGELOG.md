@@ -1,5 +1,9 @@
 # Changelog
 
+## 11.0.1
+
+- Upgrade dependencies
+
 ## 11.0.0
 
 - Glimmerise component
