@@ -4,10 +4,10 @@ import { render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { htmlSafe } from '@ember/string';
 
-module('tooltipper', function(hooks) {
+module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
-  test('display', async function(assert) {
+  test('display', async function (assert) {
     assert.expect(1);
 
     this.set('style', htmlSafe('display: none'));

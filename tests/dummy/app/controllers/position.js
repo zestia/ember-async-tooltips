@@ -82,7 +82,7 @@ export default class PositionController extends Controller {
   load() {
     set(this, 'isLoading', true);
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       later(() => {
         set(this, 'isLoading', false);
         resolve();

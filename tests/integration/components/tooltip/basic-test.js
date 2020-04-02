@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('tooltip', function(hooks) {
+module('tooltip', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('basic rendering test', async function(assert) {
+  test('basic rendering test', async function (assert) {
     assert.expect(2);
 
     await render(hbs`

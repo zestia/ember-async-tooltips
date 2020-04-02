@@ -1,55 +1,137 @@
 <div class="controls">
   <label class="control">
     Position
-    <select {{on "change" this.setPosition}} class="position">
-      <option value="">auto</option>
-      <option>top left</option>
-      <option>top center</option>
-      <option>top right</option>
-      <option>right middle</option>
-      <option>right top</option>
-      <option>right bottom</option>
-      <option>bottom right</option>
-      <option>bottom center</option>
-      <option>bottom left</option>
-      <option>left middle</option>
-      <option>left top</option>
-      <option>left bottom</option>
+    <select class="position" {{on "change" this.setPosition}}>
+      <option value="">
+        auto
+      </option>
+      <option>
+        top left
+      </option>
+      <option>
+        top center
+      </option>
+      <option>
+        top right
+      </option>
+      <option>
+        right middle
+      </option>
+      <option>
+        right top
+      </option>
+      <option>
+        right bottom
+      </option>
+      <option>
+        bottom right
+      </option>
+      <option>
+        bottom center
+      </option>
+      <option>
+        bottom left
+      </option>
+      <option>
+        left middle
+      </option>
+      <option>
+        left top
+      </option>
+      <option>
+        left bottom
+      </option>
     </select>
   </label>
 
-  <label class="control adjust-label {{if this.adjustDisabled "adjust-label--disabled"}}" title="Adjust position if the tooltip does not fit in the viewport">
-    <input type="checkbox" {{on "click" this.setAdjust}} disabled={{this.adjustDisabled}}>
+  <label
+    class="control adjust-label {{
+      if this.adjustDisabled "adjust-label--disabled"
+    }}"
+    title="Adjust position if the tooltip does not fit in the viewport"
+  >
+    <input
+      type="checkbox"
+      disabled={{this.adjustDisabled}}
+      {{on "click" this.setAdjust}}
+    />
     Adjust
   </label>
 
   <span class="control">
-    <label> Hover delay <input type="number" min="1" class="number-input hover-delay" title="In" value={{this.showDelay}} {{on "input" this.setShowDelay}}></label><input type="number" min="1" class="number-input hover-delay" title="Out" value={{this.hideDelay}} {{on "input" this.setHideDelay}}>
+    <label>
+      Hover delay
+      <input
+        type="number"
+        min="1"
+        class="number-input hover-delay"
+        title="In"
+        value={{this.showDelay}}
+        {{on "input" this.setShowDelay}}
+      />
+    </label>
+    <input
+      type="number"
+      min="1"
+      class="number-input hover-delay"
+      title="Out"
+      value={{this.hideDelay}}
+      {{on "input" this.setHideDelay}}
+    />
   </span>
 
   <label class="control">
-    Load delay <input type="number" min="1" class="number-input load-delay" value={{this.loadDelay}} {{on "input" this.setLoadDelay}}>
+    Load delay
+    <input
+      type="number"
+      min="1"
+      class="number-input load-delay"
+      value={{this.loadDelay}}
+      {{on "input" this.setLoadDelay}}
+    />
   </label>
 
-  <small><a href="#" {{on "click" this.unload}}>Unload</a></small>
+  <small>
+    <a href="#" {{on "click" this.unload}}>
+      Unload
+    </a>
+  </small>
 </div>
 
 <table class="grid">
   <tbody>
     <tr class="row">
-      <td class="cell">top left</td>
-      <td class="cell">top center</td>
-      <td class="cell">top right</td>
+      <td class="cell">
+        top left
+      </td>
+      <td class="cell">
+        top center
+      </td>
+      <td class="cell">
+        top right
+      </td>
     </tr>
     <tr class="row">
-      <td class="cell">middle left</td>
-      <td class="cell">middle center</td>
-      <td class="cell">middle right</td>
+      <td class="cell">
+        middle left
+      </td>
+      <td class="cell">
+        middle center
+      </td>
+      <td class="cell">
+        middle right
+      </td>
     </tr>
     <tr class="row">
-      <td class="cell">bottom left</td>
-      <td class="cell">bottom center</td>
-      <td class="cell">bottom right</td>
+      <td class="cell">
+        bottom left
+      </td>
+      <td class="cell">
+        bottom center
+      </td>
+      <td class="cell">
+        bottom right
+      </td>
     </tr>
   </tbody>
 </table>
@@ -65,13 +147,12 @@
     @hideDelay={{this.hideDelay}}
     @position={{this.position}}
     @adjust={{this.adjust}}
-    @tooltip={{component "tooltip" text="Hello World"}} as |tooltipper|>
-
+    @tooltip={{component "tooltip" text="Hello World"}} as |tooltipper|
+  >
     {{#if tooltipper.isLoading}}
       Loading…
     {{else}}
       Hello World!
     {{/if}}
-
   </Tooltipper>
 {{/if}}

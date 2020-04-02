@@ -3,10 +3,10 @@ import setupTooltipperTest from './setup';
 import { render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('tooltipper', function(hooks) {
+module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
-  test('changing position', async function(assert) {
+  test('changing position', async function (assert) {
     assert.expect(4);
 
     this.set('position', 'top right');
@@ -26,7 +26,7 @@ module('tooltipper', function(hooks) {
     assert.dom('.tooltip').hasStyle(
       {
         top: '-5px',
-        left: '30px'
+        left: '30px',
       },
       'has top right coords set'
     );
@@ -40,7 +40,7 @@ module('tooltipper', function(hooks) {
     assert.dom('.tooltip').hasStyle(
       {
         top: '20px',
-        left: '30px'
+        left: '30px',
       },
       'coordinates are recomputed to bottom right'
     );

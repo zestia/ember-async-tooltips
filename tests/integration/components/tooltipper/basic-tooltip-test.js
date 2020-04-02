@@ -3,10 +3,10 @@ import setupTooltipperTest from './setup';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('tooltipper', function(hooks) {
+module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
-  test('built in tooltip', async function(assert) {
+  test('built in tooltip', async function (assert) {
     assert.expect(1);
 
     await render(hbs`
@@ -20,7 +20,7 @@ module('tooltipper', function(hooks) {
       .hasText('Hello World', 'built in tooltip is rendered as a child');
   });
 
-  test('custom tooltip', async function(assert) {
+  test('custom tooltip', async function (assert) {
     assert.expect(1);
 
     await render(hbs`

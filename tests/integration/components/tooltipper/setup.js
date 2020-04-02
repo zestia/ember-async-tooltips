@@ -4,7 +4,7 @@ import hbs from 'htmlbars-inline-precompile';
 export default function setupTooltipperTest(hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     const template = hbs`
       <div class="custom-tooltip" ...attributes>
         {{#if @error}}

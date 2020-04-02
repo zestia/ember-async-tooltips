@@ -4,10 +4,10 @@ import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { defer } from 'rsvp';
 
-module('tooltipper', function(hooks) {
+module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
-  test('loading error', async function(assert) {
+  test('loading error', async function (assert) {
     assert.expect(2);
 
     const deferred = defer();

@@ -3,10 +3,10 @@ import setupTooltipperTest from './setup';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('tooltipper', function(hooks) {
+module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
-  test('showing / hiding class', async function(assert) {
+  test('showing / hiding class', async function (assert) {
     assert.expect(4);
 
     this.set('showTooltip', true);

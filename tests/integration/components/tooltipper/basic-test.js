@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('tooltipper', function(hooks) {
+module('tooltipper', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('basic rendering test', async function(assert) {
+  test('basic rendering test', async function (assert) {
     assert.expect(4);
 
     await render(hbs`<Tooltipper class="example-tooltipper" />`);
@@ -22,9 +22,7 @@ module('tooltipper', function(hooks) {
       .dom('.example-tooltipper')
       .hasClass('tooltipper', 'has an appropriate class name');
 
-    const [id] = find('.tooltipper')
-      .getAttribute('id')
-      .match(/\d+/);
+    const [id] = find('.tooltipper').getAttribute('id').match(/\d+/);
 
     assert
       .dom('.tooltipper')

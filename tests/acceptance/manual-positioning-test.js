@@ -2,10 +2,10 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { visit, triggerEvent, fillIn } from '@ember/test-helpers';
 
-module('tooltips', function(hooks) {
+module('tooltips', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('manual positioning', async function(assert) {
+  test('manual positioning', async function (assert) {
     assert.expect(12);
 
     await visit('/position');

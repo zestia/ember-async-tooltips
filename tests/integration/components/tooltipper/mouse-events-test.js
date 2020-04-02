@@ -3,10 +3,10 @@ import setupTooltipperTest from './setup';
 import { render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('tooltipper', function(hooks) {
+module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
-  test('mouse events', async function(assert) {
+  test('mouse events', async function (assert) {
     assert.expect(1);
 
     await render(hbs`
@@ -20,7 +20,7 @@ module('tooltipper', function(hooks) {
     assert.dom('.tooltip').doesNotExist('will not render a tooltip');
   });
 
-  test('mouse events', async function(assert) {
+  test('mouse events', async function (assert) {
     assert.expect(1);
 
     await render(hbs`

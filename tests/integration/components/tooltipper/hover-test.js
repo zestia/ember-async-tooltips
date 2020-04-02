@@ -3,10 +3,10 @@ import setupTooltipperTest from './setup';
 import { render, settled, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('tooltipper', function(hooks) {
+module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
-  test('mouse enter reference', async function(assert) {
+  test('mouse enter reference', async function (assert) {
     assert.expect(2);
 
     await render(hbs`<Tooltipper @tooltip={{component "tooltip"}} />`);
@@ -20,7 +20,7 @@ module('tooltipper', function(hooks) {
       .exists('renders tooltip when mousing over the toolipper');
   });
 
-  test('mouse leave reference', async function(assert) {
+  test('mouse leave reference', async function (assert) {
     assert.expect(2);
 
     await render(hbs`<Tooltipper @tooltip={{component "tooltip"}} />`);
@@ -38,7 +38,7 @@ module('tooltipper', function(hooks) {
       .doesNotExist('tooltip hidden when mouse leaves tooltipper');
   });
 
-  test('mouse leave tooltip', async function(assert) {
+  test('mouse leave tooltip', async function (assert) {
     assert.expect(2);
 
     await render(hbs`<Tooltipper @tooltip={{component "tooltip"}} />`);
@@ -56,7 +56,7 @@ module('tooltipper', function(hooks) {
       .doesNotExist('tooltip hidden when mouse leaves tooltip');
   });
 
-  test('mouse enter / loading data', async function(assert) {
+  test('mouse enter / loading data', async function (assert) {
     assert.expect(2);
 
     this.load = () => assert.step('loading data');
@@ -76,7 +76,7 @@ module('tooltipper', function(hooks) {
     assert.verifySteps(['loading data'], 'load action is only fired once once');
   });
 
-  test('mouse enter / destroying', async function(assert) {
+  test('mouse enter / destroying', async function (assert) {
     assert.expect(0);
 
     this.set('showTooltipper', true);

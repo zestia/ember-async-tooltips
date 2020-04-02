@@ -3,10 +3,10 @@ import setupTooltipperTest from './setup';
 import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('tooltipper', function(hooks) {
+module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
-  test('aria', async function(assert) {
+  test('aria', async function (assert) {
     assert.expect(4);
 
     await render(hbs`
@@ -19,9 +19,7 @@ module('tooltipper', function(hooks) {
       .dom('.tooltip')
       .hasAttribute('role', 'tooltip', 'has an appropriate aria role');
 
-    const [id] = find('.tooltipper')
-      .getAttribute('id')
-      .match(/\d+/);
+    const [id] = find('.tooltipper').getAttribute('id').match(/\d+/);
 
     assert
       .dom('.tooltip')

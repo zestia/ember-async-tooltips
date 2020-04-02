@@ -1,20 +1,20 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('service:tooltip', function(hooks) {
+module('service:tooltip', function (hooks) {
   setupTest(hooks);
 
   let tooltipService;
   let fooTooltipper;
   let barTooltipper;
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     tooltipService = this.owner.lookup('service:tooltip');
     fooTooltipper = new (class FooTooltipper {})();
     barTooltipper = new (class BarTooltipper {})();
   });
 
-  test('#add', function(assert) {
+  test('#add', function (assert) {
     assert.expect(2);
 
     tooltipService.add(fooTooltipper);
@@ -34,7 +34,7 @@ module('service:tooltip', function(hooks) {
     );
   });
 
-  test('#remove', function(assert) {
+  test('#remove', function (assert) {
     assert.expect(2);
 
     tooltipService.add(fooTooltipper);

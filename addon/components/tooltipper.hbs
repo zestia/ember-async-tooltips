@@ -1,40 +1,53 @@
 <div
-  {{did-insert this.handleInsertTooltipper}}
-  {{did-update this.handleUpdatedArguments @showTooltip @position @referenceElement}}
-  {{will-destroy this.handleDestroyTooltipper}}
-  class={{concat
+  class={{
+    concat
     "tooltipper"
     (if this.isLoading " tooltipper--loading")
     (if this.shouldRenderTooltip " tooltipper--has-tooltip")
   }}
   aria-describedby={{concat "tooltip-" this.id}}
   id={{concat "tooltipper-" this.id}}
-  ...attributes>
-
-  {{~yield (hash
-    isLoading=this.isLoading
-    showTooltip=this.showTooltip
-    hideTooltip=this.hideTooltip
-    toggleTooltip=this.toggleTooltip
-  )~}}
+  ...attributes
+  {{did-insert this.handleInsertTooltipper}}
+  {{did-update
+    this.handleUpdatedArguments
+    @showTooltip
+    @position
+    @referenceElement
+  }}
+  {{will-destroy this.handleDestroyTooltipper}}
+>
+  {{~
+    yield
+    (hash
+      isLoading=this.isLoading
+      showTooltip=this.showTooltip
+      hideTooltip=this.hideTooltip
+      toggleTooltip=this.toggleTooltip
+    )
+  ~}}
 
   {{! template-lint-disable no-inline-styles }}
   {{~#if this.shouldRenderTooltip~}}
     <this.tooltipComponent
-      {{did-insert this.handleInsertTooltip}}
-      {{will-destroy this.handleDestroyTooltip}}
-      {{on "mouseenter" this.handleMouseEnterTooltip}}
-      {{on "mouseleave" this.handleMouseLeaveTooltip}}
-      class={{concat
+      class={{
+        concat
         "tooltip"
-        " tooltip--" (if this.isShowingTooltip "showing" "hiding")
-        " tooltip--" (if this.coords.position this.tooltipPosition "unpositioned")
+        " tooltip--"
+        (if this.isShowingTooltip "showing" "hiding")
+        " tooltip--"
+        (if this.coords.position this.tooltipPosition "unpositioned")
       }}
       id={{concat "tooltip-" this.id}}
       style={{this.tooltipStyle}}
       role="tooltip"
       @hide={{this.hideTooltip}}
       @data={{this.loadedData}}
-      @error={{this.loadError}} />
+      @error={{this.loadError}}
+      {{did-insert this.handleInsertTooltip}}
+      {{will-destroy this.handleDestroyTooltip}}
+      {{on "mouseenter" this.handleMouseEnterTooltip}}
+      {{on "mouseleave" this.handleMouseLeaveTooltip}}
+    />
   {{~/if~}}
 </div>

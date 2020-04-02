@@ -11,5 +11,5 @@ export default Route.extend({
     this._super(...arguments);
     this.controllerFor('application').set('showLayout', true);
     document.querySelector('body').classList.add('has-layout');
-  }
+  },
 });

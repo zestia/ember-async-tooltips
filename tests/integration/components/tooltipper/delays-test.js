@@ -4,18 +4,18 @@ import { render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { later } from '@ember/runloop';
 
-module('tooltipper', function(hooks) {
+module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.tooltipService = this.owner.lookup('service:tooltip');
   });
 
-  test('load less than show delay', async function(assert) {
+  test('load less than show delay', async function (assert) {
     assert.expect(3);
 
     this.load = () => {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         later(resolve, 50);
       });
     };
@@ -42,11 +42,11 @@ module('tooltipper', function(hooks) {
     assert.ok(this.timeTaken() >= 100, 'will render after the show delay');
   });
 
-  test('load delay more than show delay', async function(assert) {
+  test('load delay more than show delay', async function (assert) {
     assert.expect(3);
 
     this.load = () => {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         later(resolve, 200);
       });
     };
@@ -76,7 +76,7 @@ module('tooltipper', function(hooks) {
     );
   });
 
-  test('hide delay', async function(assert) {
+  test('hide delay', async function (assert) {
     assert.expect(4);
 
     await render(hbs`
