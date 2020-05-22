@@ -1,5 +1,9 @@
 # Changelog
 
+## 11.0.2
+
+- Add missing `@tracked` decorator to a few properties
+
 ## 11.0.1
 
 - Upgrade dependencies

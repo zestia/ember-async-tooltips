@@ -16,14 +16,14 @@ export default class TooltipperComponent extends Component {
   @tracked coords = { top: 0, left: 0, position: '' };
   @tracked isLoading = false;
   @tracked isShowingTooltip = false;
+  @tracked loadedData = null;
+  @tracked loadError = null;
   @tracked shouldRenderTooltip = false;
 
   isLoaded = false;
   isOverReferenceElement = false;
   isOverTooltipElement = false;
-  loadedData = null;
   loadEndTime = 0;
-  loadError = null;
   loadStartTime = 0;
   previousReferenceElement = null;
   referenceElement = null;
