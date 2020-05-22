@@ -92,13 +92,13 @@
   </label>
 
   <small>
-    <a href="#" {{on "click" this.unload}}>
+    <button type="button" {{on "click" this.unload}}>
       Unload
-    </a>
+    </button>
   </small>
 </div>
 
-<table class="grid">
+<table class="grid" dragover={{this.handleDragOver}}>
   <tbody>
     <tr class="row">
       <td class="cell">

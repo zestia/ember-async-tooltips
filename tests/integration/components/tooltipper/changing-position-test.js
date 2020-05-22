@@ -26,7 +26,7 @@ module('tooltipper', function (hooks) {
     assert.dom('.tooltip').hasStyle(
       {
         top: '-5px',
-        left: '30px',
+        left: '30px'
       },
       'has top right coords set'
     );
@@ -40,7 +40,7 @@ module('tooltipper', function (hooks) {
     assert.dom('.tooltip').hasStyle(
       {
         top: '20px',
-        left: '30px',
+        left: '30px'
       },
       'coordinates are recomputed to bottom right'
     );

@@ -1,9 +1,9 @@
 import Route from '@ember/routing/route';
 
-export default Route.extend({
+export default class ApplicationRoute extends Route {
   activate() {
-    this._super(...arguments);
+    super.activate(...arguments);
     this.controllerFor('application').set('showLayout', true);
     document.querySelector('body').classList.add('has-layout');
-  },
-});
+  }
+}

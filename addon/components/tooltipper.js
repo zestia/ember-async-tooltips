@@ -289,7 +289,7 @@ export default class TooltipperComponent extends Component {
   _waitForTooltipToHide() {
     return new Promise((resolve) => {
       this.tooltipElement.addEventListener('animationend', resolve, {
-        once: true,
+        once: true
       });
 
       this.isShowingTooltip = false;

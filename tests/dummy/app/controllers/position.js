@@ -1,52 +1,59 @@
 import { Promise } from 'rsvp';
 import Controller from '@ember/controller';
-import { run, later } from '@ember/runloop';
+import { next, later } from '@ember/runloop';
 import { equal } from '@ember/object/computed';
-import { action, set } from '@ember/object';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
 export default class PositionController extends Controller {
   window = window;
 
-  init() {
-    super.init(...arguments);
-    set(this, 'showDelay', 500);
-    set(this, 'hideDelay', 0);
-    set(this, 'loadDelay', 500);
-    set(this, 'position', '');
-    set(this, 'showTooltipper', true);
-  }
+  @tracked showDelay = 500;
+  @tracked hideDelay = 0;
+  @tracked loadDelay = 500;
+  @tracked position = '';
+  @tracked isLoading;
+  @tracked adjust;
+  @tracked showTooltipper = true;
+  @tracked showTooltip = false;
 
   @equal('position', '') adjustDisabled;
 
+  constructor() {
+    super(...arguments);
+
+    document.ondragover = (e) => e.preventDefault(); // Prevent ghost spring back
+  }
+
   @action
   unload() {
-    run(() => this.set('showTooltipper', false));
-    run(() => this.set('showTooltipper', true));
+    this.showTooltipper = false;
+    next(() => (this.showTooltipper = true));
   }
 
   @action
   setPosition({ target: { value } }) {
-    set(this, 'position', value);
+    this.position = value;
   }
 
   @action
   setAdjust({ target: { checked } }) {
-    set(this, 'adjust', checked);
+    this.adjust = checked;
   }
 
   @action
   setShowDelay({ target: { value } }) {
-    set(this, 'showDelay', value);
+    this.showDelay = value;
   }
 
   @action
   setHideDelay({ target: { value } }) {
-    set(this, 'hideDelay', value);
+    this.hideDelay = value;
   }
 
   @action
   setLoadDelay({ target: { value } }) {
-    set(this, 'loadDelay', value);
+    this.loadDelay = value;
   }
 
   @action
@@ -66,7 +73,7 @@ export default class PositionController extends Controller {
   storeStartPos(e) {
     const pos = e.target.getBoundingClientRect();
 
-    set(this, 'startPos', [e.clientX - pos.left, e.clientY - pos.top]);
+    this.startPos = [e.clientX - pos.left, e.clientY - pos.top];
   }
 
   @action
@@ -74,17 +81,17 @@ export default class PositionController extends Controller {
     const { clientX: x, clientY: y } = e;
 
     if (x && y) {
-      set(this, 'lastPos', [x, y]);
+      this.lastPos = [x, y];
     }
   }
 
   @action
   load() {
-    set(this, 'isLoading', true);
+    this.isLoading = true;
 
     return new Promise((resolve) => {
       later(() => {
-        set(this, 'isLoading', false);
+        this.isLoading = false;
         resolve();
       }, this.loadDelay);
     });

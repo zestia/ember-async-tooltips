@@ -1,15 +1,20 @@
 import Route from '@ember/routing/route';
 
-export default Route.extend({
+export default class PositionRoute extends Route {
   activate() {
-    this._super(...arguments);
+    super.activate(...arguments);
     this.controllerFor('application').set('showLayout', false);
     document.querySelector('body').classList.remove('has-layout');
-  },
+  }
+
+  setupController(controller) {
+    super.setupController(...arguments);
+    controller.refresh = this.refresh.bind(this);
+  }
 
   deactivate() {
-    this._super(...arguments);
+    super.activate(...arguments);
     this.controllerFor('application').set('showLayout', true);
     document.querySelector('body').classList.add('has-layout');
-  },
-});
+  }
+}
