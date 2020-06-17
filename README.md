@@ -108,21 +108,23 @@ The tooltipper yields an API to control the tooltip.
   @tooltip={{component "my-tooltip"}}
   @mouseEvents={{false}} as |tooltipper|
 >
-  <button {{on "click" tooltipper.hideTooltip}}>Hide</button>
-  <button {{on "click" tooltipper.showTooltip}}>Show</button>
-  <button {{on "click" tooltipper.toggleTooltip}}>Toggle</button>
-  <button {{on "click" tooltipper.repositionTooltip}}>Reposition</button>
+  {{!tooltipper.isLoading}}
+  {{!tooltipper.hideTooltip}}
+  {{!tooltipper.showTooltip}}
+  {{!tooltipper.toggleTooltip}}
+  {{!tooltipper.repositionTooltip}}
 </Tooltipper>
 ```
 
 Similarly, the tooltip receives an API as an argument:
 
 ```handlebars
-{{! my-tooltip.hbs }}
-{{@tooltip.hide}}
-{{@tooltip.reposition}}
-{{@tooltip.data}}
-{{@tooltip.error}}
+<div class="my-tooltip">
+  {{!@tooltip.hide}}
+  {{!@tooltip.reposition}}
+  {{!@tooltip.data}}
+  {{!@tooltip.error}}
+</div>
 ```
 
 ## Custom reference element
