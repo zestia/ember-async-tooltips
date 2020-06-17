@@ -99,6 +99,10 @@ Additionally, you can customise the show/hide delays.
 />
 ```
 
+## API
+
+The tooltipper yields an API to control the tooltip.
+
 ```handlebars
 <Tooltipper
   @tooltip={{component "my-tooltip"}}
@@ -109,6 +113,16 @@ Additionally, you can customise the show/hide delays.
   <button {{on "click" tooltipper.toggleTooltip}}>Toggle</button>
   <button {{on "click" tooltipper.repositionTooltip}}>Reposition</button>
 </Tooltipper>
+```
+
+Similarly, the tooltip receives an API as an argument:
+
+```handlebars
+{{! my-tooltip.hbs }}
+{{@tooltip.hide}}
+{{@tooltip.reposition}}
+{{@tooltip.data}}
+{{@tooltip.error}}
 ```
 
 ## Custom reference element
