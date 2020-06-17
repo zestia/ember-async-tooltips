@@ -7,10 +7,10 @@ export default function setupTooltipperTest(hooks) {
   hooks.beforeEach(function () {
     const template = hbs`
       <div class="custom-tooltip" ...attributes>
-        {{#if @error}}
-          {{@error.message}}
+        {{#if @tooltip.error}}
+          {{@tooltip.error.message}}
         {{else}}
-          {{@data.greeting}}
+          {{@tooltip.data.greeting}}
         {{/if}}
       </div>
     `;

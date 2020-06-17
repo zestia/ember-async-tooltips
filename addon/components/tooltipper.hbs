@@ -42,9 +42,12 @@
       id={{concat "tooltip-" this.id}}
       style={{this.tooltipStyle}}
       role="tooltip"
-      @hide={{this.hideTooltip}}
-      @data={{this.loadedData}}
-      @error={{this.loadError}}
+      @tooltip={{hash
+        hide=this.hideTooltip
+        reposition=this.repositionTooltip
+        data=this.loadedData
+        error=this.loadError
+      }}
       {{did-insert this.handleInsertTooltip}}
       {{will-destroy this.handleDestroyTooltip}}
       {{on "mouseenter" this.handleMouseEnterTooltip}}

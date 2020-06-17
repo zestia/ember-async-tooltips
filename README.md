@@ -107,6 +107,7 @@ Additionally, you can customise the show/hide delays.
   <button {{on "click" tooltipper.hideTooltip}}>Hide</button>
   <button {{on "click" tooltipper.showTooltip}}>Show</button>
   <button {{on "click" tooltipper.toggleTooltip}}>Toggle</button>
+  <button {{on "click" tooltipper.repositionTooltip}}>Reposition</button>
 </Tooltipper>
 ```
 
@@ -135,7 +136,7 @@ The following example waits for 300ms before showing a tooltip, during this time
 ```
 
 ```handlebars
-{{! user-tooltipper/template.hbs }}
+{{! user-tooltipper.hbs }}
 <Tooltipper
   @showDelay={{300}}
   @onLoad={{fn this.loadUser @id}}
@@ -144,8 +145,8 @@ The following example waits for 300ms before showing a tooltip, during this time
 ```
 
 ```handlebars
-{{! user-tooltip/template.hbs }}
-Hello {{@data.user.name}}
+{{! user-tooltip.hbs }}
+Hello {{@tooltip.data.user.name}}
 ```
 
 ## Prerequisites

@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { cancel, debounce, scheduleOnce } from '@ember/runloop';
+import { cancel, debounce } from '@ember/runloop';
 import { getPosition, getCoords } from '@zestia/position-utils';
 import { guidFor } from '@ember/object/internals';
 import { isPresent } from '@ember/utils';

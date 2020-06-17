@@ -1,9 +1,7 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render, click, triggerEvent, settled } from '@ember/test-helpers';
+import { render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import EmberResolver from 'ember-resolver';
-import waitForAnimation from '../../../helpers/wait-for-animation';
 
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
@@ -11,25 +9,22 @@ module('tooltipper', function (hooks) {
   test('changing content', async function (assert) {
     assert.expect(2);
 
-    this.text = 'Hello';
+    const template = hbs`
+      <div class="my-tooltip" {{did-update @tooltip.reposition @text}} ...attributes>
+        {{@text}}
+      </div>
+    `;
 
-    this.changeText = (tooltipper) => {
-      this.set('text', this.text.repeat(10));
-      tooltipper.repositionTooltip();
-    };
+    this.owner.register('template:components/my-tooltip', template);
+
+    this.text = 'Hello';
 
     await render(hbs`
       <Tooltipper
-        @tooltip={{component "tooltip" text=this.text}}
-        @position="bottom right"
-        as |tooltipper|
+        @tooltip={{component "my-tooltip" text=this.text}}
+        @position="bottom center"
       >
         Hover over me
-
-        <br>
-        <button type="button" {{on "click" (fn this.changeText tooltipper)}}>
-          Hover over me
-        </button>
       </Tooltipper>
     `);
 
@@ -37,25 +32,32 @@ module('tooltipper', function (hooks) {
 
     assert.dom('.tooltip').hasStyle(
       {
-        top: '23.5px',
-        left: '37.9297px'
+        top: '13px',
+        left: '19.1055px'
       },
       'initial position'
     );
 
-    // Here, we change the text, and should expect
-    // that the tooltip is re-positioned, as if the
-    // user had mouse'd out and back in again.
-    // this.set('text', this.text.repeat(10));
+    // Here, we change the content inside a tooltip,
+    // and should expect that the tooltip is re-positioned,
+    // as if the user had mouse'd out and back in again.
+    //
+    // Note that we yield the ability to reposition
+    // the tooltip, rather than doing it automatically,
+    // because although that would be the ideal, it would
+    // require a DOM Mutation Observer and that's a lot of
+    // observering, for a situation that rarely occurs.
+    //
     // await triggerEvent('.tooltipper', 'mouseleave');
     // await waitForAnimation('.tooltip');
     // await triggerEvent('.tooltipper', 'mouseenter');
-    await click('button');
 
-    assert.dom('.tooltip').hasStyle(
+    this.set('text', this.text.repeat(10));
+
+    assert.dom('.my-tooltip').hasStyle(
       {
-        top: '23.5px',
-        left: '-122.031px'
+        top: '13px',
+        left: '-60.875px'
       },
       'tooltip is re-positioned'
     );

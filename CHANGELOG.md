@@ -1,5 +1,10 @@
 # Changelog
 
+## 12.0.0
+
+- Move arguments passed to tooltips, to a single argument 'api'.
+- Expose ability to reposition a tooltip
+
 ## 11.0.2
 
 - Add missing `@tracked` decorator to a few properties
