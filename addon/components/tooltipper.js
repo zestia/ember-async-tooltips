@@ -298,7 +298,7 @@ export default class TooltipperComponent extends Component {
 
   _destroyTooltip() {
     this.tooltipService.remove(this);
-
+    console.log('destroyed');
     this.shouldRenderTooltip = false;
   }
 
