@@ -12,51 +12,51 @@ module('tooltips', function (hooks) {
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    await fillIn('.position', 'top left');
+    await fillIn('.position-page__position', 'top left');
 
     assert.dom('.tooltip').hasClass('tooltip--top-left');
 
-    await fillIn('.position', 'top center');
+    await fillIn('.position-page__position', 'top center');
 
     assert.dom('.tooltip').hasClass('tooltip--top-center');
 
-    await fillIn('.position', 'top right');
+    await fillIn('.position-page__position', 'top right');
 
     assert.dom('.tooltip').hasClass('tooltip--top-right');
 
-    await fillIn('.position', 'right middle');
+    await fillIn('.position-page__position', 'right middle');
 
     assert.dom('.tooltip').hasClass('tooltip--right-middle');
 
-    await fillIn('.position', 'right top');
+    await fillIn('.position-page__position', 'right top');
 
     assert.dom('.tooltip').hasClass('tooltip--right-top');
 
-    await fillIn('.position', 'right bottom');
+    await fillIn('.position-page__position', 'right bottom');
 
     assert.dom('.tooltip').hasClass('tooltip--right-bottom');
 
-    await fillIn('.position', 'bottom right');
+    await fillIn('.position-page__position', 'bottom right');
 
     assert.dom('.tooltip').hasClass('tooltip--bottom-right');
 
-    await fillIn('.position', 'bottom center');
+    await fillIn('.position-page__position', 'bottom center');
 
     assert.dom('.tooltip').hasClass('tooltip--bottom-center');
 
-    await fillIn('.position', 'bottom left');
+    await fillIn('.position-page__position', 'bottom left');
 
     assert.dom('.tooltip').hasClass('tooltip--bottom-left');
 
-    await fillIn('.position', 'left middle');
+    await fillIn('.position-page__position', 'left middle');
 
     assert.dom('.tooltip').hasClass('tooltip--left-middle');
 
-    await fillIn('.position', 'left top');
+    await fillIn('.position-page__position', 'left top');
 
     assert.dom('.tooltip').hasClass('tooltip--left-top');
 
-    await fillIn('.position', 'left bottom');
+    await fillIn('.position-page__position', 'left bottom');
 
     assert.dom('.tooltip').hasClass('tooltip--left-bottom');
   });

@@ -4,7 +4,6 @@ export default class PositionRoute extends Route {
   activate() {
     super.activate(...arguments);
     this.controllerFor('application').set('showLayout', false);
-    document.querySelector('body').classList.remove('has-layout');
   }
 
   setupController(controller) {
@@ -15,6 +14,5 @@ export default class PositionRoute extends Route {
   deactivate() {
     super.activate(...arguments);
     this.controllerFor('application').set('showLayout', true);
-    document.querySelector('body').classList.add('has-layout');
   }
 }

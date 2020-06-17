@@ -4,6 +4,5 @@ export default class ApplicationRoute extends Route {
   activate() {
     super.activate(...arguments);
     this.controllerFor('application').set('showLayout', true);
-    document.querySelector('body').classList.add('has-layout');
   }
 }
