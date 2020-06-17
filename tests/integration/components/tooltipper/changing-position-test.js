@@ -9,40 +9,43 @@ module('tooltipper', function (hooks) {
   test('changing position', async function (assert) {
     assert.expect(4);
 
-    this.set('position', 'top right');
+    this.set('position', 'top center');
 
     await render(hbs`
       <Tooltipper
-        @tooltip={{component "tooltip"}}
-        @position={{this.position}} />
+        @tooltip={{component "tooltip" text="See me"}}
+        @position={{this.position}}
+      >
+        Hover over me
+      </Tooltipper>
     `);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
     assert
       .dom('.tooltip')
-      .hasClass('tooltip--top-right', 'has initial position class name');
+      .hasClass('tooltip--top-center', 'has initial position class name');
 
     assert.dom('.tooltip').hasStyle(
       {
         top: '-5px',
-        left: '30px'
+        left: '16.3281px'
       },
-      'has top right coords set'
+      'has top center coords set'
     );
 
-    this.set('position', 'bottom right');
+    this.set('position', 'bottom center');
 
     assert
       .dom('.tooltip')
-      .hasClass('tooltip--bottom-right', 'position class name is recomputed');
+      .hasClass('tooltip--bottom-center', 'position class name is recomputed');
 
     assert.dom('.tooltip').hasStyle(
       {
-        top: '20px',
-        left: '30px'
+        top: '13px',
+        left: '16.3281px'
       },
-      'coordinates are recomputed to bottom right'
+      'coordinates are recomputed to bottom center'
     );
   });
 });
