@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { cancel, debounce } from '@ember/runloop';
+import { cancel, debounce, scheduleOnce } from '@ember/runloop';
 import { getPosition, getCoords } from '@zestia/position-utils';
 import { guidFor } from '@ember/object/internals';
 import { isPresent } from '@ember/utils';
@@ -143,6 +143,11 @@ export default class TooltipperComponent extends Component {
     } else {
       this._showTooltip();
     }
+  }
+
+  @action
+  repositionTooltip() {
+    this._positionTooltip();
   }
 
   _maybeToggleViaArgument() {
@@ -298,7 +303,6 @@ export default class TooltipperComponent extends Component {
 
   _destroyTooltip() {
     this.tooltipService.remove(this);
-    console.log('destroyed');
     this.shouldRenderTooltip = false;
   }
 

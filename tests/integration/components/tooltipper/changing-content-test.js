@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render, triggerEvent, settled } from '@ember/test-helpers';
+import { render, click, triggerEvent, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import EmberResolver from 'ember-resolver';
 import waitForAnimation from '../../../helpers/wait-for-animation';
@@ -13,12 +13,23 @@ module('tooltipper', function (hooks) {
 
     this.text = 'Hello';
 
+    this.changeText = (tooltipper) => {
+      this.set('text', this.text.repeat(10));
+      tooltipper.repositionTooltip();
+    };
+
     await render(hbs`
       <Tooltipper
         @tooltip={{component "tooltip" text=this.text}}
         @position="bottom right"
+        as |tooltipper|
       >
         Hover over me
+
+        <br>
+        <button type="button" {{on "click" (fn this.changeText tooltipper)}}>
+          Hover over me
+        </button>
       </Tooltipper>
     `);
 
@@ -26,8 +37,8 @@ module('tooltipper', function (hooks) {
 
     assert.dom('.tooltip').hasStyle(
       {
-        top: '13px',
-        left: '34.2109px'
+        top: '23.5px',
+        left: '37.9297px'
       },
       'initial position'
     );
@@ -35,15 +46,16 @@ module('tooltipper', function (hooks) {
     // Here, we change the text, and should expect
     // that the tooltip is re-positioned, as if the
     // user had mouse'd out and back in again.
+    // this.set('text', this.text.repeat(10));
     // await triggerEvent('.tooltipper', 'mouseleave');
     // await waitForAnimation('.tooltip');
     // await triggerEvent('.tooltipper', 'mouseenter');
-    this.set('text', this.text.repeat(10));
+    await click('button');
 
     assert.dom('.tooltip').hasStyle(
       {
-        top: '13px',
-        left: '-125.75px'
+        top: '23.5px',
+        left: '-122.031px'
       },
       'tooltip is re-positioned'
     );
