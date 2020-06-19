@@ -3,7 +3,7 @@ import Route from '@ember/routing/route';
 export default class PositionRoute extends Route {
   activate() {
     super.activate(...arguments);
-    this.controllerFor('application').set('showLayout', false);
+    this.controllerFor('application').showLayout = false;
   }
 
   setupController(controller) {
@@ -13,6 +13,6 @@ export default class PositionRoute extends Route {
 
   deactivate() {
     super.activate(...arguments);
-    this.controllerFor('application').set('showLayout', true);
+    this.controllerFor('application').showLayout = true;
   }
 }

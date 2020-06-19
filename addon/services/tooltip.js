@@ -1,20 +1,20 @@
 import Service from '@ember/service';
-import { A as emberA } from '@ember/array';
-import { set } from '@ember/object';
 import { all } from 'rsvp';
+import { tracked } from '@glimmer/tracking';
 
 export default class TooltipService extends Service {
-  init() {
-    super.init(...arguments);
-    set(this, 'tooltippers', emberA());
-  }
+  @tracked tooltippers = [];
 
   add(tooltipper) {
-    this.tooltippers.addObject(tooltipper);
+    this.tooltippers = [...this.tooltippers, tooltipper];
   }
 
   remove(tooltipper) {
-    this.tooltippers.removeObject(tooltipper);
+    const index = this.queue.indexOf(tooltipper);
+
+    this.tooltippers.splice(index, 1);
+
+    this.tooltippers = [...this.tooltippers];
   }
 
   hideAllTooltips() {
