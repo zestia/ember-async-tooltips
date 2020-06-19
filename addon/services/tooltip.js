@@ -10,7 +10,7 @@ export default class TooltipService extends Service {
   }
 
   remove(tooltipper) {
-    const index = this.queue.indexOf(tooltipper);
+    const index = this.tooltippers.indexOf(tooltipper);
 
     this.tooltippers.splice(index, 1);
 
