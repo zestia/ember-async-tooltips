@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.0.1
+
+- Add `@onShowTooltip` and `@onHideTooltip` actions
+
 ## 12.0.0
 
 - Move arguments passed to tooltips, to a single argument 'api'.

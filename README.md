@@ -99,6 +99,8 @@ Additionally, you can customise the show/hide delays.
 />
 ```
 
+You can also use the actions `@onShowTooltip` and `@onHideTooltip`. These hooks include load time, render time, and animation time.
+
 ## API
 
 The tooltipper yields an API to control the tooltip.

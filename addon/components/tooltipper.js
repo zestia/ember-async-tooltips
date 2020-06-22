@@ -6,7 +6,7 @@ import { guidFor } from '@ember/object/internals';
 import { isPresent } from '@ember/utils';
 import { htmlSafe, dasherize } from '@ember/string';
 import { inject } from '@ember/service';
-import { resolve } from 'rsvp';
+import { Promise, defer, resolve } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import autoPosition from '../utils/auto-position';
 
@@ -103,6 +103,7 @@ export default class TooltipperComponent extends Component {
   @action
   handleInsertTooltip(element) {
     this.tooltipElement = element;
+    this.willInsertTooltip.resolve();
     this._positionTooltip();
   }
 
@@ -148,6 +149,14 @@ export default class TooltipperComponent extends Component {
   @action
   repositionTooltip() {
     this._positionTooltip();
+  }
+
+  _invokeAction(name, ...args) {
+    const action = this.args[name];
+
+    if (typeof action === 'function') {
+      action(...args);
+    }
   }
 
   _maybeToggleViaArgument() {
@@ -251,14 +260,20 @@ export default class TooltipperComponent extends Component {
       return;
     }
 
-    this._load().then(this._renderTooltip.bind(this));
+    this._load()
+      .then(() => this._renderTooltip())
+      .then(() => this._waitForAnimation())
+      .then(() => this._invokeAction('onShowTooltip'));
   }
 
   _renderTooltip() {
     this.isShowingTooltip = true;
     this.shouldRenderTooltip = true;
+    this.willInsertTooltip = defer();
 
     this.tooltipService.add(this);
+
+    return this._waitForTooltipElement();
   }
 
   _scheduleHideTooltipFromHover() {
@@ -288,16 +303,23 @@ export default class TooltipperComponent extends Component {
       return;
     }
 
-    return this._waitForTooltipToHide().then(this._destroyTooltip.bind(this));
+    this.isShowingTooltip = false;
+
+    return this._waitForAnimation().then(() => {
+      this._invokeAction('onHideTooltip');
+      this._destroyTooltip();
+    });
   }
 
-  _waitForTooltipToHide() {
+  _waitForTooltipElement() {
+    return this.willInsertTooltip.promise;
+  }
+
+  _waitForAnimation() {
     return new Promise((resolve) => {
       this.tooltipElement.addEventListener('animationend', resolve, {
         once: true
       });
-
-      this.isShowingTooltip = false;
     });
   }
 
