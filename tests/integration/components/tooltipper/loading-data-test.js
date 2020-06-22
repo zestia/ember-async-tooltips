@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { defer } from 'rsvp';
 
@@ -8,15 +8,21 @@ module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
   test('loading data', async function (assert) {
-    assert.expect(2);
+    assert.expect(4);
+
+    this.showTooltip = true;
 
     const deferred = defer();
 
-    this.loadTooltip = () => deferred.promise;
+    this.loadTooltip = () => {
+      assert.step('load tooltip');
+
+      return deferred.promise;
+    };
 
     await render(hbs`
       <Tooltipper
-        @showTooltip={{true}}
+        @showTooltip={{this.showTooltip}}
         @onLoad={{this.loadTooltip}}
         @tooltip={{component "custom-tooltip"}} />
     `);
@@ -30,5 +36,18 @@ module('tooltipper', function (hooks) {
     assert
       .dom('.tooltip')
       .hasText('Hello World', 'the loaded data is passed to the tooltip');
+
+    this.set('showTooltip', false);
+
+    await settled();
+
+    this.set('showTooltip', true);
+
+    await settled();
+
+    assert.verifySteps(
+      ['load tooltip'],
+      'load not called on a subsequent render'
+    );
   });
 });

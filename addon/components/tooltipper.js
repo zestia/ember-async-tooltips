@@ -123,7 +123,7 @@ export default class TooltipperComponent extends Component {
     this.isOverTooltipElement = false;
 
     if (this.shouldUseMouseEvents) {
-      this._scheduleHideTooltipFromHover();
+      this._scheduleHideTooltip();
     }
   }
 
@@ -183,18 +183,19 @@ export default class TooltipperComponent extends Component {
   _mouseEnterReferenceElement() {
     this.isOverReferenceElement = true;
 
-    this._scheduleShowTooltipFromHover();
+    this._scheduleShowTooltip();
   }
 
   _mouseLeaveReferenceElement() {
     this.isOverReferenceElement = false;
 
-    this._scheduleHideTooltipFromHover();
+    this._scheduleHideTooltip();
   }
 
   _load() {
+    console.log('load');
     const action =
-      this.isLoaded || typeof this.args.onLoad !== 'function'
+      typeof this.args.onLoad !== 'function'
         ? this._onLoad.bind(this)
         : this.args.onLoad;
 
@@ -229,22 +230,6 @@ export default class TooltipperComponent extends Component {
     this.loadError = error;
   }
 
-  _scheduleShowTooltipFromHover() {
-    if (this.isLoading) {
-      return;
-    }
-
-    this._load().then(this._attemptShowTooltipFromHover.bind(this));
-  }
-
-  _attemptShowTooltipFromHover() {
-    if (!this.isOverReferenceElement) {
-      return;
-    }
-
-    this._scheduleShowTooltip();
-  }
-
   _scheduleShowTooltip() {
     this._cancelHideTooltip();
 
@@ -276,26 +261,22 @@ export default class TooltipperComponent extends Component {
     return this._waitForTooltipElement();
   }
 
-  _scheduleHideTooltipFromHover() {
-    this._cancelShowTooltip();
-
-    this.hideTimer = debounce(
-      this,
-      '_attemptHideTooltipFromHover',
-      this.hideDelay
-    );
-  }
-
-  _cancelHideTooltip() {
-    cancel(this.hideTimer);
-  }
-
-  _attemptHideTooltipFromHover() {
+  _attemptHideTooltip() {
     if (this.isOverReferenceElement || this.isOverTooltipElement) {
       return;
     }
 
     this._hideTooltip();
+  }
+
+  _scheduleHideTooltip() {
+    this._cancelShowTooltip();
+
+    this.hideTimer = debounce(this, '_attemptHideTooltip', this.hideDelay);
+  }
+
+  _cancelHideTooltip() {
+    cancel(this.hideTimer);
   }
 
   _hideTooltip() {
