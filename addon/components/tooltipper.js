@@ -205,10 +205,6 @@ export default class TooltipperComponent extends Component {
       .finally(this._loadFinished.bind(this));
   }
 
-  _onLoad() {
-    return this.loadedData;
-  }
-
   _loadStarted() {
     this.loadStartTime = Date.now();
     this.isLoading = true;
