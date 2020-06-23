@@ -3,6 +3,7 @@
 ## 12.0.1
 
 - Add `@onShowTooltip` and `@onHideTooltip` actions
+- Internal refactor / add missing test cases
 
 ## 12.0.0
 

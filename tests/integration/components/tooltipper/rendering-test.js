@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { settled, render, click, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import waitForAnimation from '../../../helpers/wait-for-animation';
 
 module('tooltipper', function (hooks) {
   setupRenderingTest(hooks);
@@ -38,9 +37,9 @@ module('tooltipper', function (hooks) {
   test('cancel destroying tooltip when animating out', async function (assert) {
     assert.expect(2);
 
-    // This test simulates hovering over whilst a tooltip is animating out
-    // The tooltip should finish hiding and then show again, and not be
-    // destroyed and rerendered.
+    // This test simulates hovering over a tooltipper whilst a tooltip is
+    // animating out. The tooltip should finish hiding and then show again,
+    // and not be destroyed and rerendered.
 
     await render(hbs`
       <Tooltipper
