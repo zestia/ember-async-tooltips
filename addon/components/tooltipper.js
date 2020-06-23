@@ -123,7 +123,7 @@ export default class TooltipperComponent extends Component {
     this.isOverTooltipElement = false;
 
     if (this.shouldUseMouseEvents) {
-      this._scheduleHideTooltipFromHover();
+      this._scheduleHideTooltip();
     }
   }
 
@@ -155,7 +155,7 @@ export default class TooltipperComponent extends Component {
     const action = this.args[name];
 
     if (typeof action === 'function') {
-      action(...args);
+      return action(...args);
     }
   }
 
@@ -183,31 +183,26 @@ export default class TooltipperComponent extends Component {
   _mouseEnterReferenceElement() {
     this.isOverReferenceElement = true;
 
-    this._scheduleShowTooltipFromHover();
+    this._scheduleShowTooltip();
   }
 
   _mouseLeaveReferenceElement() {
     this.isOverReferenceElement = false;
 
-    this._scheduleHideTooltipFromHover();
+    this._scheduleHideTooltip();
   }
 
   _load() {
-    const action =
-      this.isLoaded || typeof this.args.onLoad !== 'function'
-        ? this._onLoad.bind(this)
-        : this.args.onLoad;
+    if (this.isLoaded) {
+      return resolve();
+    }
 
     this._loadStarted();
 
-    return resolve(action())
+    return resolve(this._invokeAction('onLoad'))
       .then(this._loadedData.bind(this))
       .catch(this._loadError.bind(this))
       .finally(this._loadFinished.bind(this));
-  }
-
-  _onLoad() {
-    return this.loadedData;
   }
 
   _loadStarted() {
@@ -229,22 +224,6 @@ export default class TooltipperComponent extends Component {
     this.loadError = error;
   }
 
-  _scheduleShowTooltipFromHover() {
-    if (this.isLoading) {
-      return;
-    }
-
-    this._load().then(this._attemptShowTooltipFromHover.bind(this));
-  }
-
-  _attemptShowTooltipFromHover() {
-    if (!this.isOverReferenceElement) {
-      return;
-    }
-
-    this._scheduleShowTooltip();
-  }
-
   _scheduleShowTooltip() {
     this._cancelHideTooltip();
 
@@ -256,6 +235,8 @@ export default class TooltipperComponent extends Component {
   }
 
   _showTooltip() {
+    this.isShowingTooltip = true;
+
     if (this.shouldRenderTooltip) {
       return;
     }
@@ -267,7 +248,6 @@ export default class TooltipperComponent extends Component {
   }
 
   _renderTooltip() {
-    this.isShowingTooltip = true;
     this.shouldRenderTooltip = true;
     this.willInsertTooltip = defer();
 
@@ -276,21 +256,17 @@ export default class TooltipperComponent extends Component {
     return this._waitForTooltipElement();
   }
 
-  _scheduleHideTooltipFromHover() {
+  _scheduleHideTooltip() {
     this._cancelShowTooltip();
 
-    this.hideTimer = debounce(
-      this,
-      '_attemptHideTooltipFromHover',
-      this.hideDelay
-    );
+    this.hideTimer = debounce(this, '_attemptHideTooltip', this.hideDelay);
   }
 
   _cancelHideTooltip() {
     cancel(this.hideTimer);
   }
 
-  _attemptHideTooltipFromHover() {
+  _attemptHideTooltip() {
     if (this.isOverReferenceElement || this.isOverTooltipElement) {
       return;
     }
@@ -307,7 +283,7 @@ export default class TooltipperComponent extends Component {
 
     return this._waitForAnimation().then(() => {
       this._invokeAction('onHideTooltip');
-      this._destroyTooltip();
+      this._attemptDestroyTooltip();
     });
   }
 
@@ -321,6 +297,14 @@ export default class TooltipperComponent extends Component {
         once: true
       });
     });
+  }
+
+  _attemptDestroyTooltip() {
+    if (this.isShowingTooltip) {
+      return;
+    }
+
+    this._destroyTooltip();
   }
 
   _destroyTooltip() {

@@ -2,9 +2,14 @@ import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
 import { render, settled, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import waitForAnimation from '../../../helpers/wait-for-animation';
 
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
+
+  hooks.beforeEach(function () {
+    this.tooltipService = this.owner.lookup('service:tooltip');
+  });
 
   test('mouse enter reference', async function (assert) {
     assert.expect(2);
@@ -31,7 +36,7 @@ module('tooltipper', function (hooks) {
 
     await triggerEvent('.tooltipper', 'mouseleave');
 
-    await triggerEvent('.tooltip', 'animationend');
+    await waitForAnimation('.tooltip');
 
     assert
       .dom('.tooltip')
@@ -49,7 +54,7 @@ module('tooltipper', function (hooks) {
 
     await triggerEvent('.tooltip', 'mouseleave');
 
-    await triggerEvent('.tooltip', 'animationend');
+    await waitForAnimation('.tooltip');
 
     assert
       .dom('.tooltip')
@@ -94,5 +99,63 @@ module('tooltipper', function (hooks) {
     this.set('showTooltipper', false);
 
     await settled();
+  });
+
+  test('mouse enter / mouse leave tooltipper', async function (assert) {
+    assert.expect(1);
+
+    await render(hbs`
+      <Tooltipper @tooltip={{component "tooltip"}} />
+    `);
+
+    // Intentionally no await
+    triggerEvent('.tooltipper', 'mouseenter');
+    triggerEvent('.tooltipper', 'mouseleave');
+
+    await settled();
+
+    assert.dom('.tooltip').doesNotExist('never needlessly renders');
+  });
+
+  test('mouse leave tooltip whilst still over tooltipper', async function (assert) {
+    assert.expect(1);
+
+    await render(hbs`
+      <Tooltipper @tooltip={{component "tooltip"}} />
+    `);
+
+    await triggerEvent('.tooltipper', 'mouseenter');
+
+    await triggerEvent('.tooltip', 'mouseleave', { bubbles: false });
+
+    await waitForAnimation('.tooltip');
+
+    await settled();
+
+    assert
+      .dom('.tooltip')
+      .exists('mouse still over tooltipper, so tooltip should be present');
+  });
+
+  test('mouse leave tooltipper whilst still over tooltip', async function (assert) {
+    assert.expect(1);
+
+    await render(hbs`
+      <Tooltipper @tooltip={{component "tooltip"}} />
+    `);
+
+    await triggerEvent('.tooltipper', 'mouseenter');
+
+    await triggerEvent('.tooltip', 'mouseenter');
+
+    await triggerEvent('.tooltipper', 'mouseleave', { bubbles: false });
+
+    await waitForAnimation('.tooltip');
+
+    await settled();
+
+    assert
+      .dom('.tooltip')
+      .exists('mouse still over tooltip, so tooltip should be present');
   });
 });
