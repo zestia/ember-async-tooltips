@@ -115,11 +115,15 @@ export default class TooltipperComponent extends Component {
 
   @action
   handleMouseEnterTooltip() {
+    console.log('mouse enter tooltip');
+
     this.isOverTooltipElement = true;
   }
 
   @action
   handleMouseLeaveTooltip() {
+    console.log('mouse leave tooltip');
+
     this.isOverTooltipElement = false;
 
     if (this.shouldUseMouseEvents) {
@@ -155,7 +159,7 @@ export default class TooltipperComponent extends Component {
     const action = this.args[name];
 
     if (typeof action === 'function') {
-      action(...args);
+      return action(...args);
     }
   }
 
@@ -181,27 +185,29 @@ export default class TooltipperComponent extends Component {
   }
 
   _mouseEnterReferenceElement() {
+    console.log('mouse enter reference');
+
     this.isOverReferenceElement = true;
 
     this._scheduleShowTooltip();
   }
 
   _mouseLeaveReferenceElement() {
+    console.log('mouse leave reference');
+
     this.isOverReferenceElement = false;
 
     this._scheduleHideTooltip();
   }
 
   _load() {
-    console.log('load');
-    const action =
-      typeof this.args.onLoad !== 'function'
-        ? this._onLoad.bind(this)
-        : this.args.onLoad;
+    if (this.isLoaded) {
+      return resolve();
+    }
 
     this._loadStarted();
 
-    return resolve(action())
+    return resolve(this._invokeAction('onLoad'))
       .then(this._loadedData.bind(this))
       .catch(this._loadError.bind(this))
       .finally(this._loadFinished.bind(this));
@@ -241,7 +247,11 @@ export default class TooltipperComponent extends Component {
   }
 
   _showTooltip() {
+    console.log('show tooltip');
+    this.isShowingTooltip = true;
+
     if (this.shouldRenderTooltip) {
+      console.log('skipped render');
       return;
     }
 
@@ -252,7 +262,8 @@ export default class TooltipperComponent extends Component {
   }
 
   _renderTooltip() {
-    this.isShowingTooltip = true;
+    console.log('rendering');
+
     this.shouldRenderTooltip = true;
     this.willInsertTooltip = defer();
 
@@ -261,18 +272,10 @@ export default class TooltipperComponent extends Component {
     return this._waitForTooltipElement();
   }
 
-  _attemptHideTooltip() {
-    if (this.isOverReferenceElement || this.isOverTooltipElement) {
-      return;
-    }
-
-    this._hideTooltip();
-  }
-
   _scheduleHideTooltip() {
     this._cancelShowTooltip();
 
-    this.hideTimer = debounce(this, '_attemptHideTooltip', this.hideDelay);
+    this.hideTimer = debounce(this, '_hideTooltip', this.hideDelay);
   }
 
   _cancelHideTooltip() {
@@ -280,13 +283,20 @@ export default class TooltipperComponent extends Component {
   }
 
   _hideTooltip() {
+    // if (this.isOverReferenceElement || this.isOverTooltipElement) {
+    //   return;
+    // }
+
+    this.isShowingTooltip = false;
+
+    console.log('hide tooltip');
+
     if (!this.tooltipElement) {
       return;
     }
 
-    this.isShowingTooltip = false;
-
     return this._waitForAnimation().then(() => {
+      console.log('jere');
       this._invokeAction('onHideTooltip');
       this._destroyTooltip();
     });
@@ -305,8 +315,14 @@ export default class TooltipperComponent extends Component {
   }
 
   _destroyTooltip() {
+    if (this.isShowingTooltip) {
+      console.log('skipped destroy');
+      return;
+    }
+
     this.tooltipService.remove(this);
     this.shouldRenderTooltip = false;
+    console.log('destroying');
   }
 
   _autoSetupReferenceElement() {

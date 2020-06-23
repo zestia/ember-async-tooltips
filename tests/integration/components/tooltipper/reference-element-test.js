@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
 import { render, find, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import waitForAnimation from '../../../helpers/wait-for-animation';
 
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
@@ -30,7 +31,7 @@ module('tooltipper', function (hooks) {
 
     await triggerEvent('.reference-element-1', 'mouseleave');
 
-    await triggerEvent('.tooltip', 'animationend');
+    await waitForAnimation('.tooltip');
 
     assert
       .dom('.tooltip')

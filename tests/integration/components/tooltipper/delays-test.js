@@ -3,6 +3,7 @@ import setupTooltipperTest from './setup';
 import { render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { later } from '@ember/runloop';
+import waitForAnimation from '../../../helpers/wait-for-animation';
 
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
@@ -101,13 +102,11 @@ module('tooltipper', function (hooks) {
       `approximately 100ms hide delay (${time}ms)`
     );
 
-    const willHide = triggerEvent('.tooltip', 'animationend');
-
     assert
       .dom('.tooltip')
       .exists('tooltip still present whilst hide animation is taking place');
 
-    await willHide;
+    await waitForAnimation('.tooltip');
 
     assert.dom('.tooltip').doesNotExist('hidden after animation');
   });

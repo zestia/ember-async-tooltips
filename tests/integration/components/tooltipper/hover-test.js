@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
 import { render, settled, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import waitForAnimation from '../../../helpers/wait-for-animation';
 
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
@@ -31,7 +32,7 @@ module('tooltipper', function (hooks) {
 
     await triggerEvent('.tooltipper', 'mouseleave');
 
-    await triggerEvent('.tooltip', 'animationend');
+    await waitForAnimation('.tooltip');
 
     assert
       .dom('.tooltip')
@@ -49,7 +50,7 @@ module('tooltipper', function (hooks) {
 
     await triggerEvent('.tooltip', 'mouseleave');
 
-    await triggerEvent('.tooltip', 'animationend');
+    await waitForAnimation('.tooltip');
 
     assert
       .dom('.tooltip')
@@ -94,5 +95,21 @@ module('tooltipper', function (hooks) {
     this.set('showTooltipper', false);
 
     await settled();
+  });
+
+  test('mouse enter / mouse leave', async function (assert) {
+    assert.expect(1);
+
+    await render(hbs`
+      <Tooltipper @tooltip={{component "tooltip"}} />
+    `);
+
+    // Intentionally no await
+    triggerEvent('.tooltipper', 'mouseenter');
+    triggerEvent('.tooltipper', 'mouseleave');
+
+    await settled();
+
+    assert.dom('.tooltip').doesNotExist('never needlessly renders');
   });
 });

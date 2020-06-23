@@ -47,7 +47,7 @@ module('tooltipper', function (hooks) {
 
     assert.verifySteps(
       ['load tooltip'],
-      'load not called on a subsequent render'
+      'load is not called on a subsequent render of the tooltip'
     );
   });
 });

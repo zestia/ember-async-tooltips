@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-import { visit, triggerEvent } from '@ember/test-helpers';
+import { visit, triggerEvent, settled } from '@ember/test-helpers';
 
 module('tooltips', function (hooks) {
   setupApplicationTest(hooks);
@@ -20,7 +20,7 @@ module('tooltips', function (hooks) {
 
     await this.tooltipService.hideAllTooltips();
 
-    await triggerEvent('.tooltip', 'animationend');
+    await settled();
 
     assert.dom('.tooltip').doesNotExist();
   });
