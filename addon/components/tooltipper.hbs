@@ -35,7 +35,7 @@
         concat
         "tooltip"
         " tooltip--"
-        (if this.isShowingTooltip "showing" "hiding")
+        (if this.shouldShowTooltip "showing" "hiding")
         " tooltip--"
         (if this.coords.position this.tooltipPosition "unpositioned")
       }}

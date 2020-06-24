@@ -15,7 +15,7 @@ export default class TooltipperComponent extends Component {
 
   @tracked coords = { top: 0, left: 0, position: '' };
   @tracked isLoading = false;
-  @tracked isShowingTooltip = false;
+  @tracked shouldShowTooltip = false;
   @tracked loadedData = null;
   @tracked loadError = null;
   @tracked shouldRenderTooltip = false;
@@ -235,7 +235,7 @@ export default class TooltipperComponent extends Component {
   }
 
   _showTooltip() {
-    this.isShowingTooltip = true;
+    this.shouldShowTooltip = true;
 
     if (this.shouldRenderTooltip) {
       return;
@@ -279,7 +279,7 @@ export default class TooltipperComponent extends Component {
       return;
     }
 
-    this.isShowingTooltip = false;
+    this.shouldShowTooltip = false;
 
     return this._waitForAnimation().then(() => {
       this._invokeAction('onHideTooltip');
@@ -300,7 +300,7 @@ export default class TooltipperComponent extends Component {
   }
 
   _attemptDestroyTooltip() {
-    if (this.isShowingTooltip) {
+    if (this.shouldShowTooltip) {
       return;
     }
 
