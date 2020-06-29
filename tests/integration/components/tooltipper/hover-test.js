@@ -81,6 +81,23 @@ module('tooltipper', function (hooks) {
     assert.verifySteps(['loading data'], 'load action is only fired once once');
   });
 
+  test('mouse leave / loading data', async function (assert) {
+    assert.expect(1);
+
+    await render(hbs`
+      <Tooltipper
+        @tooltip={{component "tooltip"}} />
+    `);
+
+    // Intentionally no await
+    triggerEvent('.tooltipper', 'mouseenter');
+    triggerEvent('.tooltipper', 'mouseleave');
+
+    await settled();
+
+    assert.dom('.tooltip').doesNotExist();
+  });
+
   test('mouse enter / destroying', async function (assert) {
     assert.expect(0);
 

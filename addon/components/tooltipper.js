@@ -74,9 +74,12 @@ export default class TooltipperComponent extends Component {
     return this.loadEndTime - this.loadStartTime;
   }
 
-  get showDelayRemainder() {
-    const maxDelay = isPresent(this.args.showDelay) ? this.args.showDelay : 0;
-    return this.loadDelay > maxDelay ? 0 : maxDelay - this.loadDelay;
+  get showRemainder() {
+    if (this.loadDelay > this.showDelay) {
+      return 0;
+    } else {
+      return this.showDelay - this.loadDelay;
+    }
   }
 
   @action
@@ -183,7 +186,7 @@ export default class TooltipperComponent extends Component {
   _mouseEnterReferenceElement() {
     this.isOverReferenceElement = true;
 
-    this._scheduleShowTooltip();
+    this._loadOnce().then(() => this._scheduleShowTooltip());
   }
 
   _mouseLeaveReferenceElement() {
@@ -192,14 +195,15 @@ export default class TooltipperComponent extends Component {
     this._scheduleHideTooltip();
   }
 
-  _load() {
-    if (this.isLoaded) {
-      return resolve();
-    }
+  _loadOnce() {
+    const load =
+      this.isLoaded || this.isLoading
+        ? resolve(this.loadedData)
+        : resolve(this._invokeAction('onLoad'));
 
     this._loadStarted();
 
-    return resolve(this._invokeAction('onLoad'))
+    return load
       .then(this._loadedData.bind(this))
       .catch(this._loadError.bind(this))
       .finally(this._loadFinished.bind(this));
@@ -225,13 +229,19 @@ export default class TooltipperComponent extends Component {
   }
 
   _scheduleShowTooltip() {
-    this._cancelHideTooltip();
-
-    this.showTimer = debounce(this, '_showTooltip', this.showDelayRemainder);
+    this.showTimer = debounce(this, '_attemptShowTooltip', this.showRemainder);
   }
 
   _cancelShowTooltip() {
     cancel(this.showTimer);
+  }
+
+  _attemptShowTooltip() {
+    if (!this.isOverReferenceElement) {
+      return;
+    }
+
+    this._showTooltip();
   }
 
   _showTooltip() {
@@ -241,24 +251,21 @@ export default class TooltipperComponent extends Component {
       return;
     }
 
-    this._load()
+    this._loadOnce()
       .then(() => this._renderTooltip())
       .then(() => this._waitForAnimation())
       .then(() => this._invokeAction('onShowTooltip'));
   }
 
   _renderTooltip() {
-    this.shouldRenderTooltip = true;
     this.willInsertTooltip = defer();
-
+    this.shouldRenderTooltip = true;
     this.tooltipService.add(this);
 
-    return this._waitForTooltipElement();
+    return this.willInsertTooltip.promise;
   }
 
   _scheduleHideTooltip() {
-    this._cancelShowTooltip();
-
     this.hideTimer = debounce(this, '_attemptHideTooltip', this.hideDelay);
   }
 
@@ -285,10 +292,6 @@ export default class TooltipperComponent extends Component {
       this._invokeAction('onHideTooltip');
       this._attemptDestroyTooltip();
     });
-  }
-
-  _waitForTooltipElement() {
-    return this.willInsertTooltip.promise;
   }
 
   _waitForAnimation() {

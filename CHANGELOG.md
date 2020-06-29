@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.0.2
+
+- Fix show delay remainder regression
+
 ## 12.0.1
 
 - Add `@onShowTooltip` and `@onHideTooltip` actions
