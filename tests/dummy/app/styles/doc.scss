@@ -12,3 +12,8 @@
   margin: 0;
   padding: var(--app-margin);
 }
+
+// stylelint-disable-next-line
+a {
+  display: inline-block;
+}
