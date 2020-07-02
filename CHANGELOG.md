@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.0.4
+
+- Upgrade dependencies
+
 ## 12.0.3
 
 - Upgrade dependencies
