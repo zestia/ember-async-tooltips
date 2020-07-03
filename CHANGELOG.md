@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.0.0
+
+- Remove `@adjust` option
+
 ## 12.0.4
 
 - Upgrade dependencies

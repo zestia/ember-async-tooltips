@@ -1,7 +1,6 @@
 import { Promise } from 'rsvp';
 import Controller from '@ember/controller';
 import { next, later } from '@ember/runloop';
-import { equal } from '@ember/object/computed';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
@@ -13,11 +12,8 @@ export default class PositionController extends Controller {
   @tracked loadDelay = 500;
   @tracked position = '';
   @tracked isLoading;
-  @tracked adjust;
   @tracked showTooltipper = true;
   @tracked showTooltip = false;
-
-  @equal('position', '') adjustDisabled;
 
   constructor() {
     super(...arguments);
@@ -34,11 +30,6 @@ export default class PositionController extends Controller {
   @action
   setPosition({ target: { value } }) {
     this.position = value;
-  }
-
-  @action
-  setAdjust({ target: { checked } }) {
-    this.adjust = checked;
   }
 
   @action

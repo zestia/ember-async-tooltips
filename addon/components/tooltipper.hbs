@@ -37,7 +37,7 @@
         " tooltip--"
         (if this.shouldShowTooltip "showing" "hiding")
         " tooltip--"
-        (if this.coords.position this.tooltipPosition "unpositioned")
+        (if this.tooltipPosition this.tooltipPositionClass "unpositioned")
       }}
       id={{concat "tooltip-" this.id}}
       style={{this.tooltipStyle}}

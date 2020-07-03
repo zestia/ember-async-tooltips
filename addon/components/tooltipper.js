@@ -13,12 +13,13 @@ import autoPosition from '../utils/auto-position';
 export default class TooltipperComponent extends Component {
   @inject('tooltip') tooltipService;
 
-  @tracked coords = { top: 0, left: 0, position: '' };
   @tracked isLoading = false;
-  @tracked shouldShowTooltip = false;
   @tracked loadedData = null;
   @tracked loadError = null;
   @tracked shouldRenderTooltip = false;
+  @tracked shouldShowTooltip = false;
+  @tracked tooltipCoords = [0, 0];
+  @tracked tooltipPosition = null;
 
   isLoaded = false;
   isOverReferenceElement = false;
@@ -42,10 +43,6 @@ export default class TooltipperComponent extends Component {
     return isPresent(this.args.rows) ? this.args.rows : 3;
   }
 
-  get shouldAdjust() {
-    return isPresent(this.args.adjust) ? this.args.adjust : false;
-  }
-
   get shouldUseMouseEvents() {
     return isPresent(this.args.mouseEvents) ? this.args.mouseEvents : true;
   }
@@ -63,11 +60,13 @@ export default class TooltipperComponent extends Component {
   }
 
   get tooltipStyle() {
-    return htmlSafe(`top: ${this.coords.top}px; left: ${this.coords.left}px`);
+    const [x, y] = this.tooltipCoords;
+
+    return htmlSafe(`top: ${y}px; left: ${x}px`);
   }
 
-  get tooltipPosition() {
-    return dasherize(this.coords.position);
+  get tooltipPositionClass() {
+    return dasherize(this.tooltipPosition);
   }
 
   get loadDelay() {
@@ -356,7 +355,7 @@ export default class TooltipperComponent extends Component {
   }
 
   _getReferencePosition(referenceElement) {
-    // Get the rough position of the reference element in the window by
+    // Get the rough position of the reference element in the viewport by
     // splitting it in to a grid of rows and columns and choosing a square.
 
     return getPosition(referenceElement, window, this.columns, this.rows);
@@ -374,13 +373,12 @@ export default class TooltipperComponent extends Component {
   _recomputeCoords() {
     try {
       // Compute the coordinates required to place the tooltip element near the
-      // reference element. And, if a container element is provided, attempt to
-      // adjust the position further to make sure the tooltip element it is
-      // always visible inside the container.
-      this.coords = getCoords(...arguments);
+      // reference element.
+      return getCoords(...arguments);
     } catch (error) {
       // The reference element was probably hidden, therefore it's was
       // not possible to compute coordinates.
+      return [0, 0];
     }
   }
 
@@ -391,15 +389,16 @@ export default class TooltipperComponent extends Component {
       return;
     }
 
-    const container = this.shouldAdjust ? window : null;
     const referencePosition = this._getReferencePosition(referenceElement);
+
     const tooltipPosition = this._decideToolipPosition(referencePosition);
 
-    this._recomputeCoords(
+    this.tooltipCoords = this._recomputeCoords(
       tooltipPosition,
       tooltipElement,
-      referenceElement,
-      container
+      referenceElement
     );
+
+    this.tooltipPosition = tooltipPosition;
   }
 }

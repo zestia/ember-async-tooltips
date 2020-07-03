@@ -45,20 +45,6 @@
       </select>
     </label>
 
-    <label
-      class="position-page__control position-page__adjust-label {{
-        if this.adjustDisabled "position-page__adjust-label--disabled"
-      }}"
-      title="Adjust position if the tooltip does not fit in the viewport"
-    >
-      <input
-        type="checkbox"
-        disabled={{this.adjustDisabled}}
-        {{on "click" this.setAdjust}}
-      />
-      Adjust
-    </label>
-
     <span class="position-page__control">
       <label>
         Hover delay
