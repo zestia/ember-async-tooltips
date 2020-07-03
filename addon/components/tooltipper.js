@@ -363,7 +363,7 @@ export default class TooltipperComponent extends Component {
 
   _decideToolipPosition(referencePosition) {
     // The position of the tooltip should be the one provided, or one based
-    // upon the position of the reference element, that the tooltip is for.
+    // upon the position of the reference element.
 
     return isPresent(this.args.position)
       ? this.args.position
