@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.0.2
+
+- Upgrade dependencies
+
 ## 13.0.1
 
 - Upgrade dependencies
