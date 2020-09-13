@@ -81,6 +81,25 @@ export default class TooltipperComponent extends Component {
     }
   }
 
+  get tooltipperAPI() {
+    return {
+      isLoading: this.isLoading,
+      showTooltip: this.showTooltip,
+      hideTooltip: this.hideTooltip,
+      toggleTooltip: this.toggleTooltip,
+      repositionTooltip: this.repositionTooltip
+    };
+  }
+
+  get tooltipAPI() {
+    return {
+      data: this.loadedData,
+      error: this.loadError,
+      hide: this.hideTooltip,
+      reposition: this.repositionTooltip
+    };
+  }
+
   @action
   handleInsertTooltipper(element) {
     this.tooltipperElement = element;

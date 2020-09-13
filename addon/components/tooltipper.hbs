@@ -17,16 +17,7 @@
   }}
   {{will-destroy this.handleDestroyTooltipper}}
 >
-  {{~
-    yield
-    (hash
-      isLoading=this.isLoading
-      showTooltip=this.showTooltip
-      hideTooltip=this.hideTooltip
-      toggleTooltip=this.toggleTooltip
-      repositionTooltip=this.repositionTooltip
-    )
-  ~}}
+  {{~yield this.tooltipperAPI~}}
 
   {{! template-lint-disable no-inline-styles }}
   {{~#if this.shouldRenderTooltip~}}
@@ -42,13 +33,7 @@
       id={{concat "tooltip-" this.id}}
       style={{this.tooltipStyle}}
       role="tooltip"
-      @tooltip={{
-        hash
-        hide=this.hideTooltip
-        reposition=this.repositionTooltip
-        data=this.loadedData
-        error=this.loadError
-      }}
+      @tooltip={{this.tooltipAPI}}
       {{did-insert this.handleInsertTooltip}}
       {{will-destroy this.handleDestroyTooltip}}
       {{on "mouseenter" this.handleMouseEnterTooltip}}
