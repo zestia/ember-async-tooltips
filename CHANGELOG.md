@@ -1,5 +1,10 @@
 # Changelog
 
+## 13.0.5
+
+- Upgrade dependencies
+- Internal: Simplify template
+
 ## 13.0.4
 
 - Upgrade dependencies
