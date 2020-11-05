@@ -1,3 +1,5 @@
+/* eslint-disable array-callback-return */
+
 import EmberRouter from '@ember/routing/router';
 import config from './config/environment';
 
@@ -10,6 +12,4 @@ Router.map(function () {
   this.route('simple');
   this.route('reference');
   this.route('position');
-
-  return null;
 });
