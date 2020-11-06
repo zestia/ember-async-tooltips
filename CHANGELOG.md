@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.0.7
+
+- Run ember-cli-update
+
 ## 13.0.6
 
 - Upgrade dependencies
