@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.0.8
+
+- Satisfy AXE a11y test by not using `aria-describedby` attribute until the tooltip is present
+
 ## 13.0.7
 
 - Run ember-cli-update

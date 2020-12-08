@@ -7,13 +7,22 @@ module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
   test('aria', async function (assert) {
-    assert.expect(4);
+    assert.expect(6);
 
     await render(hbs`
       <Tooltipper
-        @showTooltip={{true}}
+        @showTooltip={{this.showTooltip}}
         @tooltip={{component "tooltip"}} />
     `);
+
+    assert
+      .dom('.tooltipper')
+      .doesNotHaveAttribute(
+        'aria-describedby',
+        'the tooltipper is not described by anything (yet)'
+      );
+
+    this.set('showTooltip', true);
 
     assert
       .dom('.tooltip')
@@ -34,6 +43,14 @@ module('tooltipper', function (hooks) {
       .doesNotHaveAttribute(
         'title',
         "does not splat the attributes, because component helper doesn't support this yet"
+      );
+
+    assert
+      .dom('.tooltipper')
+      .hasAttribute(
+        'aria-describedby',
+        `tooltip-${id}`,
+        'the tooltipper will be described by the tooltip'
       );
   });
 });

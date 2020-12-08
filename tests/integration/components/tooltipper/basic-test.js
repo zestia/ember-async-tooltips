@@ -7,7 +7,7 @@ module('tooltipper', function (hooks) {
   setupRenderingTest(hooks);
 
   test('basic rendering test', async function (assert) {
-    assert.expect(4);
+    assert.expect(3);
 
     await render(hbs`<Tooltipper class="example-tooltipper" />`);
 
@@ -30,14 +30,6 @@ module('tooltipper', function (hooks) {
         'id',
         `tooltipper-${id}`,
         'has an appropriate id attribute'
-      );
-
-    assert
-      .dom('.tooltipper')
-      .hasAttribute(
-        'aria-describedby',
-        `tooltip-${id}`,
-        'this tooltipper will be described by a tooltip with the same identifer'
       );
   });
 });

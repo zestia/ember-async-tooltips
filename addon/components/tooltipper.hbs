@@ -5,7 +5,7 @@
     (if this.isLoading " tooltipper--loading")
     (if this.shouldRenderTooltip " tooltipper--has-tooltip")
   }}
-  aria-describedby={{concat "tooltip-" this.id}}
+  aria-describedby={{if this.shouldRenderTooltip (concat "tooltip-" this.id)}}
   id={{concat "tooltipper-" this.id}}
   ...attributes
   {{did-insert this.handleInsertTooltipper}}
