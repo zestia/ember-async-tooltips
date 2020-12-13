@@ -1,9 +1,12 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
-export default Controller.extend({
-  actions: {
-    getReferenceElement(tooltipper) {
-      return tooltipper.closest('tr');
-    }
+export default class ReferenceController extends Controller {
+  @tracked tr;
+
+  @action
+  registerTableRow(element) {
+    this.tr = element;
   }
-});
+}
