@@ -65,7 +65,8 @@ module('tooltipper', function (hooks) {
     await render(hbs`
       <Tooltipper
         @onLoad={{this.load}}
-        @tooltip={{component "tooltip"}} />
+        @tooltip={{component "tooltip"}}
+      />
     `);
 
     // Intentionally no await
@@ -80,10 +81,7 @@ module('tooltipper', function (hooks) {
   test('mouse leave / loading data', async function (assert) {
     assert.expect(1);
 
-    await render(hbs`
-      <Tooltipper
-        @tooltip={{component "tooltip"}} />
-    `);
+    await render(hbs`<Tooltipper @tooltip={{component "tooltip"}} />`);
 
     // Intentionally no await
     triggerEvent('.tooltipper', 'mouseenter');
@@ -103,7 +101,8 @@ module('tooltipper', function (hooks) {
       {{#if this.showTooltipper}}
         <Tooltipper
           @showDelay={{200}}
-          @tooltip={{component "tooltip"}} />
+          @tooltip={{component "tooltip"}}
+        />
       {{/if}}
     `);
 
@@ -117,9 +116,7 @@ module('tooltipper', function (hooks) {
   test('mouse enter / mouse leave tooltipper', async function (assert) {
     assert.expect(1);
 
-    await render(hbs`
-      <Tooltipper @tooltip={{component "tooltip"}} />
-    `);
+    await render(hbs`<Tooltipper @tooltip={{component "tooltip"}} />`);
 
     // Intentionally no await
     triggerEvent('.tooltipper', 'mouseenter');
@@ -133,9 +130,7 @@ module('tooltipper', function (hooks) {
   test('mouse leave tooltip whilst still over tooltipper', async function (assert) {
     assert.expect(1);
 
-    await render(hbs`
-      <Tooltipper @tooltip={{component "tooltip"}} />
-    `);
+    await render(hbs`<Tooltipper @tooltip={{component "tooltip"}} />`);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
@@ -153,9 +148,7 @@ module('tooltipper', function (hooks) {
   test('mouse leave tooltipper whilst still over tooltip', async function (assert) {
     assert.expect(1);
 
-    await render(hbs`
-      <Tooltipper @tooltip={{component "tooltip"}} />
-    `);
+    await render(hbs`<Tooltipper @tooltip={{component "tooltip"}} />`);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 

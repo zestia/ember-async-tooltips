@@ -14,7 +14,8 @@ module('tooltipper', function (hooks) {
       {{#if this.referenceElement}}
         <Tooltipper
           @tooltip={{component "tooltip"}}
-          @referenceElement={{this.referenceElement}} />
+          @referenceElement={{this.referenceElement}}
+        />
       {{/if}}
 
       <div class="reference-element-1"></div>

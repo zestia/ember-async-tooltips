@@ -12,7 +12,8 @@ module('tooltipper', function (hooks) {
     await render(hbs`
       <Tooltipper
         @showTooltip={{true}}
-        @tooltip={{component "tooltip" text="Hello World"}} />
+        @tooltip={{component "tooltip" text="Hello World"}}
+      />
     `);
 
     assert
@@ -26,7 +27,8 @@ module('tooltipper', function (hooks) {
     await render(hbs`
       <Tooltipper
         @showTooltip={{true}}
-        @tooltip={{component "custom-tooltip"}} />
+        @tooltip={{component "custom-tooltip"}}
+      />
     `);
 
     assert

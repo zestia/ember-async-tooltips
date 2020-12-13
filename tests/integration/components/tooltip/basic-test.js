@@ -12,7 +12,8 @@ module('tooltip', function (hooks) {
     await render(hbs`
       <Tooltip
         class="example-tooltip"
-        @text="Hello World" />
+        @text="Hello World"
+      />
     `);
 
     assert

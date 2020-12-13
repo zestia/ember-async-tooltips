@@ -21,7 +21,8 @@ module('tooltipper', function (hooks) {
       <Tooltipper
         @tooltip={{component "tooltip"}}
         @onLoad={{this.load}}
-        @showDelay={{100}} />
+        @showDelay={{100}}
+      />
     `);
 
     assert.dom('.tooltip').doesNotExist('does not render tooltip');
@@ -52,7 +53,8 @@ module('tooltipper', function (hooks) {
       <Tooltipper
         @tooltip={{component "tooltip"}}
         @onLoad={{this.load}}
-        @showDelay={{100}} />
+        @showDelay={{100}}
+      />
     `);
 
     assert.dom('.tooltip').doesNotExist('does not render tooltip');
@@ -80,7 +82,8 @@ module('tooltipper', function (hooks) {
       <Tooltipper
         @showTooltip={{true}}
         @tooltip={{component "tooltip"}}
-        @hideDelay={{100}} />
+        @hideDelay={{100}}
+      />
     `);
 
     this.startTimer();

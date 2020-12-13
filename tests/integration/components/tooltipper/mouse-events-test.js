@@ -12,7 +12,8 @@ module('tooltipper', function (hooks) {
     await render(hbs`
       <Tooltipper
         @mouseEvents={{false}}
-        @tooltip={{component "tooltip"}} />
+        @tooltip={{component "tooltip"}}
+      />
     `);
 
     await triggerEvent('.tooltipper', 'mouseenter');
@@ -26,7 +27,8 @@ module('tooltipper', function (hooks) {
     await render(hbs`
       <Tooltipper
         @mouseEvents={{null}}
-        @tooltip={{component "tooltip"}} />
+        @tooltip={{component "tooltip"}}
+      />
     `);
 
     await triggerEvent('.tooltipper', 'mouseenter');

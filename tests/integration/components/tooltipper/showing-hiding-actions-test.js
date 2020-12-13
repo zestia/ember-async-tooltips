@@ -18,7 +18,8 @@ module('tooltipper', function (hooks) {
         @showTooltip={{this.showTooltip}}
         @tooltip={{component "tooltip"}}
         @onShowTooltip={{this.tooltipShown}}
-        @onHideTooltip={{this.tooltipHidden}} />
+        @onHideTooltip={{this.tooltipHidden}}
+      />
     `);
 
     this.set('showTooltip', true);
