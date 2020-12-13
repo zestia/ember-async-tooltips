@@ -52,7 +52,15 @@ export default class TooltipperComponent extends Component {
   }
 
   get showDelay() {
-    return isPresent(this.args.showDelay) ? this.args.showDelay : 0;
+    if (isPresent(this.args.showDelay)) {
+      if (this._isSticky()) {
+        return 0;
+      } else {
+        return this.args.showDelay;
+      }
+    } else {
+      return 0;
+    }
   }
 
   get tooltipComponent() {
@@ -331,6 +339,18 @@ export default class TooltipperComponent extends Component {
   _destroyTooltip() {
     this.tooltipService.remove(this);
     this.shouldRenderTooltip = false;
+  }
+
+  _isSticky() {
+    const stickyId = this.args.stickyId;
+
+    if (!isPresent(stickyId)) {
+      return false;
+    }
+
+    return this.tooltipService.tooltippers.some(
+      (tooltipper) => tooltipper.args.stickyId === stickyId
+    );
   }
 
   _autoSetupReferenceElement() {

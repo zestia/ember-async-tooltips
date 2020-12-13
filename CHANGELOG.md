@@ -1,7 +1,8 @@
 # Changelog
 
-## 13.0.8
+## 13.1.0
 
+- Add ability to have sticky tooltips
 - Satisfy AXE a11y test by not using `aria-describedby` attribute until the tooltip is present
 - Upgrade dependencies
 
