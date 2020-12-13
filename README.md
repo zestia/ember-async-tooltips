@@ -105,8 +105,8 @@ You can configure tooltips to ignore the `showDelay` if a tooltip is already pre
 
 ```handlebars
 <Tooltipper
-  @tooltip={{component "my-tooltip}}
-  @showDelay={1000}}
+  @tooltip={{component "my-tooltip"}}
+  @showDelay={{1000}}
   @stickyID="sticky"
 />
 ```
