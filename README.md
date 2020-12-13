@@ -103,12 +103,13 @@ You can also use the actions `@onShowTooltip` and `@onHideTooltip`. These hooks 
 
 You can configure tooltips to ignore the `showDelay` if a tooltip is already present. This means the user doesn't have to wait again to see subsequent tooltips.
 
-````
+```handlebars
 <Tooltipper
   @tooltip={{component "my-tooltip}}
   @showDelay={1000}}
   @stickyID="sticky"
 />
+```
 
 The sticky identifier is used to determine if the next tooltip that opens is related to the current one.
 
@@ -127,7 +128,7 @@ The tooltipper yields an API to control the tooltip.
   {{!tooltipper.toggleTooltip}}
   {{!tooltipper.repositionTooltip}}
 </Tooltipper>
-````
+```
 
 Similarly, the tooltip receives an API as an argument:
 
