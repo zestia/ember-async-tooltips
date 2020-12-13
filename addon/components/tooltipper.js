@@ -342,14 +342,14 @@ export default class TooltipperComponent extends Component {
   }
 
   _isSticky() {
-    const stickyId = this.args.stickyId;
+    const stickyID = this.args.stickyID;
 
-    if (!isPresent(stickyId)) {
+    if (!isPresent(stickyID)) {
       return false;
     }
 
     return this.tooltipService.tooltippers.some(
-      (tooltipper) => tooltipper.args.stickyId === stickyId
+      (tooltipper) => tooltipper.args.stickyID === stickyID
     );
   }
 

@@ -7,10 +7,6 @@ import waitForAnimation from '../../../helpers/wait-for-animation';
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
-  hooks.beforeEach(function () {
-    this.tooltipService = this.owner.lookup('service:tooltip');
-  });
-
   test('mouse enter reference', async function (assert) {
     assert.expect(2);
 

@@ -8,10 +8,6 @@ import waitForAnimation from '../../../helpers/wait-for-animation';
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
-  hooks.beforeEach(function () {
-    this.tooltipService = this.owner.lookup('service:tooltip');
-  });
-
   test('load less than show delay', async function (assert) {
     assert.expect(3);
 
