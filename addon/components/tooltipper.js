@@ -3,7 +3,6 @@ import { action } from '@ember/object';
 import { cancel, debounce } from '@ember/runloop';
 import { getPosition, getCoords } from '@zestia/position-utils';
 import { guidFor } from '@ember/object/internals';
-import { isPresent } from '@ember/utils';
 import { htmlSafe, dasherize } from '@ember/string';
 import { inject } from '@ember/service';
 import { Promise, defer, resolve } from 'rsvp';
@@ -36,19 +35,19 @@ export default class TooltipperComponent extends Component {
   }
 
   get columns() {
-    return isPresent(this.args.columns) ? this.args.columns : 3;
+    return this.args.columns ?? 3;
   }
 
   get rows() {
-    return isPresent(this.args.rows) ? this.args.rows : 3;
+    return this.args.rows ?? 3;
   }
 
   get shouldUseMouseEvents() {
-    return isPresent(this.args.mouseEvents) ? this.args.mouseEvents : true;
+    return this.args.mouseEvents ?? true;
   }
 
   get tooltipComponent() {
-    return isPresent(this.args.tooltip) ? this.args.tooltip : 'tooltip';
+    return this.args.tooltip ?? 'tooltip';
   }
 
   get tooltipStyle() {
@@ -66,11 +65,11 @@ export default class TooltipperComponent extends Component {
   }
 
   get hideDelay() {
-    return isPresent(this.args.hideDelay) ? this.args.hideDelay : 0;
+    return this.args.hideDelay ?? 0;
   }
 
   get showDelay() {
-    return isPresent(this.args.showDelay) ? this.args.showDelay : 0;
+    return this.args.showDelay ?? 0;
   }
 
   get showRemainder() {
@@ -384,9 +383,7 @@ export default class TooltipperComponent extends Component {
     // The position of the tooltip should be the one provided, or one chosen
     // automatically, based upon the position of the reference element.
 
-    return isPresent(this.args.position)
-      ? this.args.position
-      : autoPosition(referencePosition);
+    return this.args.position ?? autoPosition(referencePosition);
   }
 
   _computeCoords() {
