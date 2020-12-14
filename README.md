@@ -37,7 +37,6 @@ https://zestia.github.io/ember-async-tooltips/
 - [Customisable show/hide delays](#showinghiding) ✔︎
 - [Customisable reference element](#custom-reference-element) ✔︎
 - [Pre-loads any required data](#preloading-data) ✔︎
-- [Sticky behaviour](#sticky-tooltips) ✔︎
 
 ## Example
 
