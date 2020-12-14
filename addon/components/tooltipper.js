@@ -47,8 +47,30 @@ export default class TooltipperComponent extends Component {
     return isPresent(this.args.mouseEvents) ? this.args.mouseEvents : true;
   }
 
+  get tooltipComponent() {
+    return isPresent(this.args.tooltip) ? this.args.tooltip : 'tooltip';
+  }
+
+  get tooltipStyle() {
+    const [x, y] = this.tooltipCoords;
+
+    return htmlSafe(`top: ${y}px; left: ${x}px`);
+  }
+
+  get tooltipPositionClass() {
+    return dasherize(this.tooltipPosition);
+  }
+
+  get loadDelay() {
+    return this.loadEndTime - this.loadStartTime;
+  }
+
   get hideDelay() {
-    return isPresent(this.args.hideDelay) ? this.args.hideDelay : 0;
+    if (isPresent(this.args.hideDelay)) {
+      return this.args.hideDelay;
+    } else {
+      return 0;
+    }
   }
 
   get showDelay() {
@@ -73,24 +95,6 @@ export default class TooltipperComponent extends Component {
     return this.tooltipService.tooltippers.some(
       (tooltipper) => tooltipper.args.stickyID === stickyID
     );
-  }
-
-  get tooltipComponent() {
-    return isPresent(this.args.tooltip) ? this.args.tooltip : 'tooltip';
-  }
-
-  get tooltipStyle() {
-    const [x, y] = this.tooltipCoords;
-
-    return htmlSafe(`top: ${y}px; left: ${x}px`);
-  }
-
-  get tooltipPositionClass() {
-    return dasherize(this.tooltipPosition);
-  }
-
-  get loadDelay() {
-    return this.loadEndTime - this.loadStartTime;
   }
 
   get showRemainder() {
