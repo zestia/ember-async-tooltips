@@ -379,7 +379,7 @@ export default class TooltipperComponent extends Component {
     return getPosition(referenceElement, window, this.columns, this.rows);
   }
 
-  _decideToolipPosition(referencePosition) {
+  _decideTooltipPosition(referencePosition) {
     // The position of the tooltip should be the one provided, or one chosen
     // automatically, based upon the position of the reference element.
 
@@ -407,7 +407,7 @@ export default class TooltipperComponent extends Component {
 
     const referencePosition = this._getReferencePosition(referenceElement);
 
-    const tooltipPosition = this._decideToolipPosition(referencePosition);
+    const tooltipPosition = this._decideTooltipPosition(referencePosition);
 
     this.tooltipCoords = this._computeCoords(
       tooltipPosition,
