@@ -66,35 +66,11 @@ export default class TooltipperComponent extends Component {
   }
 
   get hideDelay() {
-    if (isPresent(this.args.hideDelay)) {
-      return this.args.hideDelay;
-    } else {
-      return 0;
-    }
+    return isPresent(this.args.hideDelay) ? this.args.hideDelay : 0;
   }
 
   get showDelay() {
-    if (isPresent(this.args.showDelay)) {
-      if (this.isSticky) {
-        return 0;
-      } else {
-        return this.args.showDelay;
-      }
-    } else {
-      return 0;
-    }
-  }
-
-  get isSticky() {
-    const stickyID = this.args.stickyID;
-
-    if (!isPresent(stickyID)) {
-      return false;
-    }
-
-    return this.tooltipService.tooltippers.some(
-      (tooltipper) => tooltipper.args.stickyID === stickyID
-    );
+    return isPresent(this.args.showDelay) ? this.args.showDelay : 0;
   }
 
   get showRemainder() {

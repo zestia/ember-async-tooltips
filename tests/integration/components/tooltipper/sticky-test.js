@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, skip } from 'qunit';
 import setupTooltipperTest from './setup';
 import { render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
@@ -6,7 +6,7 @@ import hbs from 'htmlbars-inline-precompile';
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
-  test('stickyness', async function (assert) {
+  skip('stickyness', async function (assert) {
     assert.expect(4);
 
     await render(hbs`
@@ -30,7 +30,10 @@ module('tooltipper', function (hooks) {
 
     this.stopTimer();
 
-    assert.ok(this.timeTaken() < 100, 'show delay is ignored when id matches');
+    assert.ok(
+      this.timeTaken() < 100,
+      'show delay is ignored when sticky identifier matches'
+    );
 
     this.startTimer();
 
@@ -49,6 +52,9 @@ module('tooltipper', function (hooks) {
 
     this.stopTimer();
 
-    assert.ok(this.timeTaken() < 100, 'show delay is ignored when id matches');
+    assert.ok(
+      this.timeTaken() < 100,
+      'show delay is ignored when sticky identifier matches'
+    );
   });
 });
