@@ -409,7 +409,7 @@ export default class TooltipperComponent extends Component {
       : autoPosition(referencePosition);
   }
 
-  _recomputeCoords() {
+  _computeCoords() {
     try {
       // Compute the coordinates required to place the tooltip element near the
       // reference element.
@@ -432,7 +432,7 @@ export default class TooltipperComponent extends Component {
 
     const tooltipPosition = this._decideToolipPosition(referencePosition);
 
-    this.tooltipCoords = this._recomputeCoords(
+    this.tooltipCoords = this._computeCoords(
       tooltipPosition,
       tooltipElement,
       referenceElement
