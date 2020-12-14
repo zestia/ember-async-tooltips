@@ -209,8 +209,8 @@ export default class TooltipperComponent extends Component {
   }
 
   _startListening(element) {
-    this._enterHandler = this._mouseEnterReferenceElement.bind(this);
-    this._leaveHandler = this._mouseLeaveReferenceElement.bind(this);
+    this._enterHandler = this._handleMouseEnterReferenceElement.bind(this);
+    this._leaveHandler = this._handleMouseLeaveReferenceElement.bind(this);
 
     element.addEventListener('mouseenter', this._enterHandler);
     element.addEventListener('mouseleave', this._leaveHandler);
@@ -221,13 +221,13 @@ export default class TooltipperComponent extends Component {
     element.removeEventListener('mouseleave', this._leaveHandler);
   }
 
-  _mouseEnterReferenceElement() {
+  _handleMouseEnterReferenceElement() {
     this.isOverReferenceElement = true;
 
     this._loadOnce().then(() => this._scheduleShowTooltip());
   }
 
-  _mouseLeaveReferenceElement() {
+  _handleMouseLeaveReferenceElement() {
     this.isOverReferenceElement = false;
 
     this._scheduleHideTooltip();
