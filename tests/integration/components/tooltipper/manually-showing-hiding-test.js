@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import waitForAnimation from '../../../helpers/wait-for-animation';
 
@@ -8,7 +8,7 @@ module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
   test('manually showing / hiding test', async function (assert) {
-    assert.expect(3);
+    assert.expect(4);
 
     await render(hbs`
       <Tooltipper
@@ -26,6 +26,10 @@ module('tooltipper', function (hooks) {
       .exists('tooltip can be shown on demand by via showTooltip argument');
 
     this.set('showTooltip', false);
+
+    await settled();
+
+    assert.dom('.tooltip').exists('tooltip still present, animating out...');
 
     await waitForAnimation('.tooltip');
 
