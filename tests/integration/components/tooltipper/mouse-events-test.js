@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
 import { render, triggerEvent, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import waitForAnimation from '../../../helpers/wait-for-animation';
 
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
@@ -42,7 +43,7 @@ module('tooltipper', function (hooks) {
       );
   });
 
-  test('multiple manually shown tooltips', async function (assert) {
+  test('multiple tooltips', async function (assert) {
     assert.expect(1);
 
     await render(hbs`
@@ -50,30 +51,20 @@ module('tooltipper', function (hooks) {
         @mouseEvents={{false}}
         @tooltip={{component "tooltip"}} as |tooltipper|
       >
-        <button type="button" {{on "click" tooltipper.showTooltip}}>
-          Show 1
-        </button>
+        <button type="button" {{on "click" tooltipper.showTooltip}}></button>
       </Tooltipper>
 
-      <Tooltipper
-        @mouseEvents={{false}}
-        @tooltip={{component "tooltip"}} as |tooltipper|
-      >
-        <button type="button" {{on "click" tooltipper.showTooltip}}>
-          Show 2
-        </button>
-      </Tooltipper>
+      <Tooltipper @tooltip={{component "tooltip"}} />
     `);
 
     await click('.tooltipper:nth-child(1) button');
-    await click('.tooltipper:nth-child(2) button');
+    await triggerEvent('.tooltipper:nth-child(2)', 'mouseenter');
 
     assert
       .dom('.tooltip')
       .exists(
         { count: 2 },
-        'multiple tooltips can be rendered at any one time ' +
-          'if they were manually shown (without mouse enter event)'
+        'multiple tooltips can be rendered at any one time'
       );
   });
 });
