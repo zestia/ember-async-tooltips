@@ -29,7 +29,11 @@ export default class PositionController extends Controller {
 
   @action
   setPosition({ target: { value } }) {
-    this.position = value;
+    if (value === 'auto') {
+      this.position = null;
+    } else {
+      this.position = value;
+    }
   }
 
   @action
