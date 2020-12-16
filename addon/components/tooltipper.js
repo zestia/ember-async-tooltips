@@ -80,6 +80,12 @@ export default class TooltipperComponent extends Component {
     }
   }
 
+  get hasChild() {
+    return this.tooltipService.tooltippers.some((tooltipper) => {
+      return this.referenceElement.contains(tooltipper.referenceElement);
+    });
+  }
+
   get tooltipperAPI() {
     return {
       isLoading: this.isLoading,
@@ -255,6 +261,10 @@ export default class TooltipperComponent extends Component {
 
   _attemptShowTooltip() {
     if (!this.isOverReferenceElement) {
+      return;
+    }
+
+    if (this.hasChild) {
       return;
     }
 

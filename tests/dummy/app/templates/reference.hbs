@@ -5,20 +5,20 @@
   <tbody>
     <tr {{did-insert this.registerTableRow}}>
       <td>
-        Hover over me
+        Cell 1
 
         {{#if this.tr}}
           <Tooltipper
-            @tooltip={{component "tooltip" text="Hello World"}}
+            @tooltip={{component "tooltip" text="Tooltip for row"}}
+            @showDelay={{500}}
             @referenceElement={{this.tr}}
           />
         {{/if}}
       </td>
       <td>
-        Cell 2
-      </td>
-      <td>
-        Cell 3
+        <Tooltipper @tooltip={{component "tooltip" text="Tooltip for cell"}}>
+          Cell 2
+        </Tooltipper>
       </td>
     </tr>
   </tbody>
