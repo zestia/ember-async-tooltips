@@ -10,7 +10,7 @@ export default class PositionController extends Controller {
   @tracked showDelay = 500;
   @tracked hideDelay = 0;
   @tracked loadDelay = 500;
-  @tracked position = '';
+  @tracked position = null;
   @tracked isLoading;
   @tracked showTooltipper = true;
   @tracked showTooltip = false;
