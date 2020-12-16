@@ -10,15 +10,22 @@
         {{#if this.tr}}
           <Tooltipper
             @tooltip={{component "tooltip" text="Tooltip for row"}}
-            @showDelay={{500}}
+            @showDelay={{100}}
             @referenceElement={{this.tr}}
           />
         {{/if}}
       </td>
       <td>
+        Cell 2
+
         <Tooltipper @tooltip={{component "tooltip" text="Tooltip for cell"}}>
-          Cell 2
+          <small>
+            ⓘ
+          </small>
         </Tooltipper>
+      </td>
+      <td>
+        Cell 3
       </td>
     </tr>
   </tbody>

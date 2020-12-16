@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { cancel, debounce } from '@ember/runloop';
+import { cancel, later } from '@ember/runloop';
 import { getPosition, getCoords } from '@zestia/position-utils';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe, dasherize } from '@ember/string';
@@ -80,9 +80,21 @@ export default class TooltipperComponent extends Component {
     }
   }
 
-  get hasChild() {
-    return this.tooltipService.tooltippers.some((tooltipper) => {
+  get renderedChild() {
+    return this.renderedExceptSelf.find((tooltipper) => {
       return this.referenceElement.contains(tooltipper.referenceElement);
+    });
+  }
+
+  get renderedParent() {
+    return this.renderedExceptSelf.find((tooltipper) => {
+      return tooltipper.referenceElement.contains(this.referenceElement);
+    });
+  }
+
+  get renderedExceptSelf() {
+    return this.tooltipService.tooltippers.filter((tooltipper) => {
+      return tooltipper !== this;
     });
   }
 
@@ -121,8 +133,7 @@ export default class TooltipperComponent extends Component {
 
   @action
   handleDestroyTooltipper() {
-    this._cancelShowTooltip();
-    this._cancelHideTooltip();
+    this._cancelTimers();
     this._autoTearDownReferenceElement();
   }
 
@@ -252,11 +263,7 @@ export default class TooltipperComponent extends Component {
   }
 
   _scheduleShowTooltip() {
-    this.showTimer = debounce(this, '_attemptShowTooltip', this.showRemainder);
-  }
-
-  _cancelShowTooltip() {
-    cancel(this.showTimer);
+    this.showTimer = later(this, '_attemptShowTooltip', this.showRemainder);
   }
 
   _attemptShowTooltip() {
@@ -264,8 +271,12 @@ export default class TooltipperComponent extends Component {
       return;
     }
 
-    if (this.hasChild) {
+    if (this.renderedChild) {
       return;
+    }
+
+    if (this.renderedParent) {
+      this.renderedParent.hideTooltip();
     }
 
     this._showTooltip();
@@ -277,6 +288,8 @@ export default class TooltipperComponent extends Component {
     if (this.shouldRenderTooltip) {
       return;
     }
+
+    this._cancelTimers();
 
     this._loadOnce()
       .then(() => this._renderTooltip())
@@ -293,10 +306,11 @@ export default class TooltipperComponent extends Component {
   }
 
   _scheduleHideTooltip() {
-    this.hideTimer = debounce(this, '_attemptHideTooltip', this.hideDelay);
+    this.hideTimer = later(this, '_attemptHideTooltip', this.hideDelay);
   }
 
-  _cancelHideTooltip() {
+  _cancelTimers() {
+    cancel(this.showTimer);
     cancel(this.hideTimer);
   }
 
@@ -312,6 +326,8 @@ export default class TooltipperComponent extends Component {
     if (!this.tooltipElement) {
       return;
     }
+
+    this._cancelTimers();
 
     this.shouldShowTooltip = false;
 
