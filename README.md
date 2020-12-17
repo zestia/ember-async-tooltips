@@ -43,7 +43,7 @@ https://zestia.github.io/ember-async-tooltips/
 When the tooltipper is hovered over, and any loading that needs to take place has finished, then the tooltip will be rendered inside. (Or, you can use the `{{in-element}}` helper to render the tooltip elsewhere).
 
 ```handlebars
-<Tooltipper @tooltip={{component "tooltip" @text="Hello World"}}>
+<Tooltipper @tooltip={{component "tooltip" text="Hello World"}}>
   Hover over me
 </Tooltipper>
 ```
