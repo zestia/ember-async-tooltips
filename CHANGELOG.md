@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.2.1
+
+- Make sure tooltip service is always in sync with the DOM
+
 ## 13.2.0
 
 - Re-setup mouse events when `@mouseEvents` argument changes

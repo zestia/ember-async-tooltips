@@ -60,4 +60,28 @@ module('tooltipper', function (hooks) {
     assert.dom('.tooltip').exists('tooltip is not destroyed');
     assert.dom('.tooltip').hasClass('tooltip--showing', 'is not hidden');
   });
+
+  test('tearing down', async function (assert) {
+    assert.expect(0);
+
+    // This regression test checks that when a tooltipoer is destroyed,
+    // that the tooltip service does not hold on to a reference
+    // to its tooltip, which should also be destroyed.
+
+    this.show = true;
+
+    await render(hbs`
+      {{#if this.show}}
+        <Tooltipper @tooltip={{component "tooltip"}} />
+      {{/if}}
+
+      <Tooltipper @tooltip={{component "tooltip"}} />
+    `);
+
+    await triggerEvent('.tooltipper:nth-child(1)', 'mouseenter');
+
+    this.set('show', false);
+
+    await triggerEvent('.tooltipper:nth-child(1)', 'mouseenter');
+  });
 });

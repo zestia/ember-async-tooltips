@@ -140,6 +140,7 @@ export default class TooltipperComponent extends Component {
   handleInsertTooltip(element) {
     this.tooltipElement = element;
     this.willInsertTooltip.resolve();
+    this.tooltipService.add(this);
     this._positionTooltip();
   }
 
@@ -147,6 +148,7 @@ export default class TooltipperComponent extends Component {
   handleDestroyTooltip() {
     this.tooltipElement = null;
     this.isOverTooltipElement = false;
+    this.tooltipService.remove(this);
   }
 
   @action
@@ -299,7 +301,6 @@ export default class TooltipperComponent extends Component {
   _renderTooltip() {
     this.willInsertTooltip = defer();
     this.shouldRenderTooltip = true;
-    this.tooltipService.add(this);
 
     return this.willInsertTooltip.promise;
   }
@@ -353,7 +354,6 @@ export default class TooltipperComponent extends Component {
   }
 
   _destroyTooltip() {
-    this.tooltipService.remove(this);
     this.shouldRenderTooltip = false;
   }
 
