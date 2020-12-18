@@ -1,10 +1,12 @@
+/* stylelint-disable selector-max-type */
+
 :root {
   margin: 0;
 
   --white: white;
   --black: black;
   --grey: silver;
-  --dark-grey: grey;
+  --dark-grey: darkgray;
   --app-margin: 8px;
 }
 
@@ -13,7 +15,10 @@
   padding: var(--app-margin);
 }
 
-// stylelint-disable-next-line
 a {
   display: inline-block;
+}
+
+span {
+  color: var(--dark-grey);
 }

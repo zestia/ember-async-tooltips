@@ -1,90 +1,4 @@
 <div class="position-page">
-  <div class="position-page__controls">
-    <label class="position-page__control">
-      Position
-      <select class="position-page__position" {{on "change" this.setPosition}}>
-        <option>
-          auto
-        </option>
-        <option>
-          top left
-        </option>
-        <option>
-          top center
-        </option>
-        <option>
-          top right
-        </option>
-        <option>
-          right middle
-        </option>
-        <option>
-          right top
-        </option>
-        <option>
-          right bottom
-        </option>
-        <option>
-          bottom right
-        </option>
-        <option>
-          bottom center
-        </option>
-        <option>
-          bottom left
-        </option>
-        <option>
-          left middle
-        </option>
-        <option>
-          left top
-        </option>
-        <option>
-          left bottom
-        </option>
-      </select>
-    </label>
-
-    <span class="position-page__control">
-      <label>
-        Hover delay
-        <input
-          type="number"
-          min="1"
-          class="position-page__number-input position-page__hover-delay"
-          title="In"
-          value={{this.showDelay}}
-          {{on "input" this.setShowDelay}}
-        />
-      </label>
-      <input
-        type="number"
-        min="1"
-        class="position-page__number-input position-page__hover-delay"
-        title="Out"
-        value={{this.hideDelay}}
-        {{on "input" this.setHideDelay}}
-      />
-    </span>
-
-    <label class="position-page__control">
-      Load delay
-      <input
-        type="number"
-        min="1"
-        class="position-page__number-input position-page__load-delay"
-        value={{this.loadDelay}}
-        {{on "input" this.setLoadDelay}}
-      />
-    </label>
-
-    <small>
-      <button type="button" {{on "click" this.unload}}>
-        Unload
-      </button>
-    </small>
-  </div>
-
   <table class="position-page__grid">
     <tbody>
       <tr class="position-page__row">
@@ -123,24 +37,13 @@
     </tbody>
   </table>
 
-  {{#if this.showTooltipper}}
-    <Tooltipper
-      draggable="true"
-      ondrag={{this.storeLastPos}}
-      ondragstart={{this.storeStartPos}}
-      ondragend={{this.reposition}}
-      @onLoad={{this.load}}
-      @showDelay={{this.showDelay}}
-      @hideDelay={{this.hideDelay}}
-      @position={{this.position}}
-      @adjust={{this.adjust}}
-      @tooltip={{component "tooltip" text="Tooltip"}} as |tooltipper|
-    >
-      {{#if tooltipper.isLoading}}
-        Loading…
-      {{else}}
-        Tooltipper
-      {{/if}}
-    </Tooltipper>
-  {{/if}}
+  <Tooltipper
+    draggable="true"
+    ondrag={{this.storeLastPos}}
+    ondragstart={{this.storeStartPos}}
+    ondragend={{this.reposition}}
+    @tooltip={{component "tooltip" text="Tooltip"}}
+  >
+    Tooltipper
+  </Tooltipper>
 </div>

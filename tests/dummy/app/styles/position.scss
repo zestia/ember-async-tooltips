@@ -2,27 +2,13 @@
   height: calc(100vh - var(--app-margin) * 2);
 }
 
-.position-page__controls {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-}
-
-.position-page__control {
-  margin-right: 20px;
-}
-
-.position-page__number-input {
-  max-width: 40px;
-}
-
 .position-page .tooltipper {
   background-color: var(--grey);
   box-sizing: border-box;
   cursor: move;
   user-select: none;
   position: absolute;
-  top: 60px;
+  top: 20px;
   left: 20px;
   width: 160px;
   padding: 20px;

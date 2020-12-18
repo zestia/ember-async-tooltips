@@ -38,6 +38,10 @@ https://zestia.github.io/ember-async-tooltips/
 - [Customisable reference element](#custom-reference-element) ✔︎
 - [Pre-loads any required data](#preloading-data) ✔︎
 
+## Notes
+
+- This addon intentionally does not come with any styles.
+
 ## Example
 
 When the tooltipper is hovered over, and any loading that needs to take place has finished, then the tooltip will be rendered inside. (Or, you can use the `{{in-element}}` helper to render the tooltip elsewhere).

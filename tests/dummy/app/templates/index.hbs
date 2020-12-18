@@ -1,0 +1,249 @@
+<br />
+
+<h3>
+  Basic tooltipper
+</h3>
+
+<Tooltipper
+  @tooltip={{component "tooltip" text="Hello World"}}
+  @position="bottom left"
+>
+  Hover over me
+</Tooltipper>
+
+<br />
+<br />
+<br />
+
+<h3>
+  Manual tooltipper
+</h3>
+
+<Tooltipper
+  @tooltip={{component "tooltip" text="Hello World"}}
+  @position="bottom left"
+  @mouseEvents={{false}} as |tooltipper|
+>
+  <button type="button" {{on "click" tooltipper.toggleTooltip}}>
+    Click me
+  </button>
+</Tooltipper>
+
+<br />
+<br />
+<br />
+<br />
+
+<h3>
+  Custom reference element
+</h3>
+
+<Tooltipper
+  @tooltip={{component "tooltip" text="Tooltip for div"}}
+  @position="bottom left"
+  @referenceElement={{this.span}}
+>
+  Tooltipper instance is here,
+</Tooltipper>
+
+<span {{did-insert this.registerSpan}}>
+  but tooltip is displayed over me
+</span>
+
+<br />
+<br />
+<br />
+<br />
+
+<h3>
+  Nested tooltipper
+</h3>
+
+<table>
+  <tbody>
+    <tr {{did-insert this.registerTableRow}}>
+      <td>
+        Cell 1
+
+        {{#if this.tr}}
+          <Tooltipper
+            @tooltip={{component "tooltip" text="Tooltip for row"}}
+            @showDelay={{100}}
+            @referenceElement={{this.tr}}
+            @position="bottom left"
+          />
+        {{/if}}
+      </td>
+      <td>
+        Cell 2
+
+        <Tooltipper
+          @tooltip={{component "tooltip" text="Tooltip for cell"}}
+          @position="bottom left"
+        >
+          <small>
+            ⓘ
+          </small>
+        </Tooltipper>
+      </td>
+      <td>
+        Cell 3
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br />
+<br />
+<br />
+
+<h3>
+  Delays
+</h3>
+
+<form>
+  <p>
+    <label>
+      <input
+        type="text"
+        value={{this.showDelay}}
+        size="4"
+        {{on "input" this.setShowDelay}}
+      />
+      Show delay
+    </label>
+  </p>
+  <p>
+    <label>
+      <input
+        type="text"
+        value={{this.hideDelay}}
+        size="4"
+        {{on "input" this.setHideDelay}}
+      />
+      Hide delay
+    </label>
+  </p>
+  <p>
+    <label>
+      <input
+        type="text"
+        value={{this.loadDelay}}
+        size="4"
+        {{on "input" this.setLoadDelay}}
+      />
+      Load delay
+    </label>
+  </p>
+  <p>
+    <button type="button" {{on "click" this.unload}}>
+      Unload
+    </button>
+  </p>
+  <p>
+    <span>
+      Total delay time {{this.totalDelay}}ms
+    </span>
+  </p>
+</form>
+
+{{#if this.showTooltipper}}
+  <Tooltipper
+    @onLoad={{this.load}}
+    @showDelay={{this.showDelay}}
+    @hideDelay={{this.hideDelay}}
+    @position="bottom left"
+    @tooltip={{component "tooltip" text="Hello World"}} as |tooltipper|
+  >
+    Hover over me
+    {{#if tooltipper.isLoading}}
+      (Loading…)
+    {{/if}}
+  </Tooltipper>
+{{/if}}
+
+<br />
+<br />
+<br />
+<br />
+
+<h3>
+  Positioning
+</h3>
+
+<p>
+  Manual
+
+  |
+
+  <LinkTo @route="position">
+    Auto
+  </LinkTo>
+</p>
+
+<select {{on "change" this.setPosition}}>
+  <option>
+    top left
+  </option>
+  <option>
+    top center
+  </option>
+  <option>
+    top right
+  </option>
+  <option>
+    right top
+  </option>
+  <option>
+    right middle
+  </option>
+  <option>
+    right bottom
+  </option>
+  <option>
+    bottom right
+  </option>
+  <option>
+    bottom center
+  </option>
+  <option>
+    bottom left
+  </option>
+  <option>
+    left bottom
+  </option>
+  <option>
+    left middle
+  </option>
+  <option>
+    left top
+  </option>
+</select>
+
+<br />
+<br />
+<br />
+<br />
+
+<Tooltipper
+  class="manual-position-tooltipper"
+  @tooltip={{component "tooltip" text=this.tooltipText}}
+  @position={{this.position}}
+>
+  Hover over me
+</Tooltipper>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

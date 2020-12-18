@@ -9,7 +9,5 @@ export default class Router extends EmberRouter {
 }
 
 Router.map(function () {
-  this.route('simple');
-  this.route('reference');
   this.route('position');
 });

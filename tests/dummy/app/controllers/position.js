@@ -1,54 +1,14 @@
-import { Promise } from 'rsvp';
 import Controller from '@ember/controller';
-import { next, later } from '@ember/runloop';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class PositionController extends Controller {
-  window = window;
-
-  @tracked showDelay = 500;
-  @tracked hideDelay = 0;
-  @tracked loadDelay = 500;
   @tracked position = null;
-  @tracked isLoading;
-  @tracked showTooltipper = true;
-  @tracked showTooltip = false;
 
   constructor() {
     super(...arguments);
 
     document.ondragover = (e) => e.preventDefault(); // Prevent ghost spring back
-  }
-
-  @action
-  unload() {
-    this.showTooltipper = false;
-    next(() => (this.showTooltipper = true));
-  }
-
-  @action
-  setPosition({ target: { value } }) {
-    if (value === 'auto') {
-      this.position = null;
-    } else {
-      this.position = value;
-    }
-  }
-
-  @action
-  setShowDelay({ target: { value } }) {
-    this.showDelay = value;
-  }
-
-  @action
-  setHideDelay({ target: { value } }) {
-    this.hideDelay = value;
-  }
-
-  @action
-  setLoadDelay({ target: { value } }) {
-    this.loadDelay = value;
   }
 
   @action
@@ -78,17 +38,5 @@ export default class PositionController extends Controller {
     if (x && y) {
       this.lastPos = [x, y];
     }
-  }
-
-  @action
-  load() {
-    this.isLoading = true;
-
-    return new Promise((resolve) => {
-      later(() => {
-        this.isLoading = false;
-        resolve();
-      }, this.loadDelay);
-    });
   }
 }

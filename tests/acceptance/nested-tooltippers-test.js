@@ -9,7 +9,7 @@ module('tooltips', function (hooks) {
   test('parent with already rendered child', async function (assert) {
     assert.expect(2);
 
-    await visit('/reference');
+    await visit('/');
 
     // To enter the child, one must first enter the parent.
     // The parent's tooltip should be aborted to favour the child.
@@ -23,7 +23,7 @@ module('tooltips', function (hooks) {
   test('child with already rendered parent', async function (assert) {
     assert.expect(2);
 
-    await visit('/reference');
+    await visit('/');
 
     // After first hovering over a parent to make its tooltip show,
     // and subsequently hovering over a child. Then the parent's tooltip
