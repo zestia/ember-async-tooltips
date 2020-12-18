@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.2.2
+
+- Upgrade dependencies
+
 ## 13.2.1
 
 - Make sure tooltip service is always in sync with the DOM
