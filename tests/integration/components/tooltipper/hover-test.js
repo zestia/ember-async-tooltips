@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import setupTooltipperTest from './setup';
 import { render, settled, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
@@ -92,10 +92,14 @@ module('tooltipper', function (hooks) {
     assert.dom('.tooltip').doesNotExist();
   });
 
-  test('mouse enter / destroying', async function (assert) {
+  skip('mouse enter / destroying', async function (assert) {
     assert.expect(0);
 
-    this.set('showTooltipper', true);
+    // This originally tested when happened if mousing over
+    // a tooltipper if it was being destroyed
+    // This not longer seems to be a testable scenario
+
+    this.showTooltipper = true;
 
     await render(hbs`
       {{#if this.showTooltipper}}
@@ -106,7 +110,7 @@ module('tooltipper', function (hooks) {
       {{/if}}
     `);
 
-    triggerEvent('.tooltipper', 'mouseenter');
+    triggerEvent('.tooltipper', 'mouseenter'); // Intentionally no await
 
     this.set('showTooltipper', false);
 

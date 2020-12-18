@@ -9,7 +9,7 @@ module('tooltipper', function (hooks) {
   test('showing / hiding class', async function (assert) {
     assert.expect(4);
 
-    this.set('showTooltip', true);
+    this.showTooltip = true;
 
     await render(hbs`
       <Tooltipper

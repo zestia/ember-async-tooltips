@@ -9,7 +9,7 @@ module('tooltipper', function (hooks) {
   test('changing position', async function (assert) {
     assert.expect(4);
 
-    this.set('position', 'top center');
+    this.position = 'top center';
 
     await render(hbs`
       <Tooltipper

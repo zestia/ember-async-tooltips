@@ -10,7 +10,7 @@ module('tooltipper', function (hooks) {
   test('display', async function (assert) {
     assert.expect(1);
 
-    this.set('style', htmlSafe('display: none'));
+    this.style = htmlSafe('display: none');
 
     await render(hbs`
       {{! template-lint-disable no-inline-styles }}
