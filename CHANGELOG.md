@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.1.1
+
+- Re-setup mouse events when `@mouseEvents` argument changes
+
 ## 13.1.0
 
 - Satisfy AXE a11y test by not using `aria-describedby` attribute until the tooltip is present

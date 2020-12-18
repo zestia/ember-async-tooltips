@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
 import { render, triggerEvent, click } from '@ember/test-helpers';
+import waitForAnimation from '../../../helpers/wait-for-animation';
 import hbs from 'htmlbars-inline-precompile';
 
 module('tooltipper', function (hooks) {
@@ -40,6 +41,51 @@ module('tooltipper', function (hooks) {
           'needs to be specifically set to true or false to take affect - ' +
           'this is useful for composition'
       );
+  });
+
+  test('changing mouse events', async function (assert) {
+    assert.expect(2);
+
+    this.mouseEvents = false;
+
+    await render(hbs`
+      <Tooltipper
+        @mouseEvents={{this.mouseEvents}}
+        @tooltip={{component "tooltip"}}
+      />
+    `);
+
+    await triggerEvent('.tooltipper', 'mouseenter');
+
+    assert.dom('.tooltip').doesNotExist('event listener is off');
+
+    this.set('mouseEvents', true);
+
+    await triggerEvent('.tooltipper', 'mouseenter');
+
+    assert.dom('.tooltip').exists('event listener is on');
+  });
+
+  test('mousing out of a tooltip', async function (assert) {
+    assert.expect(2);
+
+    await render(hbs`
+      <Tooltipper
+        @mouseEvents={{false}}
+        @showTooltip={{true}}
+        @tooltip={{component "tooltip"}}
+      />
+    `);
+
+    assert.dom('.tooltip').exists('preconditon: tooltip present');
+
+    await triggerEvent('.tooltip', 'mouseleave');
+
+    await waitForAnimation('.tooltip');
+
+    assert
+      .dom('.tooltip')
+      .exists('still present because mouse events off is acknowledged');
   });
 
   test('multiple tooltips', async function (assert) {

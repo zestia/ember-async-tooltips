@@ -25,7 +25,6 @@ export default class TooltipperComponent extends Component {
   isOverTooltipElement = false;
   loadEndTime = 0;
   loadStartTime = 0;
-  previousReferenceElement = null;
   referenceElement = null;
   tooltipElement = null;
   tooltipperElement = null;
@@ -120,13 +119,13 @@ export default class TooltipperComponent extends Component {
   @action
   handleInsertTooltipper(element) {
     this.tooltipperElement = element;
-    this._autoSetupReferenceElement();
+    this._setupReferenceElement();
     this._maybeToggleViaArgument();
   }
 
   @action
   handleUpdatedArguments() {
-    this._autoSetupReferenceElement();
+    this._setupReferenceElement();
     this._maybeToggleViaArgument();
     this._positionTooltip();
   }
@@ -134,7 +133,7 @@ export default class TooltipperComponent extends Component {
   @action
   handleDestroyTooltipper() {
     this._cancelTimers();
-    this._autoTearDownReferenceElement();
+    this._teardownReferenceElement();
   }
 
   @action
@@ -204,17 +203,17 @@ export default class TooltipperComponent extends Component {
     }
   }
 
-  _startListening(element) {
+  _startListening() {
     this._enterHandler = this._handleMouseEnterReferenceElement.bind(this);
     this._leaveHandler = this._handleMouseLeaveReferenceElement.bind(this);
 
-    element.addEventListener('mouseenter', this._enterHandler);
-    element.addEventListener('mouseleave', this._leaveHandler);
+    this.referenceElement.addEventListener('mouseenter', this._enterHandler);
+    this.referenceElement.addEventListener('mouseleave', this._leaveHandler);
   }
 
-  _stopListening(element) {
-    element.removeEventListener('mouseenter', this._enterHandler);
-    element.removeEventListener('mouseleave', this._leaveHandler);
+  _stopListening() {
+    this.referenceElement.removeEventListener('mouseenter', this._enterHandler);
+    this.referenceElement.removeEventListener('mouseleave', this._leaveHandler);
   }
 
   _handleMouseEnterReferenceElement() {
@@ -358,44 +357,26 @@ export default class TooltipperComponent extends Component {
     this.shouldRenderTooltip = false;
   }
 
-  _autoSetupReferenceElement() {
+  _setupReferenceElement() {
+    this._teardownReferenceElement();
+
     this.referenceElement =
       this.args.referenceElement || this.tooltipperElement;
 
-    if (
-      !this.referenceElement ||
-      this.referenceElement === this.previousReferenceElement
-    ) {
-      return;
-    }
-
-    if (this.previousReferenceElement) {
-      this._teardownReferenceElement(this.previousReferenceElement);
-    }
-
-    this.previousReferenceElement = this.referenceElement;
-
-    this._setupReferenceElement(this.referenceElement);
-  }
-
-  _autoTearDownReferenceElement() {
-    this._teardownReferenceElement(this.referenceElement);
-  }
-
-  _setupReferenceElement(element) {
     if (!this.shouldUseMouseEvents) {
       return;
     }
 
-    this._startListening(element);
+    this._startListening();
   }
 
-  _teardownReferenceElement(element) {
-    if (!this.shouldUseMouseEvents) {
+  _teardownReferenceElement() {
+    if (!this.referenceElement) {
       return;
     }
 
-    this._stopListening(element);
+    this._stopListening();
+    this.referenceElement = null;
   }
 
   _getReferencePosition(referenceElement) {
