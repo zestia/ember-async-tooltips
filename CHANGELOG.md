@@ -1,6 +1,6 @@
 # Changelog
 
-## 13.1.1
+## 13.2.0
 
 - Re-setup mouse events when `@mouseEvents` argument changes
 
