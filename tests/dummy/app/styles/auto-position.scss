@@ -1,9 +1,11 @@
-.position-page {
+/* stylelint-disable selector-max-type */
+
+.auto-position-page {
   height: calc(100vh - var(--app-margin) * 2);
 }
 
-.position-page .tooltipper {
-  background-color: var(--grey);
+.auto-position-page .tooltipper {
+  background-color: var(--white);
   box-sizing: border-box;
   cursor: move;
   user-select: none;
@@ -15,21 +17,15 @@
   text-align: center;
 }
 
-.position-page .tooltip {
-  background-color: var(--black);
+.auto-position-page .tooltip {
+  background-color: var(--white);
   box-sizing: border-box;
-  color: var(--white);
   padding: 5px;
   width: 100px;
   text-align: center;
 }
 
-.position-page__grid {
+.auto-position-page table {
   height: 100%;
   width: 100%;
-}
-
-.position-page__cell {
-  vertical-align: middle;
-  text-align: center;
 }

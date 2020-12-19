@@ -2,7 +2,7 @@
 
 import Route from '@ember/routing/route';
 
-export default class PositionRoute extends Route {
+export default class AutoPositionRoute extends Route {
   activate() {
     super.activate(...arguments);
     this.controllerFor('application').showLayout = false;

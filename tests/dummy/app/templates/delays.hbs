@@ -1,0 +1,64 @@
+<p>
+  The total delay is affected by the show delay and the time taken to load
+</p>
+
+<form>
+  <p>
+    <label>
+      <input
+        type="text"
+        value={{this.showDelay}}
+        size="4"
+        {{on "input" this.setShowDelay}}
+      />
+      Show delay
+    </label>
+  </p>
+  <p>
+    <label>
+      <input
+        type="text"
+        value={{this.hideDelay}}
+        size="4"
+        {{on "input" this.setHideDelay}}
+      />
+      Hide delay
+    </label>
+  </p>
+  <p>
+    <label>
+      <input
+        type="text"
+        value={{this.loadDelay}}
+        size="4"
+        {{on "input" this.setLoadDelay}}
+      />
+      Load delay
+    </label>
+  </p>
+  <p>
+    <button type="button" {{on "click" this.unload}}>
+      Unload
+    </button>
+  </p>
+  <p>
+    <span>
+      Total delay time {{this.totalDelay}}ms
+    </span>
+  </p>
+</form>
+
+{{#if this.showTooltipper}}
+  <Tooltipper
+    @onLoad={{this.load}}
+    @showDelay={{this.showDelay}}
+    @hideDelay={{this.hideDelay}}
+    @position="bottom left"
+    @tooltip={{component "tooltip" text="Hello World"}} as |tooltipper|
+  >
+    Hover over me
+    {{#if tooltipper.isLoading}}
+      (Loading…)
+    {{/if}}
+  </Tooltipper>
+{{/if}}

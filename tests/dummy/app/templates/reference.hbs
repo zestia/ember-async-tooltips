@@ -1,0 +1,15 @@
+<p>
+  Custom reference element
+</p>
+
+<Tooltipper
+  @tooltip={{component "tooltip" text="Hello World"}}
+  @position="bottom center"
+  @referenceElement={{this.span}}
+>
+  Tooltipper instance is here,
+</Tooltipper>
+
+<span {{did-insert this.registerSpan}}>
+  but the tooltip is displayed over me
+</span>

@@ -1,7 +1,5 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
-import { next } from '@ember/runloop';
 
 export default class PositionController extends Controller {
   constructor() {

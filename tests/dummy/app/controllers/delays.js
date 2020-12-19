@@ -4,16 +4,13 @@ import { tracked } from '@glimmer/tracking';
 import { next, later } from '@ember/runloop';
 import { Promise } from 'rsvp';
 
-export default class IndexController extends Controller {
-  @tracked span;
-  @tracked tr;
+export default class DelaysController extends Controller {
   @tracked showDelay = 250;
   @tracked hideDelay = 0;
   @tracked loadDelay = 1000;
   @tracked isLoading = false;
   @tracked isLoaded = false;
   @tracked showTooltipper = true;
-  @tracked position = 'top left';
 
   get totalDelay() {
     if (this.useAdjustedLoadDelay) {
@@ -39,20 +36,6 @@ export default class IndexController extends Controller {
     return this.loadDelay - this.showDelay;
   }
 
-  get tooltipText() {
-    if (/^top/.test(this.position)) {
-      return '⬇️';
-    } else if (/^bottom/.test(this.position)) {
-      return '⬆️';
-    } else if (/^left/.test(this.position)) {
-      return '➡️';
-    } else if (/^right/.test(this.position)) {
-      return '⬅️';
-    } else {
-      return '';
-    }
-  }
-
   @action
   setShowDelay({ target: { value } }) {
     this.showDelay = parseInt(value || 0, 10);
@@ -66,21 +49,6 @@ export default class IndexController extends Controller {
   @action
   setLoadDelay({ target: { value } }) {
     this.loadDelay = parseInt(value || 0, 10);
-  }
-
-  @action
-  setPosition({ target: { value } }) {
-    this.position = value;
-  }
-
-  @action
-  registerSpan(element) {
-    this.span = element;
-  }
-
-  @action
-  registerTableRow(element) {
-    this.tr = element;
   }
 
   @action

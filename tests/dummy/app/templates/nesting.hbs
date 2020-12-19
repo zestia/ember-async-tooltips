@@ -1,0 +1,36 @@
+<p>
+  A tooltipper inside a tooltipper
+</p>
+
+<Tooltipper
+  class="outer-tooltipper"
+  @tooltip={{component "tooltip" text="Tooltip for row"}}
+  @showDelay={{100}}
+  @position="bottom left"
+>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          Cell 1
+        </td>
+        <td>
+          Cell 2
+
+          <Tooltipper
+            class="inner-tooltipper"
+            @tooltip={{component "tooltip" text="Tooltip for cell"}}
+            @position="bottom left"
+          >
+            <small>
+              ⓘ
+            </small>
+          </Tooltipper>
+        </td>
+        <td>
+          Cell 3
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</Tooltipper>

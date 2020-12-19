@@ -1,0 +1,54 @@
+<p>
+  Manual position
+</p>
+
+<select {{on "change" this.setPosition}}>
+  <option>
+    top left
+  </option>
+  <option>
+    top center
+  </option>
+  <option>
+    top right
+  </option>
+  <option>
+    right top
+  </option>
+  <option>
+    right middle
+  </option>
+  <option>
+    right bottom
+  </option>
+  <option>
+    bottom right
+  </option>
+  <option>
+    bottom center
+  </option>
+  <option>
+    bottom left
+  </option>
+  <option>
+    left bottom
+  </option>
+  <option>
+    left middle
+  </option>
+  <option>
+    left top
+  </option>
+</select>
+
+<br />
+
+<Tooltipper
+  class="manual-position-tooltipper"
+  @tooltip={{component "tooltip" text="Hello World"}}
+  @position={{this.position}}
+  @mouseEvents={{false}}
+  @showTooltip={{true}}
+>
+  Tooltipper
+</Tooltipper>
