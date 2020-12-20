@@ -79,21 +79,21 @@ export default class TooltipperComponent extends Component {
     }
   }
 
+  get tooltippers() {
+    return this.tooltipService.tooltippers.filter((tooltipper) => {
+      return tooltipper !== this;
+    });
+  }
+
   get renderedChild() {
-    return this.renderedExceptSelf.find((tooltipper) => {
+    return this.tooltippers.find((tooltipper) => {
       return this.referenceElement.contains(tooltipper.referenceElement);
     });
   }
 
   get renderedParent() {
-    return this.renderedExceptSelf.find((tooltipper) => {
+    return this.tooltippers.find((tooltipper) => {
       return tooltipper.referenceElement.contains(this.referenceElement);
-    });
-  }
-
-  get renderedExceptSelf() {
-    return this.tooltipService.tooltippers.filter((tooltipper) => {
-      return tooltipper !== this;
     });
   }
 
