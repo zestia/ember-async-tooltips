@@ -1,15 +1,29 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { visit, triggerEvent, settled } from '@ember/test-helpers';
-import waitForAnimation from '../helpers/wait-for-animation';
+import setupTooltipperTest from './setup';
+import { render, triggerEvent, settled } from '@ember/test-helpers';
+import waitForAnimation from '../../../helpers/wait-for-animation';
+import hbs from 'htmlbars-inline-precompile';
 
-module('tooltips', function (hooks) {
-  setupApplicationTest(hooks);
+module('tooltipper', function (hooks) {
+  setupTooltipperTest(hooks);
+
+  hooks.beforeEach(async function () {
+    await render(hbs`
+      <Tooltipper
+        class="outer-tooltipper"
+        @tooltip={{component "tooltip" text="Outer"}}
+        @showDelay={{100}}
+      >
+        <Tooltipper
+          class="inner-tooltipper"
+          @tooltip={{component "tooltip" text="Inner"}}
+        />
+      </Tooltipper>
+    `);
+  });
 
   test('parent with already rendered child', async function (assert) {
     assert.expect(2);
-
-    await visit('/nesting');
 
     // To enter the child, one must first enter the parent.
     // The parent's tooltip should be aborted to favour the child.
@@ -17,13 +31,11 @@ module('tooltips', function (hooks) {
 
     await triggerEvent('.inner-tooltipper', 'mouseenter');
 
-    assert.dom('.tooltip').exists({ count: 1 }).hasText('Tooltip for cell');
+    assert.dom('.tooltip').exists({ count: 1 }).hasText('Inner');
   });
 
   test('child with already rendered parent', async function (assert) {
     assert.expect(2);
-
-    await visit('/nesting');
 
     // After first hovering over a parent to make its tooltip show,
     // and subsequently hovering over a child. Then the parent's tooltip
@@ -35,6 +47,6 @@ module('tooltips', function (hooks) {
     await waitForAnimation('.inner-tooltipper > .tooltip');
     await settled();
 
-    assert.dom('.tooltip').exists({ count: 1 }).hasText('Tooltip for cell');
+    assert.dom('.tooltip').exists({ count: 1 }).hasText('Inner');
   });
 });
