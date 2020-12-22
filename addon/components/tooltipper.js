@@ -361,7 +361,7 @@ export default class TooltipperComponent extends Component {
     this._teardownReferenceElement();
 
     this.referenceElement =
-      this.args.referenceElement || this.tooltipperElement;
+      this.args.referenceElement ?? this.tooltipperElement;
 
     if (!this.shouldUseMouseEvents) {
       return;
