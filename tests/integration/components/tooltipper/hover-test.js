@@ -12,7 +12,7 @@ module('tooltipper', function (hooks) {
 
     await render(hbs`<Tooltipper @tooltip={{component "tooltip"}} />`);
 
-    assert.dom('.tooltip').doesNotExist('does not render too');
+    assert.dom('.tooltip').doesNotExist('does not render tooltip');
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
