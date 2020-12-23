@@ -264,6 +264,8 @@ export default class TooltipperComponent extends Component {
   }
 
   _scheduleShowTooltip() {
+    this._cancelTimers();
+
     this.showTimer = later(this, '_attemptShowTooltip', this.showRemainder);
   }
 
@@ -290,8 +292,6 @@ export default class TooltipperComponent extends Component {
       return;
     }
 
-    this._cancelTimers();
-
     this._loadOnce()
       .then(() => this._renderTooltip())
       .then(() => this._waitForAnimation())
@@ -306,12 +306,9 @@ export default class TooltipperComponent extends Component {
   }
 
   _scheduleHideTooltip() {
-    this.hideTimer = later(this, '_attemptHideTooltip', this.hideDelay);
-  }
+    this._cancelTimers();
 
-  _cancelTimers() {
-    cancel(this.showTimer);
-    cancel(this.hideTimer);
+    this.hideTimer = later(this, '_attemptHideTooltip', this.hideDelay);
   }
 
   _attemptHideTooltip() {
@@ -327,14 +324,17 @@ export default class TooltipperComponent extends Component {
       return;
     }
 
-    this._cancelTimers();
-
     this.shouldShowTooltip = false;
 
     return this._waitForAnimation().then(() => {
       this._invokeAction('onHideTooltip');
       this._attemptDestroyTooltip();
     });
+  }
+
+  _cancelTimers() {
+    cancel(this.showTimer);
+    cancel(this.hideTimer);
   }
 
   _waitForAnimation() {
