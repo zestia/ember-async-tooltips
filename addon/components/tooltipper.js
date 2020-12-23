@@ -230,18 +230,21 @@ export default class TooltipperComponent extends Component {
     this._scheduleHideTooltip();
   }
 
-  _loadOnce() {
-    const load =
-      this.isLoaded || this.isLoading
-        ? resolve(this.loadedData)
-        : resolve(this._invokeAction('onLoad'));
-
+  _load() {
     this._loadStarted();
 
-    return load
+    return resolve(this._invokeAction('onLoad'))
       .then(this._loadedData.bind(this))
       .catch(this._loadError.bind(this))
       .finally(this._loadFinished.bind(this));
+  }
+
+  _loadOnce() {
+    if (this.isLoaded || this.isLoading) {
+      return resolve();
+    } else {
+      return this._load();
+    }
   }
 
   _loadStarted() {
@@ -256,6 +259,7 @@ export default class TooltipperComponent extends Component {
 
   _loadedData(data) {
     this.loadedData = data;
+    this.loadError = null;
     this.isLoaded = true;
   }
 

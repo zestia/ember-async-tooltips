@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.2.3
+
+- Allow tooltips that failed to load the first time, to load on subsequent attempts
+
 ## 13.2.2
 
 - Upgrade dependencies
