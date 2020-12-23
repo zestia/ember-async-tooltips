@@ -253,8 +253,8 @@ export default class TooltipperComponent extends Component {
   }
 
   _loadFinished() {
-    this.isLoading = false;
     this.loadEndTime = Date.now();
+    this.isLoading = false;
   }
 
   _loadedData(data) {
@@ -266,6 +266,7 @@ export default class TooltipperComponent extends Component {
   _loadError(error) {
     this.loadError = error;
     this.loadedData = null;
+    this.isLoaded = false;
   }
 
   _scheduleShowTooltip() {
