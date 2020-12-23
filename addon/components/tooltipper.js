@@ -139,9 +139,9 @@ export default class TooltipperComponent extends Component {
   @action
   handleInsertTooltip(element) {
     this.tooltipElement = element;
-    this.willInsertTooltip.resolve();
     this.tooltipService.add(this);
     this._positionTooltip();
+    this.willInsertTooltip.resolve();
   }
 
   @action

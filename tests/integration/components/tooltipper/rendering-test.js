@@ -1,7 +1,15 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { settled, render, click, triggerEvent } from '@ember/test-helpers';
+import {
+  settled,
+  render,
+  find,
+  click,
+  waitUntil,
+  triggerEvent
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import waitForAnimation from '../../../helpers/wait-for-animation';
 
 module('tooltipper', function (hooks) {
   setupRenderingTest(hooks);
@@ -61,7 +69,7 @@ module('tooltipper', function (hooks) {
     assert.dom('.tooltip').hasClass('tooltip--showing', 'is not hidden');
   });
 
-  test('tearing down', async function (assert) {
+  test('tearing down #1', async function (assert) {
     assert.expect(0);
 
     // This regression test checks that when a tooltipoer is destroyed,
@@ -83,5 +91,63 @@ module('tooltipper', function (hooks) {
     this.set('show', false);
 
     await triggerEvent('.tooltipper:nth-child(1)', 'mouseenter');
+  });
+
+  test('tearing down #2', async function (assert) {
+    assert.expect(0);
+
+    this.show = true;
+
+    // this.load = () => {
+    //   console.log('load');
+    //   return new Promise((resolve) => {
+    //     Ember.run.later(() => {
+    //       console.log('loaded');
+    //       resolve();
+    //     }, 1000);
+    //   });
+    // };
+
+    await render(hbs`
+      <Tooltipper @tooltip={{component "tooltip"}} />
+
+      {{#if this.show}}
+        <Tooltipper @tooltip={{component "tooltip"}} />
+      {{/if}}
+    `);
+
+    await triggerEvent('.tooltipper:nth-child(1)', 'mouseenter');
+
+    // triggerEvent('.tooltipper:nth-child(2)', 'mouseenter');
+    // await triggerEvent('.tooltipper:nth-child(2)', 'mouseenter');
+
+    // console.log(this.tooltipService.tooltippers.length);
+
+    // await triggerEvent('.tooltipper:nth-child(2) .tooltip', 'mouseleave');
+
+    // triggerEvent('.tooltipper:nth-child(1)', 'mouseleave');
+    // triggerEvent('.tooltipper:nth-child(1)', 'mouseenter');
+
+    // await triggerEvent('.tooltipper:nth-child(1)', 'mouseenter');
+
+    // await waitUntil(() => {
+    //   this.tooltipService.tooltippers.forEach((tt) => {
+    //     console.log('\t', tt.referenceElement);
+    //   });
+    // });
+
+    // await waitForAnimation('.tooltipper:nth-child(2) .tooltip');
+
+    // await triggerEvent('.tooltipper:nth-child(2)', 'mouseenter');
+
+    // await waitUntil(() => {
+    //   return this.tooltipService.tooltippers.length === 2;
+    // });
+
+    // await triggerEvent('.tooltipper:nth-child(1)', 'mouseenter');
+
+    // this.set('show', false);
+
+    // return this.pauseTest();
   });
 });
