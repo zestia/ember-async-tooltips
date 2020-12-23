@@ -265,6 +265,7 @@ export default class TooltipperComponent extends Component {
 
   _loadError(error) {
     this.loadError = error;
+    this.loadedData = null;
   }
 
   _scheduleShowTooltip() {
