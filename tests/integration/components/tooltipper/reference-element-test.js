@@ -11,12 +11,10 @@ module('tooltipper', function (hooks) {
     assert.expect(4);
 
     await render(hbs`
-      {{#if this.referenceElement}}
-        <Tooltipper
-          @tooltip={{component "tooltip"}}
-          @referenceElement={{this.referenceElement}}
-        />
-      {{/if}}
+      <Tooltipper
+        @tooltip={{component "tooltip"}}
+        @referenceElement={{this.referenceElement}}
+      />
 
       <div class="reference-element-1"></div>
       <div class="reference-element-2"></div>
