@@ -93,17 +93,21 @@ module('tooltipper', function (hooks) {
 
     await render(hbs`
       <Tooltipper
+        class="tooltipper-1"
         @mouseEvents={{false}}
         @tooltip={{component "tooltip"}} as |tooltipper|
       >
         <button type="button" {{on "click" tooltipper.showTooltip}}></button>
       </Tooltipper>
 
-      <Tooltipper @tooltip={{component "tooltip"}} />
+      <Tooltipper
+        class="tooltipper-2"
+        @tooltip={{component "tooltip"}}
+      />
     `);
 
-    await click('.tooltipper:nth-child(1) button');
-    await triggerEvent('.tooltipper:nth-child(2)', 'mouseenter');
+    await click('.tooltipper-1 button');
+    await triggerEvent('.tooltipper-2', 'mouseenter');
 
     assert
       .dom('.tooltip')

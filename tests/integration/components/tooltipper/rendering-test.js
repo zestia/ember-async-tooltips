@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { settled, render, click, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { defer } from 'rsvp';
 
 module('tooltipper', function (hooks) {
   setupRenderingTest(hooks);
@@ -72,16 +73,61 @@ module('tooltipper', function (hooks) {
 
     await render(hbs`
       {{#if this.show}}
-        <Tooltipper @tooltip={{component "tooltip"}} />
+        <Tooltipper
+          class="tooltipper-1"
+          @tooltip={{component "tooltip"}}
+        />
       {{/if}}
 
-      <Tooltipper @tooltip={{component "tooltip"}} />
+      <Tooltipper
+        class="tooltipper-2"
+        @tooltip={{component "tooltip"}}
+      />
     `);
 
-    await triggerEvent('.tooltipper:nth-child(1)', 'mouseenter');
+    await triggerEvent('.tooltipper-1', 'mouseenter');
 
     this.set('show', false);
 
-    await triggerEvent('.tooltipper:nth-child(1)', 'mouseenter');
+    await triggerEvent('.tooltipper-2', 'mouseenter');
+  });
+
+  test('tearing down whilst showing another tooltip', async function (assert) {
+    assert.expect(0);
+
+    // This tests loads a slow tooltipper, which is destroyed whilst
+    // it is loading. During that time, another tooltipper is hovered over
+    // This causes the code that checks if a tooltipper has-a-child,
+    // or is-a-parent to run. The recently destroyed tooltipper's element
+    // will be null so any parent/child checks need to account for this.
+
+    this.show = true;
+
+    const deferred = defer();
+
+    this.loadTooltip = () => deferred.promise;
+
+    await render(hbs`
+      {{#if this.show}}
+        <Tooltipper
+          class="tooltipper-1"
+          @onLoad={{this.loadTooltip}}
+          @tooltip={{component "tooltip"}}
+        />
+      {{/if}}
+
+      <Tooltipper
+        class="tooltipper-2"
+        @tooltip={{component "tooltip"}}
+      />
+    `);
+
+    await triggerEvent('.tooltipper-1', 'mouseenter');
+
+    this.set('show', false);
+
+    await triggerEvent('.tooltipper-2', 'mouseenter');
+
+    deferred.resolve();
   });
 });

@@ -35,4 +35,31 @@ module('tooltipper', function (hooks) {
       .dom('.tooltipper > .tooltip.custom-tooltip')
       .exists('custom tooltip is rendered as a child');
   });
+
+  test('class name', async function (assert) {
+    assert.expect(2);
+
+    await render(hbs`
+      <Tooltipper
+        @showTooltip={{this.showTooltip}}
+        @tooltip={{component "tooltip" text="Hello World"}}
+      />
+    `);
+
+    assert
+      .dom('.tooltipper')
+      .doesNotHaveClass(
+        'tooltipper--has-tooltip',
+        'tooltipper is not showing tooltip yet'
+      );
+
+    this.set('showTooltip', true);
+
+    assert
+      .dom('.tooltipper')
+      .hasClass(
+        'tooltipper--has-tooltip',
+        "has a class name to signify the tooltipper's tooltip is present"
+      );
+  });
 });

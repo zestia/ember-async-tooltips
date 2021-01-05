@@ -276,7 +276,7 @@ export default class TooltipperComponent extends Component {
   }
 
   _attemptShowTooltip() {
-    if (!this.isOverReferenceElement) {
+    if (this.isDestroyed || !this.isOverReferenceElement) {
       return;
     }
 

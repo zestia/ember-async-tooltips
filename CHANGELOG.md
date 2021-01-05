@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.2.4
+
+- Don't attempt to show tooltip if tooltipper has since been destroyed
+
 ## 13.2.3
 
 - Allow tooltips that failed to load the first time, to load on subsequent attempts
