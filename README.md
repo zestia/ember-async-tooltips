@@ -94,9 +94,8 @@ By default, tooltips will display when hovering over a tooltipper. But tooltippe
 ```handlebars
 <Tooltipper
   @tooltip={{component "my-tooltip"}}
-  @mouseEvents={{boolean}}
-  @showDelay={{number}}
-  @hideDelay={{number}}
+  @showDelay={{500}}
+  @hideDelay={{0}}
 />
 ```
 
@@ -107,7 +106,11 @@ You can also use the actions `@onShowTooltip` and `@onHideTooltip`. These hooks 
 The tooltipper yields an API to control the tooltip.
 
 ```handlebars
-<Tooltipper @tooltip={{component "my-tooltip"}} as |tooltipper|>
+<Tooltipper
+  @tooltip={{component "my-tooltip"}}
+  @mouseEvents={{false}}
+  as |tooltipper|
+>
   {{!tooltipper.isLoading}}
   {{!tooltipper.hideTooltip}}
   {{!tooltipper.showTooltip}}
