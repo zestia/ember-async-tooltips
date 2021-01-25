@@ -79,6 +79,10 @@ export default class TooltipperComponent extends Component {
     }
   }
 
+  get needsToShow() {
+    return this.isOverReferenceElement || this.isOverTooltipElement;
+  }
+
   get tooltippers() {
     return this.tooltipService.tooltippers.filter((tooltipper) => {
       return tooltipper !== this;
@@ -95,6 +99,10 @@ export default class TooltipperComponent extends Component {
     return this.tooltippers.find((tooltipper) => {
       return tooltipper.referenceElement.contains(this.referenceElement);
     });
+  }
+
+  get hasChild() {
+    return !!this.renderedChild;
   }
 
   get tooltipperAPI() {
@@ -114,6 +122,20 @@ export default class TooltipperComponent extends Component {
       hide: this.hideTooltip,
       reposition: this.repositionTooltip
     };
+  }
+
+  @action
+  handleMouseEnterReferenceElement() {
+    this.isOverReferenceElement = true;
+
+    this._loadOnce().then(() => this._scheduleShowTooltip());
+  }
+
+  @action
+  handleMouseLeaveReferenceElement() {
+    this.isOverReferenceElement = false;
+
+    this._scheduleHideTooltip();
   }
 
   @action
@@ -160,9 +182,11 @@ export default class TooltipperComponent extends Component {
   handleMouseLeaveTooltip() {
     this.isOverTooltipElement = false;
 
-    if (this.shouldUseMouseEvents) {
-      this._scheduleHideTooltip();
+    if (!this.shouldUseMouseEvents) {
+      return;
     }
+
+    this._scheduleHideTooltip();
   }
 
   @action
@@ -192,9 +216,11 @@ export default class TooltipperComponent extends Component {
   _invokeAction(name, ...args) {
     const action = this.args[name];
 
-    if (typeof action === 'function') {
-      return action(...args);
+    if (typeof action !== 'function') {
+      return;
     }
+
+    return action(...args);
   }
 
   _maybeToggleViaArgument() {
@@ -206,28 +232,18 @@ export default class TooltipperComponent extends Component {
   }
 
   _startListening() {
-    this._enterHandler = this._handleMouseEnterReferenceElement.bind(this);
-    this._leaveHandler = this._handleMouseLeaveReferenceElement.bind(this);
+    const add = (...args) => this.referenceElement.addEventListener(...args);
 
-    this.referenceElement.addEventListener('mouseenter', this._enterHandler);
-    this.referenceElement.addEventListener('mouseleave', this._leaveHandler);
+    add('mouseenter', this.handleMouseEnterReferenceElement);
+    add('mouseleave', this.handleMouseLeaveReferenceElement);
   }
 
   _stopListening() {
-    this.referenceElement.removeEventListener('mouseenter', this._enterHandler);
-    this.referenceElement.removeEventListener('mouseleave', this._leaveHandler);
-  }
+    const remove = (...args) =>
+      this.referenceElement.removeEventListener(...args);
 
-  _handleMouseEnterReferenceElement() {
-    this.isOverReferenceElement = true;
-
-    this._loadOnce().then(() => this._scheduleShowTooltip());
-  }
-
-  _handleMouseLeaveReferenceElement() {
-    this.isOverReferenceElement = false;
-
-    this._scheduleHideTooltip();
+    remove('mouseenter', this.handleMouseEnterReferenceElement);
+    remove('mouseleave', this.handleMouseLeaveReferenceElement);
   }
 
   _load() {
@@ -276,11 +292,7 @@ export default class TooltipperComponent extends Component {
   }
 
   _attemptShowTooltip() {
-    if (this.isDestroyed || !this.isOverReferenceElement) {
-      return;
-    }
-
-    if (this.renderedChild) {
+    if (this.isDestroyed || !this.needsToShow || this.hasChild) {
       return;
     }
 
@@ -318,7 +330,7 @@ export default class TooltipperComponent extends Component {
   }
 
   _attemptHideTooltip() {
-    if (this.isOverReferenceElement || this.isOverTooltipElement) {
+    if (this.needsToShow) {
       return;
     }
 

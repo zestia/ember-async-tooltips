@@ -89,14 +89,14 @@ You can control this behaviour to some degree by changing how the viewport is [s
 
 ## Showing/hiding
 
-By default, tooltips will display when hovering over a tooltipper. But tooltippers also yield the ability to show or hide its tooltip manually.
-Additionally, you can customise the show/hide delays.
+By default, tooltips will display when hovering over a tooltipper. But tooltippers also yield the ability to show or hide its tooltip manually, on focusin for example. Additionally, you can customise the show/hide delays.
 
 ```handlebars
 <Tooltipper
   @tooltip={{component "my-tooltip"}}
-  @showDelay={{500}}
-  @hideDelay={{0}}
+  @mouseEvents={{boolean}}
+  @showDelay={{number}}
+  @hideDelay={{number}}
 />
 ```
 
@@ -107,10 +107,7 @@ You can also use the actions `@onShowTooltip` and `@onHideTooltip`. These hooks 
 The tooltipper yields an API to control the tooltip.
 
 ```handlebars
-<Tooltipper
-  @tooltip={{component "my-tooltip"}}
-  @mouseEvents={{false}} as |tooltipper|
->
+<Tooltipper @tooltip={{component "my-tooltip"}} as |tooltipper|>
   {{!tooltipper.isLoading}}
   {{!tooltipper.hideTooltip}}
   {{!tooltipper.showTooltip}}

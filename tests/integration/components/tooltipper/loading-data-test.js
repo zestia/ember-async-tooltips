@@ -25,7 +25,7 @@ module('tooltipper', function (hooks) {
       <Tooltipper
         @showTooltip={{this.showTooltip}}
         @onLoad={{this.loadTooltip}}
-        @tooltip={{component "custom-tooltip"}}
+        @tooltip={{component "greeting-tooltip"}}
       />
     `);
 
@@ -37,11 +37,12 @@ module('tooltipper', function (hooks) {
 
     assert
       .dom('.tooltip')
-      .hasText('Hello World', 'the loaded data is passed to the tooltip');
+      .containsText('Hello World', 'the loaded data is passed to the tooltip');
 
     this.set('showTooltip', false);
 
     await waitForAnimation('.tooltip');
+
     await settled();
 
     this.set('showTooltip', true);

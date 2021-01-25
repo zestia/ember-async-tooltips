@@ -7,7 +7,7 @@ import hbs from 'htmlbars-inline-precompile';
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
-  test('mouse events off', async function (assert) {
+  test('mouse events false', async function (assert) {
     assert.expect(1);
 
     await render(hbs`
@@ -22,7 +22,7 @@ module('tooltipper', function (hooks) {
     assert.dom('.tooltip').doesNotExist('will not render a tooltip');
   });
 
-  test('mouse events nullish', async function (assert) {
+  test('mouseEvents nullish', async function (assert) {
     assert.expect(1);
 
     await render(hbs`
@@ -43,7 +43,7 @@ module('tooltipper', function (hooks) {
       );
   });
 
-  test('changing mouse events', async function (assert) {
+  test('changing mouseEvents', async function (assert) {
     assert.expect(2);
 
     this.mouseEvents = false;
@@ -57,13 +57,13 @@ module('tooltipper', function (hooks) {
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    assert.dom('.tooltip').doesNotExist('event listener is off');
+    assert.dom('.tooltip').doesNotExist('mouse event listener is off');
 
     this.set('mouseEvents', true);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    assert.dom('.tooltip').exists('event listener is on');
+    assert.dom('.tooltip').exists('mouse event listener is on');
   });
 
   test('mousing out of a tooltip', async function (assert) {
@@ -83,9 +83,7 @@ module('tooltipper', function (hooks) {
 
     await waitForAnimation('.tooltip');
 
-    assert
-      .dom('.tooltip')
-      .exists('still present because mouse events off is acknowledged');
+    assert.dom('.tooltip').exists('still present because mouse events are off');
   });
 
   test('multiple tooltips', async function (assert) {

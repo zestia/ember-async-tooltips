@@ -27,12 +27,12 @@ module('tooltipper', function (hooks) {
     await render(hbs`
       <Tooltipper
         @showTooltip={{true}}
-        @tooltip={{component "custom-tooltip"}}
+        @tooltip={{component "greeting-tooltip"}}
       />
     `);
 
     assert
-      .dom('.tooltipper > .tooltip.custom-tooltip')
+      .dom('.tooltipper > .tooltip.greeting-tooltip')
       .exists('custom tooltip is rendered as a child');
   });
 

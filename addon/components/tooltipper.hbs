@@ -34,6 +34,7 @@
       id={{concat "tooltip-" this.id}}
       style={{this.tooltipStyle}}
       role="tooltip"
+      aria-live="polite"
       @tooltip={{this.tooltipAPI}}
       {{did-insert this.handleInsertTooltip}}
       {{will-destroy this.handleDestroyTooltip}}

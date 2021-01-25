@@ -7,7 +7,7 @@ module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
   test('aria', async function (assert) {
-    assert.expect(6);
+    assert.expect(7);
 
     await render(hbs`
       <Tooltipper
@@ -44,6 +44,14 @@ module('tooltipper', function (hooks) {
       .doesNotHaveAttribute(
         'title',
         "does not splat the attributes, because component helper doesn't support this yet"
+      );
+
+    assert
+      .dom('.tooltip')
+      .hasAttribute(
+        'aria-live',
+        'polite',
+        "once loaded and rendered, the tooltip's description will be politely announced by screen readers"
       );
 
     assert

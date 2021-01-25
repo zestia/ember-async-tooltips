@@ -1,0 +1,19 @@
+<p>
+  Example usage with
+  <code>
+    \{{in-element}} helper
+  </code>
+</p>
+
+<Tooltipper
+  @tooltip={{component "in-element-tooltip" destinationElement=this.elsewhere}}
+  @position="bottom left"
+>
+  <LinkTo @route="in-element">
+    Hover over or focus me
+  </LinkTo>
+</Tooltipper>
+
+<div id="elsewhere" {{did-insert this.registerElsewhere}}>
+  {{! tooltip rendered here }}
+</div>

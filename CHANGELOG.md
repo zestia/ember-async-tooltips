@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.2.5
+
+- Add `aria-live="polite"`
+
 ## 13.2.4
 
 - Don't attempt to show tooltip if tooltipper has since been destroyed
