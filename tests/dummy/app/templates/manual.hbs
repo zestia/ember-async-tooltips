@@ -11,3 +11,20 @@
     Click me
   </button>
 </Tooltipper>
+
+<br />
+<br />
+<br />
+
+<Tooltipper
+  @tooltip={{component "tooltip" text="Hello World"}}
+  @position="bottom left"
+  @mouseEvents={{false}} as |tooltipper|
+>
+  <input
+    type="text"
+    placeholder="Focus me"
+    {{on "focus" tooltipper.showTooltip}}
+    {{on "blur" tooltipper.hideTooltip}}
+  />
+</Tooltipper>
