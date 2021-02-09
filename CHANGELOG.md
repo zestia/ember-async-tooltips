@@ -4,13 +4,7 @@
 
 - Allow custom 'auto' positioning
   (The `@position` argument now takes a function)
-
-## 13.2.5
-
 - Add `aria-live="polite"`
-
-## 13.2.4
-
 - Don't attempt to show tooltip if tooltipper has since been destroyed
 
 ## 13.2.3
