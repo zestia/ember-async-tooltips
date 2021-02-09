@@ -1,5 +1,10 @@
 # Changelog
 
+## 13.3.0
+
+- Allow custom 'auto' positioning
+  (The `@position` argument now takes a function)
+
 ## 13.2.5
 
 - Add `aria-live="polite"`

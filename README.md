@@ -77,7 +77,7 @@ By omitting the `@position` argument, the tooltip will be positioned automatical
 <Tooltipper @tooltip={{component "my-tooltip"}} />
 ```
 
-You can control this behaviour to some degree by changing how the viewport is [split into sections](https://github.com/zestia/position-utils#zestiaposition-utils).
+You can control whether the reference element is considered to be in a given position by changing how the viewport is [split into sections](https://github.com/zestia/position-utils#zestiaposition-utils).
 
 ```handlebars
 <Tooltipper
@@ -85,6 +85,20 @@ You can control this behaviour to some degree by changing how the viewport is [s
   @rows={{2}}
   @columns={{3}}
 />
+```
+
+### Custom positioning
+
+You can set `@position` to be a function. Your function will receive the reference element's position in the viewport. You are then free to return an appropriate counter-position for your tooltip. e.g:
+
+```javascript
+position() {
+  switch(referencePosition) {
+    case 'top right':
+      return 'left top';
+    // ...
+  }
+}
 ```
 
 ## Showing/hiding
