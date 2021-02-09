@@ -408,7 +408,15 @@ export default class TooltipperComponent extends Component {
     // The position of the tooltip should be the one provided, or one chosen
     // automatically, based upon the position of the reference element.
 
-    return this.args.position ?? autoPosition(referencePosition);
+    const { position } = this.args;
+
+    if (typeof position === 'string') {
+      return position;
+    } else if (typeof position === 'function') {
+      return position(referencePosition);
+    } else {
+      return autoPosition(referencePosition);
+    }
   }
 
   _computeCoords() {
