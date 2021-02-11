@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.3.1
+
+- Upgrade dependencies
+
 ## 13.3.0
 
 - Allow custom 'auto' positioning

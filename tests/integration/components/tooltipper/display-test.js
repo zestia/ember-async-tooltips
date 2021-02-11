@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
 import { render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
