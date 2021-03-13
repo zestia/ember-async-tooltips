@@ -1,5 +1,10 @@
 # Changelog
 
+## 14.0.0
+
+- Upgrade dependencies
+- Rename `@tooltip` argument to `@Tooltip`
+
 ## 13.3.1
 
 - Upgrade dependencies
