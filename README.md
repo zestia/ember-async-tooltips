@@ -64,8 +64,8 @@ Setting the `@position` argument will compute `top` and `left` CSS properties to
 
 ```handlebars
 <Tooltipper
-  @position="bottom left"
   @Tooltip={{component "my-tooltip"}}
+  @position="bottom left"
 />
 ```
 
