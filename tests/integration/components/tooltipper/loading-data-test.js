@@ -23,9 +23,9 @@ module('tooltipper', function (hooks) {
 
     await render(hbs`
       <Tooltipper
+        @Tooltip={{component "greeting-tooltip"}}
         @showTooltip={{this.showTooltip}}
         @onLoad={{this.loadTooltip}}
-        @Tooltip={{component "greeting-tooltip"}}
       />
     `);
 

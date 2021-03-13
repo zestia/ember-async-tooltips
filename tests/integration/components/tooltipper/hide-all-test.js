@@ -11,13 +11,13 @@ module('tooltipper', function (hooks) {
 
     await render(hbs`
       <Tooltipper
-        @showTooltip={{true}}
         @Tooltip={{component "tooltip"}}
+        @showTooltip={{true}}
       />
 
       <Tooltipper
-        @showTooltip={{true}}
         @Tooltip={{component "tooltip"}}
+        @showTooltip={{true}}
       />
     `);
 

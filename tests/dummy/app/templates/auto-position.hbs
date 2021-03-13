@@ -38,11 +38,11 @@
   </table>
 
   <Tooltipper
+    @Tooltip={{component "tooltip" text="Tooltip"}}
     draggable="true"
     ondrag={{this.storeLastPos}}
     ondragstart={{this.storeStartPos}}
     ondragend={{this.reposition}}
-    @Tooltip={{component "tooltip" text="Tooltip"}}
   >
     Tooltipper
   </Tooltipper>

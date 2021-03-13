@@ -16,8 +16,8 @@ module('tooltipper', function (hooks) {
 
     await render(hbs`
       <Tooltipper
-        @mouseEvents={{false}}
-        @Tooltip={{component "tooltip"}} as |tooltipper|
+        @Tooltip={{component "tooltip"}}
+        @mouseEvents={{false}} as |tooltipper|
       >
         <button type="button" {{on "click" tooltipper.showTooltip}}>
           Show
@@ -111,8 +111,8 @@ module('tooltipper', function (hooks) {
       {{#if this.show}}
         <Tooltipper
           class="tooltipper-1"
-          @onLoad={{this.loadTooltip}}
           @Tooltip={{component "tooltip"}}
+          @onLoad={{this.loadTooltip}}
         />
       {{/if}}
 

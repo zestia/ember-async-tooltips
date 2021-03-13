@@ -50,11 +50,11 @@
 
 {{#if this.showTooltipper}}
   <Tooltipper
+    @Tooltip={{component "tooltip" text="Hello World"}}
     @onLoad={{this.load}}
     @showDelay={{this.showDelay}}
     @hideDelay={{this.hideDelay}}
-    @position="bottom left"
-    @Tooltip={{component "tooltip" text="Hello World"}} as |tooltipper|
+    @position="bottom left" as |tooltipper|
   >
     Hover over me
     {{#if tooltipper.isLoading}}
