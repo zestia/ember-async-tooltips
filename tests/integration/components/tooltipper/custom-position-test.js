@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render, triggerEvent } from '@ember/test-helpers';
+import { render, triggerEvent, getRootElement } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('tooltipper', function (hooks) {
@@ -8,6 +8,8 @@ module('tooltipper', function (hooks) {
 
   test('custom position', async function (assert) {
     assert.expect(3);
+
+    getRootElement().parentNode.classList.add('full-screen');
 
     this.position = (referencePosition) => {
       assert.step(
@@ -36,5 +38,7 @@ module('tooltipper', function (hooks) {
     assert
       .dom('.tooltip')
       .hasClass('tooltip--left-top', 'custom position is used');
+
+    getRootElement().parentNode.classList.remove('full-screen');
   });
 });
