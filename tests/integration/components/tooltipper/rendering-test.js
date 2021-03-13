@@ -17,7 +17,7 @@ module('tooltipper', function (hooks) {
     await render(hbs`
       <Tooltipper
         @mouseEvents={{false}}
-        @tooltip={{component "tooltip"}} as |tooltipper|
+        @Tooltip={{component "tooltip"}} as |tooltipper|
       >
         <button type="button" {{on "click" tooltipper.showTooltip}}>
           Show
@@ -45,7 +45,7 @@ module('tooltipper', function (hooks) {
     await render(hbs`
       <Tooltipper
         @showTooltip={{true}}
-        @tooltip={{component "tooltip"}}
+        @Tooltip={{component "tooltip"}}
       />
     `);
 
@@ -75,13 +75,13 @@ module('tooltipper', function (hooks) {
       {{#if this.show}}
         <Tooltipper
           class="tooltipper-1"
-          @tooltip={{component "tooltip"}}
+          @Tooltip={{component "tooltip"}}
         />
       {{/if}}
 
       <Tooltipper
         class="tooltipper-2"
-        @tooltip={{component "tooltip"}}
+        @Tooltip={{component "tooltip"}}
       />
     `);
 
@@ -112,13 +112,13 @@ module('tooltipper', function (hooks) {
         <Tooltipper
           class="tooltipper-1"
           @onLoad={{this.loadTooltip}}
-          @tooltip={{component "tooltip"}}
+          @Tooltip={{component "tooltip"}}
         />
       {{/if}}
 
       <Tooltipper
         class="tooltipper-2"
-        @tooltip={{component "tooltip"}}
+        @Tooltip={{component "tooltip"}}
       />
     `);
 

@@ -14,7 +14,7 @@ module('tooltipper', function (hooks) {
 
     await render(hbs`
       {{! template-lint-disable no-inline-styles }}
-      <Tooltipper @tooltip={{component "tooltip"}} style={{this.style}} />
+      <Tooltipper @Tooltip={{component "tooltip"}} style={{this.style}} />
     `);
 
     await triggerEvent('.tooltipper', 'mouseenter');

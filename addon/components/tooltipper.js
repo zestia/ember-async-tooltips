@@ -46,10 +46,6 @@ export default class TooltipperComponent extends Component {
     return this.args.mouseEvents ?? true;
   }
 
-  get tooltipComponent() {
-    return this.args.tooltip ?? 'tooltip';
-  }
-
   get tooltipStyle() {
     const [x, y] = this.tooltipCoords;
 

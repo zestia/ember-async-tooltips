@@ -10,7 +10,7 @@ module('tooltipper', function (hooks) {
   test('mouse enter reference', async function (assert) {
     assert.expect(2);
 
-    await render(hbs`<Tooltipper @tooltip={{component "tooltip"}} />`);
+    await render(hbs`<Tooltipper @Tooltip={{component "tooltip"}} />`);
 
     assert.dom('.tooltip').doesNotExist('does not render tooltip');
 
@@ -24,7 +24,7 @@ module('tooltipper', function (hooks) {
   test('mouse leave reference', async function (assert) {
     assert.expect(2);
 
-    await render(hbs`<Tooltipper @tooltip={{component "tooltip"}} />`);
+    await render(hbs`<Tooltipper @Tooltip={{component "tooltip"}} />`);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
@@ -42,7 +42,7 @@ module('tooltipper', function (hooks) {
   test('mouse leave tooltip', async function (assert) {
     assert.expect(2);
 
-    await render(hbs`<Tooltipper @tooltip={{component "tooltip"}} />`);
+    await render(hbs`<Tooltipper @Tooltip={{component "tooltip"}} />`);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
@@ -65,7 +65,7 @@ module('tooltipper', function (hooks) {
     await render(hbs`
       <Tooltipper
         @onLoad={{this.load}}
-        @tooltip={{component "tooltip"}}
+        @Tooltip={{component "tooltip"}}
       />
     `);
 
@@ -81,7 +81,7 @@ module('tooltipper', function (hooks) {
   test('mouse leave / loading data', async function (assert) {
     assert.expect(1);
 
-    await render(hbs`<Tooltipper @tooltip={{component "tooltip"}} />`);
+    await render(hbs`<Tooltipper @Tooltip={{component "tooltip"}} />`);
 
     // Intentionally no await
     triggerEvent('.tooltipper', 'mouseenter');
@@ -105,7 +105,7 @@ module('tooltipper', function (hooks) {
       {{#if this.showTooltipper}}
         <Tooltipper
           @showDelay={{200}}
-          @tooltip={{component "tooltip"}}
+          @Tooltip={{component "tooltip"}}
         />
       {{/if}}
     `);
@@ -120,7 +120,7 @@ module('tooltipper', function (hooks) {
   test('mouse enter / mouse leave tooltipper', async function (assert) {
     assert.expect(1);
 
-    await render(hbs`<Tooltipper @tooltip={{component "tooltip"}} />`);
+    await render(hbs`<Tooltipper @Tooltip={{component "tooltip"}} />`);
 
     // Intentionally no await
     triggerEvent('.tooltipper', 'mouseenter');
@@ -134,7 +134,7 @@ module('tooltipper', function (hooks) {
   test('mouse leave tooltip whilst still over tooltipper', async function (assert) {
     assert.expect(1);
 
-    await render(hbs`<Tooltipper @tooltip={{component "tooltip"}} />`);
+    await render(hbs`<Tooltipper @Tooltip={{component "tooltip"}} />`);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
@@ -152,7 +152,7 @@ module('tooltipper', function (hooks) {
   test('mouse leave tooltipper whilst still over tooltip', async function (assert) {
     assert.expect(1);
 
-    await render(hbs`<Tooltipper @tooltip={{component "tooltip"}} />`);
+    await render(hbs`<Tooltipper @Tooltip={{component "tooltip"}} />`);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 

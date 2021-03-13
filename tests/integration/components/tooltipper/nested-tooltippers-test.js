@@ -11,12 +11,12 @@ module('tooltipper', function (hooks) {
     await render(hbs`
       <Tooltipper
         class="outer-tooltipper"
-        @tooltip={{component "tooltip" text="Outer"}}
+        @Tooltip={{component "tooltip" text="Outer"}}
         @showDelay={{100}}
       >
         <Tooltipper
           class="inner-tooltipper"
-          @tooltip={{component "tooltip" text="Inner"}}
+          @Tooltip={{component "tooltip" text="Inner"}}
         />
       </Tooltipper>
     `);

@@ -12,12 +12,12 @@ module('tooltipper', function (hooks) {
     await render(hbs`
       <Tooltipper
         @showTooltip={{true}}
-        @tooltip={{component "tooltip"}}
+        @Tooltip={{component "tooltip"}}
       />
 
       <Tooltipper
         @showTooltip={{true}}
-        @tooltip={{component "tooltip"}}
+        @Tooltip={{component "tooltip"}}
       />
     `);
 

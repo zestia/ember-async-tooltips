@@ -13,7 +13,7 @@ module('tooltipper', function (hooks) {
 
     await render(hbs`
       <Tooltipper
-        @tooltip={{component "tooltip" text="See me"}}
+        @Tooltip={{component "tooltip" text="See me"}}
         @position={{this.position}}
       >
         Hover over me

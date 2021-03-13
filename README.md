@@ -47,12 +47,12 @@ https://zestia.github.io/ember-async-tooltips/
 When the tooltipper is hovered over, and any loading that needs to take place has finished, then the tooltip will be rendered inside. (Or, you can use the `{{in-element}}` helper to render the tooltip elsewhere).
 
 ```handlebars
-<Tooltipper @tooltip={{component "tooltip" text="Hello World"}}>
+<Tooltipper @Tooltip={{component "tooltip" text="Hello World"}}>
   Hover over me
 </Tooltipper>
 ```
 
-You can replace the `@tooltip` argument with any custom component of your choosing.
+You can replace the `@Tooltip` argument with any custom component of your choosing.
 
 ## Positioning
 
@@ -65,7 +65,7 @@ Setting the `@position` argument will compute `top` and `left` CSS properties to
 ```handlebars
 <Tooltipper
   @position="bottom left"
-  @tooltip={{component "my-tooltip"}}
+  @Tooltip={{component "my-tooltip"}}
 />
 ```
 
@@ -74,14 +74,14 @@ Setting the `@position` argument will compute `top` and `left` CSS properties to
 By omitting the `@position` argument, the tooltip will be positioned automatically around the outside edge of the tooltipper. For example: If the tooltipper is at the very bottom of the viewport, then the tooltip will be displayed _above_ it - so as to remain visible.
 
 ```handlebars
-<Tooltipper @tooltip={{component "my-tooltip"}} />
+<Tooltipper @Tooltip={{component "my-tooltip"}} />
 ```
 
 You can control whether the reference element is considered to be in a given position by changing how the viewport is [split into sections](https://github.com/zestia/position-utils#zestiaposition-utils).
 
 ```handlebars
 <Tooltipper
-  @tooltip={{component "my-tooltip"}}
+  @Tooltip={{component "my-tooltip"}}
   @rows={{2}}
   @columns={{3}}
 />
@@ -107,7 +107,7 @@ By default, tooltips will display when hovering over a tooltipper. But tooltippe
 
 ```handlebars
 <Tooltipper
-  @tooltip={{component "my-tooltip"}}
+  @Tooltip={{component "my-tooltip"}}
   @showDelay={{500}}
   @hideDelay={{0}}
 />
@@ -121,7 +121,7 @@ The tooltipper yields an API to control the tooltip.
 
 ```handlebars
 <Tooltipper
-  @tooltip={{component "my-tooltip"}}
+  @Tooltip={{component "my-tooltip"}}
   @mouseEvents={{false}}
   as |tooltipper|
 >
@@ -150,7 +150,7 @@ By default the tooltipper _is_ the reference element that the causes the tooltip
 
 ```handlebars
 <Tooltipper
-  @tooltip={{component "my-tooltip"}}
+  @Tooltip={{component "my-tooltip"}}
   @referenceElement={{this.element.parentNode}}
 />
 ```
@@ -173,7 +173,7 @@ The following example waits for 300ms before showing a tooltip, during this time
 <Tooltipper
   @showDelay={{300}}
   @onLoad={{fn this.loadUser @id}}
-  @tooltip={{component "user-tooltip"}}
+  @Tooltip={{component "user-tooltip"}}
 />
 ```
 

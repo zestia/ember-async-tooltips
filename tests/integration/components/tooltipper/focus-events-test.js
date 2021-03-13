@@ -10,7 +10,7 @@ module('tooltipper', function (hooks) {
     assert.expect(1);
 
     await render(hbs`
-      <Tooltipper @tooltip={{component "tooltip"}}>
+      <Tooltipper @Tooltip={{component "tooltip"}}>
         <a href="#">Focus me</a>
       </Tooltipper>
     `);

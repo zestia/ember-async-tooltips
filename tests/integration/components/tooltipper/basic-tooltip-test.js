@@ -12,7 +12,7 @@ module('tooltipper', function (hooks) {
     await render(hbs`
       <Tooltipper
         @showTooltip={{true}}
-        @tooltip={{component "tooltip" text="Hello World"}}
+        @Tooltip={{component "tooltip" text="Hello World"}}
       />
     `);
 
@@ -27,7 +27,7 @@ module('tooltipper', function (hooks) {
     await render(hbs`
       <Tooltipper
         @showTooltip={{true}}
-        @tooltip={{component "greeting-tooltip"}}
+        @Tooltip={{component "greeting-tooltip"}}
       />
     `);
 
@@ -42,7 +42,7 @@ module('tooltipper', function (hooks) {
     await render(hbs`
       <Tooltipper
         @showTooltip={{this.showTooltip}}
-        @tooltip={{component "tooltip" text="Hello World"}}
+        @Tooltip={{component "tooltip" text="Hello World"}}
       />
     `);
 

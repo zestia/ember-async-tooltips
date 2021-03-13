@@ -9,7 +9,7 @@ module('tooltipper', function (hooks) {
   test('whitespace', async function (assert) {
     assert.expect(1);
 
-    await render(hbs`<Tooltipper @tooltip={{component "tooltip"}} />`);
+    await render(hbs`<Tooltipper @Tooltip={{component "tooltip"}} />`);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 

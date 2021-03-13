@@ -12,7 +12,7 @@ module('tooltipper', function (hooks) {
 
     await render(hbs`
       <Tooltipper
-        @tooltip={{component "tooltip"}}
+        @Tooltip={{component "tooltip"}}
         @referenceElement={{this.referenceElement}}
       />
 

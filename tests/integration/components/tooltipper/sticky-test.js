@@ -10,10 +10,10 @@ module('tooltipper', function (hooks) {
     assert.expect(4);
 
     await render(hbs`
-      <Tooltipper @showDelay={{1000}} @stickyID="A" @tooltip={{component "tooltip" text="foo"}} />
-      <Tooltipper @showDelay={{1000}} @stickyID="A" @tooltip={{component "tooltip" text="bar"}} />
-      <Tooltipper @showDelay={{1000}} @stickyID="B" @tooltip={{component "tooltip" text="baz"}} />
-      <Tooltipper @showDelay={{1000}} @stickyID="B" @tooltip={{component "tooltip" text="qux"}} />
+      <Tooltipper @showDelay={{1000}} @stickyID="A" @Tooltip={{component "tooltip" text="foo"}} />
+      <Tooltipper @showDelay={{1000}} @stickyID="A" @Tooltip={{component "tooltip" text="bar"}} />
+      <Tooltipper @showDelay={{1000}} @stickyID="B" @Tooltip={{component "tooltip" text="baz"}} />
+      <Tooltipper @showDelay={{1000}} @stickyID="B" @Tooltip={{component "tooltip" text="qux"}} />
     `);
 
     this.startTimer();

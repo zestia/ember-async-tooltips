@@ -21,7 +21,7 @@ module('tooltipper', function (hooks) {
 
     await render(hbs`
       <Tooltipper
-        @tooltip={{component "my-tooltip" text=this.text}}
+        @Tooltip={{component "my-tooltip" text=this.text}}
         @position="bottom center"
       >
         Hover over me

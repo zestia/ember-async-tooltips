@@ -25,7 +25,7 @@ module('tooltipper', function (hooks) {
       <Tooltipper
         @showTooltip={{this.showTooltip}}
         @onLoad={{this.loadTooltip}}
-        @tooltip={{component "greeting-tooltip"}}
+        @Tooltip={{component "greeting-tooltip"}}
       />
     `);
 
