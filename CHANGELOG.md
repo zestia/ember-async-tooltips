@@ -1,5 +1,10 @@
 # Changelog
 
+## 14.0.1
+
+- Upgrade dependencies
+- Add Embroider support
+
 ## 14.0.0
 
 - Upgrade dependencies
