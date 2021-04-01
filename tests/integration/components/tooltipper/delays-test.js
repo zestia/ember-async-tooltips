@@ -96,10 +96,9 @@ module('tooltipper', function (hooks) {
 
     const time = this.timeTaken();
 
-    assert.ok(
-      time >= 100 && time <= 120,
-      `approximately 100ms hide delay (${time}ms)`
-    );
+    const delayed = time >= 100 && time <= 120;
+
+    assert.ok(delayed, `approximately 100ms hide delay (${time}ms)`);
 
     assert
       .dom('.tooltip')
