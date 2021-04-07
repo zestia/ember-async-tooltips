@@ -11,13 +11,15 @@ module('tooltipper', function (hooks) {
   test('changing content', async function (assert) {
     assert.expect(2);
 
-    const template = hbs`
+    const myTooltip = hbs`
       <div class="my-tooltip" {{did-update @tooltip.reposition @text}} ...attributes>
         {{@text}}
       </div>
     `;
 
-    this.MyTooltip = setComponentTemplate(template, Component);
+    const MyTooltip = class extends Component {};
+
+    this.MyTooltip = setComponentTemplate(myTooltip, MyTooltip);
 
     this.text = 'Hello';
 
