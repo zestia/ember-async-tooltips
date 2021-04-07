@@ -1,7 +1,9 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
+import Component from '@glimmer/component';
 import { render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { setComponentTemplate } from '@ember/component';
 
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
@@ -15,13 +17,13 @@ module('tooltipper', function (hooks) {
       </div>
     `;
 
-    this.owner.register('template:components/my-tooltip', template);
+    this.MyTooltip = setComponentTemplate(template, Component);
 
     this.text = 'Hello';
 
     await render(hbs`
       <Tooltipper
-        @Tooltip={{component "my-tooltip" text=this.text}}
+        @Tooltip={{component (ensure-safe-component this.MyTooltip) text=this.text}}
         @position="bottom center"
       >
         Hover over me
@@ -46,7 +48,7 @@ module('tooltipper', function (hooks) {
     // the tooltip, rather than doing it automatically,
     // because although that would be the ideal, it would
     // require a DOM Mutation Observer and that's a lot of
-    // observering, for a situation that rarely occurs.
+    // observing, for a situation that rarely occurs.
     //
     // await triggerEvent('.tooltipper', 'mouseleave');
     // await waitForAnimation('.tooltip');

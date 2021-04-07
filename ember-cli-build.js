@@ -19,16 +19,6 @@ module.exports = function (defaults) {
       {
         package: 'qunit'
       }
-    ],
-    packageRules: [
-      {
-        package: 'dummy',
-        components: {
-          '{{my-tooltip}}': {
-            safeToIgnore: true
-          }
-        }
-      }
     ]
   });
 };
