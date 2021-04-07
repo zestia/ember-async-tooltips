@@ -253,7 +253,9 @@ export default class TooltipperComponent extends Component {
   }
 
   _loadOnce() {
-    if (this.isLoaded || this.isLoading) {
+    if (this.isLoading) {
+      return new Promise(() => {});
+    } else if (this.isLoaded) {
       return this._load(this.loadedData);
     } else {
       return this._load(this._invokeAction('onLoad'));
