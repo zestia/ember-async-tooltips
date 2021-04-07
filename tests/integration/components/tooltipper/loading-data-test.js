@@ -9,7 +9,7 @@ module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
   test('loading data', async function (assert) {
-    assert.expect(4);
+    assert.expect(5);
 
     this.showTooltip = true;
 
@@ -53,5 +53,9 @@ module('tooltipper', function (hooks) {
       ['load tooltip'],
       'load is not called on a subsequent render of the tooltip'
     );
+
+    assert
+      .dom('.tooltip')
+      .containsText('Hello World', 'the loaded data is still present');
   });
 });

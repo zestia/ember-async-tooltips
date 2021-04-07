@@ -5,7 +5,7 @@ import { next, later } from '@ember/runloop';
 import { Promise } from 'rsvp';
 
 export default class DelaysController extends Controller {
-  @tracked showDelay = 250;
+  @tracked showDelay = 500;
   @tracked hideDelay = 0;
   @tracked loadDelay = 1000;
   @tracked isLoading = false;
@@ -18,6 +18,10 @@ export default class DelaysController extends Controller {
     } else {
       return this.showDelay;
     }
+  }
+
+  get expectedDelay() {
+    return this.showDelay + this.loadDelay;
   }
 
   get useAdjustedLoadDelay() {

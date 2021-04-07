@@ -243,10 +243,10 @@ export default class TooltipperComponent extends Component {
     remove('mouseleave', this.handleMouseLeaveReferenceElement);
   }
 
-  _load() {
+  _load(data) {
     this._loadStarted();
 
-    return resolve(this._invokeAction('onLoad'))
+    return resolve(data)
       .then(this._loadedData.bind(this))
       .catch(this._loadError.bind(this))
       .finally(this._loadFinished.bind(this));
@@ -254,9 +254,9 @@ export default class TooltipperComponent extends Component {
 
   _loadOnce() {
     if (this.isLoaded || this.isLoading) {
-      return resolve();
+      return this._load(this.loadedData);
     } else {
-      return this._load();
+      return this._load(this._invokeAction('onLoad'));
     }
   }
 

@@ -4,6 +4,7 @@
 
 - Upgrade dependencies
 - Add Embroider support
+- Fix incorrect `showDelay` on subsequent mouseovers, after async data was loaded.
 
 ## 14.0.0
 

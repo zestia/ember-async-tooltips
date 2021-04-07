@@ -41,11 +41,11 @@ module('tooltipper', function (hooks) {
   });
 
   test('load delay more than show delay', async function (assert) {
-    assert.expect(3);
+    assert.expect(4);
 
     this.load = () => {
       return new Promise((resolve) => {
-        later(resolve, 200);
+        later(resolve, 1000);
       });
     };
 
@@ -69,9 +69,24 @@ module('tooltipper', function (hooks) {
       .dom('.tooltip')
       .exists('renders tooltip when mousing over the toolipper');
 
+    const afterLoadTime = this.timeTaken() >= 1000;
+
     assert.ok(
-      this.timeTaken() >= 200,
-      'will render after the load time, because it exceeded the show delay'
+      afterLoadTime,
+      'will render after the *load* time, because it exceeded the show delay'
+    );
+
+    this.startTimer();
+
+    await triggerEvent('.tooltipper', 'mouseenter');
+
+    this.stopTimer();
+
+    const afterShowTime = this.timeTaken() >= 100 && this.timeTaken() <= 200;
+
+    assert.ok(
+      afterShowTime,
+      'will render after the *show* time, because it was already loaded'
     );
   });
 

@@ -43,7 +43,10 @@
   </p>
   <p>
     <span>
-      Total delay time {{this.totalDelay}}ms
+      {{!prettier-ignore}}
+      Total delay time
+      <span class="strike">{{this.expectedDelay}}ms</span>
+      {{this.totalDelay}}ms
     </span>
   </p>
 </form>
