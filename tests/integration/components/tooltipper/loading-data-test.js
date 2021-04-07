@@ -1,12 +1,6 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import {
-  render,
-  settled,
-  triggerEvent,
-  getSettledState,
-  waitFor
-} from '@ember/test-helpers';
+import { render, settled, triggerEvent, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import waitForAnimation from '../../../helpers/wait-for-animation';
 import { defer } from 'rsvp';
