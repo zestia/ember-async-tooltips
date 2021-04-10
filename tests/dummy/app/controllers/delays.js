@@ -7,7 +7,7 @@ import { Promise } from 'rsvp';
 export default class DelaysController extends Controller {
   @tracked showDelay = 500;
   @tracked hideDelay = 0;
-  @tracked loadDelay = 1000;
+  @tracked loadDelay = 500;
   @tracked isLoading = false;
   @tracked isLoaded = false;
   @tracked showTooltipper = true;
