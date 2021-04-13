@@ -210,16 +210,6 @@ export default class TooltipperComponent extends Component {
     this._positionTooltip();
   }
 
-  _invokeAction(name, ...args) {
-    const action = this.args[name];
-
-    if (typeof action !== 'function') {
-      return;
-    }
-
-    return action(...args);
-  }
-
   _maybeToggleViaArgument() {
     if (this.args.showTooltip === true) {
       this._showTooltip();
@@ -257,8 +247,10 @@ export default class TooltipperComponent extends Component {
       return new Promise(() => {});
     } else if (this.isLoaded) {
       return this._load(this.loadedData);
+    } else if (typeof this.args.onLoad === 'function') {
+      return this._load(this.args.onLoad());
     } else {
-      return this._load(this._invokeAction('onLoad'));
+      return resolve();
     }
   }
 
@@ -312,7 +304,7 @@ export default class TooltipperComponent extends Component {
     this._loadOnce()
       .then(() => this._renderTooltip())
       .then(() => this._waitForAnimation())
-      .then(() => this._invokeAction('onShowTooltip'));
+      .then(() => this.args.onShowTooltip?.());
   }
 
   _renderTooltip() {
@@ -344,7 +336,7 @@ export default class TooltipperComponent extends Component {
     this.shouldShowTooltip = false;
 
     return this._waitForAnimation().then(() => {
-      this._invokeAction('onHideTooltip');
+      this.args.onHideTooltip?.();
       this._attemptDestroyTooltip();
     });
   }
