@@ -1,9 +1,11 @@
 # @zestia/ember-async-tooltips
 
 <p>
-  <a href="http://travis-ci.org/zestia/ember-async-tooltips">
-    <img src="https://travis-ci.org/zestia/ember-async-tooltips.svg?branch=master">
+  <!--
+  <a href="https://github.com/zestia/ember-async-tooltips/actions/workflows/ci.yml">
+    <img src="https://github.com/zestia/ember-async-tooltips/actions/workflows/ci.yml/badge.svg">
   </a>
+  -->
 
   <a href="https://david-dm.org/zestia/ember-async-tooltips#badge-embed">
     <img src="https://david-dm.org/zestia/ember-async-tooltips.svg">
