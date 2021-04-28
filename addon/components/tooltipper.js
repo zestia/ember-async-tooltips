@@ -9,6 +9,7 @@ import { inject } from '@ember/service';
 import { Promise, defer, resolve } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import autoPosition from '../utils/auto-position';
+import { modifier } from 'ember-modifier';
 
 export default class TooltipperComponent extends Component {
   @inject('tooltip') tooltipService;
@@ -155,20 +156,10 @@ export default class TooltipperComponent extends Component {
     this._teardownReferenceElement();
   }
 
-  @action
-  handleInsertTooltip(element) {
-    this.tooltipElement = element;
-    this.tooltipService.add(this);
-    this._positionTooltip();
-    this.willInsertTooltip.resolve();
-  }
-
-  @action
-  handleDestroyTooltip() {
-    this.tooltipElement = null;
-    this.isOverTooltipElement = false;
-    this.tooltipService.remove(this);
-  }
+  tooltipLifecycle = modifier((element) => {
+    this._handleInsertTooltip(element);
+    return () => this._handleDestroyTooltip();
+  });
 
   @action
   handleMouseEnterTooltip() {
@@ -208,6 +199,19 @@ export default class TooltipperComponent extends Component {
   @action
   repositionTooltip() {
     this._positionTooltip();
+  }
+
+  _handleInsertTooltip(element) {
+    this.tooltipElement = element;
+    this.tooltipService.add(this);
+    this._positionTooltip();
+    this.willInsertTooltip.resolve();
+  }
+
+  _handleDestroyTooltip() {
+    this.tooltipElement = null;
+    this.isOverTooltipElement = false;
+    this.tooltipService.remove(this);
   }
 
   _maybeToggleViaArgument() {

@@ -36,8 +36,7 @@
       role="tooltip"
       aria-live="polite"
       @tooltip={{this.tooltipAPI}}
-      {{did-insert this.handleInsertTooltip}}
-      {{will-destroy this.handleDestroyTooltip}}
+      {{this.tooltipLifecycle}}
       {{on "mouseenter" this.handleMouseEnterTooltip}}
       {{on "mouseleave" this.handleMouseLeaveTooltip}}
     />
