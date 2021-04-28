@@ -31,6 +31,22 @@ export default class TooltipperComponent extends Component {
   tooltipElement = null;
   tooltipperElement = null;
 
+  tooltipperLifecycle = modifier((element) => {
+    this._handleInsertTooltipper(element);
+    return () => this._handleDestroyTooltipper();
+  });
+
+  tooltipLifecycle = modifier((element) => {
+    this._handleInsertTooltip(element);
+    return () => this._handleDestroyTooltip();
+  });
+
+  handleUpdatedArguments = modifier(() => {
+    this._setupReferenceElement();
+    this._maybeToggleViaArgument();
+    this._positionTooltip();
+  });
+
   get id() {
     return guidFor(this).replace('ember', '');
   }
@@ -137,31 +153,6 @@ export default class TooltipperComponent extends Component {
   }
 
   @action
-  handleInsertTooltipper(element) {
-    this.tooltipperElement = element;
-    this._setupReferenceElement();
-    this._maybeToggleViaArgument();
-  }
-
-  @action
-  handleUpdatedArguments() {
-    this._setupReferenceElement();
-    this._maybeToggleViaArgument();
-    this._positionTooltip();
-  }
-
-  @action
-  handleDestroyTooltipper() {
-    this._cancelTimers();
-    this._teardownReferenceElement();
-  }
-
-  tooltipLifecycle = modifier((element) => {
-    this._handleInsertTooltip(element);
-    return () => this._handleDestroyTooltip();
-  });
-
-  @action
   handleMouseEnterTooltip() {
     this.isOverTooltipElement = true;
   }
@@ -199,6 +190,17 @@ export default class TooltipperComponent extends Component {
   @action
   repositionTooltip() {
     this._positionTooltip();
+  }
+
+  _handleInsertTooltipper(element) {
+    this.tooltipperElement = element;
+    this._setupReferenceElement();
+    this._maybeToggleViaArgument();
+  }
+
+  _handleDestroyTooltipper() {
+    this._cancelTimers();
+    this._teardownReferenceElement();
   }
 
   _handleInsertTooltip(element) {
