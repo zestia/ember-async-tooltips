@@ -9,6 +9,7 @@ import { inject } from '@ember/service';
 import { Promise, defer, resolve } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import autoPosition from '../utils/auto-position';
+import { modifier } from 'ember-modifier';
 
 export default class TooltipperComponent extends Component {
   @inject('tooltip') tooltipService;
@@ -29,6 +30,22 @@ export default class TooltipperComponent extends Component {
   referenceElement = null;
   tooltipElement = null;
   tooltipperElement = null;
+
+  tooltipperLifecycle = modifier((element) => {
+    this._handleInsertTooltipper(element);
+    return () => this._handleDestroyTooltipper();
+  });
+
+  tooltipLifecycle = modifier((element) => {
+    this._handleInsertTooltip(element);
+    return () => this._handleDestroyTooltip();
+  });
+
+  handleUpdatedArguments = modifier(() => {
+    this._setupReferenceElement();
+    this._maybeToggleViaArgument();
+    this._positionTooltip();
+  });
 
   get id() {
     return guidFor(this).replace('ember', '');
@@ -136,41 +153,6 @@ export default class TooltipperComponent extends Component {
   }
 
   @action
-  handleInsertTooltipper(element) {
-    this.tooltipperElement = element;
-    this._setupReferenceElement();
-    this._maybeToggleViaArgument();
-  }
-
-  @action
-  handleUpdatedArguments() {
-    this._setupReferenceElement();
-    this._maybeToggleViaArgument();
-    this._positionTooltip();
-  }
-
-  @action
-  handleDestroyTooltipper() {
-    this._cancelTimers();
-    this._teardownReferenceElement();
-  }
-
-  @action
-  handleInsertTooltip(element) {
-    this.tooltipElement = element;
-    this.tooltipService.add(this);
-    this._positionTooltip();
-    this.willInsertTooltip.resolve();
-  }
-
-  @action
-  handleDestroyTooltip() {
-    this.tooltipElement = null;
-    this.isOverTooltipElement = false;
-    this.tooltipService.remove(this);
-  }
-
-  @action
   handleMouseEnterTooltip() {
     this.isOverTooltipElement = true;
   }
@@ -208,6 +190,30 @@ export default class TooltipperComponent extends Component {
   @action
   repositionTooltip() {
     this._positionTooltip();
+  }
+
+  _handleInsertTooltipper(element) {
+    this.tooltipperElement = element;
+    this._setupReferenceElement();
+    this._maybeToggleViaArgument();
+  }
+
+  _handleDestroyTooltipper() {
+    this._cancelTimers();
+    this._teardownReferenceElement();
+  }
+
+  _handleInsertTooltip(element) {
+    this.tooltipElement = element;
+    this.tooltipService.add(this);
+    this._positionTooltip();
+    this.willInsertTooltip.resolve();
+  }
+
+  _handleDestroyTooltip() {
+    this.tooltipElement = null;
+    this.isOverTooltipElement = false;
+    this.tooltipService.remove(this);
   }
 
   _maybeToggleViaArgument() {
