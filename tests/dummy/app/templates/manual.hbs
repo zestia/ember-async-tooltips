@@ -5,7 +5,8 @@
 <Tooltipper
   @Tooltip={{component "tooltip" text="Hello World"}}
   @position="bottom left"
-  @mouseEvents={{false}} as |tooltipper|
+  @mouseEvents={{false}}
+  as |tooltipper|
 >
   <button type="button" {{on "click" tooltipper.toggleTooltip}}>
     Click me
@@ -19,7 +20,8 @@
 <Tooltipper
   @Tooltip={{component "tooltip" text="Hello World"}}
   @position="bottom left"
-  @mouseEvents={{false}} as |tooltipper|
+  @mouseEvents={{false}}
+  as |tooltipper|
 >
   <input
     type="text"
