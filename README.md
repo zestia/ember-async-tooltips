@@ -79,7 +79,7 @@ By omitting the `@position` argument, the tooltip will be positioned automatical
 <Tooltipper @Tooltip={{component "my-tooltip"}} />
 ```
 
-You can control whether the reference element is considered to be in a given position by changing how the viewport is [split into sections](https://github.com/zestia/position-utils#zestiaposition-utils).
+You can control whether the reference element is considered to be in a given position by changing how the viewport is [split into a grid](https://github.com/zestia/position-utils#zestiaposition-utils).
 
 ```handlebars
 <Tooltipper
