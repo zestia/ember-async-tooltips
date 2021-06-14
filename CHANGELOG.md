@@ -1,5 +1,9 @@
 # Changelog
 
+## 14.1.2
+
+- Upgrade positioning library to handle cases where `offsetParent` is null (usually when an element is hidden)
+
 ## 14.1.1
 
 - Upgrade dependencies

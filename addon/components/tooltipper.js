@@ -395,6 +395,13 @@ export default class TooltipperComponent extends Component {
     return getPosition(referenceElement, window, this.columns, this.rows);
   }
 
+  _computeCoords() {
+    // Compute the coordinates required to place the tooltip element near the
+    // reference element.
+
+    return getCoords(...arguments);
+  }
+
   _decideTooltipPosition(referencePosition) {
     // The position of the tooltip should be the one provided, or one chosen
     // automatically, based upon the position of the reference element.
@@ -407,18 +414,6 @@ export default class TooltipperComponent extends Component {
       return position(referencePosition);
     } else {
       return autoPosition(referencePosition);
-    }
-  }
-
-  _computeCoords() {
-    try {
-      // Compute the coordinates required to place the tooltip element near the
-      // reference element.
-      return getCoords(...arguments);
-    } catch (error) {
-      // The reference element was probably hidden, therefore it's was
-      // not possible to compute coordinates.
-      return [0, 0];
     }
   }
 
