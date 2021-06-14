@@ -388,18 +388,18 @@ export default class TooltipperComponent extends Component {
     this.referenceElement = null;
   }
 
-  _getReferencePosition(referenceElement) {
+  _getReferencePosition() {
     // Get the rough position of the reference element in the viewport by
     // splitting it in to a grid of rows and columns and choosing a square.
 
-    return getPosition(referenceElement, window, this.columns, this.rows);
+    return getPosition(this.referenceElement, window, this.columns, this.rows);
   }
 
-  _computeCoords() {
-    // Compute the coordinates required to place the tooltip element near the
-    // reference element.
+  _computeCoords(position) {
+    // Compute the coordinates required to place the tooltip element at the
+    // given position near the reference element.
 
-    return getCoords(...arguments);
+    return getCoords(position, this.tooltipElement, this.referenceElement);
   }
 
   _decideTooltipPosition(referencePosition) {
@@ -418,21 +418,15 @@ export default class TooltipperComponent extends Component {
   }
 
   _positionTooltip() {
-    const { tooltipElement, referenceElement } = this;
-
-    if (!tooltipElement || !referenceElement) {
+    if (!this.tooltipElement || !this.referenceElement) {
       return;
     }
 
-    const referencePosition = this._getReferencePosition(referenceElement);
+    const referencePosition = this._getReferencePosition();
 
     const tooltipPosition = this._decideTooltipPosition(referencePosition);
 
-    this.tooltipCoords = this._computeCoords(
-      tooltipPosition,
-      tooltipElement,
-      referenceElement
-    );
+    this.tooltipCoords = this._computeCoords(tooltipPosition);
 
     this.tooltipPosition = tooltipPosition;
   }
