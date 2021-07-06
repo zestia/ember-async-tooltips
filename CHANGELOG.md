@@ -1,5 +1,9 @@
 # Changelog
 
+## 14.1.3 (not yet published)
+
+- Simplify waiting for animation
+
 ## 14.1.2
 
 - Upgrade positioning library to handle cases where `offsetParent` is null (usually when an element is hidden)

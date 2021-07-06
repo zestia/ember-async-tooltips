@@ -6,7 +6,7 @@ import { guidFor } from '@ember/object/internals';
 import { dasherize } from '@ember/string';
 import { htmlSafe } from '@ember/template';
 import { inject } from '@ember/service';
-import { Promise, defer, resolve } from 'rsvp';
+import { defer, resolve } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import autoPosition from '../utils/auto-position';
 
@@ -29,6 +29,8 @@ export default class TooltipperComponent extends Component {
   referenceElement = null;
   tooltipElement = null;
   tooltipperElement = null;
+  willAnimateTooltip = null;
+  willInsertTooltip = null;
 
   get id() {
     return guidFor(this).replace('ember', '');
@@ -184,6 +186,11 @@ export default class TooltipperComponent extends Component {
     }
 
     this._scheduleHideTooltip();
+  }
+
+  @action
+  handleAnimatedTooltip() {
+    this.willAnimateTooltip.resolve();
   }
 
   @action
@@ -347,11 +354,8 @@ export default class TooltipperComponent extends Component {
   }
 
   _waitForAnimation() {
-    return new Promise((resolve) => {
-      this.tooltipElement.addEventListener('animationend', resolve, {
-        once: true
-      });
-    });
+    this.willAnimateTooltip = defer();
+    return this.willAnimateTooltip.promise;
   }
 
   _attemptDestroyTooltip() {
