@@ -2,13 +2,26 @@
   "name": "@zestia/ember-async-tooltips",
   "version": "14.1.2",
   "description": "Render tooltips asyncronously on hover",
+  "keywords": [
+    "ember-addon",
+    "tooltips",
+    "mouseover",
+    "hover",
+    "async"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zestia/ember-async-tooltips.git"
+  },
+  "license": "MIT",
+  "author": "Zestia",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
   "scripts": {
     "build": "ember build --environment=production",
-    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel 'lint:!(fix)'",
+    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel \"lint:!(fix)\"",
     "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
     "lint:css": "stylelint '**/*.{css,scss}'",
     "lint:css:fix": "stylelint '**/*.{css,scss}' --fix",
@@ -24,26 +37,28 @@
     "release": "release-it",
     "deploy": "ember build --environment production && ember github-pages:commit --message \"Deploy gh-pages from commit $(git rev-parse HEAD)\" && git push origin gh-pages:gh-pages"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/zestia/ember-async-tooltips.git"
+  "dependencies": {
+    "@ember/render-modifiers": "^1.0.2",
+    "@embroider/util": "^0.41.0",
+    "@zestia/position-utils": "^6.0.8",
+    "ember-auto-import": "^2.0.1",
+    "ember-cli-babel": "^7.26.6",
+    "ember-cli-htmlbars": "^5.7.1",
+    "ember-modifier": "^2.1.2"
   },
-  "engines": {
-    "node": "10.* || >= 12"
-  },
-  "author": "Zestia",
-  "license": "MIT",
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.2.6",
     "@embroider/test-setup": "^0.41.0",
+    "@glimmer/component": "^1.0.4",
+    "@glimmer/tracking": "^1.0.4",
     "@zestia/eslint-config": "^4.0.4",
     "@zestia/prettier-config": "^1.0.5",
     "@zestia/stylelint-config": "^2.0.47",
     "@zestia/template-lint-config": "^4.1.2",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
-    "ember-cli": "^3.26.1",
+    "ember-cli": "^3.27.0",
     "ember-cli-dependency-checker": "^3.2.0",
     "ember-cli-github-pages": "^0.2.2",
     "ember-cli-inject-live-reload": "^2.0.2",
@@ -54,6 +69,7 @@
     "ember-in-element-polyfill": "^1.0.1",
     "ember-load-initializers": "^2.1.2",
     "ember-maybe-import-regenerator": "^0.1.6",
+    "ember-page-title": "^6.2.2",
     "ember-qunit": "^5.1.4",
     "ember-resolver": "^8.0.2",
     "ember-source": "^3.27.5",
@@ -71,34 +87,14 @@
     "stylelint": "^13.13.1",
     "webpack": "^5.38.1"
   },
-  "dependencies": {
-    "@ember/render-modifiers": "^1.0.2",
-    "@embroider/util": "^0.41.0",
-    "@glimmer/component": "^1.0.4",
-    "@glimmer/tracking": "^1.0.4",
-    "@zestia/position-utils": "^6.0.8",
-    "ember-auto-import": "^2.0.1",
-    "ember-cli-babel": "^7.26.6",
-    "ember-cli-htmlbars": "^5.7.1",
-    "ember-modifier": "^2.1.2"
+  "engines": {
+    "node": "10.* || >= 12"
   },
-  "keywords": [
-    "ember-addon",
-    "tooltips",
-    "mouseover",
-    "hover",
-    "async"
-  ],
   "ember": {
     "edition": "octane"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
     "demoURL": "https://zestia.github.io/ember-async-tooltips"
-  },
-  "bugs": {
-    "url": "https://github.com/zestia/ember-async-tooltips/issues"
-  },
-  "homepage": "https://github.com/zestia/ember-async-tooltips",
-  "configPath": "tests/dummy/config"
+  }
 }
