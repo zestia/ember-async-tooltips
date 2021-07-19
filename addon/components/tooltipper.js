@@ -189,8 +189,10 @@ export default class TooltipperComponent extends Component {
   }
 
   @action
-  handleAnimatedTooltip() {
-    this.willAnimateTooltip.resolve();
+  handleAnimatedTooltip(event) {
+    if (event.target === this.tooltipElement) {
+      this.willAnimateTooltip.resolve();
+    }
   }
 
   @action
