@@ -1,5 +1,17 @@
 # Changelog
 
+## 14.1.3 (not yet published)
+
+- Fix waiting for animation: Make sure the animation happens on the actual tooltip element, and not a child.
+
+## 14.1.2
+
+- Upgrade positioning library to handle cases where `offsetParent` is null (usually when an element is hidden)
+
+## 14.1.1
+
+- Upgrade dependencies
+
 ## 14.1.0
 
 - Upgrade dependencies

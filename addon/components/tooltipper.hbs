@@ -1,6 +1,5 @@
 <div
-  class={{
-    concat
+  class={{concat
     "tooltipper"
     (if this.isLoading " tooltipper--loading")
     (if this.shouldRenderTooltip " tooltipper--has-tooltip")
@@ -21,8 +20,7 @@
   {{! template-lint-disable no-inline-styles }}
   {{~#if this.shouldRenderTooltip~}}
     <@Tooltip
-      class={{
-        concat
+      class={{concat
         "tooltip"
         " tooltip--"
         (if this.shouldShowTooltip "showing" "hiding")
@@ -37,6 +35,7 @@
       {{this.tooltipLifecycle}}
       {{on "mouseenter" this.handleMouseEnterTooltip}}
       {{on "mouseleave" this.handleMouseLeaveTooltip}}
+      {{on "animationend" this.handleAnimatedTooltip}}
     />
   {{~/if~}}
 </div>

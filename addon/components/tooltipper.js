@@ -6,7 +6,7 @@ import { guidFor } from '@ember/object/internals';
 import { dasherize } from '@ember/string';
 import { htmlSafe } from '@ember/template';
 import { inject } from '@ember/service';
-import { Promise, defer, resolve } from 'rsvp';
+import { defer, resolve } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import autoPosition from '../utils/auto-position';
 import { modifier } from 'ember-modifier';
@@ -30,6 +30,8 @@ export default class TooltipperComponent extends Component {
   referenceElement = null;
   tooltipElement = null;
   tooltipperElement = null;
+  willAnimateTooltip = null;
+  willInsertTooltip = null;
 
   tooltipperLifecycle = modifier((element) => {
     this._handleInsertTooltipper(element);
@@ -166,6 +168,13 @@ export default class TooltipperComponent extends Component {
     }
 
     this._scheduleHideTooltip();
+  }
+
+  @action
+  handleAnimatedTooltip(event) {
+    if (event.target === this.tooltipElement) {
+      this.willAnimateTooltip.resolve();
+    }
   }
 
   @action
@@ -353,11 +362,8 @@ export default class TooltipperComponent extends Component {
   }
 
   _waitForAnimation() {
-    return new Promise((resolve) => {
-      this.tooltipElement.addEventListener('animationend', resolve, {
-        once: true
-      });
-    });
+    this.willAnimateTooltip = defer();
+    return this.willAnimateTooltip.promise;
   }
 
   _attemptDestroyTooltip() {
@@ -394,11 +400,18 @@ export default class TooltipperComponent extends Component {
     this.referenceElement = null;
   }
 
-  _getReferencePosition(referenceElement) {
+  _getReferencePosition() {
     // Get the rough position of the reference element in the viewport by
     // splitting it in to a grid of rows and columns and choosing a square.
 
-    return getPosition(referenceElement, window, this.columns, this.rows);
+    return getPosition(this.referenceElement, window, this.columns, this.rows);
+  }
+
+  _computeCoords(position) {
+    // Compute the coordinates required to place the tooltip element at the
+    // given position near the reference element.
+
+    return getCoords(position, this.tooltipElement, this.referenceElement);
   }
 
   _decideTooltipPosition(referencePosition) {
@@ -416,34 +429,16 @@ export default class TooltipperComponent extends Component {
     }
   }
 
-  _computeCoords() {
-    try {
-      // Compute the coordinates required to place the tooltip element near the
-      // reference element.
-      return getCoords(...arguments);
-    } catch (error) {
-      // The reference element was probably hidden, therefore it's was
-      // not possible to compute coordinates.
-      return [0, 0];
-    }
-  }
-
   _positionTooltip() {
-    const { tooltipElement, referenceElement } = this;
-
-    if (!tooltipElement || !referenceElement) {
+    if (!this.tooltipElement || !this.referenceElement) {
       return;
     }
 
-    const referencePosition = this._getReferencePosition(referenceElement);
+    const referencePosition = this._getReferencePosition();
 
     const tooltipPosition = this._decideTooltipPosition(referencePosition);
 
-    this.tooltipCoords = this._computeCoords(
-      tooltipPosition,
-      tooltipElement,
-      referenceElement
-    );
+    this.tooltipCoords = this._computeCoords(tooltipPosition);
 
     this.tooltipPosition = tooltipPosition;
   }
