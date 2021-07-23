@@ -2,7 +2,7 @@
 
 ## 14.1.3 (not yet published)
 
-- Fix waiting for animation: Make sure the animation happens on the actual tooltip element, and not a child.
+- Simplify waiting for animation
 
 ## 14.1.2
 
