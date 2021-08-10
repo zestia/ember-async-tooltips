@@ -132,7 +132,6 @@ The tooltipper yields an API to control the tooltip.
   {{!tooltipper.showTooltip}}
   {{!tooltipper.toggleTooltip}}
   {{!tooltipper.repositionTooltip}}
-  {{!tooltipper.cancelShowTooltip}}
 </Tooltipper>
 ```
 

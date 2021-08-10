@@ -1,20 +1,25 @@
-import { module, test } from 'qunit';
+import { module, skip } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render, triggerEvent } from '@ember/test-helpers';
+import { render, triggerEvent, settled } from '@ember/test-helpers';
 import { later } from '@ember/runloop';
 import hbs from 'htmlbars-inline-precompile';
 
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
-  test('cancelling showing', async function (assert) {
+  skip('cancelling showing', async function (assert) {
     assert.expect(1);
 
+    this.mouseEvents = true;
+
     await render(hbs`
-      <Tooltipper @Tooltip={{component "tooltip"}} @showDelay={{1000}} as |tooltipper|>
-        <button {{on "click" tooltipper.cancelShowTooltip}}>
-          Hover over me
-        </button>
+      <Tooltipper
+        @Tooltip={{component "tooltip"}}
+        @showDelay={{1000}}
+        @mouseEvents={{this.mouseEvents}}
+        as |tooltipper|
+      >
+        Hover over me
       </Tooltipper>
     `);
 
@@ -22,8 +27,12 @@ module('tooltipper', function (hooks) {
 
     await new Promise((resolve) => later(resolve), 500);
 
-    await triggerEvent('button', 'click');
+    this.set('mouseEvents', false);
 
-    assert.dom('.tooltip').doesNotExist('can cancel showing a tooltip');
+    await settled();
+
+    assert
+      .dom('.tooltip')
+      .doesNotExist('tooltips scheduled to show, will be cancelled');
   });
 });

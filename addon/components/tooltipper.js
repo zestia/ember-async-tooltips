@@ -110,8 +110,7 @@ export default class TooltipperComponent extends Component {
       showTooltip: this.showTooltip,
       hideTooltip: this.hideTooltip,
       toggleTooltip: this.toggleTooltip,
-      repositionTooltip: this.repositionTooltip,
-      cancelShowTooltip: this.cancelShowTooltip
+      repositionTooltip: this.repositionTooltip
     };
   }
 
@@ -218,11 +217,6 @@ export default class TooltipperComponent extends Component {
     this._positionTooltip();
   }
 
-  @action
-  cancelShowTooltip() {
-    cancel(this.showTimer);
-  }
-
   _maybeToggleViaArgument() {
     if (this.args.showTooltip === true) {
       this._showTooltip();
@@ -296,7 +290,12 @@ export default class TooltipperComponent extends Component {
   }
 
   _attemptShowTooltip() {
-    if (this.isDestroyed || !this.needsToShow || this.hasChild) {
+    if (
+      this.isDestroyed ||
+      !this.shouldUseMouseEvents ||
+      !this.needsToShow ||
+      this.hasChild
+    ) {
       return;
     }
 
