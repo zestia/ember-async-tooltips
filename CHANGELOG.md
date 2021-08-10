@@ -3,6 +3,7 @@
 ## 14.1.3 (not yet published)
 
 - Simplify waiting for animation
+- Prevents tooltips from eventually showing if `@mouseEvents` have since been turned off.
 
 ## 14.1.2
 

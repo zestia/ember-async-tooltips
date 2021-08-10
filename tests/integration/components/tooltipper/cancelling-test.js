@@ -1,4 +1,4 @@
-import { module, skip } from 'qunit';
+import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
 import { render, triggerEvent, settled } from '@ember/test-helpers';
 import { later } from '@ember/runloop';
@@ -7,7 +7,7 @@ import hbs from 'htmlbars-inline-precompile';
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
-  skip('cancelling showing', async function (assert) {
+  test('cancelling showing', async function (assert) {
     assert.expect(1);
 
     this.mouseEvents = true;
