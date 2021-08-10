@@ -110,7 +110,8 @@ export default class TooltipperComponent extends Component {
       showTooltip: this.showTooltip,
       hideTooltip: this.hideTooltip,
       toggleTooltip: this.toggleTooltip,
-      repositionTooltip: this.repositionTooltip
+      repositionTooltip: this.repositionTooltip,
+      cancelShowTooltip: this.cancelShowTooltip
     };
   }
 
@@ -215,6 +216,11 @@ export default class TooltipperComponent extends Component {
   @action
   repositionTooltip() {
     this._positionTooltip();
+  }
+
+  @action
+  cancelShowTooltip() {
+    cancel(this.showTimer);
   }
 
   _maybeToggleViaArgument() {

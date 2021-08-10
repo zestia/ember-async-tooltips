@@ -3,6 +3,7 @@
 ## 14.1.3 (not yet published)
 
 - Simplify waiting for animation
+- Add `tooltipper.cancelShowTooltip`
 
 ## 14.1.2
 
