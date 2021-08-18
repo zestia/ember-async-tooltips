@@ -1,5 +1,9 @@
 # Changelog
 
+## 14.2.0
+
+- Add sticky tooltips
+
 ## 14.1.3
 
 - Simplify waiting for animation
