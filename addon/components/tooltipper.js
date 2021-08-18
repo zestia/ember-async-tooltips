@@ -74,7 +74,7 @@ export default class TooltipperComponent extends Component {
   }
 
   get stickyTimeout() {
-    return this.args.stickyTimeout ?? this.showDelay * 2;
+    return this.args.stickyTimeout ?? this.showDelay;
   }
 
   get showRemainder() {
@@ -376,6 +376,7 @@ export default class TooltipperComponent extends Component {
   _cancelTimers() {
     cancel(this.showTimer);
     cancel(this.hideTimer);
+    cancel(this.stickyTimer);
   }
 
   _scheduleResetSticky() {
