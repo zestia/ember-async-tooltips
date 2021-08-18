@@ -21,12 +21,15 @@ export default class TooltipperComponent extends Component {
   @tracked tooltipCoords = [0, 0];
   @tracked tooltipPosition = null;
 
+  hideTimer = null;
   isLoaded = false;
   isOverReferenceElement = false;
   isOverTooltipElement = false;
   loadEndTime = 0;
   loadStartTime = 0;
   referenceElement = null;
+  showTimer = null;
+  stickyTimer = null;
   tooltipElement = null;
   tooltipperElement = null;
   willAnimateTooltip = null;
@@ -70,15 +73,19 @@ export default class TooltipperComponent extends Component {
     return this.args.showDelay ?? 0;
   }
 
-  get showRemainder() {
-    if (this.loadDelay > this.showDelay) {
-      return 0;
-    } else {
-      return this.showDelay - this.loadDelay;
-    }
+  get stickyDelay() {
+    return this.args.stickyDelay ?? this.showDelay * 2;
   }
 
-  get needsToShow() {
+  get showRemainder() {
+    if (this.loadDelay > this.showDelay || this.isSticky) {
+      return 0;
+    }
+
+    return this.showDelay - this.loadDelay;
+  }
+
+  get needsToShowTooltip() {
     return this.isOverReferenceElement || this.isOverTooltipElement;
   }
 
@@ -102,6 +109,19 @@ export default class TooltipperComponent extends Component {
 
   get hasChild() {
     return !!this.renderedChild;
+  }
+
+  get stickyTooltippers() {
+    return this.tooltipService.tooltippers.filter((tooltipper) => {
+      return (
+        tooltipper.args.stickyID === this.args.stickyID &&
+        tooltipper.needsToShowTooltip
+      );
+    });
+  }
+
+  get isSticky() {
+    return this.tooltipService.sticky[this.args.stickyID] === true;
   }
 
   get tooltipperAPI() {
@@ -293,7 +313,7 @@ export default class TooltipperComponent extends Component {
     if (
       this.isDestroyed ||
       !this.shouldUseMouseEvents ||
-      !this.needsToShow ||
+      !this.needsToShowTooltip ||
       this.hasChild
     ) {
       return;
@@ -316,7 +336,7 @@ export default class TooltipperComponent extends Component {
     this._loadOnce()
       .then(() => this._renderTooltip())
       .then(() => this._waitForAnimation())
-      .then(() => this.args.onShowTooltip?.());
+      .then(() => this._handleShow());
   }
 
   _renderTooltip() {
@@ -333,7 +353,7 @@ export default class TooltipperComponent extends Component {
   }
 
   _attemptHideTooltip() {
-    if (this.needsToShow) {
+    if (this.needsToShowTooltip) {
       return;
     }
 
@@ -348,7 +368,7 @@ export default class TooltipperComponent extends Component {
     this.shouldShowTooltip = false;
 
     return this._waitForAnimation().then(() => {
-      this.args.onHideTooltip?.();
+      this._handleHide();
       this._attemptDestroyTooltip();
     });
   }
@@ -356,6 +376,34 @@ export default class TooltipperComponent extends Component {
   _cancelTimers() {
     cancel(this.showTimer);
     cancel(this.hideTimer);
+  }
+
+  _scheduleResetSticky() {
+    this.stickyTimer = later(this, '_attemptResetSticky', this.stickyDelay);
+  }
+
+  _attemptResetSticky() {
+    if (this.stickyTooltippers.length) {
+      return;
+    }
+
+    this.tooltipService.setSticky(this, false);
+  }
+
+  _handleShow() {
+    if (this.args.stickyID) {
+      this.tooltipService.setSticky(this, true);
+    }
+
+    this.args.onShowTooltip?.();
+  }
+
+  _handleHide() {
+    if (this.args.stickyID) {
+      this._scheduleResetSticky();
+    }
+
+    this.args.onHideTooltip?.();
   }
 
   _waitForAnimation() {

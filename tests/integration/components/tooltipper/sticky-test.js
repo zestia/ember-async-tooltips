@@ -1,12 +1,13 @@
-import { module, skip } from 'qunit';
+import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
 import { render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import waitForAnimation from '../../../helpers/wait-for-animation';
 
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
-  skip('stickyness', async function (assert) {
+  test('stickyness', async function (assert) {
     assert.expect(4);
 
     await render(hbs`
@@ -19,6 +20,7 @@ module('tooltipper', function (hooks) {
     this.startTimer();
 
     await triggerEvent('.tooltipper:nth-child(1)', 'mouseenter');
+    await waitForAnimation('.tooltipper:nth-child(1) .tooltip');
 
     this.stopTimer();
 
@@ -27,6 +29,7 @@ module('tooltipper', function (hooks) {
     this.startTimer();
 
     await triggerEvent('.tooltipper:nth-child(2)', 'mouseenter');
+    await waitForAnimation('.tooltipper:nth-child(2) .tooltip');
 
     this.stopTimer();
 
@@ -38,6 +41,7 @@ module('tooltipper', function (hooks) {
     this.startTimer();
 
     await triggerEvent('.tooltipper:nth-child(3)', 'mouseenter');
+    await waitForAnimation('.tooltipper:nth-child(3) .tooltip');
 
     this.stopTimer();
 
@@ -49,6 +53,7 @@ module('tooltipper', function (hooks) {
     this.startTimer();
 
     await triggerEvent('.tooltipper:nth-child(4)', 'mouseenter');
+    await waitForAnimation('.tooltipper:nth-child(4) .tooltip');
 
     this.stopTimer();
 

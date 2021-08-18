@@ -3,6 +3,7 @@ import { all } from 'rsvp';
 
 export default class TooltipService extends Service {
   tooltippers = [];
+  sticky = {};
 
   add(tooltipper) {
     this.tooltippers.push(tooltipper);
@@ -19,5 +20,9 @@ export default class TooltipService extends Service {
         return promises;
       }, [])
     );
+  }
+
+  setSticky(tooltipper, value) {
+    this.sticky[tooltipper.args.stickyID] = value;
   }
 }
