@@ -73,8 +73,8 @@ export default class TooltipperComponent extends Component {
     return this.args.showDelay ?? 0;
   }
 
-  get stickyDelay() {
-    return this.args.stickyDelay ?? this.showDelay * 2;
+  get stickyTimeout() {
+    return this.args.stickyTimeout ?? this.showDelay * 2;
   }
 
   get showRemainder() {
@@ -379,7 +379,7 @@ export default class TooltipperComponent extends Component {
   }
 
   _scheduleResetSticky() {
-    this.stickyTimer = later(this, '_attemptResetSticky', this.stickyDelay);
+    this.stickyTimer = later(this, '_attemptResetSticky', this.stickyTimeout);
   }
 
   _attemptResetSticky() {

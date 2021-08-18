@@ -117,6 +117,21 @@ By default, tooltips will display when hovering over a tooltipper. But tooltippe
 
 You can also use the actions `@onShowTooltip` and `@onHideTooltip`. These hooks include load time, render time, and animation time.
 
+
+## Sticky tooltips
+
+You can group tooltips together, so that once one from a group is showing, then others in that group will show instantly - ignoring their show delay.
+
+```handlebars
+<Tooltipper
+  @Tooltip={{component "my-tooltip"}}
+  @showDelay={{1000}}
+  @stickyID="some-group"
+/>
+```
+
+The normal showing/hiding behaviour will resume after a period of time. This can be optionally be customised with `@stickyTimeout`.
+
 ## API
 
 The tooltipper yields an API to control the tooltip.
