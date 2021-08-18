@@ -34,7 +34,7 @@ module('tooltipper', function (hooks) {
     this.stopTimer();
 
     assert.ok(
-      this.timeTaken() < 100,
+      this.timeTaken() < 1000,
       'show delay is ignored when sticky identifier matches'
     );
 
@@ -58,7 +58,7 @@ module('tooltipper', function (hooks) {
     this.stopTimer();
 
     assert.ok(
-      this.timeTaken() < 100,
+      this.timeTaken() < 1000,
       'show delay is ignored when sticky identifier matches'
     );
   });
