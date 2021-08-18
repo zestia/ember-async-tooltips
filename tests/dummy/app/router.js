@@ -17,4 +17,5 @@ Router.map(function () {
   this.route('auto-position');
   this.route('in-element');
   this.route('interactive-content');
+  this.route('sticky');
 });
