@@ -74,7 +74,7 @@ export default class TooltipperComponent extends Component {
   }
 
   get stickyTimeout() {
-    return this.args.stickyTimeout ?? this.showDelay;
+    return this.args.stickyTimeout ?? this.showDelay / 2;
   }
 
   get showRemainder() {
