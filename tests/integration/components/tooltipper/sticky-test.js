@@ -8,28 +8,49 @@ module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
   test('stickyness', async function (assert) {
-    assert.expect(4);
+    assert.expect(7);
 
     await render(hbs`
-      <Tooltipper @Tooltip={{component "tooltip" text="foo"}} @showDelay={{1000}} @stickyID="A" />
-      <Tooltipper @Tooltip={{component "tooltip" text="bar"}} @showDelay={{1000}} @stickyID="A" />
-      <Tooltipper @Tooltip={{component "tooltip" text="baz"}} @showDelay={{1000}} @stickyID="B" />
-      <Tooltipper @Tooltip={{component "tooltip" text="qux"}} @showDelay={{1000}} @stickyID="B" />
+      <Tooltipper class="a1" @Tooltip={{component "tooltip" text="A1"}} @showDelay={{1000}} @stickyID="A" />
+      <Tooltipper class="a2" @Tooltip={{component "tooltip" text="A2"}} @showDelay={{1000}} @stickyID="A" />
+      <Tooltipper class="b1" @Tooltip={{component "tooltip" text="B1"}} @showDelay={{1000}} @stickyID="B" />
+      <Tooltipper class="b2" @Tooltip={{component "tooltip" text="B2"}} @showDelay={{1000}} @stickyID="B" />
     `);
+
+    // A1
 
     this.startTimer();
 
-    await triggerEvent('.tooltipper:nth-child(1)', 'mouseenter');
-    await waitForAnimation('.tooltipper:nth-child(1) .tooltip');
+    await triggerEvent('.a1', 'mouseenter');
+
+    assert
+      .dom('.a1 .tooltip')
+      .doesNotHaveClass(
+        'tooltip--sticky',
+        'initial tooltip is not sticky, yet'
+      );
+
+    await waitForAnimation('.a1 .tooltip');
 
     this.stopTimer();
 
     assert.ok(this.timeTaken() >= 1000, 'initial show delay acknowledged');
+    assert
+      .dom('.a1 .tooltip')
+      .hasClass(
+        'tooltip--sticky',
+        'tooltip is considered sticky after animating in'
+      );
+
+    // A2
 
     this.startTimer();
 
-    await triggerEvent('.tooltipper:nth-child(2)', 'mouseenter');
-    await waitForAnimation('.tooltipper:nth-child(2) .tooltip');
+    await triggerEvent('.a2', 'mouseenter');
+    await waitForAnimation('.a2 .tooltip');
+    assert
+      .dom('.a2 .tooltip')
+      .hasClass('tooltip--sticky', 'subsequent tooltip is considered sticky');
 
     this.stopTimer();
 
@@ -38,22 +59,26 @@ module('tooltipper', function (hooks) {
       'show delay is ignored when sticky identifier matches'
     );
 
+    // B1
+
     this.startTimer();
 
-    await triggerEvent('.tooltipper:nth-child(3)', 'mouseenter');
-    await waitForAnimation('.tooltipper:nth-child(3) .tooltip');
+    await triggerEvent('.b1', 'mouseenter');
+    await waitForAnimation('.b1 .tooltip');
 
     this.stopTimer();
 
     assert.ok(
       this.timeTaken() >= 1000,
-      'show delay is acknowledged if sticky identifier differs'
+      'show delay is acknowledged when sticky identifier differs'
     );
+
+    // B2
 
     this.startTimer();
 
-    await triggerEvent('.tooltipper:nth-child(4)', 'mouseenter');
-    await waitForAnimation('.tooltipper:nth-child(4) .tooltip');
+    await triggerEvent('.b2', 'mouseenter');
+    await waitForAnimation('.b2 .tooltip');
 
     this.stopTimer();
 

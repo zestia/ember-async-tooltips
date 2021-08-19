@@ -4,6 +4,10 @@
 
 - Release changes from 14.1.4-beta.0
 
+## 14.1.4-beta.1
+
+- Add `tooltip--sticky` class
+
 ## 14.1.4-beta.0
 
 - Add sticky tooltips

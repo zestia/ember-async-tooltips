@@ -1,9 +1,10 @@
 import Service from '@ember/service';
 import { all } from 'rsvp';
+import { tracked } from '@glimmer/tracking';
 
 export default class TooltipService extends Service {
   tooltippers = [];
-  sticky = {};
+  @tracked sticky = {};
 
   add(tooltipper) {
     this.tooltippers.push(tooltipper);
@@ -24,5 +25,6 @@ export default class TooltipService extends Service {
 
   setSticky(tooltipper, value) {
     this.sticky[tooltipper.args.stickyID] = value;
+    this.sticky = { ...this.sticky };
   }
 }

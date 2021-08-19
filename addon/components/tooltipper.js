@@ -114,8 +114,7 @@ export default class TooltipperComponent extends Component {
   get stickyTooltippers() {
     return this.tooltipService.tooltippers.filter((tooltipper) => {
       return (
-        tooltipper.args.stickyID === this.args.stickyID &&
-        tooltipper.needsToShowTooltip
+        tooltipper.args.stickyID === this.args.stickyID && tooltipper.isSticky
       );
     });
   }

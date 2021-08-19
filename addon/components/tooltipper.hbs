@@ -28,6 +28,7 @@
         (if this.shouldShowTooltip "showing" "hiding")
         " tooltip--"
         (if this.tooltipPosition this.tooltipPositionClass "unpositioned")
+        (if this.isSticky " tooltip--sticky")
       }}
       id={{concat "tooltip-" this.id}}
       style={{this.tooltipStyle}}
