@@ -2,6 +2,10 @@
 
 ## 14.2.0
 
+- Release changes from 14.1.4-beta.0
+
+## 14.1.4-beta.0
+
 - Add sticky tooltips
 
 ## 14.1.3
