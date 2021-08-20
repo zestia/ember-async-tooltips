@@ -123,6 +123,14 @@ export default class TooltipperComponent extends Component {
     return this.tooltipService.sticky[this.args.stickyID] === true;
   }
 
+  get tooltipAnimates() {
+    return (
+      getComputedStyle(this.tooltipElement).getPropertyValue(
+        'animation-name'
+      ) !== 'none'
+    );
+  }
+
   get tooltipperAPI() {
     return {
       isLoading: this.isLoading,
@@ -407,8 +415,12 @@ export default class TooltipperComponent extends Component {
   }
 
   _waitForAnimation() {
-    this.willAnimateTooltip = defer();
-    return this.willAnimateTooltip.promise;
+    if (this.tooltipAnimates) {
+      this.willAnimateTooltip = defer();
+      return this.willAnimateTooltip.promise;
+    } else {
+      return resolve();
+    }
   }
 
   _attemptDestroyTooltip() {

@@ -199,9 +199,9 @@ The following example waits for 300ms before showing a tooltip, during this time
 Hello {{@tooltip.data.user.name}}
 ```
 
-## Prerequisites
+## Animating
 
-1\. It is assumed that all your tooltips will animate in and out. For this reason you are _required_ to add the following styles as a minimum.
+If your tooltips need to animate in and out, you can utilise these class names:
 
 ```css
 .tooltip--showing {
@@ -212,3 +212,10 @@ Hello {{@tooltip.data.user.name}}
   animation: your-hide-animation;
 }
 ```
+
+You may want to alter animations for sticky tooltips:
+
+```css
+.tooltip--sticky {
+  animation-name: none
+}
