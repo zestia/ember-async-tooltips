@@ -54,10 +54,6 @@ module('tooltipper', function (hooks) {
     // because although that would be the ideal, it would
     // require a DOM Mutation Observer and that's a lot of
     // observing, for a situation that rarely occurs.
-    //
-    // await triggerEvent('.tooltipper', 'mouseleave');
-    // await waitForAnimation('.tooltip');
-    // await triggerEvent('.tooltipper', 'mouseenter');
 
     this.set('text', this.text.repeat(10));
 

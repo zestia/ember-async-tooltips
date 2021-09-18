@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render, settled } from '@ember/test-helpers';
+import { render, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import waitForAnimation from '../../../helpers/wait-for-animation';
 
@@ -24,7 +24,7 @@ module('tooltipper', function (hooks) {
 
     this.set('showTooltip', true);
 
-    await settled();
+    await waitFor('.tooltip--showing');
 
     assert.verifySteps([], 'does not fire actions when rendering');
 
@@ -37,7 +37,7 @@ module('tooltipper', function (hooks) {
 
     this.set('showTooltip', false);
 
-    await settled();
+    await waitFor('.tooltip--hiding');
 
     assert.verifySteps([], 'does not fire actions when rendering');
 

@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('tooltipper', function (hooks) {
@@ -54,6 +54,8 @@ module('tooltipper', function (hooks) {
       );
 
     this.set('showTooltip', true);
+
+    await settled();
 
     assert
       .dom('.tooltipper')

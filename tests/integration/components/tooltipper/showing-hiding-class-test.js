@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('tooltipper', function (hooks) {
@@ -44,5 +44,7 @@ module('tooltipper', function (hooks) {
         'tooltip--hiding',
         'is hiding class is added to trigger animations'
       );
+
+    await settled();
   });
 });

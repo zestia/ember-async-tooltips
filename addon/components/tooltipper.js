@@ -8,7 +8,11 @@ import { htmlSafe } from '@ember/template';
 import { inject } from '@ember/service';
 import { defer, resolve } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
+import { buildWaiter } from '@ember/test-waiters';
 import autoPosition from '../utils/auto-position';
+
+const show = buildWaiter('@zestia/ember-async-tooltips:show');
+const hide = buildWaiter('@zestia/ember-async-tooltips:hide');
 
 export default class TooltipperComponent extends Component {
   @inject('tooltip') tooltipService;
@@ -342,7 +346,7 @@ export default class TooltipperComponent extends Component {
 
     this._loadOnce()
       .then(() => this._renderTooltip())
-      .then(() => this._waitForAnimation())
+      .then(() => this._waitForAnimation(show))
       .then(() => this._handleShow());
   }
 
@@ -374,10 +378,9 @@ export default class TooltipperComponent extends Component {
 
     this.shouldShowTooltip = false;
 
-    return this._waitForAnimation().then(() => {
-      this._handleHide();
-      this._attemptDestroyTooltip();
-    });
+    return this._waitForAnimation(hide)
+      .then(() => this._handleHide())
+      .then(() => this._attemptDestroyTooltip());
   }
 
   _cancelTimers() {
@@ -414,10 +417,11 @@ export default class TooltipperComponent extends Component {
     this.args.onHideTooltip?.();
   }
 
-  _waitForAnimation() {
+  _waitForAnimation(waiter) {
     if (this.tooltipAnimates) {
       this.willAnimateTooltip = defer();
-      return this.willAnimateTooltip.promise;
+      const token = waiter.beginAsync();
+      return this.willAnimateTooltip.promise.then(() => waiter.endAsync(token));
     } else {
       return resolve();
     }

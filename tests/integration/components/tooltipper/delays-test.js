@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render, triggerEvent } from '@ember/test-helpers';
+import { render, waitFor, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { later } from '@ember/runloop';
 import waitForAnimation from '../../../helpers/wait-for-animation';
@@ -103,7 +103,9 @@ module('tooltipper', function (hooks) {
 
     this.startTimer();
 
-    await triggerEvent('.tooltipper', 'mouseleave');
+    triggerEvent('.tooltipper', 'mouseleave');
+
+    await waitFor('.tooltip--hiding');
 
     assert.dom('.tooltip').exists('tooltip still present on mouseleave');
 

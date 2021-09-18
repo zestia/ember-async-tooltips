@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
 import { render, triggerEvent, click } from '@ember/test-helpers';
-import waitForAnimation from '../../../helpers/wait-for-animation';
 import hbs from 'htmlbars-inline-precompile';
 
 module('tooltipper', function (hooks) {
@@ -80,8 +79,6 @@ module('tooltipper', function (hooks) {
     assert.dom('.tooltip').exists('preconditon: tooltip present');
 
     await triggerEvent('.tooltip', 'mouseleave');
-
-    await waitForAnimation('.tooltip');
 
     assert.dom('.tooltip').exists('still present because mouse events are off');
   });
