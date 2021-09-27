@@ -107,7 +107,9 @@ module('tooltipper', function (hooks) {
 
     await waitFor('.tooltip--hiding');
 
-    assert.dom('.tooltip').exists('tooltip still present on mouseleave');
+    assert
+      .dom('.tooltip')
+      .exists('tooltip still present whilst hide delay is taking place');
 
     this.stopTimer();
 
