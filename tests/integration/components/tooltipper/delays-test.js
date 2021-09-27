@@ -121,7 +121,7 @@ module('tooltipper', function (hooks) {
       .dom('.tooltip')
       .exists('tooltip still present whilst hide animation is taking place');
 
-    await waitForAnimation('.tooltip');
+    await waitForAnimation('.tooltip', 'fade-out');
 
     assert.dom('.tooltip').doesNotExist('hidden after animation');
   });

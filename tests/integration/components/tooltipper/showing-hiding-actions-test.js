@@ -28,7 +28,7 @@ module('tooltipper', function (hooks) {
 
     assert.verifySteps([], 'does not fire actions when rendering');
 
-    await waitForAnimation('.tooltip');
+    await waitForAnimation('.tooltip', 'fade-in');
 
     assert.verifySteps(
       ['tooltip shown'],
@@ -41,7 +41,7 @@ module('tooltipper', function (hooks) {
 
     assert.verifySteps([], 'does not fire actions when rendering');
 
-    await waitForAnimation('.tooltip');
+    await waitForAnimation('.tooltip', 'fade-out');
 
     assert.verifySteps(
       ['tooltip hidden'],
