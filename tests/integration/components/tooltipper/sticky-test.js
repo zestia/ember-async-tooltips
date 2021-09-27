@@ -1,8 +1,7 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render, triggerEvent } from '@ember/test-helpers';
+import { render, waitFor, settled, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import waitForAnimation from '../../../helpers/wait-for-animation';
 
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
@@ -21,7 +20,9 @@ module('tooltipper', function (hooks) {
 
     this.startTimer();
 
-    await triggerEvent('.a1', 'mouseenter');
+    triggerEvent('.a1', 'mouseenter');
+
+    await waitFor('.a1 .tooltip');
 
     assert
       .dom('.a1 .tooltip')
@@ -30,11 +31,12 @@ module('tooltipper', function (hooks) {
         'initial tooltip is not sticky, yet'
       );
 
-    await waitForAnimation('.a1 .tooltip');
-
     this.stopTimer();
 
     assert.ok(this.timeTaken() >= 1000, 'initial show delay acknowledged');
+
+    await settled();
+
     assert
       .dom('.a1 .tooltip')
       .hasClass(
@@ -47,7 +49,7 @@ module('tooltipper', function (hooks) {
     this.startTimer();
 
     await triggerEvent('.a2', 'mouseenter');
-    await waitForAnimation('.a2 .tooltip');
+
     assert
       .dom('.a2 .tooltip')
       .hasClass('tooltip--sticky', 'subsequent tooltip is considered sticky');
@@ -64,7 +66,6 @@ module('tooltipper', function (hooks) {
     this.startTimer();
 
     await triggerEvent('.b1', 'mouseenter');
-    await waitForAnimation('.b1 .tooltip');
 
     this.stopTimer();
 
@@ -78,7 +79,6 @@ module('tooltipper', function (hooks) {
     this.startTimer();
 
     await triggerEvent('.b2', 'mouseenter');
-    await waitForAnimation('.b2 .tooltip');
 
     this.stopTimer();
 

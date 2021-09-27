@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render, triggerEvent, settled } from '@ember/test-helpers';
-import waitForAnimation from '../../../helpers/wait-for-animation';
+import { render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('tooltipper', function (hooks) {
@@ -43,9 +42,6 @@ module('tooltipper', function (hooks) {
 
     await triggerEvent('.outer-tooltipper', 'mouseenter');
     await triggerEvent('.inner-tooltipper', 'mouseenter');
-
-    await waitForAnimation('.inner-tooltipper > .tooltip');
-    await settled();
 
     assert.dom('.tooltip').exists({ count: 1 }).hasText('Inner');
   });

@@ -1,5 +1,9 @@
 # Changelog
 
+## 14.3.0
+
+- The tooltip uses a test waiter, and so is aware of animations.
+
 ## 14.2.0
 
 - Release changes from 14.1.4-beta.0

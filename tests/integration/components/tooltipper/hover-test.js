@@ -2,7 +2,6 @@ import { module, test, skip } from 'qunit';
 import setupTooltipperTest from './setup';
 import { render, settled, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import waitForAnimation from '../../../helpers/wait-for-animation';
 
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
@@ -32,8 +31,6 @@ module('tooltipper', function (hooks) {
 
     await triggerEvent('.tooltipper', 'mouseleave');
 
-    await waitForAnimation('.tooltip');
-
     assert
       .dom('.tooltip')
       .doesNotExist('tooltip hidden when mouse leaves tooltipper');
@@ -49,8 +46,6 @@ module('tooltipper', function (hooks) {
     assert.dom('.tooltip').exists('precondition: tooltip present');
 
     await triggerEvent('.tooltip', 'mouseleave');
-
-    await waitForAnimation('.tooltip');
 
     assert
       .dom('.tooltip')
@@ -95,8 +90,8 @@ module('tooltipper', function (hooks) {
   skip('mouse enter / destroying', async function (assert) {
     assert.expect(0);
 
-    // This originally tested when happened if mousing over
-    // a tooltipper if it was being destroyed
+    // This originally tested what happened if mousing over
+    // a tooltipper whilst it was being destroyed
     // This not longer seems to be a testable scenario
 
     this.showTooltipper = true;
@@ -140,10 +135,6 @@ module('tooltipper', function (hooks) {
 
     await triggerEvent('.tooltip', 'mouseleave', { bubbles: false });
 
-    await waitForAnimation('.tooltip');
-
-    await settled();
-
     assert
       .dom('.tooltip')
       .exists('mouse still over tooltipper, so tooltip should be present');
@@ -159,10 +150,6 @@ module('tooltipper', function (hooks) {
     await triggerEvent('.tooltip', 'mouseenter');
 
     await triggerEvent('.tooltipper', 'mouseleave', { bubbles: false });
-
-    await waitForAnimation('.tooltip');
-
-    await settled();
 
     assert
       .dom('.tooltip')

@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
 import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import waitForAnimation from '../../../helpers/wait-for-animation';
 import { defer } from 'rsvp';
 
 module('tooltipper', function (hooks) {
@@ -38,11 +37,13 @@ module('tooltipper', function (hooks) {
 
     this.set('showTooltip', false);
 
-    await waitForAnimation('.tooltip');
     await settled();
 
     this.set('loadTooltip', () => deferred2.promise);
+
     this.set('showTooltip', true);
+
+    await settled();
 
     deferred2.resolve({ greeting: 'Loaded OK' });
 

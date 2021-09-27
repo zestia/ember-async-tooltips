@@ -8,6 +8,7 @@ import { htmlSafe } from '@ember/template';
 import { inject } from '@ember/service';
 import { defer, resolve } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
+import { waitForPromise } from '@ember/test-waiters';
 import autoPosition from '../utils/auto-position';
 
 export default class TooltipperComponent extends Component {
@@ -217,7 +218,12 @@ export default class TooltipperComponent extends Component {
 
   @action
   handleAnimatedTooltip() {
+    if (!this.willAnimateTooltip) {
+      return;
+    }
+
     this.willAnimateTooltip.resolve();
+    this.willAnimateTooltip = null;
   }
 
   @action
@@ -374,10 +380,9 @@ export default class TooltipperComponent extends Component {
 
     this.shouldShowTooltip = false;
 
-    return this._waitForAnimation().then(() => {
-      this._handleHide();
-      this._attemptDestroyTooltip();
-    });
+    return this._waitForAnimation()
+      .then(() => this._handleHide())
+      .then(() => this._attemptDestroyTooltip());
   }
 
   _cancelTimers() {
@@ -417,7 +422,7 @@ export default class TooltipperComponent extends Component {
   _waitForAnimation() {
     if (this.tooltipAnimates) {
       this.willAnimateTooltip = defer();
-      return this.willAnimateTooltip.promise;
+      return waitForPromise(this.willAnimateTooltip.promise);
     } else {
       return resolve();
     }
