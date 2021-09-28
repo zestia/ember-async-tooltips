@@ -1,5 +1,9 @@
 # Changelog
 
+## 14.2.1
+
+- Add debug label to test waiter
+
 ## 14.2.0
 
 - Release changes from 14.1.4-beta.0
