@@ -41,6 +41,7 @@
     "@ember/render-modifiers": "^1.0.2",
     "@ember/test-waiters": "^3.0.0",
     "@embroider/util": "^0.43.5",
+    "@zestia/animation-utils": "^1.0.0",
     "@zestia/position-utils": "^6.0.8",
     "ember-auto-import": "^1.11.2",
     "ember-cli-babel": "^7.26.6",

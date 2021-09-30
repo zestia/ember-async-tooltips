@@ -8,7 +8,8 @@ import { htmlSafe } from '@ember/template';
 import { inject } from '@ember/service';
 import { defer, resolve } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
-import { waitForPromise } from '@ember/test-waiters';
+import { waitFor } from '@ember/test-waiters';
+import { waitForAnimation } from '@zestia/animation-utils';
 import autoPosition from '../utils/auto-position';
 
 export default class TooltipperComponent extends Component {
@@ -33,7 +34,6 @@ export default class TooltipperComponent extends Component {
   stickyTimer = null;
   tooltipElement = null;
   tooltipperElement = null;
-  willAnimateTooltip = null;
   willInsertTooltip = null;
 
   get id() {
@@ -348,7 +348,7 @@ export default class TooltipperComponent extends Component {
 
     this._loadOnce()
       .then(() => this._renderTooltip())
-      .then(() => this._waitForAnimation('show'))
+      .then(() => this._waitForAnimation())
       .then(() => this._handleShow());
   }
 
@@ -380,7 +380,7 @@ export default class TooltipperComponent extends Component {
 
     this.shouldShowTooltip = false;
 
-    return this._waitForAnimation('hide')
+    return this._waitForAnimation()
       .then(() => this._handleHide())
       .then(() => this._attemptDestroyTooltip());
   }
@@ -419,17 +419,13 @@ export default class TooltipperComponent extends Component {
     this.args.onHideTooltip?.();
   }
 
-  _waitForAnimation(label) {
-    if (this.tooltipAnimates) {
-      this.willAnimateTooltip = defer();
-
-      return waitForPromise(
-        this.willAnimateTooltip.promise,
-        `@zestia/ember-async-tooltips:${label}`
-      );
-    } else {
-      return resolve();
+  @waitFor
+  async _waitForAnimation() {
+    if (!this.tooltipAnimates) {
+      return;
     }
+
+    await waitForAnimation(this.tooltipElement);
   }
 
   _attemptDestroyTooltip() {

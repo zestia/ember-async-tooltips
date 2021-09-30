@@ -1,5 +1,9 @@
 # Changelog
 
+## 14.2.2
+
+- Utilise `@zestia/animation-utils`
+
 ## 14.2.1
 
 - Add debug label to test waiter
