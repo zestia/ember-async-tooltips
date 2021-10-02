@@ -1,9 +1,8 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render, waitFor, triggerEvent } from '@ember/test-helpers';
+import { render, waitFor, triggerEvent, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { later } from '@ember/runloop';
-import waitForAnimation from '../../../helpers/wait-for-animation';
 
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
@@ -123,7 +122,7 @@ module('tooltipper', function (hooks) {
       .dom('.tooltip')
       .exists('tooltip still present whilst hide animation is taking place');
 
-    await waitForAnimation('.tooltip', 'fade-out');
+    await settled();
 
     assert.dom('.tooltip').doesNotExist('hidden after animation');
   });

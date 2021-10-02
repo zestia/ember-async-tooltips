@@ -31,7 +31,7 @@ module('tooltipper', function (hooks) {
 
     find('.tooltip__child').classList.add('animate');
 
-    await waitForAnimation('.tooltip__child', 'move');
+    await waitForAnimation('.tooltip__child', { animationName: 'move' });
 
     assert.ok(true, 'ignores bubbling child animations');
   });

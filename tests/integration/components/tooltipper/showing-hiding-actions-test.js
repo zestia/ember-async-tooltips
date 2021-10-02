@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render, waitFor } from '@ember/test-helpers';
+import { render, waitFor, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import waitForAnimation from '../../../helpers/wait-for-animation';
 
@@ -28,7 +28,8 @@ module('tooltipper', function (hooks) {
 
     assert.verifySteps([], 'does not fire actions when rendering');
 
-    await waitForAnimation('.tooltip', 'fade-in');
+    await waitForAnimation('.tooltip', { animationName: 'fade-in' });
+    await settled();
 
     assert.verifySteps(
       ['tooltip shown'],
@@ -41,7 +42,8 @@ module('tooltipper', function (hooks) {
 
     assert.verifySteps([], 'does not fire actions when rendering');
 
-    await waitForAnimation('.tooltip', 'fade-out');
+    await waitForAnimation('.tooltip', { animationName: 'fade-out' });
+    await settled();
 
     assert.verifySteps(
       ['tooltip hidden'],
