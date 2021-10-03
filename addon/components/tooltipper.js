@@ -124,14 +124,6 @@ export default class TooltipperComponent extends Component {
     return this.tooltipService.sticky[this.args.stickyID] === true;
   }
 
-  get tooltipAnimates() {
-    return (
-      getComputedStyle(this.tooltipElement).getPropertyValue(
-        'animation-name'
-      ) !== 'none'
-    );
-  }
-
   get tooltipperAPI() {
     return {
       isLoading: this.isLoading,
@@ -411,10 +403,6 @@ export default class TooltipperComponent extends Component {
 
   @waitFor
   async _waitForAnimation() {
-    if (!this.tooltipAnimates) {
-      return;
-    }
-
     await waitForAnimation(this.tooltipElement);
   }
 
