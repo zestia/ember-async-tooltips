@@ -1,6 +1,6 @@
 # Changelog
 
-## 14.2.2
+## 14.3.0
 
 - Utilise `@zestia/animation-utils`
 - Upgrade dependencies
