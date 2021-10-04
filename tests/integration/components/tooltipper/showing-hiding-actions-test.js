@@ -8,7 +8,9 @@ module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
   test('showing / hiding actions', async function (assert) {
-    assert.expect(6);
+    assert.expect(8);
+
+    let animations;
 
     this.tooltipShown = () => assert.step('tooltip shown');
     this.tooltipHidden = () => assert.step('tooltip hidden');
@@ -28,7 +30,12 @@ module('tooltipper', function (hooks) {
 
     assert.verifySteps([], 'does not fire actions when rendering');
 
-    await waitForAnimation('.tooltip', { animationName: 'fade-in' });
+    animations = await waitForAnimation('.tooltip', {
+      animationName: 'fade-in'
+    });
+
+    assert.true(animations.length > 0, 'animates in');
+
     await settled();
 
     assert.verifySteps(
@@ -42,7 +49,12 @@ module('tooltipper', function (hooks) {
 
     assert.verifySteps([], 'does not fire actions when rendering');
 
-    await waitForAnimation('.tooltip', { animationName: 'fade-out' });
+    animations = await waitForAnimation('.tooltip', {
+      animationName: 'fade-out'
+    });
+
+    assert.true(animations.length > 0, 'animates out');
+
     await settled();
 
     assert.verifySteps(
