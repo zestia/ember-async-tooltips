@@ -11,6 +11,7 @@ import { tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';
 import { waitForAnimation } from '@zestia/animation-utils';
 import autoPosition from '../utils/auto-position';
+import { modifier } from 'ember-modifier';
 
 export default class TooltipperComponent extends Component {
   @inject('tooltip') tooltipService;
