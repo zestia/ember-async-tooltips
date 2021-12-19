@@ -12,6 +12,7 @@
     @position
     @referenceElement
     @mouseEvents
+    component=this
   }}
 >
   {{~yield this.tooltipperAPI~}}
@@ -32,7 +33,7 @@
       role="tooltip"
       aria-live="polite"
       @tooltip={{this.tooltipAPI}}
-      {{this.tooltipLifecycle}}
+      {{this.tooltipLifecycle component=this}}
       {{on "mouseenter" this.handleMouseEnterTooltip}}
       {{on "mouseleave" this.handleMouseLeaveTooltip}}
     />

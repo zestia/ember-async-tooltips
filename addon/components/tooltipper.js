@@ -11,7 +11,7 @@ import { tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';
 import { waitForAnimation } from '@zestia/animation-utils';
 import autoPosition from '../utils/auto-position';
-import { modifier } from 'ember-modifier';
+import Modifier from 'ember-modifier';
 
 export default class TooltipperComponent extends Component {
   @inject('tooltip') tooltipService;
@@ -36,6 +36,32 @@ export default class TooltipperComponent extends Component {
   tooltipElement = null;
   tooltipperElement = null;
   willInsertTooltip = null;
+
+  tooltipperLifecycle = class extends Modifier {
+    didInstall() {
+      this.args.named.component._handleInsertTooltipper(this.element);
+    }
+
+    didUpdateArguments() {
+      this.args.named.component._handleUpdatedArguments();
+    }
+
+    willDestroy() {
+      super.willDestroy(...arguments);
+      this.args.named.component._handleDestroyTooltipper();
+    }
+  };
+
+  tooltipLifecycle = class extends Modifier {
+    didInstall() {
+      this.args.named.component._handleInsertTooltip(this.element);
+    }
+
+    willDestroy() {
+      super.willDestroy(...arguments);
+      this.args.named.component._handleDestroyTooltip();
+    }
+  };
 
   get id() {
     return guidFor(this).replace('ember', '');
@@ -158,31 +184,6 @@ export default class TooltipperComponent extends Component {
     this._scheduleHideTooltip();
   }
 
-  tooltipperLifecycle = modifier((element) => {
-    this.tooltipperElement = element;
-    this._setupReferenceElement();
-    this._maybeToggleViaArgument();
-    this._positionTooltip();
-
-    return () => {
-      this._cancelTimers();
-      this._teardownReferenceElement();
-    };
-  });
-
-  tooltipLifecycle = modifier((element) => {
-    this.tooltipElement = element;
-    this.tooltipService.add(this);
-    this._positionTooltip();
-    this.willInsertTooltip.resolve();
-
-    return () => {
-      this.tooltipElement = null;
-      this.isOverTooltipElement = false;
-      this.tooltipService.remove(this);
-    };
-  });
-
   @action
   handleMouseEnterTooltip() {
     this.isOverTooltipElement = true;
@@ -221,6 +222,36 @@ export default class TooltipperComponent extends Component {
   @action
   repositionTooltip() {
     this._positionTooltip();
+  }
+
+  _handleInsertTooltipper(element) {
+    this.tooltipperElement = element;
+    this._setupReferenceElement();
+    this._maybeToggleViaArgument();
+  }
+
+  _handleUpdatedArguments() {
+    this._setupReferenceElement();
+    this._maybeToggleViaArgument();
+    this._positionTooltip();
+  }
+
+  _handleDestroyTooltipper() {
+    this._cancelTimers();
+    this._teardownReferenceElement();
+  }
+
+  _handleInsertTooltip(element) {
+    this.tooltipElement = element;
+    this.tooltipService.add(this);
+    this._positionTooltip();
+    this.willInsertTooltip.resolve();
+  }
+
+  _handleDestroyTooltip() {
+    this.tooltipElement = null;
+    this.isOverTooltipElement = false;
+    this.tooltipService.remove(this);
   }
 
   _maybeToggleViaArgument() {
