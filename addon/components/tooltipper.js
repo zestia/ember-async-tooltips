@@ -158,40 +158,30 @@ export default class TooltipperComponent extends Component {
     this._scheduleHideTooltip();
   }
 
-  @action
-  handleInsertTooltipper(element) {
+  tooltipperLifecycle = modifier((element) => {
     this.tooltipperElement = element;
     this._setupReferenceElement();
     this._maybeToggleViaArgument();
-  }
-
-  @action
-  handleUpdatedArguments() {
-    this._setupReferenceElement();
-    this._maybeToggleViaArgument();
     this._positionTooltip();
-  }
 
-  @action
-  handleDestroyTooltipper() {
-    this._cancelTimers();
-    this._teardownReferenceElement();
-  }
+    return () => {
+      this._cancelTimers();
+      this._teardownReferenceElement();
+    };
+  });
 
-  @action
-  handleInsertTooltip(element) {
+  tooltipLifecycle = modifier((element) => {
     this.tooltipElement = element;
     this.tooltipService.add(this);
     this._positionTooltip();
     this.willInsertTooltip.resolve();
-  }
 
-  @action
-  handleDestroyTooltip() {
-    this.tooltipElement = null;
-    this.isOverTooltipElement = false;
-    this.tooltipService.remove(this);
-  }
+    return () => {
+      this.tooltipElement = null;
+      this.isOverTooltipElement = false;
+      this.tooltipService.remove(this);
+    };
+  });
 
   @action
   handleMouseEnterTooltip() {
