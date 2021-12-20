@@ -7,12 +7,14 @@
   aria-describedby={{if this.shouldRenderTooltip (concat "tooltip-" this.id)}}
   id={{concat "tooltipper-" this.id}}
   ...attributes
-  {{this.tooltipperLifecycle
+  {{this.lifecycleHooks
     @showTooltip
     @position
     @referenceElement
     @mouseEvents
-    component=this
+    didInstall=this.handleInsertTooltipper
+    didUpdateArguments=this.handleUpdatedArguments
+    willDestroy=this.handleDestroyTooltipper
   }}
 >
   {{~yield this.tooltipperAPI~}}
@@ -33,7 +35,10 @@
       role="tooltip"
       aria-live="polite"
       @tooltip={{this.tooltipAPI}}
-      {{this.tooltipLifecycle component=this}}
+      {{this.lifecycleHooks
+        didInstall=this.handleInsertTooltip
+        willDestroy=this.handleDestroyTooltip
+      }}
       {{on "mouseenter" this.handleMouseEnterTooltip}}
       {{on "mouseleave" this.handleMouseLeaveTooltip}}
     />

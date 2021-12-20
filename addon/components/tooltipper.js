@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { action } from '@ember/object';
 import { cancel, later } from '@ember/runloop';
 import { getPosition, getCoords } from '@zestia/position-utils';
 import { guidFor } from '@ember/object/internals';
@@ -37,29 +36,18 @@ export default class TooltipperComponent extends Component {
   tooltipperElement = null;
   willInsertTooltip = null;
 
-  tooltipperLifecycle = class extends Modifier {
+  lifecycleHooks = class extends Modifier {
     didInstall() {
-      this.args.named.component._handleInsertTooltipper(this.element);
+      this.args.named.didInstall(this.element);
     }
 
     didUpdateArguments() {
-      this.args.named.component._handleUpdatedArguments();
+      this.args.named.didUpdateArguments?.();
     }
 
     willDestroy() {
       super.willDestroy(...arguments);
-      this.args.named.component._handleDestroyTooltipper();
-    }
-  };
-
-  tooltipLifecycle = class extends Modifier {
-    didInstall() {
-      this.args.named.component._handleInsertTooltip(this.element);
-    }
-
-    willDestroy() {
-      super.willDestroy(...arguments);
-      this.args.named.component._handleDestroyTooltip();
+      this.args.named.willDestroy();
     }
   };
 
@@ -170,27 +158,53 @@ export default class TooltipperComponent extends Component {
     };
   }
 
-  @action
-  handleMouseEnterReferenceElement() {
+  handleInsertTooltipper = (element) => {
+    this.tooltipperElement = element;
+    this._setupReferenceElement();
+    this._maybeToggleViaArgument();
+  };
+
+  handleUpdatedArguments = () => {
+    this._setupReferenceElement();
+    this._maybeToggleViaArgument();
+    this._positionTooltip();
+  };
+
+  handleInsertTooltip = (element) => {
+    this.tooltipElement = element;
+    this.tooltipService.add(this);
+    this._positionTooltip();
+    this.willInsertTooltip.resolve();
+  };
+
+  handleDestroyTooltip = () => {
+    this.tooltipElement = null;
+    this.isOverTooltipElement = false;
+    this.tooltipService.remove(this);
+  };
+
+  handleDestroyTooltipper = () => {
+    this._cancelTimers();
+    this._teardownReferenceElement();
+  };
+
+  handleMouseEnterReferenceElement = () => {
     this.isOverReferenceElement = true;
 
     this._loadOnce().then(() => this._scheduleShowTooltip());
-  }
+  };
 
-  @action
-  handleMouseLeaveReferenceElement() {
+  handleMouseLeaveReferenceElement = () => {
     this.isOverReferenceElement = false;
 
     this._scheduleHideTooltip();
-  }
+  };
 
-  @action
-  handleMouseEnterTooltip() {
+  handleMouseEnterTooltip = () => {
     this.isOverTooltipElement = true;
-  }
+  };
 
-  @action
-  handleMouseLeaveTooltip() {
+  handleMouseLeaveTooltip = () => {
     this.isOverTooltipElement = false;
 
     if (!this.shouldUseMouseEvents) {
@@ -198,61 +212,27 @@ export default class TooltipperComponent extends Component {
     }
 
     this._scheduleHideTooltip();
-  }
+  };
 
-  @action
-  hideTooltip() {
+  hideTooltip = () => {
     return this._hideTooltip();
-  }
+  };
 
-  @action
-  showTooltip() {
+  showTooltip = () => {
     this._showTooltip();
-  }
+  };
 
-  @action
-  toggleTooltip() {
+  toggleTooltip = () => {
     if (this.shouldRenderTooltip) {
       this._hideTooltip();
     } else {
       this._showTooltip();
     }
-  }
+  };
 
-  @action
-  repositionTooltip() {
+  repositionTooltip = () => {
     this._positionTooltip();
-  }
-
-  _handleInsertTooltipper(element) {
-    this.tooltipperElement = element;
-    this._setupReferenceElement();
-    this._maybeToggleViaArgument();
-  }
-
-  _handleUpdatedArguments() {
-    this._setupReferenceElement();
-    this._maybeToggleViaArgument();
-    this._positionTooltip();
-  }
-
-  _handleDestroyTooltipper() {
-    this._cancelTimers();
-    this._teardownReferenceElement();
-  }
-
-  _handleInsertTooltip(element) {
-    this.tooltipElement = element;
-    this.tooltipService.add(this);
-    this._positionTooltip();
-    this.willInsertTooltip.resolve();
-  }
-
-  _handleDestroyTooltip() {
-    this.tooltipElement = null;
-    this.isOverTooltipElement = false;
-    this.tooltipService.remove(this);
-  }
+  };
 
   _maybeToggleViaArgument() {
     if (this.args.showTooltip === true) {
