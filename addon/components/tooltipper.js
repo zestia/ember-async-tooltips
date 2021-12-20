@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { cancel, later } from '@ember/runloop';
+import { cancel, later, next } from '@ember/runloop';
 import { getPosition, getCoords } from '@zestia/position-utils';
 import { guidFor } from '@ember/object/internals';
 import { dasherize } from '@ember/string';
@@ -162,12 +162,12 @@ export default class TooltipperComponent extends Component {
   handleInsertTooltipper = (element) => {
     this.tooltipperElement = element;
     this._setupReferenceElement();
-    this._maybeToggleViaArgument();
+    this._handleManualToggling();
   };
 
   handleUpdatedArguments = () => {
     this._setupReferenceElement();
-    this._maybeToggleViaArgument();
+    this._handleManualToggling();
     this._positionTooltip();
   };
 
@@ -235,18 +235,16 @@ export default class TooltipperComponent extends Component {
     this._positionTooltip();
   };
 
-  _maybeToggleViaArgument() {
-    if (this.manuallyShowTooltip === this.args.showTooltip) {
-      return;
-    }
+  _handleManualToggling() {
+    next(() => this._maybeToggleViaArg());
+  }
 
+  _maybeToggleViaArg() {
     if (this.args.showTooltip === true) {
       this._showTooltip();
     } else if (this.args.showTooltip === false) {
       this._hideTooltip();
     }
-
-    this.manuallyShowTooltip = this.args.showTooltip;
   }
 
   _startListening() {
