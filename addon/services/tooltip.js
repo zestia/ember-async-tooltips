@@ -17,7 +17,7 @@ export default class TooltipService extends Service {
   hideAllTooltips() {
     return all(
       this.tooltippers.reduce((promises, tooltipper) => {
-        promises.push(tooltipper.actions.hideTooltip.call(tooltipper));
+        promises.push(tooltipper.hideTooltip(tooltipper));
         return promises;
       }, [])
     );
