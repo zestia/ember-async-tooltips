@@ -29,6 +29,7 @@ export default class TooltipperComponent extends Component {
   isOverTooltipElement = false;
   loadEndTime = 0;
   loadStartTime = 0;
+  manuallyShowTooltip = false;
   referenceElement = null;
   showTimer = null;
   stickyTimer = null;
@@ -235,11 +236,17 @@ export default class TooltipperComponent extends Component {
   };
 
   _maybeToggleViaArgument() {
+    if (this.manuallyShowTooltip === this.args.showTooltip) {
+      return;
+    }
+
     if (this.args.showTooltip === true) {
       this._showTooltip();
     } else if (this.args.showTooltip === false) {
       this._hideTooltip();
     }
+
+    this.manuallyShowTooltip = this.args.showTooltip;
   }
 
   _startListening() {
