@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('tooltipper', function (hooks) {
@@ -30,6 +30,8 @@ module('tooltipper', function (hooks) {
       .doesNotHaveClass('tooltip--hiding', 'precondition: is not hiding');
 
     this.set('showTooltip', false);
+
+    await waitFor('.tooltip');
 
     assert
       .dom('.tooltip')

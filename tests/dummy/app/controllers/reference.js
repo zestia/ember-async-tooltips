@@ -1,12 +1,11 @@
 import Controller from '@ember/controller';
-import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { modifier } from 'ember-modifier';
 
 export default class ReferenceController extends Controller {
   @tracked span;
 
-  @action
-  registerSpan(element) {
+  registerSpan = modifier((element) => {
     this.span = element;
-  }
+  });
 }

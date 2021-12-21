@@ -50,7 +50,7 @@ module('tooltipper', function (hooks) {
     `);
 
     const tooltipper = this.tooltipService.tooltippers[0];
-    const willHideTooltip = tooltipper.actions.hideTooltip.call(tooltipper);
+    const willHideTooltip = tooltipper.hideTooltip(tooltipper);
 
     triggerEvent('.tooltipper', 'mouseenter');
 
