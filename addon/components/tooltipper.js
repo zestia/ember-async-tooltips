@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import Modifier from 'ember-modifier';
 import { cancel, later, next } from '@ember/runloop';
 import { getPosition, getCoords } from '@zestia/position-utils';
 import { guidFor } from '@ember/object/internals';
@@ -10,7 +11,7 @@ import { tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';
 import { waitForAnimation } from '@zestia/animation-utils';
 import autoPosition from '../utils/auto-position';
-import Modifier from 'ember-modifier';
+import { action } from '@ember/object';
 
 export default class TooltipperComponent extends Component {
   @inject('tooltip') tooltipService;
@@ -158,53 +159,62 @@ export default class TooltipperComponent extends Component {
     };
   }
 
-  handleInsertTooltipper = (element) => {
+  @action
+  handleInsertTooltipper(element) {
     this.tooltipperElement = element;
     this._setupReferenceElement();
     this._handleManualToggling();
-  };
+  }
 
-  handleUpdatedArguments = () => {
+  @action
+  handleUpdatedArguments() {
     this._setupReferenceElement();
     this._handleManualToggling();
     this._positionTooltip();
-  };
+  }
 
-  handleInsertTooltip = (element) => {
+  @action
+  handleInsertTooltip(element) {
     this.tooltipElement = element;
     this.tooltipService.add(this);
     this._positionTooltip();
     this.willInsertTooltip.resolve();
-  };
+  }
 
-  handleDestroyTooltip = () => {
+  @action
+  handleDestroyTooltip() {
     this.tooltipElement = null;
     this.isOverTooltipElement = false;
     this.tooltipService.remove(this);
-  };
+  }
 
-  handleDestroyTooltipper = () => {
+  @action
+  handleDestroyTooltipper() {
     this._cancelTimers();
     this._teardownReferenceElement();
-  };
+  }
 
-  handleMouseEnterReferenceElement = () => {
+  @action
+  handleMouseEnterReferenceElement() {
     this.isOverReferenceElement = true;
 
     this._loadOnce().then(() => this._scheduleShowTooltip());
-  };
+  }
 
-  handleMouseLeaveReferenceElement = () => {
+  @action
+  handleMouseLeaveReferenceElement() {
     this.isOverReferenceElement = false;
 
     this._scheduleHideTooltip();
-  };
+  }
 
-  handleMouseEnterTooltip = () => {
+  @action
+  handleMouseEnterTooltip() {
     this.isOverTooltipElement = true;
-  };
+  }
 
-  handleMouseLeaveTooltip = () => {
+  @action
+  handleMouseLeaveTooltip() {
     this.isOverTooltipElement = false;
 
     if (!this.shouldUseMouseEvents) {
@@ -212,27 +222,31 @@ export default class TooltipperComponent extends Component {
     }
 
     this._scheduleHideTooltip();
-  };
+  }
 
-  hideTooltip = () => {
+  @action
+  hideTooltip() {
     return this._hideTooltip();
-  };
+  }
 
-  showTooltip = () => {
+  @action
+  showTooltip() {
     this._showTooltip();
-  };
+  }
 
-  toggleTooltip = () => {
+  @action
+  toggleTooltip() {
     if (this.shouldRenderTooltip) {
       this._hideTooltip();
     } else {
       this._showTooltip();
     }
-  };
+  }
 
-  repositionTooltip = () => {
+  @action
+  repositionTooltip() {
     this._positionTooltip();
-  };
+  }
 
   _handleManualToggling() {
     next(() => this._maybeToggleViaArg());
