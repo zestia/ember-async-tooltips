@@ -29,7 +29,6 @@ export default class TooltipperComponent extends Component {
   isOverTooltipElement = false;
   loadEndTime = 0;
   loadStartTime = 0;
-  manuallyShowTooltip = false;
   referenceElement = null;
   showTimer = null;
   stickyTimer = null;
