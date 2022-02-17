@@ -1,5 +1,9 @@
 # Changelog
 
+## 14.3.2
+
+- Upgrade embroider dependencies
+
 ## 14.3.1
 
 - Bump `@zestia/animation-utils`
