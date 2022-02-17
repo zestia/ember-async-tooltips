@@ -5,6 +5,10 @@
 - Ember Auto Import 2x
 - Move from Travis to GH actions
 
+## 14.3.2
+
+- Upgrade `@embroider/util`
+
 ## 14.3.1
 
 - Bump `@zestia/animation-utils`
