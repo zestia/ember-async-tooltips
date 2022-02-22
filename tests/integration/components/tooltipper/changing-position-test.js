@@ -29,7 +29,7 @@ module('tooltipper', function (hooks) {
     assert.dom('.tooltip').hasStyle(
       {
         left: '16.3281px',
-        top: '-6px'
+        top: '-6.25px'
       },
       'has top center coords set'
     );
@@ -43,7 +43,7 @@ module('tooltipper', function (hooks) {
     assert.dom('.tooltip').hasStyle(
       {
         left: '16.3281px',
-        top: '14px'
+        top: '14.25px'
       },
       'coordinates are recomputed to bottom center'
     );

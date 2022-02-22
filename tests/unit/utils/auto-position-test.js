@@ -5,16 +5,16 @@ module('autoPosition', function (hooks) {
   test('#autoPosition', function (assert) {
     assert.expect(9);
 
-    assert.equal(autoPosition('top left'), 'bottom left');
-    assert.equal(autoPosition('top right'), 'bottom right');
-    assert.equal(autoPosition('top center'), 'bottom center');
+    assert.strictEqual(autoPosition('top left'), 'bottom left');
+    assert.strictEqual(autoPosition('top right'), 'bottom right');
+    assert.strictEqual(autoPosition('top center'), 'bottom center');
 
-    assert.equal(autoPosition('middle left'), 'right middle');
-    assert.equal(autoPosition('middle right'), 'left middle');
-    assert.equal(autoPosition('middle center'), 'bottom center');
+    assert.strictEqual(autoPosition('middle left'), 'right middle');
+    assert.strictEqual(autoPosition('middle right'), 'left middle');
+    assert.strictEqual(autoPosition('middle center'), 'bottom center');
 
-    assert.equal(autoPosition('bottom left'), 'top left');
-    assert.equal(autoPosition('bottom right'), 'top right');
-    assert.equal(autoPosition('bottom center'), 'top center');
+    assert.strictEqual(autoPosition('bottom left'), 'top left');
+    assert.strictEqual(autoPosition('bottom right'), 'top right');
+    assert.strictEqual(autoPosition('bottom center'), 'top center');
   });
 });

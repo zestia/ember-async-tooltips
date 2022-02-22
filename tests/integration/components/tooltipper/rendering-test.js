@@ -28,7 +28,7 @@ module('tooltipper', function (hooks) {
     await click('button');
     await click('button');
 
-    assert.equal(
+    assert.strictEqual(
       this.tooltipService.tooltippers.length,
       1,
       'correctly keeps track of tooltips'

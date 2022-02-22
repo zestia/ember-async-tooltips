@@ -39,8 +39,8 @@ module('tooltipper', function (hooks) {
 
     assert.dom('.tooltip').hasStyle(
       {
-        left: '19.1055px',
-        top: '14px'
+        left: '19.1035px',
+        top: '14.25px'
       },
       'initial position'
     );
@@ -59,8 +59,8 @@ module('tooltipper', function (hooks) {
 
     assert.dom('.my-tooltip').hasStyle(
       {
-        left: '-60.875px',
-        top: '14px'
+        left: '-60.877px',
+        top: '14.25px'
       },
       'tooltip is re-positioned'
     );
