@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
 import Component from '@glimmer/component';
-import { render, triggerEvent } from '@ember/test-helpers';
+import { render, find, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setComponentTemplate } from '@ember/component';
 import { action } from '@ember/object';
@@ -40,7 +40,10 @@ module('tooltipper', function (hooks) {
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    assert.dom('.tooltip').hasStyle(
+    console.log(getComputedStyle(find('.tooltip')).left);
+    console.log(getComputedStyle(find('.tooltip')).top);
+
+    assert.dom('.my-tooltip').hasStyle(
       {
         left: '19.1035px',
         top: '14.25px'
@@ -59,6 +62,9 @@ module('tooltipper', function (hooks) {
     // observing, for a situation that rarely occurs.
 
     this.set('text', this.text.repeat(10));
+
+    console.log(getComputedStyle(find('.tooltip')).left);
+    console.log(getComputedStyle(find('.tooltip')).top);
 
     assert.dom('.my-tooltip').hasStyle(
       {
