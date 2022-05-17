@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
 import Component from '@glimmer/component';
