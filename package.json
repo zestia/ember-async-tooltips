@@ -38,14 +38,14 @@
     "deploy": "ember build --environment production && ember github-pages:commit --message \"Deploy gh-pages from commit $(git rev-parse HEAD)\" && git push origin gh-pages:gh-pages"
   },
   "dependencies": {
-    "@ember/test-waiters": "^3.0.1",
-    "@embroider/util": "^1.2.0",
+    "@ember/test-waiters": "^3.0.2",
+    "@embroider/util": "^1.6.0",
     "@zestia/animation-utils": "^4.1.0",
     "@zestia/position-utils": "^7.0.3",
     "ember-auto-import": "^2.4.1",
     "ember-cli-babel": "^7.26.11",
     "ember-cli-htmlbars": "^6.0.1",
-    "ember-modifier": "^3.2.7"
+    "@ember/render-modifiers": "^2.0.4"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
@@ -53,10 +53,10 @@
     "@embroider/test-setup": "^1.6.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
-    "@zestia/eslint-config": "^4.0.9",
+    "@zestia/eslint-config": "^4.0.10",
     "@zestia/prettier-config": "^1.0.8",
     "@zestia/stylelint-config": "^4.0.4",
-    "@zestia/template-lint-config": "^4.1.10",
+    "@zestia/template-lint-config": "^5.0.0-0",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "ember-cli": "^4.3.0",
@@ -74,7 +74,7 @@
     "ember-resolver": "^8.0.3",
     "ember-source": "~4.4.0",
     "ember-source-channel-url": "^3.0.0",
-    "ember-template-lint": "^4.3.0",
+    "ember-template-lint": "^4.8.0",
     "ember-try": "^2.0.0",
     "eslint": "^7.32.0",
     "loader.js": "^4.7.0",
@@ -84,7 +84,7 @@
     "qunit-dom": "^2.0.0",
     "release-it": "^15.0.0",
     "sass": "^1.51.0",
-    "stylelint": "^14.5.2",
+    "stylelint": "^14.8.2",
     "webpack": "^5.72.1"
   },
   "engines": {

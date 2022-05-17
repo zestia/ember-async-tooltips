@@ -4,7 +4,7 @@ import Component from '@glimmer/component';
 import { render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setComponentTemplate } from '@ember/component';
-import { modifier } from 'ember-modifier';
+import { action } from '@ember/object';
 
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
@@ -13,13 +13,16 @@ module('tooltipper', function (hooks) {
     assert.expect(2);
 
     const myTooltip = hbs`
-      <div class="my-tooltip" {{this.reposition @text}} ...attributes>
+      <div class="my-tooltip" {{did-update this.reposition @text}} ...attributes>
         {{@text}}
       </div>
     `;
 
     const MyTooltip = class extends Component {
-      reposition = modifier(this.args.tooltip.reposition);
+      @action
+      reposition() {
+        this.args.tooltip.reposition();
+      }
     };
 
     this.MyTooltip = setComponentTemplate(myTooltip, MyTooltip);

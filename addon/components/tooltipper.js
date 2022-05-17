@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import Modifier from 'ember-modifier';
 import { cancel, later, next } from '@ember/runloop';
 import { getPosition, getCoords } from '@zestia/position-utils';
 import { guidFor } from '@ember/object/internals';
@@ -36,21 +35,6 @@ export default class TooltipperComponent extends Component {
   tooltipElement = null;
   tooltipperElement = null;
   willInsertTooltip = null;
-
-  lifecycleHooks = class extends Modifier {
-    didInstall() {
-      this.args.named.didInstall(this.element);
-    }
-
-    didUpdateArguments() {
-      this.args.named.didUpdateArguments?.();
-    }
-
-    willDestroy() {
-      super.willDestroy(...arguments);
-      this.args.named.willDestroy();
-    }
-  };
 
   get id() {
     return guidFor(this).replace('ember', '');
