@@ -40,9 +40,9 @@
   <Tooltipper
     @Tooltip={{component "tooltip" text="Tooltip"}}
     draggable="true"
-    ondrag={{this.storeLastPos}}
-    ondragstart={{this.storeStartPos}}
-    ondragend={{this.reposition}}
+    {{on "drag" this.storeLastPos}}
+    {{on "dragstart" this.storeStartPos}}
+    {{on "dragend" this.reposition}}
   >
     Tooltipper
   </Tooltipper>
