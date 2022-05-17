@@ -13,7 +13,7 @@ module('tooltipper', function (hooks) {
     assert.expect(4);
 
     const myTooltip = hbs`
-      <div class="my-tooltip" {{did-update this.reposition @text}} ...attributes>
+      <div {{did-update this.reposition @text}} ...attributes>
         {{@text}}
       </div>
     `;
@@ -42,7 +42,7 @@ module('tooltipper', function (hooks) {
 
     // Note we don't use .hasStyle due to differences across browsers
 
-    const style = getComputedStyle(find('.my-tooltip'));
+    const style = getComputedStyle(find('.tooltip'));
 
     // Initial position
 

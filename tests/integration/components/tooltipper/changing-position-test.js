@@ -1,13 +1,13 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render, triggerEvent } from '@ember/test-helpers';
+import { render, find, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
   test('changing position', async function (assert) {
-    assert.expect(4);
+    assert.expect(6);
 
     this.position = 'top center';
 
@@ -26,13 +26,14 @@ module('tooltipper', function (hooks) {
       .dom('.tooltip')
       .hasClass('tooltip--top-center', 'has initial position class name');
 
-    assert.dom('.tooltip').hasStyle(
-      {
-        left: '16.3281px',
-        top: '-6.25px'
-      },
-      'has top center coords set'
-    );
+    // Note we don't use .hasStyle due to differences across browsers
+
+    const style = getComputedStyle(find('.tooltip'));
+
+    // Initial position
+
+    assert.strictEqual(parseInt(style.left, 10), 16);
+    assert.strictEqual(parseInt(style.top, 10), -6);
 
     this.set('position', 'bottom center');
 
@@ -40,12 +41,9 @@ module('tooltipper', function (hooks) {
       .dom('.tooltip')
       .hasClass('tooltip--bottom-center', 'position class name is recomputed');
 
-    assert.dom('.tooltip').hasStyle(
-      {
-        left: '16.3281px',
-        top: '14.25px'
-      },
-      'coordinates are recomputed to bottom center'
-    );
+    // Tooltip is repositioned
+
+    assert.strictEqual(parseInt(style.left, 10), 16);
+    assert.strictEqual(parseInt(style.top, 10), 14);
   });
 });
