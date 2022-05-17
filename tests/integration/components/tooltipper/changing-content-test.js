@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
 import Component from '@glimmer/component';
@@ -12,7 +10,7 @@ module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
   test('changing content', async function (assert) {
-    assert.expect(2);
+    assert.expect(4);
 
     const myTooltip = hbs`
       <div class="my-tooltip" {{did-update this.reposition @text}} ...attributes>
@@ -42,16 +40,14 @@ module('tooltipper', function (hooks) {
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    console.log(getComputedStyle(find('.tooltip')).left);
-    console.log(getComputedStyle(find('.tooltip')).top);
+    // Note we don't use .hasStyle due to differences across browsers
 
-    assert.dom('.my-tooltip').hasStyle(
-      {
-        left: '19.1035px',
-        top: '14.25px'
-      },
-      'initial position'
-    );
+    const style = getComputedStyle(find('.my-tooltip'));
+
+    // Initial position
+
+    assert.strictEqual(parseInt(style.left, 10), 19);
+    assert.strictEqual(parseInt(style.top, 10), 14);
 
     // Here, we change the content inside a tooltip,
     // and should expect that the tooltip is re-positioned,
@@ -65,15 +61,9 @@ module('tooltipper', function (hooks) {
 
     this.set('text', this.text.repeat(10));
 
-    console.log(getComputedStyle(find('.tooltip')).left);
-    console.log(getComputedStyle(find('.tooltip')).top);
+    // Tooltip is repositioned
 
-    assert.dom('.my-tooltip').hasStyle(
-      {
-        left: '-60.877px',
-        top: '14.25px'
-      },
-      'tooltip is re-positioned'
-    );
+    assert.strictEqual(parseInt(style.left, 10), -60);
+    assert.strictEqual(parseInt(style.top, 10), 14);
   });
 });
