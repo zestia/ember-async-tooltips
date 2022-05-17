@@ -4,6 +4,7 @@
 
 - Ember Auto Import 2x
 - Move from Travis to GH actions
+- Upgrade dependencies
 
 ## 14.3.2
 
