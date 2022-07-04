@@ -1,5 +1,9 @@
 # Changelog
 
+## 14.4.1
+
+- Allow service actions to be used from template
+
 ## 14.4.0
 
 - Ember Auto Import 2x
