@@ -1,13 +1,13 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render, triggerEvent, settled } from '@ember/test-helpers';
+import { waitFor, render, triggerEvent, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { defer } from 'rsvp';
 
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
-  test('aria busy', async function (assert) {
+  test('loading attr', async function (assert) {
     assert.expect(3);
 
     const deferred = defer();
@@ -23,14 +23,14 @@ module('tooltipper', function (hooks) {
 
     assert
       .dom('.tooltipper')
-      .hasAttribute('aria-busy', 'false', 'precondition: not loading');
+      .hasAttribute('data-loading', 'false', 'precondition: not loading');
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
     assert
       .dom('.tooltipper')
       .hasAttribute(
-        'aria-busy',
+        'data-loading',
         'true',
         'tooltipper signifies when loading data for the tooltip'
       );
@@ -42,7 +42,7 @@ module('tooltipper', function (hooks) {
     assert
       .dom('.tooltipper')
       .hasAttribute(
-        'aria-busy',
+        'data-loading',
         'false',
         'attribute is reset once data is loaded'
       );

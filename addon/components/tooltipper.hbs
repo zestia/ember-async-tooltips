@@ -1,8 +1,8 @@
 <div
   class="tooltipper"
-  aria-busy="{{this.isLoading}}"
   aria-describedby={{if this.hasTooltip (concat "tooltip-" this.id)}}
   data-has-tooltip="{{this.hasTooltip}}"
+  data-loading="{{this.isLoading}}"
   id={{concat "tooltipper-" this.id}}
   ...attributes
   {{did-insert this.handleInsertTooltipper}}
