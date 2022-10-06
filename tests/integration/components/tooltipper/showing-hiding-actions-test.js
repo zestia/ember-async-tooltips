@@ -24,7 +24,7 @@ module('tooltipper', function (hooks) {
 
     this.set('showTooltip', true);
 
-    await waitFor('.tooltip--showing');
+    await waitFor(".tooltip[data-showing='true']");
 
     assert.verifySteps([], 'does not fire actions when rendering');
 
@@ -41,7 +41,7 @@ module('tooltipper', function (hooks) {
 
     this.set('showTooltip', false);
 
-    await waitFor('.tooltip--hiding');
+    await waitFor(".tooltip[data-showing='false']");
 
     assert.verifySteps([], 'does not fire actions when rendering');
 

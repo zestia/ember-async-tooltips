@@ -59,7 +59,10 @@ module('tooltipper', function (hooks) {
     await settled();
 
     assert.dom('.tooltip').exists('tooltip is not destroyed');
-    assert.dom('.tooltip').hasClass('tooltip--showing', 'is not hidden');
+
+    assert
+      .dom('.tooltip')
+      .hasAttribute('data-showing', 'true', 'is not hidden');
   });
 
   test('tearing down', async function (assert) {
@@ -129,5 +132,23 @@ module('tooltipper', function (hooks) {
     await triggerEvent('.tooltipper-2', 'mouseenter');
 
     deferred.resolve();
+  });
+
+  test('un-rendering when already present', async function (assert) {
+    assert.expect(4);
+
+    this.Component = 'tooltip';
+
+    await render(hbs`<Tooltipper @Tooltip={{this.Component}} />`);
+
+    await triggerEvent('.tooltipper', 'mouseenter');
+
+    assert.dom('.tooltipper').hasAttribute('data-has-tooltip', 'true');
+    assert.dom('.tooltip').exists();
+
+    this.set('Component', null);
+
+    assert.dom('.tooltipper').hasAttribute('data-has-tooltip', 'false');
+    assert.dom('.tooltip').doesNotExist();
   });
 });

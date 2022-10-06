@@ -24,7 +24,11 @@ module('tooltipper', function (hooks) {
 
     assert
       .dom('.tooltip')
-      .hasClass('tooltip--top-center', 'has initial position class name');
+      .hasAttribute(
+        'data-position',
+        'top-center',
+        'has initial position class name'
+      );
 
     // Note we don't use .hasStyle due to differences across browsers
 
@@ -39,7 +43,11 @@ module('tooltipper', function (hooks) {
 
     assert
       .dom('.tooltip')
-      .hasClass('tooltip--bottom-center', 'position class name is recomputed');
+      .hasAttribute(
+        'data-position',
+        'bottom-center',
+        'position attribute is recomputed'
+      );
 
     // Tooltip is repositioned
 

@@ -26,8 +26,9 @@ module('tooltipper', function (hooks) {
 
     assert
       .dom('.a1 .tooltip')
-      .doesNotHaveClass(
-        'tooltip--sticky',
+      .hasAttribute(
+        'data-sticky',
+        'false',
         'initial tooltip is not sticky, yet'
       );
 
@@ -39,8 +40,9 @@ module('tooltipper', function (hooks) {
 
     assert
       .dom('.a1 .tooltip')
-      .hasClass(
-        'tooltip--sticky',
+      .hasAttribute(
+        'data-sticky',
+        'true',
         'tooltip is considered sticky after animating in'
       );
 
@@ -52,7 +54,11 @@ module('tooltipper', function (hooks) {
 
     assert
       .dom('.a2 .tooltip')
-      .hasClass('tooltip--sticky', 'subsequent tooltip is considered sticky');
+      .hasAttribute(
+        'data-sticky',
+        'true',
+        'subsequent tooltip is considered sticky'
+      );
 
     this.stopTimer();
 

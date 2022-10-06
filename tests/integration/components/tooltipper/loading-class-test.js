@@ -7,7 +7,7 @@ import { defer } from 'rsvp';
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
-  test('loading class', async function (assert) {
+  test('aria busy', async function (assert) {
     assert.expect(3);
 
     const deferred = defer();
@@ -23,18 +23,16 @@ module('tooltipper', function (hooks) {
 
     assert
       .dom('.tooltipper')
-      .doesNotHaveClass(
-        'tooltipper--loading',
-        'precondition: no loading class'
-      );
+      .hasAttribute('aria-busy', 'false', 'precondition: not loading');
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
     assert
       .dom('.tooltipper')
-      .hasClass(
-        'tooltipper--loading',
-        'tooltipper has a loading class when loading data for the tooltip'
+      .hasAttribute(
+        'aria-busy',
+        'true',
+        'tooltipper signifies when loading data for the tooltip'
       );
 
     deferred.resolve();
@@ -43,9 +41,10 @@ module('tooltipper', function (hooks) {
 
     assert
       .dom('.tooltipper')
-      .doesNotHaveClass(
-        'tooltipper--loading',
-        'loading class is removed once data is loaded'
+      .hasAttribute(
+        'aria-busy',
+        'false',
+        'attribute is reset once data is loaded'
       );
   });
 });
