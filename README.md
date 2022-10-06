@@ -190,7 +190,7 @@ Hello {{@tooltip.data.user.name}}
 
 ## Animating
 
-If your tooltips need to animate in and out, you can utilise these class names:
+If your tooltips need to animate in and out, you can utilise these attributes:
 
 ```css
 .tooltip[data-showing='true'] {
