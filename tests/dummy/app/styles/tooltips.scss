@@ -3,15 +3,15 @@
   border: 1px solid var(--green);
 }
 
-.tooltip--showing {
+.tooltip[data-showing='true'] {
   animation: fade-in 300ms backwards;
 }
 
-.tooltip--hiding {
+.tooltip[data-showing='false'] {
   animation: fade-out 300ms forwards;
 }
 
-.tooltip--sticky {
+.tooltip[data-sticky='true'] {
   animation-name: none;
   border-color: var(--blue);
 }

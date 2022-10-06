@@ -21,6 +21,7 @@ export default class TooltipperComponent extends Component {
   @tracked shouldRenderTooltip = false;
   @tracked shouldShowTooltip = false;
   @tracked tooltipCoords = [0, 0];
+  @tracked tooltipElement = null;
   @tracked tooltipPosition = null;
 
   hideTimer = null;
@@ -32,9 +33,16 @@ export default class TooltipperComponent extends Component {
   referenceElement = null;
   showTimer = null;
   stickyTimer = null;
-  tooltipElement = null;
   tooltipperElement = null;
   willInsertTooltip = null;
+
+  get TooltipComponent() {
+    return this.args.Tooltip;
+  }
+
+  get hasTooltip() {
+    return !!this.tooltipElement;
+  }
 
   get id() {
     return guidFor(this).replace('ember', '');

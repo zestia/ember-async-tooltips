@@ -39,7 +39,7 @@ module('tooltipper', function (hooks) {
 
     assert
       .dom('.tooltip')
-      .hasClass('tooltip--showing', 'will be showing by default');
+      .hasAttribute('data-showing', 'true', 'will be showing by default');
 
     assert
       .dom('.tooltip')

@@ -1,10 +1,8 @@
 <div
-  class={{concat
-    "tooltipper"
-    (if this.isLoading " tooltipper--loading")
-    (if this.shouldRenderTooltip " tooltipper--has-tooltip")
-  }}
-  aria-describedby={{if this.shouldRenderTooltip (concat "tooltip-" this.id)}}
+  class="tooltipper"
+  aria-describedby={{if this.hasTooltip (concat "tooltip-" this.id)}}
+  data-has-tooltip="{{this.hasTooltip}}"
+  data-loading="{{this.isLoading}}"
   id={{concat "tooltipper-" this.id}}
   ...attributes
   {{did-insert this.handleInsertTooltipper}}
@@ -21,24 +19,26 @@
 
   {{! template-lint-disable no-inline-styles }}
   {{~#if this.shouldRenderTooltip~}}
-    <@Tooltip
-      class={{concat
-        "tooltip"
-        " tooltip--"
-        (if this.shouldShowTooltip "showing" "hiding")
-        " tooltip--"
-        (if this.tooltipPosition this.tooltipPositionClass "unpositioned")
-        (if this.isSticky " tooltip--sticky")
-      }}
-      id={{concat "tooltip-" this.id}}
-      style={{this.tooltipStyle}}
-      role="tooltip"
-      aria-live="polite"
-      @tooltip={{this.tooltipAPI}}
-      {{did-insert this.handleInsertTooltip}}
-      {{will-destroy this.handleDestroyTooltip}}
-      {{on "mouseenter" this.handleMouseEnterTooltip}}
-      {{on "mouseleave" this.handleMouseLeaveTooltip}}
-    />
+    {{~#let (component this.TooltipComponent) as |Tooltip|~}}
+      <Tooltip
+        class="tooltip"
+        data-showing="{{this.shouldShowTooltip}}"
+        data-position={{if
+          this.tooltipPosition
+          this.tooltipPositionClass
+          "unpositioned"
+        }}
+        data-sticky="{{this.isSticky}}"
+        id={{concat "tooltip-" this.id}}
+        style={{this.tooltipStyle}}
+        role="tooltip"
+        aria-live="polite"
+        @tooltip={{this.tooltipAPI}}
+        {{did-insert this.handleInsertTooltip}}
+        {{will-destroy this.handleDestroyTooltip}}
+        {{on "mouseenter" this.handleMouseEnterTooltip}}
+        {{on "mouseleave" this.handleMouseLeaveTooltip}}
+      />
+    {{~/let~}}
   {{~/if~}}
 </div>

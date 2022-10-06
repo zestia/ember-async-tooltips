@@ -6,8 +6,8 @@ import hbs from 'htmlbars-inline-precompile';
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
-  test('showing / hiding class', async function (assert) {
-    assert.expect(4);
+  test('showing / hiding attr', async function (assert) {
+    assert.expect(2);
 
     this.showTooltip = true;
 
@@ -20,14 +20,11 @@ module('tooltipper', function (hooks) {
 
     assert
       .dom('.tooltip')
-      .hasClass(
-        'tooltip--showing',
-        'precondition: is showing class is added to trigger animations'
+      .hasAttribute(
+        'data-showing',
+        'true',
+        'precondition: showing attr is added to trigger in animation'
       );
-
-    assert
-      .dom('.tooltip')
-      .doesNotHaveClass('tooltip--hiding', 'precondition: is not hiding');
 
     this.set('showTooltip', false);
 
@@ -35,16 +32,10 @@ module('tooltipper', function (hooks) {
 
     assert
       .dom('.tooltip')
-      .doesNotHaveClass(
-        'tooltip--showing',
-        'is showing class is removed to trigger animations'
-      );
-
-    assert
-      .dom('.tooltip')
-      .hasClass(
-        'tooltip--hiding',
-        'is hiding class is added to trigger animations'
+      .hasAttribute(
+        'data-showing',
+        'false',
+        'showing attr is updated to trigger out animation'
       );
 
     await settled();

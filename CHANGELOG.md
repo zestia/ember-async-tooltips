@@ -1,5 +1,10 @@
 # Changelog
 
+## 14.5.0
+
+- Allow `@Tooltip` to be null
+- Remove BEM classes in favour of data attributes
+
 ## 14.4.1
 
 - Allow service actions to be used from template

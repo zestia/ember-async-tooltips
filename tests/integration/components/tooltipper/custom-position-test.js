@@ -37,7 +37,7 @@ module('tooltipper', function (hooks) {
 
     assert
       .dom('.tooltip')
-      .hasClass('tooltip--left-top', 'custom position is used');
+      .hasAttribute('data-position', 'left-top', 'custom position is used');
 
     getRootElement().parentNode.classList.remove('full-screen');
   });

@@ -104,7 +104,7 @@ module('tooltipper', function (hooks) {
 
     triggerEvent('.tooltipper', 'mouseleave');
 
-    await waitFor('.tooltip--hiding');
+    await waitFor(".tooltip[data-showing='false']");
 
     assert
       .dom('.tooltip')

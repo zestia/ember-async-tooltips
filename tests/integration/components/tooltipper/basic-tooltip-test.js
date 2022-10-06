@@ -36,7 +36,7 @@ module('tooltipper', function (hooks) {
       .exists('custom tooltip is rendered as a child');
   });
 
-  test('class name', async function (assert) {
+  test('data attribute', async function (assert) {
     assert.expect(2);
 
     await render(hbs`
@@ -48,8 +48,9 @@ module('tooltipper', function (hooks) {
 
     assert
       .dom('.tooltipper')
-      .doesNotHaveClass(
-        'tooltipper--has-tooltip',
+      .hasAttribute(
+        'data-has-tooltip',
+        'false',
         'tooltipper is not showing tooltip yet'
       );
 
@@ -59,9 +60,10 @@ module('tooltipper', function (hooks) {
 
     assert
       .dom('.tooltipper')
-      .hasClass(
-        'tooltipper--has-tooltip',
-        "has a class name to signify the tooltipper's tooltip is present"
+      .hasAttribute(
+        'data-has-tooltip',
+        'true',
+        "signifies the tooltipper's tooltip is present"
       );
   });
 });

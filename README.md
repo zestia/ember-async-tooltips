@@ -193,11 +193,11 @@ Hello {{@tooltip.data.user.name}}
 If your tooltips need to animate in and out, you can utilise these class names:
 
 ```css
-.tooltip--showing {
+.tooltip[data-showing='true'] {
   animation: your-show-animation;
 }
 
-.tooltip--hiding {
+.tooltip[data-showing='false'] {
   animation: your-hide-animation;
 }
 ```
@@ -205,6 +205,6 @@ If your tooltips need to animate in and out, you can utilise these class names:
 You may want to alter animations for sticky tooltips:
 
 ```css
-.tooltip--sticky {
+.tooltip[data-sticky='true'] {
   animation-name: none
 }
