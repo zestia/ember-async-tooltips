@@ -26,7 +26,7 @@ module('tooltipper', function (hooks) {
       .dom('.tooltip')
       .hasAttribute(
         'data-position',
-        'top-center',
+        'top center',
         'has initial position class name'
       );
 
@@ -45,7 +45,7 @@ module('tooltipper', function (hooks) {
       .dom('.tooltip')
       .hasAttribute(
         'data-position',
-        'bottom-center',
+        'bottom center',
         'position attribute is recomputed'
       );
 

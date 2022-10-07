@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { cancel, later, next } from '@ember/runloop';
 import { getPosition, getCoords } from '@zestia/position-utils';
 import { guidFor } from '@ember/object/internals';
-import { dasherize } from '@ember/string';
 import { htmlSafe } from '@ember/template';
 import { inject } from '@ember/service';
 import { defer, resolve } from 'rsvp';
@@ -64,10 +63,6 @@ export default class TooltipperComponent extends Component {
     const [x, y] = this.tooltipCoords;
 
     return htmlSafe(`top: ${y}px; left: ${x}px`);
-  }
-
-  get tooltipPositionClass() {
-    return dasherize(this.tooltipPosition);
   }
 
   get loadDelay() {

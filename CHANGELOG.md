@@ -1,5 +1,9 @@
 # Changelog
 
+## 14.6.0
+
+- Remove dash from `data-position` attribute to align with `@position` argument
+
 ## 14.5.0
 
 - Allow `@Tooltip` to be null
