@@ -23,11 +23,7 @@
       <Tooltip
         class="tooltip"
         data-showing="{{this.shouldShowTooltip}}"
-        data-position={{if
-          this.tooltipPosition
-          this.tooltipPosition
-          "unpositioned"
-        }}
+        data-position={{this.tooltipPosition}}
         data-sticky="{{this.isSticky}}"
         id={{concat "tooltip-" this.id}}
         style={{this.tooltipStyle}}
