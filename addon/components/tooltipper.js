@@ -429,7 +429,6 @@ export default class TooltipperComponent extends Component {
 
   _destroyTooltip() {
     this.shouldRenderTooltip = false;
-    this.shouldShowTooltip = false;
   }
 
   _setupReferenceElement() {
