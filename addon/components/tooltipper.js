@@ -39,6 +39,16 @@ export default class TooltipperComponent extends Component {
     return this.args.Tooltip;
   }
 
+  get canRenderTooltip() {
+    return (
+      !this.isDestroyed &&
+      !!this.args.Tooltip &&
+      this.shouldUseMouseEvents &&
+      this.needsToShowTooltip &&
+      !this.hasChild
+    );
+  }
+
   get hasTooltip() {
     return !!this.tooltipElement;
   }
@@ -172,6 +182,7 @@ export default class TooltipperComponent extends Component {
   handleDestroyTooltip() {
     this.tooltipElement = null;
     this.isOverTooltipElement = false;
+    this.shouldRenderTooltip = false;
     this.tooltipService.remove(this);
   }
 
@@ -312,12 +323,7 @@ export default class TooltipperComponent extends Component {
   }
 
   _attemptShowTooltip() {
-    if (
-      this.isDestroyed ||
-      !this.shouldUseMouseEvents ||
-      !this.needsToShowTooltip ||
-      this.hasChild
-    ) {
+    if (!this.canRenderTooltip) {
       return;
     }
 
@@ -423,6 +429,7 @@ export default class TooltipperComponent extends Component {
 
   _destroyTooltip() {
     this.shouldRenderTooltip = false;
+    this.shouldShowTooltip = false;
   }
 
   _setupReferenceElement() {

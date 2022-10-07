@@ -1,5 +1,9 @@
 # Changelog
 
+## 14.6.1
+
+- Only attempt a tooltip render if `@Tooltip` component is present
+
 ## 14.6.0
 
 - Remove dash from `data-position` attribute to align with `@position` argument

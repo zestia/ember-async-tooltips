@@ -134,8 +134,24 @@ module('tooltipper', function (hooks) {
     deferred.resolve();
   });
 
-  test('un-rendering when already present', async function (assert) {
-    assert.expect(4);
+  test('can render', async function (assert) {
+    assert.expect(2);
+
+    this.Component = null;
+
+    await render(hbs`<Tooltipper @Tooltip={{this.Component}} />`);
+
+    await triggerEvent('.tooltipper', 'mouseenter');
+    await triggerEvent('.tooltipper', 'mouseleave');
+
+    this.set('Component', 'tooltip');
+
+    assert.dom('.tooltipper').hasAttribute('data-has-tooltip', 'false');
+    assert.dom('.tooltip').doesNotExist();
+  });
+
+  test('un-rendering', async function (assert) {
+    assert.expect(6);
 
     this.Component = 'tooltip';
 
@@ -146,7 +162,12 @@ module('tooltipper', function (hooks) {
     assert.dom('.tooltipper').hasAttribute('data-has-tooltip', 'true');
     assert.dom('.tooltip').exists();
 
-    this.set('Component', null);
+    this.set('Component', null); // Destroying tooltip, when already present
+
+    assert.dom('.tooltipper').hasAttribute('data-has-tooltip', 'false');
+    assert.dom('.tooltip').doesNotExist();
+
+    this.set('Component', 'tooltip'); // Restoring tooltip, having bypassed a mouse-out teardown
 
     assert.dom('.tooltipper').hasAttribute('data-has-tooltip', 'false');
     assert.dom('.tooltip').doesNotExist();
