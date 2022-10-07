@@ -6,10 +6,16 @@ import { render, triggerEvent, getRootElement } from '@ember/test-helpers';
 module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
+  hooks.beforeEach(function () {
+    getRootElement().parentNode.classList.add('full-screen');
+  });
+
+  hooks.afterEach(function () {
+    getRootElement().parentNode.classList.remove('full-screen');
+  });
+
   test('custom position', async function (assert) {
     assert.expect(3);
-
-    getRootElement().parentNode.classList.add('full-screen');
 
     this.position = (referencePosition) => {
       assert.step(
@@ -38,8 +44,6 @@ module('tooltipper', function (hooks) {
     assert
       .dom('.tooltip')
       .hasAttribute('data-position', 'left top', 'custom position is used');
-
-    getRootElement().parentNode.classList.remove('full-screen');
   });
 
   test('no position', async function (assert) {
@@ -53,7 +57,7 @@ module('tooltipper', function (hooks) {
 
     assert
       .dom('.tooltip')
-      .hasAttribute('data-position', 'bottom center', 'default');
+      .hasAttribute('data-position', 'bottom left', 'default');
   });
 
   test('invalid position', async function (assert) {
