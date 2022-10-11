@@ -7,11 +7,15 @@ module('tooltipper', function (hooks) {
   setupTooltipperTest(hooks);
 
   hooks.beforeEach(function () {
-    getRootElement().parentNode.classList.add('full-screen');
+    getRootElement().parentNode.classList.add(
+      'ember-testing-container-full-screen'
+    );
   });
 
   hooks.afterEach(function () {
-    getRootElement().parentNode.classList.remove('full-screen');
+    getRootElement().parentNode.classList.remove(
+      'ember-testing-container-full-screen'
+    );
   });
 
   test('custom position', async function (assert) {
