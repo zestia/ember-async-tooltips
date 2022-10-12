@@ -8,10 +8,10 @@ export default function autoPosition(position) {
       return 'bottom right';
     case 'middle left':
       return 'right middle';
-    case 'middle right':
-      return 'left middle';
     case 'middle center':
       return 'bottom center';
+    case 'middle right':
+      return 'left middle';
     case 'bottom left':
       return 'top left';
     case 'bottom center':
