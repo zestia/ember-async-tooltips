@@ -1,13 +1,24 @@
 <p>
   Example usage with
   <code>
-    {{!template-lint-disable no-unbalanced-curlies}}
     \{{in-element}} helper
   </code>
 </p>
 
+<p>
+  <a
+    href="https://github.com/zestia/ember-async-tooltips/blob/master/tests/dummy/app/templates/in-element.hbs"
+  >
+    hbs
+  </a>
+</p>
+
 <Tooltipper
-  @Tooltip={{component "in-element-tooltip" destinationElement=this.elsewhere}}
+  @Tooltip={{component
+    "in-element-tooltip"
+    destinationElement=this.elsewhere
+    text="This tooltip is rendered elsewhere"
+  }}
   @position="bottom left"
 >
   Hover over me

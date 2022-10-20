@@ -1,0 +1,10 @@
+<Tooltipper
+  {{did-insert this.registerElement}}
+  @Tooltip={{component
+    "in-element-tooltip"
+    destinationElement=this.element.parentElement
+    text="Hello World"
+  }}
+  @position={{@position}}
+  @referenceElement={{this.element.parentElement}}
+/>

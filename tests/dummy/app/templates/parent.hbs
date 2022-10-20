@@ -1,0 +1,22 @@
+<p>
+  Shows how to make a shorthand way to assume a tooltip will always be rendered
+  on the parent element
+</p>
+
+<p>
+  (This is no good if you need access to the yielded API)
+</p>
+
+<p>
+  <a
+    href="https://github.com/zestia/ember-async-tooltips/blob/master/tests/dummy/app/templates/parent.hbs"
+  >
+    hbs
+  </a>
+</p>
+
+<div class="parent">
+  Hover over me
+
+  <TooltipOnParent @position="bottom left" />
+</div>
