@@ -52,17 +52,16 @@
 </form>
 
 {{#if this.showTooltipper}}
-  <Tooltipper
-    @Tooltip={{component "tooltip" text="Hello World"}}
-    @onLoad={{this.load}}
-    @showDelay={{this.showDelay}}
-    @hideDelay={{this.hideDelay}}
-    @position="bottom left"
-    as |tooltipper|
-  >
+  <div>
     Hover over me
-    {{#if tooltipper.isLoading}}
-      (Loading…)
-    {{/if}}
-  </Tooltipper>
+
+    <Tooltip
+      @onLoad={{this.load}}
+      @showDelay={{this.showDelay}}
+      @hideDelay={{this.hideDelay}}
+      @position="bottom left"
+    >
+      Hello World
+    </Tooltip>
+  </div>
 {{/if}}

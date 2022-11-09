@@ -1,1 +1,29 @@
-<div ...attributes>{{@text}}</div>
+<span
+  class="__tooltip__"
+  hidden
+  {{did-insert this.handleInsertElement}}
+  {{did-update
+    this.handleUpdatedArguments
+    @columns
+    @element
+    @position
+    @rows
+    @show
+  }}
+  {{will-destroy this.handleDestroyElement}}
+></span>
+{{~#if this.shouldRenderTooltip~}}
+  {{~#let (component "-tooltip" tooltip=this) as |Tooltip|~}}
+    {{~#if @destination~}}
+      {{~#in-element @destination insertBefore=null~}}
+        <Tooltip ...attributes>
+          {{~yield this.api~}}
+        </Tooltip>
+      {{~/in-element~}}
+    {{~else~}}
+      <Tooltip ...attributes>
+        {{~yield this.api~}}
+      </Tooltip>
+    {{~/if~}}
+  {{~/let~}}
+{{/if}}

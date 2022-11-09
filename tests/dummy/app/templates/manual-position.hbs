@@ -43,12 +43,10 @@
 
 <br />
 
-<Tooltipper
-  class="manual-position-tooltipper"
-  @Tooltip={{component "tooltip" text="Hello World"}}
-  @position={{this.position}}
-  @mouseEvents={{false}}
-  @showTooltip={{true}}
->
+<div class="manual-position-tooltipper">
   Tooltipper
-</Tooltipper>
+
+  <Tooltip @position={{this.position}} @show={{true}}>
+    Hello World
+  </Tooltip>
+</div>

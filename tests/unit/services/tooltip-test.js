@@ -4,53 +4,36 @@ import { setupTest } from 'ember-qunit';
 module('service:tooltip', function (hooks) {
   setupTest(hooks);
 
-  let tooltipService;
-  let fooTooltipper;
-  let barTooltipper;
-
   hooks.beforeEach(function () {
-    tooltipService = this.owner.lookup('service:tooltip');
-    fooTooltipper = new (class FooTooltipper {})();
-    barTooltipper = new (class BarTooltipper {})();
+    this.tooltipService = this.owner.lookup('service:tooltip');
+    this.fooTooltip = new (class FooTooltip {})();
+    this.barTooltip = new (class BarTooltip {})();
   });
 
   test('#add', function (assert) {
     assert.expect(2);
 
-    tooltipService.add(fooTooltipper);
+    this.tooltipService.add(this.fooTooltip);
 
-    assert.deepEqual(
-      tooltipService.tooltippers,
-      [fooTooltipper],
-      'adds the tooltipper instance to the array of tooltippers'
-    );
+    assert.deepEqual(this.tooltipService.tooltips, [this.fooTooltip]);
 
-    tooltipService.add(barTooltipper);
+    this.tooltipService.add(this.barTooltip);
 
-    assert.deepEqual(
-      tooltipService.tooltippers,
-      [fooTooltipper, barTooltipper],
-      'pushes more tooltippers to the array'
-    );
+    assert.deepEqual(this.tooltipService.tooltips, [
+      this.fooTooltip,
+      this.barTooltip
+    ]);
   });
 
   test('#remove', function (assert) {
     assert.expect(2);
 
-    tooltipService.add(fooTooltipper);
+    this.tooltipService.add(this.fooTooltip);
 
-    assert.deepEqual(
-      tooltipService.tooltippers,
-      [fooTooltipper],
-      'precondition'
-    );
+    assert.deepEqual(this.tooltipService.tooltips, [this.fooTooltip]);
 
-    tooltipService.remove(fooTooltipper);
+    this.tooltipService.remove(this.fooTooltip);
 
-    assert.deepEqual(
-      tooltipService.tooltippers,
-      [],
-      'removes specific tooltipper component instances from the array'
-    );
+    assert.deepEqual(this.tooltipService.tooltips, []);
   });
 });

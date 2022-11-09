@@ -13,16 +13,13 @@
   </a>
 </p>
 
-<Tooltipper
-  @Tooltip={{component
-    "in-element-tooltip"
-    destinationElement=this.elsewhere
-    text="This tooltip is rendered elsewhere"
-  }}
-  @position="bottom left"
->
+<div>
   Hover over me
-</Tooltipper>
+
+  <Tooltip @destination={{this.elsewhere}}>
+    Hello World
+  </Tooltip>
+</div>
 
 <div id="elsewhere" {{did-insert this.registerElsewhere}}>
   {{! tooltip rendered here }}

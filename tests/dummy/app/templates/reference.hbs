@@ -1,5 +1,5 @@
 <p>
-  A tooltip displayed on a specific reference element
+  A tooltip displayed on a specific reference element.
 </p>
 
 <p>
@@ -10,14 +10,21 @@
   </a>
 </p>
 
-<Tooltipper
-  @Tooltip={{component "tooltip" text="Hello World"}}
-  @position="bottom center"
-  @referenceElement={{this.span}}
->
-  Tooltipper instance is here,
-</Tooltipper>
+{{#let (unique-id) as |id|}}
+  <table>
+    <tbody>
+      <tr id={{id}}>
+        <td>
+          Table cell 1
 
-<span {{did-insert this.registerSpan}}>
-  but the tooltip is displayed over me
-</span>
+          <Tooltip @element="#{{id}}">
+            Hello World
+          </Tooltip>
+        </td>
+        <td>
+          Table cell 1
+        </td>
+      </tr>
+    </tbody>
+  </table>
+{{/let}}

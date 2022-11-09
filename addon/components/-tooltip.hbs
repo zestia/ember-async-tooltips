@@ -1,0 +1,17 @@
+<div
+  class="tooltip"
+  data-tooltip-showing="{{@tooltip.shouldShowTooltip}}"
+  data-tooltip-position={{@tooltip.tooltipPosition}}
+  data-tooltip-sticky="{{@tooltip.isSticky}}"
+  id={{@tooltip.tooltipId}}
+  style={{@tooltip.tooltipStyle}}
+  role="tooltip"
+  aria-live="polite"
+  {{did-insert @tooltip.handleInsertTooltip}}
+  {{will-destroy @tooltip.handleDestroyTooltip}}
+  {{on "mouseenter" @tooltip.handleMouseEnterTooltip}}
+  {{on "mouseleave" @tooltip.handleMouseLeaveTooltip}}
+  ...attributes
+>
+  {{~yield~}}
+</div>

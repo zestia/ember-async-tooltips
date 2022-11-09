@@ -37,13 +37,16 @@
     </tbody>
   </table>
 
-  <Tooltipper
-    @Tooltip={{component "tooltip" text="Tooltip"}}
+  <div
     draggable="true"
     {{on "drag" this.storeLastPos}}
     {{on "dragstart" this.storeStartPos}}
     {{on "dragend" this.reposition}}
   >
-    Tooltipper
-  </Tooltipper>
+    Hover over me
+
+    <Tooltip>
+      Hello World
+    </Tooltip>
+  </div>
 </div>

@@ -11,7 +11,6 @@ export default class Router extends EmberRouter {
 Router.map(function () {
   this.route('manual');
   this.route('reference');
-  this.route('parent');
   this.route('nesting');
   this.route('delays');
   this.route('manual-position');
@@ -19,4 +18,5 @@ Router.map(function () {
   this.route('in-element');
   this.route('interactive-content');
   this.route('sticky');
+  this.route('tether');
 });

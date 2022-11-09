@@ -1,7 +1,10 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
+import { inject } from '@ember/service';
 
 export default class PositionController extends Controller {
+  @inject('tooltip') tooltipService;
+
   constructor() {
     super(...arguments);
 

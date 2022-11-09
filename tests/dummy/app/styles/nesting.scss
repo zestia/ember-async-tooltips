@@ -1,0 +1,9 @@
+.parent {
+  display: inline-block;
+  padding: 20px;
+
+  .child {
+    padding: 5px;
+    margin-left: 10px;
+  }
+}

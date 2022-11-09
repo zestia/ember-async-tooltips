@@ -3,28 +3,23 @@ import { all } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 
 export default class TooltipService extends Service {
-  tooltippers = [];
+  tooltips = [];
   @tracked sticky = {};
 
-  add = (tooltipper) => {
-    this.tooltippers.push(tooltipper);
+  add = (tooltip) => {
+    this.tooltips.push(tooltip);
   };
 
-  remove = (tooltipper) => {
-    this.tooltippers.splice(this.tooltippers.indexOf(tooltipper), 1);
+  remove = (tooltip) => {
+    this.tooltips.splice(this.tooltips.indexOf(tooltip), 1);
   };
 
   hideAllTooltips = () => {
-    return all(
-      this.tooltippers.reduce((promises, tooltipper) => {
-        promises.push(tooltipper.hideTooltip(tooltipper));
-        return promises;
-      }, [])
-    );
+    return all(this.tooltips.map((tooltip) => tooltip.hide()));
   };
 
-  setSticky = (tooltipper, value) => {
-    this.sticky[tooltipper.args.stickyID] = value;
+  setSticky = (tooltip, value) => {
+    this.sticky[tooltip.args.stickyID] = value;
     this.sticky = { ...this.sticky };
   };
 }

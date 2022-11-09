@@ -1,5 +1,15 @@
 # Changelog
 
+## 15.0.0-beta.0
+
+- Removed `<Tooltipper />` component
+- Removed `tooltip.reposition` from API
+- Removed `@mouseEvents` argument
+- Added `@element` argument
+- Added `@destination` argument
+- Added `@show` argument
+- Renamed data attributes
+
 ## 14.6.1
 
 - Only attempt a tooltip render if `@Tooltip` component is present

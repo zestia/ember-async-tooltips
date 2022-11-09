@@ -1,17 +1,17 @@
 .tooltip {
   position: absolute;
   border: 1px solid var(--green);
-}
 
-.tooltip[data-showing='true'] {
-  animation: fade-in 300ms backwards;
-}
+  &[data-tooltip-showing='true'] {
+    animation: fade-in 300ms backwards;
+  }
 
-.tooltip[data-showing='false'] {
-  animation: fade-out 300ms forwards;
-}
+  &[data-tooltip-showing='false'] {
+    animation: fade-out 300ms forwards;
+  }
 
-.tooltip[data-sticky='true'] {
-  animation-name: none;
-  border-color: var(--blue);
+  &[data-tooltip-sticky='true'] {
+    animation-name: none;
+    border-color: var(--blue);
+  }
 }

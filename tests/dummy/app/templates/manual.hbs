@@ -10,17 +10,16 @@
   </a>
 </p>
 
-<Tooltipper
-  @Tooltip={{component "tooltip" text="Hello World"}}
-  @position="bottom left"
-  @mouseEvents={{false}}
-  as |tooltipper|
->
+<div>
   <input
     type="text"
     placeholder="Focus me"
     aria-label="Example text area"
-    {{on "focus" tooltipper.showTooltip}}
-    {{on "blur" tooltipper.hideTooltip}}
+    {{on "focus" this.showTooltip}}
+    {{on "blur" this.hideTooltip}}
   />
-</Tooltipper>
+
+  <Tooltip @show={{this.shouldShowTooltip}}>
+    Hello World
+  </Tooltip>
+</div>

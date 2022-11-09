@@ -5,6 +5,8 @@
 @use 'tooltippers';
 @use 'manual-position';
 @use 'auto-position';
-@use 'parent';
+@use 'nesting';
 @use 'tables';
+@use 'delays';
 @use 'util';
+@use 'tether';

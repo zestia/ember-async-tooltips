@@ -3,10 +3,10 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
 export default class ReferenceController extends Controller {
-  @tracked span;
+  @tracked row;
 
   @action
-  registerSpan(element) {
-    this.span = element;
+  registerRow(element) {
+    this.row = element;
   }
 }
