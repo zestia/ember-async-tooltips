@@ -35,6 +35,7 @@ https://zestia.github.io/ember-async-tooltips/
 ## Notes
 
 - This addon intentionally does not come with any styles.
+- It is configured with [ember-test-waiters](https://github.com/emberjs/ember-test-waiters) so `await`ing in your test suite will just work.
 
 ## Example
 
