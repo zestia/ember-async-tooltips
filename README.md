@@ -133,7 +133,7 @@ position() {
 
 # API
 
-The tooltip receives an API as an argument, yielding:
+The tooltip yields an API with:
 
 - The ability to manually hide it
 - Any data that was loaded
