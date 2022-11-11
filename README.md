@@ -52,37 +52,41 @@ https://zestia.github.io/ember-async-tooltips/
 
 ### `@element`
 
-By default the parent of the tooltip element is what causes the tooltip to show or hide, and is also the element that the tooltip will be positioned next to. But, you can specify any element to be the reference element.
+Optional. By default, the parent of the tooltip element is what causes the tooltip to show & hide, and is _also_ the element it will be positioned next to.
 
 ### `@destination`
 
-Tooltips are rendered in-place, unless a destination element is specified, in which case they will be rendered inside that element instead.
+Optional. By default, tooltips are rendered in-place. Specify a destination if you want to render them in that element instead.
+
+### `@attachTo`
+
+Optional. By default, tooltips will be positioned next to the element that caused them to display. Unless this argument is specified, in which case the tooltip will show when mousing over `@element`, but will be positioned next to a different element.
 
 ### `@show`
 
-By default, tooltips will display when hovering over the reference element. But you can also show or hide a tooltip manually using the `@show` argument.
+Optional. By default, tooltips will display when hovering over the reference element. But you can use this argument to force a tooltip to display.
 
 ### `@showDelay`
 
-The show delay will prevent the tooltip from being shown until the specified milliseconds have passed.
+Optional. The show delay will prevent the tooltip from being shown until the specified milliseconds have passed after entering the reference element.
 
 ### `@hideDelay`
 
-This hide delay will prevent the tooltip from being hidden until the specified milliseconds have passed.
+Optional. The hide delay will prevent the tooltip from being hidden until the specified milliseconds have passed after leaving the reference element.
 
 ### `@stickyID`
 
-You can group tooltips together with a sticky identifier. When a tooltip from a group is showing, then other tooltips in that group (with the same identifier) will show instantly - ignoring their show delay. The term sticky is used because it feels as if the tooltips are stuck open.
+Optional. You can group tooltips together with a sticky identifier. When a tooltip from a group of tooltips all with the same identifier is shown, then other tooltips in that group will show instantly - ignoring their show delay. The term sticky is used because it feels as if the tooltips are stuck open.
 
 ### `@stickyTimeout`
 
-When a group of tooltips is in sticky mode (and so they have no show delays), after a period of time they will revert back to their normal delays. Use this argument to tweak that behaviour.
+Optional. When a group of tooltips is in sticky mode (and so they have no show delays), after a period of time they will revert back to their normal delays. Use this argument to tweak that behaviour.
 
 ### `@onLoad`
 
-When a reference element is hovered over, `@onLoad` will be fired. You can respond to this action by returning a promise. The result of that promise will be available in the tooltip's template as `@tooltip.data`. This is a good way preload any data required for the tooltip to display.
+Optional. When an element is hovered over, `@onLoad` will be fired. You can respond to this action by returning a promise. The result of that promise will be available in the tooltip's template as `@tooltip.data`. This is a good way preload any data required for the tooltip to display.
 
-In the following example, there is a show delay of 300ms before a tooltip will appear. During that time it is loading some data. If the load delay exceeds the show delay, the difference will be subtracted from the show delay.
+In the following example, there is a show delay of 300ms before a tooltip will appear. But, _during that time_ it is loading some data. If the load delay exceeds the show delay, the difference will be subtracted from the show delay.
 
 ```handlebars
 {{! application.hbs }}
@@ -102,15 +106,19 @@ In the following example, there is a show delay of 300ms before a tooltip will a
 
 ### `@position`
 
-Tooltips will be automatically positioned around the outside edge of the reference element if no `@position` is specified.
+Optional. Tooltips will be automatically positioned around the outside edge of the element if no `@position` is specified.
 
-You can use the arguments `@rows` and `@columns` to tweak how the viewport is split into a grid, thereby altering the positioning algorithm.
+#### Example
+
+If the element is positioned in the 'bottom left' of the viewport, then tooltip will be displayed _above_, so as to remain visible.
+
+You can use the arguments `@rows` and `@columns` to tweak how the positioning algorithm decides what 'bottom left' means.
 
 Please see the [positioning library](https://github.com/zestia/position-utils#zestiaposition-utils) for more information on the possible positions.
 
 #### Custom positioning
 
-You can set `@position` to be a function. Your function will receive the reference element's position in the viewport. You are then free to return an appropriate counter position for your tooltip. e.g:
+You can set `@position` to be a function. It will receive the element's position in the viewport. You are then free to return an appropriate counter position for your tooltip. e.g:
 
 ```javascript
 position() {

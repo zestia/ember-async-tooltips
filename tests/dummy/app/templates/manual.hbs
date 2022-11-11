@@ -19,7 +19,9 @@
     {{on "blur" this.hideTooltip}}
   />
 
-  <Tooltip @show={{this.shouldShowTooltip}}>
-    Hello World
-  </Tooltip>
+  {{#if this.shouldShowTooltip}}
+    <Tooltip @show={{true}}>
+      Hello World
+    </Tooltip>
+  {{/if}}
 </div>

@@ -31,6 +31,7 @@ export default class TooltipComponent extends Component {
   showTimer = null;
   stickyTimer = null;
   tooltipperElement = null;
+  positionElement = null;
   willInsertTooltip = null;
 
   get hasTooltip() {
@@ -384,6 +385,7 @@ export default class TooltipComponent extends Component {
 
   _setUp() {
     this.tooltipperElement = this._getTooltipperElement();
+    this.positionElement = this._getPositionElement();
     this.tooltipperElement.classList.add('tooltipper');
 
     this._add('mouseenter', this.handleMouseEnterTooltipperElement);
@@ -431,12 +433,18 @@ export default class TooltipComponent extends Component {
   }
 
   _getTooltipperElement() {
-    if (typeof this.args.element === 'string') {
-      return document.querySelector(this.args.element);
-    } else if (this.args.element instanceof HTMLElement) {
+    return this._getElement(this.args.element) ?? this.element.parentElement;
+  }
+
+  _getPositionElement() {
+    return this._getElement(this.args.attachTo) ?? this.tooltipperElement;
+  }
+
+  _getElement(element) {
+    if (typeof element === 'string') {
+      return document.querySelector(element);
+    } else if (element instanceof HTMLElement) {
       return this.args.element;
-    } else {
-      return this.element.parentElement;
     }
   }
 
@@ -457,14 +465,14 @@ export default class TooltipComponent extends Component {
     // Get the rough position of the tooltipper element in the viewport by
     // splitting it in to a grid of rows and columns and choosing a square.
 
-    return getPosition(this.tooltipperElement, window, this.columns, this.rows);
+    return getPosition(this.positionElement, window, this.columns, this.rows);
   }
 
   _computeCoords(position) {
     // Compute the coordinates required to place the tooltip element at the
-    // given position near the tooltipper element.
+    // given position near the tooltipper, or the specified attach-to element.
 
-    return getCoords(position, this.tooltipElement, this.tooltipperElement);
+    return getCoords(position, this.tooltipElement, this.positionElement);
   }
 
   _decideTooltipPosition(tooltipperPosition) {
@@ -483,7 +491,7 @@ export default class TooltipComponent extends Component {
   }
 
   _positionTooltip() {
-    if (!this.tooltipElement || !this.tooltipperElement) {
+    if (!this.tooltipElement || !this.positionElement) {
       return;
     }
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## 15.0.0-beta.1
+
+- Add `@attachTo` argument
+
 ## 15.0.0-beta.0
 
 - Removed `<Tooltipper />` component

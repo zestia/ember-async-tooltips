@@ -1,0 +1,24 @@
+<p>
+  Trigger the tooltip on mouse over of an element, but position the tooltip to a
+  child element
+</p>
+
+<p>
+  <a
+    href="https://github.com/zestia/ember-async-tooltips/blob/master/tests/dummy/app/templates/attach-to.hbs"
+  >
+    hbs
+  </a>
+</p>
+
+<div>
+  Hover over me
+
+  {{#let (unique-id) as |id|}}
+    <small id={{id}}>ⓘ</small>
+
+    <Tooltip @attachTo="#{{id}}" @position="bottom center">
+      Hello World
+    </Tooltip>
+  {{/let}}
+</div>

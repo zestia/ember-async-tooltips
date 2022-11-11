@@ -16,7 +16,7 @@ Router.map(function () {
   this.route('manual-position');
   this.route('auto-position');
   this.route('in-element');
-  this.route('interactive-content');
+  this.route('attach-to');
   this.route('sticky');
   this.route('tether');
 });
