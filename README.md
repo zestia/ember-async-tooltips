@@ -60,7 +60,7 @@ Optional. By default, tooltips are rendered in-place. Specify a destination if y
 
 ### `@attachTo`
 
-Optional. By default, tooltips will be positioned next to the element that caused them to display. Unless this argument is specified, in which case the tooltip will show when mousing over `@element`, but will be positioned next to a different element.
+Optional. By default, tooltips will be positioned next to the element that caused them to display. Unless this argument is specified, in which case the tooltip will show when mousing over the element, but will then be positioned next to a _different_ element.
 
 ### `@show`
 
