@@ -20,7 +20,7 @@ ember install @zestia/ember-async-tooltips
 
 ## Demo
 
-https://zestia.github.io/ember-async-tooltips/
+https://zestia.github.io/ember-async-tooltips
 
 ## Features
 
