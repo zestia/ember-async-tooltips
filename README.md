@@ -49,25 +49,27 @@ https://zestia.github.io/ember-async-tooltips
 </div>
 ```
 
-## Arguments
+## `Tooltip`
 
-### `@element`
+### Arguments
+
+#### `@element`
 
 Optional. By default, the parent of the tooltip element is what causes the tooltip to show & hide, and is _also_ the element it will be positioned next to.
 
-### `@destination`
+#### `@destination`
 
 Optional. By default, tooltips are rendered in-place. Specify a destination if you want to render them in that element instead.
 
-### `@attachTo`
+#### `@attachTo`
 
 Optional. By default, tooltips will be positioned next to the element that caused them to display. Unless this argument is specified, in which case the tooltip will show when mousing over the element, but will then be positioned next to a _different_ element.
 
-### `@show`
+#### `@show`
 
 Optional. By default, tooltips will display when hovering over the reference element. But you can use this argument to force a tooltip to display.
 
-### `@showDelay`
+#### `@showDelay`
 
 Optional. The show delay will prevent the tooltip from being shown until the specified milliseconds have passed after entering the reference element.
 
@@ -75,15 +77,15 @@ Optional. The show delay will prevent the tooltip from being shown until the spe
 
 Optional. The hide delay will prevent the tooltip from being hidden until the specified milliseconds have passed after leaving the reference element.
 
-### `@stickyID`
+#### `@stickyID`
 
 Optional. You can group tooltips together with a sticky identifier. When a tooltip from a group of tooltips all with the same identifier is shown, then other tooltips in that group will show instantly - ignoring their show delay. The term sticky is used because it feels as if the tooltips are stuck open.
 
-### `@stickyTimeout`
+#### `@stickyTimeout`
 
 Optional. When a group of tooltips is in sticky mode (and so they have no show delays), after a period of time they will revert back to their normal delays. Use this argument to tweak that behaviour.
 
-### `@onLoad`
+#### `@onLoad`
 
 Optional. When an element is hovered over, `@onLoad` will be fired. You can respond to this action by returning a promise. The result of that promise will be available in the tooltip's template as `@tooltip.data`. This is a good way preload any data required for the tooltip to display.
 
@@ -105,11 +107,11 @@ In the following example, there is a show delay of 300ms before a tooltip will a
 </Tooltip>
 ```
 
-### `@position`
+#### `@position`
 
 Optional. Tooltips will be automatically positioned around the outside edge of the element if no `@position` is specified.
 
-#### Example
+##### Example
 
 If the element is positioned in the 'bottom left' of the viewport, then tooltip will be displayed _above_, so as to remain visible.
 
@@ -117,7 +119,7 @@ You can use the arguments `@rows` and `@columns` to tweak how the positioning al
 
 Please see the [positioning library](https://github.com/zestia/position-utils#zestiaposition-utils) for more information on the possible positions.
 
-#### Custom positioning
+##### Custom positioning
 
 You can set `@position` to be a function. It will receive the element's position in the viewport. You are then free to return an appropriate counter position for your tooltip. e.g:
 
@@ -131,21 +133,19 @@ position() {
 }
 ```
 
-# API
+### API
 
-The tooltip yields an API with:
+#### `hide`
 
-- The ability to manually hide it
-- Any data that was loaded
-- Any error if the data was not loaded
+Hides the tooltip (waiting for any animations), then un-renders it.
 
-```handlebars
-<Tooltip as |tooltip|>
-  {{!tooltip.hide}}
-  {{!tooltip.data}}
-  {{!tooltip.error}}
-</Tooltip>
-```
+#### `data`
+
+Any data that was loaded via `@onLoad`
+
+#### `error`
+
+Any error if the data was `@onLoad` failed
 
 # Animating
 
