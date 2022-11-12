@@ -117,7 +117,7 @@ In the following example, there is a show delay of 300ms before a tooltip will a
 
 Optional. Tooltips will be automatically positioned around the outside edge of the element if no `@position` is specified.
 
-For example: If the element is positioned in the 'bottom left' of the viewport, then tooltip will be displayed _above_, so as to remain visible.
+For example: If the element is positioned in the 'bottom left' of the viewport, then the tooltip will be displayed _above_, so as to remain visible.
 
 You can use the arguments `@rows` and `@columns` to tweak how the positioning algorithm decides what 'bottom left' means. See the [positioning library](https://github.com/zestia/position-utils#zestiaposition-utils) for more information.
 
