@@ -73,7 +73,7 @@ Optional. By default, tooltips will display when hovering over the reference ele
 
 Optional. The show delay will prevent the tooltip from being shown until the specified milliseconds have passed after entering the reference element.
 
-### `@hideDelay`
+#### `@hideDelay`
 
 Optional. The hide delay will prevent the tooltip from being hidden until the specified milliseconds have passed after leaving the reference element.
 
