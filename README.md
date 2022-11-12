@@ -91,21 +91,27 @@ Optional. When an element is hovered over, `@onLoad` will be fired. You can resp
 
 In the following example, there is a show delay of 300ms before a tooltip will appear. But, _during that time_ it is loading some data. If the load delay exceeds the show delay, the difference will be subtracted from the show delay.
 
+<details>
+  <summary>Example</summary>
+  
 ```handlebars
 {{! application.hbs }}
 <LinkTo @route='user' @model={{123}}>
   Preview user
 
-  <UserTooltip @id={{123}} />
+<UserTooltip @id={{123}} />
 </LinkTo>
-```
+
+````
 
 ```handlebars
 {{! user-tooltip.hbs }}
 <Tooltip @showDelay={{300}} @onLoad={{fn this.loadUser @id}} as |tooltip|>
   {{tooltip.data.user.name}}
 </Tooltip>
-```
+````
+
+</details>
 
 #### `@position`
 
@@ -123,6 +129,9 @@ Please see the [positioning library](https://github.com/zestia/position-utils#ze
 
 You can set `@position` to be a function. It will receive the element's position in the viewport. You are then free to return an appropriate counter position for your tooltip. e.g:
 
+<details>
+  <summary>Example</summary>
+
 ```javascript
 position() {
   switch(referencePosition) {
@@ -132,6 +141,8 @@ position() {
   }
 }
 ```
+
+</details>
 
 ### API
 
