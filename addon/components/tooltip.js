@@ -22,6 +22,7 @@ export default class TooltipComponent extends Component {
   @tracked tooltipCoords = [0, 0];
   @tracked tooltipElement = null;
   @tracked tooltipPosition = null;
+
   hideTimer = null;
   isLoaded = false;
   isOverTooltipElement = false;
