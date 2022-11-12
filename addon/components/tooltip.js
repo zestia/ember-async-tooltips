@@ -218,8 +218,6 @@ export default class TooltipComponent extends Component {
     }
   }
 
-  _stopListening() {}
-
   _load(data) {
     this._loadStarted();
 
