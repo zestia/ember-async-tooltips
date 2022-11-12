@@ -128,7 +128,7 @@ You can also set `@position` to be a function. It will receive the element's pos
 
 ```javascript
 position() {
-  switch(referencePosition) {
+  switch(tooltipperPosition) {
     case 'top right':
       return 'left top';
     // ...
