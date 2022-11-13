@@ -15,7 +15,7 @@ Router.map(function () {
   this.route('delays');
   this.route('manual-position');
   this.route('auto-position');
-  this.route('in-element');
+  this.route('destination');
   this.route('attach-to');
   this.route('sticky');
   this.route('tether');
