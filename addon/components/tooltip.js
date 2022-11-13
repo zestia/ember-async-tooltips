@@ -29,10 +29,11 @@ export default class TooltipComponent extends Component {
   isOverTooltipElement = false;
   isOverTooltipperElement = false;
   loadDuration = 0;
+  positionElement = null;
   showTimer = null;
   stickyTimer = null;
+  tetherID = null;
   tooltipperElement = null;
-  positionElement = null;
   willInsertTooltip = null;
 
   get hasTooltip() {
