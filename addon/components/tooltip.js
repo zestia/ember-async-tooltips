@@ -461,8 +461,8 @@ export default class TooltipComponent extends Component {
     cancelAnimationFrame(this.tetherID);
   }
 
-  _getTooltipperPosition() {
-    // Get the rough position of the tooltipper element in the viewport by
+  _getReferencePosition() {
+    // Get the rough position of the position-element in the viewport by
     // splitting it in to a grid of rows and columns and choosing a square.
 
     return getPosition(this.positionElement, window, this.columns, this.rows);
@@ -470,23 +470,24 @@ export default class TooltipComponent extends Component {
 
   _computeCoords(position) {
     // Compute the coordinates required to place the tooltip element at the
-    // given position near the tooltipper, or the specified attach-to element.
+    // given position next to the position-element.
 
     return getCoords(position, this.tooltipElement, this.positionElement);
   }
 
-  _decideTooltipPosition(tooltipperPosition) {
+  _decideTooltipPosition() {
     // The position of the tooltip should be the one provided, or one chosen
-    // automatically, based upon the position of the tooltipper element.
+    // automatically, based upon the position of the reference element.
 
     const { position } = this.args;
+    const referencePosition = this._getReferencePosition();
 
     if (typeof position === 'string') {
       return position;
     } else if (typeof position === 'function') {
-      return position(tooltipperPosition);
+      return position(referencePosition);
     } else {
-      return autoPosition(tooltipperPosition);
+      return autoPosition(referencePosition);
     }
   }
 
@@ -495,9 +496,7 @@ export default class TooltipComponent extends Component {
       return;
     }
 
-    const tooltipperPosition = this._getTooltipperPosition();
-
-    const tooltipPosition = this._decideTooltipPosition(tooltipperPosition);
+    const tooltipPosition = this._decideTooltipPosition();
 
     this.tooltipCoords = this._computeCoords(tooltipPosition);
 
