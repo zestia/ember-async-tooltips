@@ -3,41 +3,64 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { next, later } from '@ember/runloop';
 import { Promise } from 'rsvp';
+const { max } = Math;
 
 export default class DelaysController extends Controller {
+  @tracked isEager = true;
   @tracked showDelay = 500;
   @tracked hideDelay = 0;
-  @tracked loadDelay = 500;
+  @tracked loadDuration = 100;
   @tracked isLoading = false;
   @tracked isLoaded = false;
   @tracked showTooltipper = true;
 
+  get isLazy() {
+    return !this.isEager;
+  }
+
+  get showLoading() {
+    return this.isEager && this.isLoading && this.loadDuration > 0;
+  }
+
+  get totalPossibleDelay() {
+    return this.loadDuration + this.showDelay;
+  }
+
   get totalDelay() {
-    if (this.useAdjustedLoadDelay) {
-      return this.adjustedDelay;
-    } else {
-      return this.showDelay;
+    if (this.isEager) {
+      if (this.loadDuration > this.showDelay) {
+        return this.loadDuration;
+      } else {
+        return this.showDelay;
+      }
     }
+
+    return this.totalPossibleDelay;
   }
 
-  get expectedDelay() {
-    return this.showDelay + this.loadDelay;
+  get timeSaved() {
+    if (this.isEager) {
+      if (this.loadDuration > this.showDelay) {
+        return this.showDelay;
+      } else {
+        return this.loadDuration;
+      }
+    }
+
+    return 0;
   }
 
-  get useAdjustedLoadDelay() {
-    return !this.isLoaded && this.loadDelayGreaterThanShowDelay;
+  get actualShowDelay() {
+    if (this.isEager) {
+      return max(this.showDelay - this.loadDuration, 0);
+    }
+
+    return this.showDelay;
   }
 
-  get loadDelayGreaterThanShowDelay() {
-    return this.loadDelay > this.showDelay;
-  }
-
-  get adjustedDelay() {
-    return this.loadDelayMinusShowDelay + this.showDelay;
-  }
-
-  get loadDelayMinusShowDelay() {
-    return this.loadDelay - this.showDelay;
+  @action
+  setEager({ target: { checked } }) {
+    this.isEager = checked;
   }
 
   @action
@@ -51,8 +74,8 @@ export default class DelaysController extends Controller {
   }
 
   @action
-  setLoadDelay({ target: { value } }) {
-    this.loadDelay = parseInt(value || 0, 10);
+  setLoadDuration({ target: { value } }) {
+    this.loadDuration = parseInt(value || 0, 10);
   }
 
   @action
@@ -63,8 +86,8 @@ export default class DelaysController extends Controller {
       later(() => {
         this.isLoading = false;
         this.isLoaded = true;
-        resolve();
-      }, this.loadDelay);
+        resolve({ message: 'Hello World' });
+      }, this.loadDuration);
     });
   }
 

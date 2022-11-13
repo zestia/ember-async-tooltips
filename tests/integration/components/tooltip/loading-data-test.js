@@ -87,4 +87,34 @@ module('tooltip | loading data', function (hooks) {
 
     assert.dom('.tooltip').doesNotExist();
   });
+
+  test('loading data with show arg', async function (assert) {
+    assert.expect(4);
+
+    const deferred = defer();
+
+    this.loadTooltip = () => {
+      assert.step('load tooltip');
+
+      return deferred.promise;
+    };
+
+    await render(hbs`
+      <div>
+        <Tooltip @onLoad={{this.loadTooltip}} @show={{true}} as |tooltip|>
+          {{tooltip.data.greeting}}
+        </Tooltip>
+      </div>
+    `);
+
+    assert.dom('.tooltip').doesNotContainText('Hello World');
+
+    assert.verifySteps(['load tooltip']);
+
+    deferred.resolve({ greeting: 'Hello World' });
+
+    await settled();
+
+    assert.dom('.tooltip').containsText('Hello World');
+  });
 });

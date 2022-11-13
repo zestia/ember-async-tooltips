@@ -4,12 +4,13 @@ import { getPosition, getCoords } from '@zestia/position-utils';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
 import { inject } from '@ember/service';
-import { defer, resolve } from 'rsvp';
+import { defer } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';
 import { waitForAnimation } from '@zestia/animation-utils';
 import autoPosition from '../utils/auto-position';
 import { action } from '@ember/object';
+const { max } = Math;
 
 export default class TooltipComponent extends Component {
   @inject('tooltip') tooltipService;
@@ -27,8 +28,7 @@ export default class TooltipComponent extends Component {
   isLoaded = false;
   isOverTooltipElement = false;
   isOverTooltipperElement = false;
-  loadEndTime = 0;
-  loadStartTime = 0;
+  loadDuration = 0;
   showTimer = null;
   stickyTimer = null;
   tooltipperElement = null;
@@ -40,7 +40,7 @@ export default class TooltipComponent extends Component {
   }
 
   get canRenderTooltip() {
-    return this.needsToShowTooltip && !this.childTooltip;
+    return !this.isDestroyed && this.needsToShowTooltip && !this.childTooltip;
   }
 
   get id() {
@@ -65,10 +65,6 @@ export default class TooltipComponent extends Component {
     return htmlSafe(`top: ${y}px; left: ${x}px`);
   }
 
-  get loadDelay() {
-    return this.loadEndTime - this.loadStartTime;
-  }
-
   get hideDelay() {
     return this.args.hideDelay ?? 0;
   }
@@ -77,16 +73,20 @@ export default class TooltipComponent extends Component {
     return this.args.showDelay ?? 0;
   }
 
-  get stickyTimeout() {
-    return this.args.stickyTimeout ?? this.showDelay / 2;
-  }
-
-  get showRemainder() {
-    if (this.loadDelay > this.showDelay || this.isSticky) {
+  get actualShowDelay() {
+    if (this.isSticky) {
       return 0;
     }
 
-    return this.showDelay - this.loadDelay;
+    if (this.isEager) {
+      return max(this.showDelay - this.loadDuration, 0);
+    }
+
+    return this.showDelay;
+  }
+
+  get stickyTimeout() {
+    return this.args.stickyTimeout ?? this.showDelay / 2;
   }
 
   get needsToShowTooltip() {
@@ -119,8 +119,23 @@ export default class TooltipComponent extends Component {
     });
   }
 
+  get shouldLoad() {
+    return (
+      typeof this.args.onLoad === 'function' &&
+      !(this.isLoading || this.isLoaded)
+    );
+  }
+
+  get shouldLoadEagerly() {
+    return this.isEager && this.shouldLoad;
+  }
+
+  get isEager() {
+    return this.args.eager ?? true;
+  }
+
   get isSticky() {
-    return this.tooltipService.sticky[this.args.stickyID] === true;
+    return this.tooltipService._sticky[this.args.stickyID] === true;
   }
 
   get api() {
@@ -145,7 +160,7 @@ export default class TooltipComponent extends Component {
   @action
   handleInsertTooltip(element) {
     this.tooltipElement = element;
-    this.tooltipService.add(this);
+    this.tooltipService._add(this);
     this._update();
     this.willInsertTooltip.resolve();
   }
@@ -156,7 +171,7 @@ export default class TooltipComponent extends Component {
     this.isOverTooltipElement = false;
     this.shouldRenderTooltip = false;
     this._updateTooltipper();
-    this.tooltipService.remove(this);
+    this.tooltipService._remove(this);
   }
 
   @action
@@ -166,10 +181,16 @@ export default class TooltipComponent extends Component {
   }
 
   @action
-  handleMouseEnterTooltipperElement() {
+  async handleMouseEnterTooltipperElement() {
     this.isOverTooltipperElement = true;
 
-    this._loadOnce().then(() => this._scheduleShowTooltip());
+    if (this.shouldLoadEagerly) {
+      await this._load();
+    }
+
+    this._scheduleShowTooltip();
+
+    this.loadDuration = 0;
   }
 
   @action
@@ -218,55 +239,29 @@ export default class TooltipComponent extends Component {
     }
   }
 
-  _load(data) {
-    this._loadStarted();
-
-    return resolve(data)
-      .then(this._loadedData.bind(this))
-      .catch(this._loadError.bind(this))
-      .finally(this._loadFinished.bind(this));
-  }
-
-  _loadOnce() {
-    if (this.isLoading) {
-      return new Promise(() => {});
-    } else if (this.isLoaded) {
-      return this._load(this.loadedData);
-    } else if (typeof this.args.onLoad === 'function') {
-      return this._load(this.args.onLoad());
-    } else {
-      return resolve();
-    }
-  }
-
-  _loadStarted() {
-    this.loadStartTime = Date.now();
+  async _load() {
+    const start = Date.now();
     this.isLoading = true;
     this._update();
-  }
 
-  _loadFinished() {
-    this.loadEndTime = Date.now();
-    this.isLoading = false;
-    this._update();
-  }
-
-  _loadedData(data) {
-    this.loadedData = data;
-    this.loadError = null;
-    this.isLoaded = true;
-  }
-
-  _loadError(error) {
-    this.loadError = error;
-    this.loadedData = null;
-    this.isLoaded = false;
+    try {
+      this.loadedData = await this.args.onLoad?.();
+      this.isLoaded = true;
+    } catch (error) {
+      this.loadError = error;
+      this.isLoaded = false;
+    } finally {
+      const end = Date.now();
+      this.loadDuration = end - start;
+      this.isLoading = false;
+      this._update();
+    }
   }
 
   _scheduleShowTooltip() {
     this._cancelTimers();
 
-    this.showTimer = later(this, '_attemptShowTooltip', this.showRemainder);
+    this.showTimer = later(this, '_attemptShowTooltip', this.actualShowDelay);
   }
 
   _attemptShowTooltip() {
@@ -281,17 +276,21 @@ export default class TooltipComponent extends Component {
     this._showTooltip();
   }
 
-  _showTooltip() {
+  async _showTooltip() {
     this.shouldShowTooltip = true;
 
     if (this.shouldRenderTooltip) {
       return;
     }
 
-    this._loadOnce()
-      .then(() => this._renderTooltip())
-      .then(() => this._waitForAnimation())
-      .then(() => this._handleShow());
+    if (this.shouldLoad) {
+      this._load();
+    }
+
+    await this._renderTooltip();
+    await this._waitForAnimation();
+
+    this._handleShow();
   }
 
   _renderTooltip() {
@@ -315,16 +314,16 @@ export default class TooltipComponent extends Component {
     this._hideTooltip();
   }
 
-  _hideTooltip() {
+  async _hideTooltip() {
     if (!this.tooltipElement) {
       return;
     }
 
     this.shouldShowTooltip = false;
 
-    return this._waitForAnimation()
-      .then(() => this._handleHide())
-      .then(() => this._attemptDestroyTooltip());
+    await this._waitForAnimation();
+
+    this._handleHide();
   }
 
   _cancelTimers() {
@@ -342,12 +341,12 @@ export default class TooltipComponent extends Component {
       return;
     }
 
-    this.tooltipService.setSticky(this, false);
+    this.tooltipService._setSticky(this, false);
   }
 
   _handleShow() {
     if (this.args.stickyID) {
-      this.tooltipService.setSticky(this, true);
+      this.tooltipService._setSticky(this, true);
     }
 
     this._startTether();
@@ -361,6 +360,7 @@ export default class TooltipComponent extends Component {
     }
 
     this._stopTether();
+    this._attemptDestroyTooltip();
 
     this.args.onHide?.();
   }

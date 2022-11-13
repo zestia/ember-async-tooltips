@@ -89,7 +89,7 @@ Optional. When a group of tooltips is in sticky mode (and so they have no show d
 
 Optional. When an element is hovered over, `@onLoad` will be fired. You can respond to this action by returning a promise. The result of that promise will be available in the tooltip's template as `@tooltip.data`. This is a good way preload any data required for the tooltip to display.
 
-In the following example, there is a show delay of 300ms before a tooltip will appear. But, _during that time_ it is loading some data. If the load delay exceeds the show delay, the difference will be subtracted from the show delay.
+In the following example, there is a show delay of 300ms before a tooltip will appear. But, _during that time_ it is loading some data. If the load duration exceeds the show delay, the difference will be subtracted from the show delay.
 
 <details>
   <summary>Example</summary>
@@ -113,6 +113,10 @@ In the following example, there is a show delay of 300ms before a tooltip will a
 
 </details>
 
+#### `@eager`
+
+Optional. When true, `@onLoad` is fired when the mouse enters the reference element, this is so data required for the tooltip to display will arrive sooner. When false `@onLoad` is fired when the tooltip displays. Defaults to true.
+
 #### `@position`
 
 Optional. Tooltips will be automatically positioned around the outside edge of the element if no `@position` is specified.
@@ -127,8 +131,8 @@ You can also set `@position` to be a function. It will receive the element's pos
   <summary>Example</summary>
 
 ```javascript
-position() {
-  switch(tooltipperPosition) {
+position(referencePosition) {
+  switch(referencePosition) {
     case 'top right':
       return 'left top';
     // ...
