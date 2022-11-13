@@ -114,7 +114,7 @@ In the following example, there is a show delay of `300`ms before a tooltip will
 
 #### `@eager`
 
-Optional. When `true`, `@onLoad` is fired when the mouse enters the reference element, this is so data required for the tooltip to display will arrive sooner. When `false`, `@onLoad` is fired when the tooltip displays. Defaults to `true`.
+Optional. If `true`, `@onLoad` is fired when the mouse enters the reference element, this is so data required for the tooltip to display will arrive sooner. When `false`, `@onLoad` is fired when the tooltip displays. Defaults to `true`.
 
 #### `@position`
 
