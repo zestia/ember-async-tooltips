@@ -223,11 +223,6 @@ export default class TooltipComponent extends Component {
     this._showTooltip();
   }
 
-  @action
-  reposition() {
-    this._positionTooltip();
-  }
-
   _handleManualToggling() {
     next(() => this._maybeToggleViaArg());
   }
