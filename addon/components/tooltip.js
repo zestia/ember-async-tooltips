@@ -438,7 +438,9 @@ export default class TooltipComponent extends Component {
   _getElement(element) {
     if (typeof element === 'string') {
       return document.querySelector(element);
-    } else if (element instanceof HTMLElement) {
+    }
+
+    if (element instanceof HTMLElement) {
       return this.args.element;
     }
   }
@@ -457,44 +459,39 @@ export default class TooltipComponent extends Component {
   }
 
   _getReferencePosition() {
-    // Get the rough position of the position-element in the viewport by
-    // splitting it in to a grid of rows and columns and choosing a square.
-
     return getPosition(this.positionElement, window, this.columns, this.rows);
   }
 
-  _computeCoords(position) {
-    // Compute the coordinates required to place the tooltip element at the
-    // given position next to the position-element.
-
-    return getCoords(position, this.tooltipElement, this.positionElement);
+  _computeTooltipCoords() {
+    return getCoords(
+      this.tooltipPosition,
+      this.tooltipElement,
+      this.positionElement
+    );
   }
 
   _decideTooltipPosition() {
-    // The position of the tooltip should be the one provided, or one chosen
-    // automatically, based upon the position of the reference element.
-
     const { position } = this.args;
-    const referencePosition = this._getReferencePosition();
 
     if (typeof position === 'string') {
       return position;
-    } else if (typeof position === 'function') {
-      return position(referencePosition);
-    } else {
-      return autoPosition(referencePosition);
     }
+
+    const referencePosition = this._getReferencePosition();
+
+    if (typeof position === 'function') {
+      return position(referencePosition);
+    }
+
+    return autoPosition(referencePosition);
   }
 
   _positionTooltip() {
-    if (!this.tooltipElement || !this.positionElement) {
+    if (!this.hasTooltip) {
       return;
     }
 
-    const tooltipPosition = this._decideTooltipPosition();
-
-    this.tooltipCoords = this._computeCoords(tooltipPosition);
-
-    this.tooltipPosition = tooltipPosition;
+    this.tooltipPosition = this._decideTooltipPosition();
+    this.tooltipCoords = this._computeTooltipCoords();
   }
 }
