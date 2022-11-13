@@ -89,7 +89,7 @@ Optional. When a group of tooltips is in sticky mode (and so they have no show d
 
 Optional. When an element is hovered over, `@onLoad` will be fired. You can respond to this action by returning a promise. The result of that promise is available on the API. This is a good way preload any data required for the tooltip to display.
 
-In the following example, there is a show delay of 300ms before a tooltip will appear. But, _during that time_ it is loading some data. If the load duration exceeds the show delay, the difference will be subtracted from the show delay.
+In the following example, there is a show delay of `300`ms before a tooltip will appear. But, _during that time_ it is loading some data which takes `50`ms. The actual show delay is reduced to `250`ms, so that the total delay remains at `300`ms.
 
 <details>
   <summary>Example</summary>
@@ -98,8 +98,7 @@ In the following example, there is a show delay of 300ms before a tooltip will a
 {{! application.hbs }}
 <LinkTo @route='user' @model={{123}}>
   Preview user
-
-<UserTooltip @id={{123}} />
+  <UserTooltip @id={{123}} />
 </LinkTo>
 
 ````
