@@ -10,15 +10,15 @@ module('tooltip | basic', function (hooks) {
     assert.expect(7);
 
     await render(hbs`
-      <div><Tooltip class="example" /></div>
+      <div class="parent"><Tooltip class="example" /></div>
     `);
 
-    assert.dom('div').hasClass('tooltipper');
+    assert.dom('.parent').hasClass('tooltipper');
     assert.dom('.tooltipper > span.__tooltip__').isNotVisible();
     assert.dom('.example').doesNotExist();
     assert.dom('.tooltip').doesNotExist();
 
-    await triggerEvent('div', 'mouseenter');
+    await triggerEvent('.tooltipper', 'mouseenter');
 
     assert.dom('.tooltipper > .tooltip').exists();
     assert.dom('.tooltip').hasClass('example');

@@ -151,7 +151,7 @@ export default class TooltipComponent extends Component {
   @action
   handleInsertElement(element) {
     this.element = element;
-    // this._update();
+    this._update();
   }
 
   @action
@@ -163,7 +163,9 @@ export default class TooltipComponent extends Component {
   handleInsertTooltip(element) {
     this.tooltipElement = element;
     this.tooltipService._add(this);
-    this._update();
+    this._updateTooltipper();
+    this._handleManualToggling();
+    this._positionTooltip();
     this.willInsertTooltip.resolve();
   }
 
@@ -239,7 +241,7 @@ export default class TooltipComponent extends Component {
   async _load() {
     const start = Date.now();
     this.isLoading = true;
-    this._update();
+    this._updateTooltipper();
 
     try {
       this.loadedData = await this.args.onLoad?.();
@@ -251,7 +253,7 @@ export default class TooltipComponent extends Component {
       const end = Date.now();
       this.loadDuration = end - start;
       this.isLoading = false;
-      this._update();
+      this._updateTooltipper();
     }
   }
 

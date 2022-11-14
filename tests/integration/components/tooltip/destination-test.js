@@ -12,17 +12,17 @@ module('tooltip | destination', function (hooks) {
     this.register = (element) => this.set('elsewhere', element);
 
     await render(hbs`
-      <div class="parent">
+      <div>
         <Tooltip @destination={{this.elsewhere}} />
       </div>
 
       <div class="elsewhere" {{did-insert this.register}}></div>
     `);
 
-    await triggerEvent('div', 'mouseenter');
+    await triggerEvent('.tooltipper', 'mouseenter');
 
     assert.dom('.tooltipper > .__tooltip__').exists();
-    assert.dom('.parent > .tooltip').doesNotExist();
+    assert.dom('.tooltipper > .tooltip').doesNotExist();
     assert.dom('.elsewhere > .tooltip').exists();
   });
 });

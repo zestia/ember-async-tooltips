@@ -7,20 +7,27 @@ module('tooltip | attach to', function (hooks) {
   setupTooltipperTest(hooks);
 
   test('display tooltip on mouse over tooltipper, but position it next to another element', async function (assert) {
-    assert.expect(3);
+    assert.expect(5);
+
+    this.attachTo = '#one';
 
     await render(hbs`
       <div class="parent">
         Hover over me
 
-        {{#let (unique-id) as |id|}}
-          <small id={{id}}>ⓘ</small>
-          <Tooltip @attachTo="#{{id}}" @position="bottom center" />
-        {{/let}}
+        <div id="one">
+          one
+        </div>
+
+        <div id="two">
+          two
+        </div>
+
+        <Tooltip @attachTo={{this.attachTo}} @position="bottom center" />
       </div>
     `);
 
-    await triggerEvent('div', 'mouseenter');
+    await triggerEvent('.tooltipper', 'mouseenter');
 
     assert.dom('.parent > .tooltip').exists();
 
@@ -29,7 +36,14 @@ module('tooltip | attach to', function (hooks) {
 
     this.style = getComputedStyle(find('.tooltip'));
 
-    assert.strictEqual(parseInt(this.style.left, 10), 67);
-    assert.strictEqual(parseInt(this.style.top, 10), 23);
+    assert.strictEqual(parseInt(this.style.left, 10), 37);
+    assert.strictEqual(parseInt(this.style.top, 10), 33);
+
+    this.set('attachTo', '#two');
+
+    this.style = getComputedStyle(find('.tooltip'));
+
+    assert.strictEqual(parseInt(this.style.left, 10), 37);
+    assert.strictEqual(parseInt(this.style.top, 10), 42);
   });
 });
