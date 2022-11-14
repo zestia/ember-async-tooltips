@@ -7,23 +7,30 @@
     @columns
     @element
     @position
+    @destination
     @rows
     @show
   }}
   {{will-destroy this.handleDestroyElement}}
 ></span>
 {{~#if this.shouldRenderTooltip~}}
-  {{~#let (component "-tooltip" tooltip=this) as |Tooltip|~}}
-    {{~#if @destination~}}
-      {{~#in-element @destination insertBefore=null~}}
-        <Tooltip ...attributes>
-          {{~yield this.api~}}
-        </Tooltip>
-      {{~/in-element~}}
-    {{~else~}}
-      <Tooltip ...attributes>
-        {{~yield this.api~}}
-      </Tooltip>
-    {{~/if~}}
-  {{~/let~}}
+  {{~#in-element this.destinationElement insertBefore=null~}}
+    <div
+      class="tooltip"
+      data-tooltip-showing="{{this.shouldShowTooltip}}"
+      data-tooltip-position={{this.tooltipPosition}}
+      data-tooltip-sticky="{{this.isSticky}}"
+      id={{this.tooltipId}}
+      style={{this.tooltipStyle}}
+      role="tooltip"
+      aria-live="polite"
+      {{did-insert this.handleInsertTooltip}}
+      {{will-destroy this.handleDestroyTooltip}}
+      {{on "mouseenter" this.handleMouseEnterTooltip}}
+      {{on "mouseleave" this.handleMouseLeaveTooltip}}
+      ...attributes
+    >
+      {{~yield this.api~}}
+    </div>
+  {{~/in-element~}}
 {{/if}}

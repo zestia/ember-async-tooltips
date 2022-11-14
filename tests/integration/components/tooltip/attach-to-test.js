@@ -7,10 +7,10 @@ module('tooltip | attach to', function (hooks) {
   setupTooltipperTest(hooks);
 
   test('display tooltip on mouse over tooltipper, but position it next to another element', async function (assert) {
-    assert.expect(2);
+    assert.expect(3);
 
     await render(hbs`
-      <div>
+      <div class="parent">
         Hover over me
 
         {{#let (unique-id) as |id|}}
@@ -20,14 +20,16 @@ module('tooltip | attach to', function (hooks) {
       </div>
     `);
 
-    await triggerEvent('.tooltipper', 'mouseenter');
+    await triggerEvent('div', 'mouseenter');
+
+    assert.dom('.parent > .tooltip').exists();
 
     // Note we don't use .hasStyle due to differences across browsers
     // and so we can round the numbers
 
     this.style = getComputedStyle(find('.tooltip'));
 
-    assert.strictEqual(parseInt(this.style.left, 10), 57);
-    assert.strictEqual(parseInt(this.style.top, 10), 13);
+    assert.strictEqual(parseInt(this.style.left, 10), 67);
+    assert.strictEqual(parseInt(this.style.top, 10), 23);
   });
 });

@@ -23,17 +23,18 @@ export default class TooltipComponent extends Component {
   @tracked tooltipCoords = [0, 0];
   @tracked tooltipElement = null;
   @tracked tooltipPosition = null;
+  @tracked destinationElement = null;
+  @tracked tooltipperElement = null;
+  @tracked positionElement = null;
 
   hideTimer = null;
   isLoaded = false;
   isOverTooltipElement = false;
   isOverTooltipperElement = false;
   loadDuration = 0;
-  positionElement = null;
   showTimer = null;
   stickyTimer = null;
   tetherID = null;
-  tooltipperElement = null;
   willInsertTooltip = null;
 
   get hasTooltip() {
@@ -150,7 +151,7 @@ export default class TooltipComponent extends Component {
   @action
   handleInsertElement(element) {
     this.element = element;
-    this._update();
+    // this._update();
   }
 
   @action
@@ -379,12 +380,22 @@ export default class TooltipComponent extends Component {
   }
 
   _setUp() {
-    this.tooltipperElement = this._getTooltipperElement();
-    this.positionElement = this._getPositionElement();
+    this._computeElements();
     this.tooltipperElement.classList.add('tooltipper');
 
     this._add('mouseenter', this.handleMouseEnterTooltipperElement);
     this._add('mouseleave', this.handleMouseLeaveTooltipperElement);
+  }
+
+  _computeElements() {
+    this.tooltipperElement =
+      this._getElement(this.args.element) ?? this.element.parentElement;
+
+    this.destinationElement =
+      this._getElement(this.args.destination) ?? this.element.parentElement;
+
+    this.positionElement =
+      this._getElement(this.args.attachTo) ?? this.tooltipperElement;
   }
 
   _update() {
@@ -427,21 +438,13 @@ export default class TooltipComponent extends Component {
     this.tooltipperElement.removeEventListener(...args);
   }
 
-  _getTooltipperElement() {
-    return this._getElement(this.args.element) ?? this.element.parentElement;
-  }
-
-  _getPositionElement() {
-    return this._getElement(this.args.attachTo) ?? this.tooltipperElement;
-  }
-
   _getElement(element) {
     if (typeof element === 'string') {
       return document.querySelector(element);
     }
 
     if (element instanceof HTMLElement) {
-      return this.args.element;
+      return element;
     }
   }
 

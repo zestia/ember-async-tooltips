@@ -1,5 +1,9 @@
 # Changelog
 
+## 15.0.0-beta.3
+
+- Internal refactoring
+
 ## 15.0.0-beta.2
 
 - Add `@eager` argument

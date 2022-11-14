@@ -10,7 +10,7 @@ module('tooltip | reference', function (hooks) {
     assert.expect(4);
 
     await render(hbs`
-      <div>
+      <div class="parent">
         <Tooltip @element={{this.referenceElement}} />
       </div>
 
@@ -24,7 +24,7 @@ module('tooltip | reference', function (hooks) {
 
     await triggerEvent('.reference-element-1', 'mouseenter');
 
-    assert.dom('.tooltip').exists();
+    assert.dom('.parent > .tooltip').exists();
 
     await triggerEvent('.reference-element-1', 'mouseleave');
 
@@ -36,11 +36,11 @@ module('tooltip | reference', function (hooks) {
 
     await triggerEvent('.reference-element-1', 'mouseenter');
 
-    assert.dom('.tooltip').doesNotExist();
+    assert.dom('.parent > .tooltip').doesNotExist();
 
     await triggerEvent('.reference-element-1', 'mouseleave');
     await triggerEvent('.reference-element-2', 'mouseenter');
 
-    assert.dom('.tooltip').exists();
+    assert.dom('.parent > .tooltip').exists();
   });
 });
