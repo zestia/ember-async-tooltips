@@ -19,7 +19,7 @@
 - Removed `@mouseEvents` argument
 - Added `@element` argument
 - Added `@destination` argument
-- Added `@show` argument
+- Renamed `@showTooltip` argument to `@show`
 - Renamed data attributes
 
 ## 14.6.1
