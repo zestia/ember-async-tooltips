@@ -8,7 +8,7 @@ module('tooltip | destroying', function (hooks) {
   setupTooltipperTest(hooks);
 
   test('destroying a tooltipper when about to show its tooltip', async function (assert) {
-    assert.expect(1);
+    assert.expect(2);
 
     this.show = true;
 
@@ -29,5 +29,6 @@ module('tooltip | destroying', function (hooks) {
     await settled();
 
     assert.dom('.tooltip').doesNotExist();
+    assert.dom('.tooltipper').doesNotExist();
   });
 });

@@ -162,11 +162,11 @@ export default class TooltipComponent extends Component {
   @action
   handleInsertTooltip(element) {
     this.tooltipElement = element;
-    this.tooltipService._add(this);
-    this._updateTooltipper();
-    this._handleManualToggling();
-    this._positionTooltip();
+    this._updateAria();
+    this._updateVisibility();
+    this._updatePosition();
     this.willInsertTooltip.resolve();
+    this.tooltipService._add(this);
   }
 
   @action
@@ -174,14 +174,14 @@ export default class TooltipComponent extends Component {
     this.tooltipElement = null;
     this.isOverTooltipElement = false;
     this.shouldRenderTooltip = false;
-    this._updateTooltipper();
+    this._updateAria();
     this.tooltipService._remove(this);
   }
 
   @action
   handleDestroyElement() {
     this._cancelTimers();
-    this._tearDown();
+    this._tearDownTooltipper();
   }
 
   @action
@@ -226,7 +226,7 @@ export default class TooltipComponent extends Component {
     this._showTooltip();
   }
 
-  _handleManualToggling() {
+  _updateVisibility() {
     next(() => this._maybeToggleViaArg());
   }
 
@@ -241,7 +241,7 @@ export default class TooltipComponent extends Component {
   async _load() {
     const start = Date.now();
     this.isLoading = true;
-    this._updateTooltipper();
+    this._updateLoading();
 
     try {
       this.loadedData = await this.args.onLoad?.();
@@ -253,7 +253,7 @@ export default class TooltipComponent extends Component {
       const end = Date.now();
       this.loadDuration = end - start;
       this.isLoading = false;
-      this._updateTooltipper();
+      this._updateLoading();
     }
   }
 
@@ -381,15 +381,18 @@ export default class TooltipComponent extends Component {
     this.shouldRenderTooltip = false;
   }
 
-  _setUp() {
-    this._computeElements();
-    this.tooltipperElement.classList.add('tooltipper');
+  _update() {
+    if (this.tooltipperElement) {
+      this._tearDownTooltipper();
+    }
 
-    this._add('mouseenter', this.handleMouseEnterTooltipperElement);
-    this._add('mouseleave', this.handleMouseLeaveTooltipperElement);
+    this._updateElements();
+    this._setUpTooltipper();
+    this._updateVisibility();
+    this._updatePosition();
   }
 
-  _computeElements() {
+  _updateElements() {
     this.tooltipperElement =
       this._getElement(this.args.element) ?? this.element.parentElement;
 
@@ -400,24 +403,24 @@ export default class TooltipComponent extends Component {
       this._getElement(this.args.attachTo) ?? this.tooltipperElement;
   }
 
-  _update() {
-    if (this.tooltipperElement) {
-      this._tearDown();
+  _updatePosition() {
+    if (!this.hasTooltip) {
+      return;
     }
 
-    this._setUp();
-    this._updateTooltipper();
-    this._handleManualToggling();
-    this._positionTooltip();
+    this.tooltipPosition = this._decideTooltipPosition();
+    this.tooltipCoords = this._computeTooltipCoords();
   }
 
-  _updateTooltipper() {
+  _updateAria() {
     if (this.hasTooltip) {
       this.tooltipperElement.setAttribute('aria-describedby', this.tooltipId);
     } else {
       this.tooltipperElement.removeAttribute('aria-describedby');
     }
+  }
 
+  _updateLoading() {
     if (this.isLoading) {
       this.tooltipperElement.dataset.tooltipLoading = 'true';
     } else {
@@ -425,11 +428,20 @@ export default class TooltipComponent extends Component {
     }
   }
 
-  _tearDown() {
-    this.tooltipperElement.classList.remove('tooltipper');
-
+  _tearDownTooltipper() {
     this._remove('mouseenter', this.handleMouseEnterTooltipperElement);
     this._remove('mouseleave', this.handleMouseLeaveTooltipperElement);
+
+    this.tooltipperElement.removeAttribute('aria-describedby');
+    this.tooltipperElement.classList.remove('tooltipper');
+    delete this.tooltipperElement.dataset.tooltipLoading;
+  }
+
+  _setUpTooltipper() {
+    this._add('mouseenter', this.handleMouseEnterTooltipperElement);
+    this._add('mouseleave', this.handleMouseLeaveTooltipperElement);
+
+    this.tooltipperElement.classList.add('tooltipper');
   }
 
   _add(...args) {
@@ -451,7 +463,7 @@ export default class TooltipComponent extends Component {
   }
 
   _tether() {
-    this._positionTooltip();
+    this._updatePosition();
     this.tetherID = requestAnimationFrame(this._tether.bind(this));
   }
 
@@ -489,14 +501,5 @@ export default class TooltipComponent extends Component {
     }
 
     return autoPosition(referencePosition);
-  }
-
-  _positionTooltip() {
-    if (!this.hasTooltip) {
-      return;
-    }
-
-    this.tooltipPosition = this._decideTooltipPosition();
-    this.tooltipCoords = this._computeTooltipCoords();
   }
 }
