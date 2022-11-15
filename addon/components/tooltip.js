@@ -173,7 +173,6 @@ export default class TooltipComponent extends Component {
   handleDestroyTooltip() {
     this.tooltipElement = null;
     this.isOverTooltipElement = false;
-    this.shouldRenderTooltip = false;
     this._updateAria();
     this.tooltipService._remove(this);
   }
