@@ -8,8 +8,8 @@
   position: absolute;
   top: 120px;
   left: 10px;
-  width: 160px;
-  padding: 20px;
+  width: 150px;
+  padding: 15px;
   text-align: center;
 }
 
@@ -21,8 +21,9 @@
   text-align: center;
 }
 
-.auto-position-page table {
+.auto-position-table {
   position: absolute;
+  z-index: -1;
   pointer-events: none;
   top: 0;
   left: 0;
