@@ -2,18 +2,16 @@
   Tooltip position is automatically re-computed
 </p>
 
-<div class="scroll-area">
-  <div>One</div>
-  <div>Two</div>
-  <div>Three</div>
-  <div>Four</div>
-  <div>
-    Five
-    <Tooltip @position="right middle" @show={{true}}>Five</Tooltip>
+{{#let (unique-id) as |id|}}
+  <div id={{id}} contenteditable>
+    Type in here
   </div>
-  <div>Six</div>
-  <div>Seven</div>
-  <div>Eight</div>
-  <div>Nine</div>
-  <div>Ten</div>
-</div>
+  <Tooltip
+    @position="right middle"
+    @show={{true}}
+    @element="#{{id}}"
+    @position="bottom center"
+  >
+    Tooltip
+  </Tooltip>
+{{/let}}
