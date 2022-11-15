@@ -109,12 +109,12 @@ module('tooltip | rendering', function (hooks) {
 
     const deferred = defer();
 
-    this.loadTooltip = () => deferred.promise;
+    this.load = () => deferred.promise;
 
     await render(hbs`
       {{#if this.show}}
         <div class="one">
-          <Tooltip @onLoad={{this.loadTooltip}} />
+          <Tooltip @onLoad={{this.load}} />
         </div>
       {{/if}}
 

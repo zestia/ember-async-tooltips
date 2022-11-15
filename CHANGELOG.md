@@ -1,5 +1,10 @@
 # Changelog
 
+## 15.0.0-beta.4
+
+- Clean up / remove unused component
+- Ensure tooltip is positioned immediately upon being shown
+
 ## 15.0.0-beta.3
 
 - Internal refactoring

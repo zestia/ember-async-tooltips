@@ -1,7 +1,8 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render, settled, triggerEvent } from '@ember/test-helpers';
+import { render, waitUntil, settled, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { waitForFrame } from '@zestia/animation-utils';
 import { defer } from 'rsvp';
 
 module('tooltip | loading data', function (hooks) {
@@ -12,7 +13,7 @@ module('tooltip | loading data', function (hooks) {
 
     const deferred = defer();
 
-    this.loadTooltip = () => {
+    this.load = () => {
       assert.step('load tooltip');
 
       return deferred.promise;
@@ -20,7 +21,7 @@ module('tooltip | loading data', function (hooks) {
 
     await render(hbs`
       <div>
-        <Tooltip @onLoad={{this.loadTooltip}} as |tooltip|>
+        <Tooltip @onLoad={{this.load}} as |tooltip|>
           {{tooltip.data.greeting}}
         </Tooltip>
       </div>
@@ -88,33 +89,29 @@ module('tooltip | loading data', function (hooks) {
     assert.dom('.tooltip').doesNotExist();
   });
 
-  test('loading data with show arg', async function (assert) {
-    assert.expect(4);
+  test('loading data with show arg renders correct position straight away', async function (assert) {
+    assert.expect(2);
 
-    const deferred = defer();
+    this.load = () => this.resolve({ greeting: 'Hello World' }, 50);
 
-    this.loadTooltip = () => {
-      assert.step('load tooltip');
-
-      return deferred.promise;
-    };
-
-    await render(hbs`
+    render(hbs`
       <div>
-        <Tooltip @onLoad={{this.loadTooltip}} @show={{true}} as |tooltip|>
+        Hover over me
+
+        <Tooltip
+          @onLoad={{this.load}}
+          @show={{true}}
+          @position="bottom center"
+          as |tooltip|
+        >
           {{tooltip.data.greeting}}
         </Tooltip>
       </div>
     `);
 
-    assert.dom('.tooltip').doesNotContainText('Hello World');
+    await waitUntil(() => this.hasText('.tooltip', 'Hello World'));
+    await waitForFrame();
 
-    assert.verifySteps(['load tooltip']);
-
-    deferred.resolve({ greeting: 'Hello World' });
-
-    await settled();
-
-    assert.dom('.tooltip').containsText('Hello World');
+    this.assertPosition('.tooltip', { left: 8, top: 14 });
   });
 });

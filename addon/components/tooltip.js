@@ -282,6 +282,8 @@ export default class TooltipComponent extends Component {
       return;
     }
 
+    this._startTether();
+
     if (this.shouldLoad) {
       this._load();
     }
@@ -347,8 +349,6 @@ export default class TooltipComponent extends Component {
     if (this.args.stickyID) {
       this.tooltipService._setSticky(this, true);
     }
-
-    this._startTether();
 
     this.args.onShow?.();
   }

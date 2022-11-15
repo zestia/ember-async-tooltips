@@ -13,11 +13,11 @@ module('tooltip | loading error', function (hooks) {
     this.deferred1 = defer();
     this.deferred2 = defer();
 
-    this.loadTooltip = () => this.deferred1.promise;
+    this.load = () => this.deferred1.promise;
 
     await render(hbs`
       <div>
-        <Tooltip @onLoad={{this.loadTooltip}} as |tooltip|>
+        <Tooltip @onLoad={{this.load}} as |tooltip|>
           {{#if tooltip.data}}
             {{tooltip.data.greeting}}
           {{else}}
@@ -39,7 +39,7 @@ module('tooltip | loading error', function (hooks) {
 
     await triggerEvent('.tooltipper', 'mouseleave');
 
-    this.set('loadTooltip', () => this.deferred2.promise);
+    this.set('load', () => this.deferred2.promise);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 

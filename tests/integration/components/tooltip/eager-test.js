@@ -1,84 +1,73 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render, triggerEvent } from '@ember/test-helpers';
+import { render, settled, waitUntil, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { later } from '@ember/runloop';
 
 module('tooltip | eager loading', function (hooks) {
   setupTooltipperTest(hooks);
 
   test('load time is less than the show delay', async function (assert) {
-    assert.expect(3);
+    assert.expect(2);
 
-    this.load = () => {
-      return new Promise((resolve) => {
-        later(resolve, 50);
-      });
-    };
+    this.load = () => this.resolve({ greeting: 'Hello World' }, 50);
 
     await render(hbs`
-      <style>
-        .tooltip { animation: none !important }
-      </style>
-
       <div>
         <Tooltip
           @onLoad={{this.load}}
           @showDelay={{100}}
-        />
+          as |tooltip|
+        >
+          {{tooltip.data.greeting}}
+        </Tooltip>
       </div>
     `);
 
-    assert.dom('.tooltip').doesNotExist();
-
     this.startTimer();
 
-    await triggerEvent('.tooltipper', 'mouseenter');
+    triggerEvent('.tooltipper', 'mouseenter');
+
+    await waitUntil(() => this.hasText('.tooltip', 'Hello World'));
 
     this.stopTimer();
 
-    assert.dom('.tooltip').exists();
+    this.assertTimeBetween(100, 150); // combined show delay and load duration
 
-    this.delayed = this.timeTaken() >= 100 && this.timeTaken() <= 150;
+    this.startTimer();
 
-    assert.ok(this.delayed);
+    await settled();
+
+    this.stopTimer();
+
+    this.assertTimeBetween(300, 350); // animation duration
   });
 
   test('load time is more than the show delay', async function (assert) {
-    assert.expect(4);
+    assert.expect(2);
 
-    this.load = () => {
-      return new Promise((resolve) => {
-        later(resolve, 1000);
-      });
-    };
+    this.load = () => this.resolve({ greeting: 'Hello World' }, 1000);
 
     await render(hbs`
-    <style>
-      .tooltip { animation: none !important }
-    </style>
-
       <div>
         <Tooltip
           @onLoad={{this.load}}
           @showDelay={{100}}
-        />
+          as |tooltip|
+        >
+          {{tooltip.data.greeting}}
+        </Tooltip>
       </div>
     `);
 
-    assert.dom('.tooltip').doesNotExist();
-
     this.startTimer();
 
-    await triggerEvent('.tooltipper', 'mouseenter');
+    triggerEvent('.tooltipper', 'mouseenter');
+
+    await waitUntil(() => this.hasText('.tooltip', 'Hello World'));
 
     this.stopTimer();
 
-    assert.dom('.tooltip').exists();
-
-    this.delayed = this.timeTaken() >= 1000 && this.timeTaken() <= 1100;
-
-    assert.ok(this.delayed);
+    this.assertTimeBetween(1000, 1100); // combined show delay and load duration
 
     await triggerEvent('.tooltipper', 'mouseleave');
 
@@ -88,8 +77,6 @@ module('tooltip | eager loading', function (hooks) {
 
     this.stopTimer();
 
-    this.delayed = this.timeTaken() >= 100 && this.timeTaken() <= 150;
-
-    assert.ok(this.delayed);
+    this.assertTimeBetween(400, 450); // combined show delay and animation duration (already loaded)
   });
 });
