@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render, find, triggerEvent } from '@ember/test-helpers';
+import { render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('tooltip | attach to', function (hooks) {
@@ -31,19 +31,10 @@ module('tooltip | attach to', function (hooks) {
 
     assert.dom('.parent > .tooltip').exists();
 
-    // Note we don't use .hasStyle due to differences across browsers
-    // and so we can round the numbers
-
-    this.style = getComputedStyle(find('.tooltip'));
-
-    assert.strictEqual(parseInt(this.style.left, 10), 37);
-    assert.strictEqual(parseInt(this.style.top, 10), 33);
+    this.assertPosition('.tooltip', { left: 37, top: 33 });
 
     this.set('attachTo', '#two');
 
-    this.style = getComputedStyle(find('.tooltip'));
-
-    assert.strictEqual(parseInt(this.style.left, 10), 37);
-    assert.strictEqual(parseInt(this.style.top, 10), 42);
+    this.assertPosition('.tooltip', { left: 37, top: 42 });
   });
 });
