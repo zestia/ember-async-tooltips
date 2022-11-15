@@ -25,7 +25,7 @@ module('tooltip | showing & hiding', function (hooks) {
 
     this.set('show', true);
 
-    await waitFor(".tooltip[data-tooltip-showing='true']");
+    await waitFor(".tooltip[data-showing='true']");
 
     assert.verifySteps([]);
 
@@ -36,7 +36,7 @@ module('tooltip | showing & hiding', function (hooks) {
 
     this.set('show', false);
 
-    await waitFor(".tooltip[data-tooltip-showing='false']");
+    await waitFor(".tooltip[data-showing='false']");
 
     assert.verifySteps([]);
 

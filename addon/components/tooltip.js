@@ -421,9 +421,9 @@ export default class TooltipComponent extends Component {
 
   _updateLoading() {
     if (this.isLoading) {
-      this.tooltipperElement.dataset.tooltipLoading = 'true';
+      this.tooltipperElement.dataset.loading = 'true';
     } else {
-      delete this.tooltipperElement.dataset.tooltipLoading;
+      delete this.tooltipperElement.dataset.loading;
     }
   }
 

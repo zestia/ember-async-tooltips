@@ -20,16 +20,16 @@ module('tooltip | loading attributes', function (hooks) {
       </div>
     `);
 
-    assert.dom('.tooltipper').doesNotHaveAttribute('data-tooltip-loading');
+    assert.dom('.tooltipper').doesNotHaveAttribute('data-loading');
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    assert.dom('.tooltipper').hasAttribute('data-tooltip-loading', 'true');
+    assert.dom('.tooltipper').hasAttribute('data-loading', 'true');
 
     this.deferred.resolve();
 
     await settled();
 
-    assert.dom('.tooltipper').doesNotHaveAttribute('data-tooltip-loading');
+    assert.dom('.tooltipper').doesNotHaveAttribute('data-loading');
   });
 });

@@ -17,13 +17,13 @@ module('tooltip | delays', function (hooks) {
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    assert.dom('.tooltip').hasAttribute('data-tooltip-showing', 'true');
+    assert.dom('.tooltip').hasAttribute('data-showing', 'true');
 
     this.startTimer();
 
     triggerEvent('.tooltipper', 'mouseleave');
 
-    await waitFor(".tooltip[data-tooltip-showing='false']");
+    await waitFor(".tooltip[data-showing='false']");
 
     this.stopTimer();
 

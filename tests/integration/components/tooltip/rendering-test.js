@@ -65,7 +65,7 @@ module('tooltip | rendering', function (hooks) {
 
     await settled();
 
-    assert.dom('.tooltip').hasAttribute('data-tooltip-showing', 'true');
+    assert.dom('.tooltip').hasAttribute('data-showing', 'true');
   });
 
   test('tearing down', async function (assert) {

@@ -1,5 +1,9 @@
 # Changelog
 
+## 15.0.0-beta.5
+
+- Revert data attribute change from 15.0.0-beta.0
+
 ## 15.0.0-beta.4
 
 - Clean up / remove unused component

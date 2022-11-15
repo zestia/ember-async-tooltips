@@ -160,11 +160,11 @@ Any error if the data was `@onLoad` failed
 If your tooltips need to animate in and out, you can utilise these attributes:
 
 ```css
-[data-tooltip-showing='true'] {
+[data-showing='true'] {
   animation: your-show-animation;
 }
 
-[data-tooltip-showing='false'] {
+[data-showing='false'] {
   animation: your-hide-animation;
 }
 ```
@@ -172,7 +172,7 @@ If your tooltips need to animate in and out, you can utilise these attributes:
 You may want to alter animations for sticky tooltips:
 
 ```css
-[data-tooltip-sticky='true'] {
+[data-sticky='true'] {
   animation-name: none;
 }
 ```

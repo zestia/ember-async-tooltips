@@ -24,7 +24,7 @@ module('tooltip | sticky', function (hooks) {
 
     await waitFor('.a1 .tooltip');
 
-    assert.dom('.a1 .tooltip').hasAttribute('data-tooltip-sticky', 'false');
+    assert.dom('.a1 .tooltip').hasAttribute('data-sticky', 'false');
 
     this.stopTimer();
 
@@ -32,7 +32,7 @@ module('tooltip | sticky', function (hooks) {
 
     await settled();
 
-    assert.dom('.a1 .tooltip').hasAttribute('data-tooltip-sticky', 'true');
+    assert.dom('.a1 .tooltip').hasAttribute('data-sticky', 'true');
 
     // A2
 
@@ -40,7 +40,7 @@ module('tooltip | sticky', function (hooks) {
 
     await triggerEvent('.a2', 'mouseenter');
 
-    assert.dom('.a2 .tooltip').hasAttribute('data-tooltip-sticky', 'true');
+    assert.dom('.a2 .tooltip').hasAttribute('data-sticky', 'true');
 
     this.stopTimer();
 

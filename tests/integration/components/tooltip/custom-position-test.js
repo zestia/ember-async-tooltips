@@ -25,7 +25,7 @@ module('tooltip | custom position', function (hooks) {
 
     assert.strictEqual(this.referencePosition, 'middle center');
 
-    assert.dom('.tooltip').hasAttribute('data-tooltip-position', 'left top');
+    assert.dom('.tooltip').hasAttribute('data-position', 'left top');
   });
 
   test('no position', async function (assert) {
@@ -39,9 +39,7 @@ module('tooltip | custom position', function (hooks) {
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    assert
-      .dom('.tooltip')
-      .hasAttribute('data-tooltip-position', 'bottom center');
+    assert.dom('.tooltip').hasAttribute('data-position', 'bottom center');
   });
 
   test('invalid position', async function (assert) {
@@ -57,7 +55,7 @@ module('tooltip | custom position', function (hooks) {
 
     assert
       .dom('.tooltip')
-      .hasAttribute('data-tooltip-position', 'foo')
+      .hasAttribute('data-position', 'foo')
       .hasAttribute('style', 'top: NaNpx; left: NaNpx');
   });
 });

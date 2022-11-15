@@ -2,15 +2,15 @@
   position: absolute;
   border: 1px solid var(--green);
 
-  &[data-tooltip-showing='true'] {
+  &[data-showing='true'] {
     animation: fade-in 300ms backwards;
   }
 
-  &[data-tooltip-showing='false'] {
+  &[data-showing='false'] {
     animation: fade-out 300ms forwards;
   }
 
-  &[data-tooltip-sticky='true'] {
+  &[data-sticky='true'] {
     animation-name: none;
     border-color: var(--blue);
   }
