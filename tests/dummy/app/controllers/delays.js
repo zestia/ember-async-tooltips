@@ -9,7 +9,7 @@ export default class DelaysController extends Controller {
   @tracked isEager = true;
   @tracked showDelay = 500;
   @tracked hideDelay = 0;
-  @tracked loadDuration = 100;
+  @tracked loadDuration = 200;
   @tracked isLoading = false;
   @tracked isLoaded = false;
   @tracked showTooltipper = true;
