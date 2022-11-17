@@ -69,7 +69,7 @@ module('tooltip | rendering', function (hooks) {
   });
 
   test('tearing down', async function (assert) {
-    assert.expect(0);
+    assert.expect(1);
 
     // This regression test checks that when a tooltip is destroyed,
     // that the tooltip service does not hold on to a reference
@@ -94,6 +94,8 @@ module('tooltip | rendering', function (hooks) {
     this.set('show', false);
 
     await triggerEvent('.two', 'mouseenter');
+
+    assert.strictEqual(this.tooltipService.tooltips.length, 1);
   });
 
   test('tearing down whilst showing another tooltip', async function (assert) {

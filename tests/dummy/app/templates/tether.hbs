@@ -6,12 +6,7 @@
   <div id={{id}} contenteditable>
     Type in here
   </div>
-  <Tooltip
-    @position="right middle"
-    @show={{true}}
-    @element="#{{id}}"
-    @position="bottom center"
-  >
+  <Tooltip @show={{true}} @element="#{{id}}" @position="bottom center">
     Tooltip
   </Tooltip>
 {{/let}}

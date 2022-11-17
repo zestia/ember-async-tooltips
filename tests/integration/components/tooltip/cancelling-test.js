@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
 import { render, triggerEvent, settled } from '@ember/test-helpers';
-import { later } from '@ember/runloop';
 import hbs from 'htmlbars-inline-precompile';
 
 module('tooltip | cancelling', function (hooks) {
@@ -20,7 +19,7 @@ module('tooltip | cancelling', function (hooks) {
 
     triggerEvent('.tooltipper', 'mouseenter');
 
-    await new Promise((resolve) => later(resolve), 500);
+    await this.wait(500);
 
     this.set('show', false);
 

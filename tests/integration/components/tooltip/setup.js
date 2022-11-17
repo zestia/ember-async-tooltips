@@ -27,6 +27,8 @@ export default function setupTooltipperTest(hooks) {
       });
     };
 
+    this.wait = (ms) => this.resolve(null, ms);
+
     this.assertPosition = (selector, expected) => {
       const style = getComputedStyle(find(selector));
 

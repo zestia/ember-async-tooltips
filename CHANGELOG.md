@@ -1,5 +1,10 @@
 # Changelog
 
+## 15.0.0-beta.6
+
+- Only attempt to show the tooltip, if the tooltipper is still in the DOM
+- Stop tethering when torn down
+
 ## 15.0.0-beta.5
 
 - Revert data attribute change from 15.0.0-beta.0

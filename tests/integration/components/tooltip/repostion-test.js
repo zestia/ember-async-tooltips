@@ -35,4 +35,38 @@ module('tooltip | reposition', function (hooks) {
 
     this.assertPosition('.tooltip', { left: -15, top: 11 });
   });
+
+  test('tethering is stopped when tooltop is torn down', async function (assert) {
+    assert.expect(3);
+
+    this.show = true;
+
+    await render(hbs`
+      {{#if this.show}}
+        <div>
+          Hover over me
+
+          <Tooltip @position="bottom center">
+            Hello World
+          </Tooltip>
+        </div>
+      {{/if}}
+    `);
+
+    await triggerEvent('.tooltipper', 'mouseenter');
+
+    const tooltip = this.tooltipService.tooltips[0];
+    const frameStart = tooltip.tetherID;
+
+    this.set('show', false);
+
+    await settled();
+    await waitForFrame();
+
+    const frameEnd = tooltip.tetherID;
+
+    assert.ok(frameStart > 0);
+    assert.ok(frameEnd > 0);
+    assert.strictEqual(frameStart, frameEnd);
+  });
 });

@@ -42,7 +42,12 @@ export default class TooltipComponent extends Component {
   }
 
   get canRenderTooltip() {
-    return !this.isDestroyed && this.needsToShowTooltip && !this.childTooltip;
+    return (
+      this.tooltipperElement.isConnected &&
+      this.needsToShowTooltip &&
+      !this.isDestroyed &&
+      !this.childTooltip
+    );
   }
 
   get id() {
@@ -179,6 +184,7 @@ export default class TooltipComponent extends Component {
 
   @action
   handleDestroyElement() {
+    this._stopTether();
     this._cancelTimers();
     this._tearDownTooltipper();
   }
