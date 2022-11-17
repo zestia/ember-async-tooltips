@@ -44,11 +44,7 @@ module('tooltip | reposition', function (hooks) {
     await render(hbs`
       {{#if this.show}}
         <div>
-          Hover over me
-
-          <Tooltip @position="bottom center">
-            Hello World
-          </Tooltip>
+          <Tooltip @position="bottom center" />
         </div>
       {{/if}}
     `);
