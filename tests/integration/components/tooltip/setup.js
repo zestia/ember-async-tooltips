@@ -2,7 +2,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { find } from '@ember/test-helpers';
 import { Promise } from 'rsvp';
 import { later } from '@ember/runloop';
-const { ceil } = Math;
+const { ceil, floor } = Math;
 
 export default function setupTooltipperTest(hooks) {
   setupRenderingTest(hooks);
@@ -33,8 +33,34 @@ export default function setupTooltipperTest(hooks) {
     this.assertPosition = (selector, expected) => {
       const style = getComputedStyle(find(selector));
 
-      assert.strictEqual(ceil(parseFloat(style.left, 10)), expected.left);
-      assert.strictEqual(ceil(parseFloat(style.top, 10)), expected.top);
+      console.log(
+        'expected',
+        expected.left,
+        'got',
+        style.left,
+        'float',
+        parseFloat(style.left),
+        'ceil',
+        Math.ceil(parseFloat(style.left)),
+        'floor',
+        Math.floor(parseFloat(style.left))
+      );
+
+      console.log(
+        'expected',
+        expected.top,
+        'got',
+        style.top,
+        'float',
+        parseFloat(style.top),
+        'ceil',
+        Math.ceil(parseFloat(style.top)),
+        'floor',
+        Math.floor(parseFloat(style.top))
+      );
+
+      assert.strictEqual(parseInt(style.left, 10), expected.left);
+      assert.strictEqual(parseInt(style.top, 10), expected.top);
     };
   });
 }

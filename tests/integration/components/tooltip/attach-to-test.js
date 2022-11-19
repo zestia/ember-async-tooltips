@@ -12,16 +12,23 @@ module('tooltip | attach to', function (hooks) {
     this.attachTo = '#one';
 
     await render(hbs`
+      <style>
+        #one,
+        #two {
+          width: 100px;
+          height: 20px;
+          border: 1px solid blue;
+        }
+
+        .tooltip {
+          width: 50px;
+          height: 20px;
+        }
+      </style>
+
       <div class="parent">
-        Hover over me
-
-        <div id="one">
-          one
-        </div>
-
-        <div id="two">
-          two
-        </div>
+        <div id="one"></div>
+        <div id="two"></div>
 
         <Tooltip @attachTo={{this.attachTo}} @position="bottom center" />
       </div>
@@ -31,10 +38,10 @@ module('tooltip | attach to', function (hooks) {
 
     assert.dom('.parent > .tooltip').exists();
 
-    this.assertPosition('.tooltip', { left: 38, top: 34 });
+    this.assertPosition('.tooltip', { left: 27, top: 25 });
 
     this.set('attachTo', '#two');
 
-    this.assertPosition('.tooltip', { left: 38, top: 44 });
+    this.assertPosition('.tooltip', { left: 27, top: 36 });
   });
 });
