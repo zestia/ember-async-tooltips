@@ -321,7 +321,7 @@ export default class TooltipComponent extends Component {
   }
 
   async _hideTooltip() {
-    if (!this.tooltipElement) {
+    if (!this.hasTooltip) {
       return;
     }
 

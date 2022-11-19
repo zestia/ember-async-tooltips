@@ -32,6 +32,8 @@ export default function setupTooltipperTest(hooks) {
     this.assertPosition = (selector, expected) => {
       const style = getComputedStyle(find(selector));
 
+      console.log(style.left, style.top);
+
       assert.strictEqual(parseInt(style.left, 10), expected.left);
       assert.strictEqual(parseInt(style.top, 10), expected.top);
     };
