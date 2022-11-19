@@ -2,6 +2,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { find } from '@ember/test-helpers';
 import { Promise } from 'rsvp';
 import { later } from '@ember/runloop';
+const { ceil } = Math;
 
 export default function setupTooltipperTest(hooks) {
   setupRenderingTest(hooks);
