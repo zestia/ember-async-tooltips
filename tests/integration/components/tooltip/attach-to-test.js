@@ -31,10 +31,10 @@ module('tooltip | attach to', function (hooks) {
 
     assert.dom('.parent > .tooltip').exists();
 
-    this.assertPosition('.tooltip', { left: 37, top: 33 });
+    this.assertPosition('.tooltip', { left: 38, top: 34 });
 
     this.set('attachTo', '#two');
 
-    this.assertPosition('.tooltip', { left: 37, top: 42 });
+    this.assertPosition('.tooltip', { left: 38, top: 44 });
   });
 });
