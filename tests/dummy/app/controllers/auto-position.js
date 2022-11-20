@@ -12,31 +12,16 @@ export default class PositionController extends Controller {
   }
 
   @action
-  reposition(e) {
-    const [x, y] = this.lastPos;
-    const [t, l] = this.startPos;
-
-    const element = e.target;
-    const top = y - l;
-    const left = x - t;
-
-    element.style.top = `${top}px`;
-    element.style.left = `${left}px`;
+  handleDragStart(e) {
+    e.dataTransfer.effectAllowed = 'move';
   }
 
   @action
-  storeStartPos(e) {
-    const pos = e.target.getBoundingClientRect();
+  handleDragEnd(e) {
+    const x = e.clientX - e.target.clientWidth / 2;
+    const y = e.clientY - e.target.clientHeight / 2;
 
-    this.startPos = [e.clientX - pos.left, e.clientY - pos.top];
-  }
-
-  @action
-  storeLastPos(e) {
-    const { clientX: x, clientY: y } = e;
-
-    if (x && y) {
-      this.lastPos = [x, y];
-    }
+    e.target.style.top = `${y}px`;
+    e.target.style.left = `${x}px`;
   }
 }

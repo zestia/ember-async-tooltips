@@ -1,9 +1,10 @@
+{{! template-lint-disable no-invalid-interactive no-down-event-binding  }}
+
 <div class="auto-position-page">
   <div
     draggable="true"
-    {{on "drag" this.storeLastPos}}
-    {{on "dragstart" this.storeStartPos}}
-    {{on "dragend" this.reposition}}
+    {{on "dragstart" this.handleDragStart}}
+    {{on "dragend" this.handleDragEnd}}
   >
     Hover over me
 
