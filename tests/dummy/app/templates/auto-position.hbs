@@ -3,6 +3,7 @@
 <div class="auto-position-page">
   <div
     draggable="true"
+    {{on "mousedown" this.handleMouseDown}}
     {{on "dragstart" this.handleDragStart}}
     {{on "dragend" this.handleDragEnd}}
   >

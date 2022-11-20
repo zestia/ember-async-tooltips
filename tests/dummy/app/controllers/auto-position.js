@@ -9,16 +9,22 @@ export default class PositionController extends Controller {
   }
 
   @action
-  handleDragStart(e) {
-    e.dataTransfer.effectAllowed = 'move';
+  handleMouseDown(event) {
+    this.startEvent = event;
   }
 
   @action
-  handleDragEnd(e) {
-    const x = e.clientX - e.target.clientWidth / 2;
-    const y = e.clientY - e.target.clientHeight / 2;
+  handleDragStart(event) {
+    event.dataTransfer.effectAllowed = 'move';
+  }
 
-    e.target.style.top = `${y}px`;
-    e.target.style.left = `${x}px`;
+  @action
+  handleDragEnd(event) {
+    const pos = event.target.getBoundingClientRect();
+    const x = event.clientX - this.startEvent.clientX + pos.left;
+    const y = event.clientY - this.startEvent.clientY + pos.top;
+
+    event.target.style.top = `${y}px`;
+    event.target.style.left = `${x}px`;
   }
 }
