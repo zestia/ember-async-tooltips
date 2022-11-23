@@ -91,6 +91,14 @@ Optional. When an element is hovered over, `@onLoad` will be fired. You can resp
 
 In the following example, there is a show delay of `300`ms before a tooltip will appear. But, _during that time_ it is loading some data which takes `50`ms. The actual show delay is reduced to `250`ms, so that the total delay remains at `300`ms.
 
+#### `@onShow`
+
+Optional. Fired after a tooltip has been rendered, _and_ any animations have been performed.
+
+#### `@onHide`
+
+Optional. Fired after any animations have been performed, _and_ the tooltip has been destroyed.
+
 <details>
   <summary>Example</summary>
   
