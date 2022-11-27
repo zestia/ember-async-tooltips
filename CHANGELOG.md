@@ -1,5 +1,9 @@
 # Changelog
 
+## 15.0.0
+
+- Released changes from beta
+
 ## 15.0.0-beta.6
 
 - Only attempt to show the tooltip, if the tooltipper is still in the DOM
