@@ -1,5 +1,9 @@
 # Changelog
 
+## 15.0.1
+
+- Remove unnecessary export causing embroider apps to not build
+
 ## 15.0.0
 
 - Released changes from beta
