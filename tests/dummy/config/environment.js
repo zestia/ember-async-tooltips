@@ -10,9 +10,8 @@ module.exports = function (environment) {
       EXTEND_PROTOTYPES: false,
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
-        // e.g. 'with-controller': true
-      },
-      EXTEND_PROTOTYPES: false
+        // e.g. EMBER_NATIVE_DECORATOR_SUPPORT: true
+      }
     },
 
     APP: {
@@ -42,7 +41,7 @@ module.exports = function (environment) {
   }
 
   if (environment === 'production') {
-    ENV.locationType = 'hash';
+    // here you can enable a production-specific feature
     ENV.rootURL = '/ember-async-tooltips/';
   }
 
