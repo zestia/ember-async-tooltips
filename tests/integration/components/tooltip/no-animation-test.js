@@ -13,6 +13,7 @@ module('tooltip | no animation', function (hooks) {
     this.handleHide = () => assert.step('hide');
 
     await render(hbs`
+      {{! template-lint-disable no-forbidden-elements }}
       <style>
       .tooltip { animation: none !important }
       </style>
