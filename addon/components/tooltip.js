@@ -10,6 +10,7 @@ import { waitFor } from '@ember/test-waiters';
 import { waitForAnimation } from '@zestia/animation-utils';
 import autoPosition from '../utils/auto-position';
 import { action } from '@ember/object';
+const { freeze } = Object;
 const { max } = Math;
 
 export default class TooltipComponent extends Component {
@@ -146,11 +147,11 @@ export default class TooltipComponent extends Component {
   }
 
   get api() {
-    return {
+    return freeze({
       data: this.loadedData,
       error: this.loadError,
       hide: this.hide
-    };
+    });
   }
 
   @action
