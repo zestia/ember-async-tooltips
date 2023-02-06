@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, triggerEvent, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-const { keys, isFrozen } = Object;
+const { keys, isSealed } = Object;
 
 module('tooltip | api', function (hooks) {
   setupRenderingTest(hooks);
@@ -30,7 +30,7 @@ module('tooltip | api', function (hooks) {
 
     assert.deepEqual(keys(this.api), ['data', 'error', 'hide']);
 
-    assert.true(isFrozen(this.api));
+    assert.true(isSealed(this.api));
 
     assert.strictEqual(this.api.data, 'foo');
     assert.strictEqual(this.api.error, null);

@@ -10,7 +10,7 @@ import { waitFor } from '@ember/test-waiters';
 import { waitForAnimation } from '@zestia/animation-utils';
 import autoPosition from '../utils/auto-position';
 import { action } from '@ember/object';
-const { freeze } = Object;
+const { seal, assign } = Object;
 const { max } = Math;
 
 export default class TooltipComponent extends Component {
@@ -28,6 +28,7 @@ export default class TooltipComponent extends Component {
   @tracked tooltipperElement = null;
   @tracked positionElement = null;
 
+  _api = {};
   hideTimer = null;
   isLoaded = false;
   isOverTooltipElement = false;
@@ -37,6 +38,16 @@ export default class TooltipComponent extends Component {
   stickyTimer = null;
   tetherID = null;
   willInsertTooltip = null;
+
+  get api() {
+    return seal(
+      assign(this._api, {
+        data: this.loadedData,
+        error: this.loadError,
+        hide: this.hide
+      })
+    );
+  }
 
   get hasTooltip() {
     return !!this.tooltipElement;
@@ -144,14 +155,6 @@ export default class TooltipComponent extends Component {
 
   get isSticky() {
     return this.tooltipService._sticky[this.args.stickyID] === true;
-  }
-
-  get api() {
-    return freeze({
-      data: this.loadedData,
-      error: this.loadError,
-      hide: this.hide
-    });
   }
 
   @action
