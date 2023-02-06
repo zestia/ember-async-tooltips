@@ -24,15 +24,17 @@ module('tooltip | aria', function (hooks) {
   });
 
   test('tooltippers are associated with a tooltip', async function (assert) {
-    assert.expect(3);
+    assert.expect(4);
 
     assert.dom('.tooltipper').doesNotHaveAttribute('aria-describedby');
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    const [id] = find('.tooltip').getAttribute('id').match(/\d+/);
+    const id = find('.tooltip').getAttribute('id');
 
-    assert.dom('.tooltipper').hasAttribute('aria-describedby', `tooltip-${id}`);
+    assert.true(/\w+\d+/.test(id));
+
+    assert.dom('.tooltipper').hasAttribute('aria-describedby', id);
 
     await triggerEvent('.tooltipper', 'mouseleave');
 

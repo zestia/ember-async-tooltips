@@ -63,11 +63,7 @@ export default class TooltipComponent extends Component {
   }
 
   get id() {
-    return guidFor(this).replace('ember', '');
-  }
-
-  get tooltipId() {
-    return `tooltip-${this.id}`;
+    return guidFor(this);
   }
 
   get columns() {
@@ -423,7 +419,7 @@ export default class TooltipComponent extends Component {
 
   _updateAria() {
     if (this.hasTooltip) {
-      this.tooltipperElement.setAttribute('aria-describedby', this.tooltipId);
+      this.tooltipperElement.setAttribute('aria-describedby', this.id);
     } else {
       this.tooltipperElement.removeAttribute('aria-describedby');
     }
