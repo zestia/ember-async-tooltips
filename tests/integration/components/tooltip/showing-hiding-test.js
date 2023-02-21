@@ -8,7 +8,7 @@ module('tooltip | showing & hiding', function (hooks) {
   setupTooltipperTest(hooks);
 
   test('showing & hiding', async function (assert) {
-    assert.expect(6);
+    assert.expect(8);
 
     this.tooltipShown = () => assert.step('tooltip shown');
     this.tooltipHidden = () => assert.step('tooltip hidden');
@@ -29,7 +29,12 @@ module('tooltip | showing & hiding', function (hooks) {
 
     assert.verifySteps([]);
 
-    await waitForAnimation('.tooltip', { animationName: 'fade-in' });
+    this.animations = await waitForAnimation('.tooltip', {
+      animationName: 'fade-in'
+    });
+
+    assert.strictEqual(this.animations.length, 1);
+
     await settled();
 
     assert.verifySteps(['tooltip shown']);
@@ -40,7 +45,12 @@ module('tooltip | showing & hiding', function (hooks) {
 
     assert.verifySteps([]);
 
-    await waitForAnimation('.tooltip', { animationName: 'fade-out' });
+    this.animations = await waitForAnimation('.tooltip', {
+      animationName: 'fade-out'
+    });
+
+    assert.strictEqual(this.animations.length, 1);
+
     await settled();
 
     assert.verifySteps(['tooltip hidden']);
