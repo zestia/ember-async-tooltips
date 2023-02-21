@@ -29,11 +29,20 @@ export default function setupTooltipperTest(hooks) {
 
     this.wait = (ms) => this.resolve(null, ms);
 
-    this.assertPosition = (selector, expected) => {
+    this.getPosition = (selector) => {
       const style = getComputedStyle(find(selector));
 
-      assert.strictEqual(parseInt(style.left, 10), expected.left);
-      assert.strictEqual(parseInt(style.top, 10), expected.top);
+      return {
+        left: parseInt(style.left, 10),
+        top: parseInt(style.top, 10)
+      };
+    };
+
+    this.assertPosition = (selector, expected) => {
+      const position = this.getPosition(selector);
+
+      assert.strictEqual(position.left, expected.left);
+      assert.strictEqual(position.top, expected.top);
     };
   });
 }

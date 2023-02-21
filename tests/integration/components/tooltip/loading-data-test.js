@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
 import { render, waitUntil, settled, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { waitForFrame } from '@zestia/animation-utils';
 import { defer } from 'rsvp';
 
 module('tooltip | loading data', function (hooks) {
@@ -110,7 +109,6 @@ module('tooltip | loading data', function (hooks) {
     `);
 
     await waitUntil(() => this.hasText('.tooltip', 'Hello World'));
-    await waitForFrame();
 
     this.assertPosition('.tooltip', { left: 8, top: 14 });
   });

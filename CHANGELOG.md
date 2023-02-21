@@ -1,5 +1,9 @@
 # Changelog
 
+## 15.0.2
+
+- Upgrade animation utils
+
 ## 15.0.1
 
 - Remove unnecessary export causing embroider apps to not build

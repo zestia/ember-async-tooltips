@@ -371,7 +371,7 @@ export default class TooltipComponent extends Component {
 
   @waitFor
   async _waitForAnimation() {
-    await waitForAnimation(this.tooltipElement);
+    await waitForAnimation(this.tooltipElement, { maybe: true });
   }
 
   _attemptDestroyTooltip() {

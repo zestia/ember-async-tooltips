@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import setupTooltipperTest from './setup';
-import { render, settled, triggerEvent } from '@ember/test-helpers';
-import { waitForFrame } from '@zestia/animation-utils';
+import { waitUntil, render, settled, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('tooltip | reposition', function (hooks) {
@@ -26,17 +25,21 @@ module('tooltip | reposition', function (hooks) {
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    this.assertPosition('.tooltip', { left: -4, top: 11 });
+    const expectedStartPosition = { left: -4, top: 11 };
+    const expectedEndPosition = { left: -15, top: 11 };
+
+    this.assertPosition('.tooltip', expectedStartPosition);
 
     this.set('text', 'Hello World');
 
-    await settled();
-    await waitForFrame();
+    await waitUntil(() => {
+      return this.getPosition('.tooltip').left !== expectedStartPosition.left;
+    });
 
-    this.assertPosition('.tooltip', { left: -15, top: 11 });
+    this.assertPosition('.tooltip', expectedEndPosition);
   });
 
-  test('tethering is stopped when tooltop is torn down', async function (assert) {
+  test('tethering is stopped when tooltip is torn down', async function (assert) {
     assert.expect(3);
 
     this.show = true;
@@ -57,7 +60,6 @@ module('tooltip | reposition', function (hooks) {
     this.set('show', false);
 
     await settled();
-    await waitForFrame();
 
     const frameEnd = tooltip.tetherID;
 
