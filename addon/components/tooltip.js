@@ -425,7 +425,7 @@ export default class TooltipComponent extends Component {
   _updateAria() {
     if (this.hasTooltip) {
       this.tooltipperElement.setAttribute('aria-describedby', this.id);
-    } else {
+    } else if (!this.isDestroying) {
       this.tooltipperElement.removeAttribute('aria-describedby');
     }
   }
