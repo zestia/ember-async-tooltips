@@ -56,9 +56,10 @@ export default class TooltipComponent extends Component {
 
   get canRenderTooltip() {
     return (
+      !this.isDestroying &&
+      !this.isDestroyed &&
       this.tooltipperElement.isConnected &&
       this.needsToShowTooltip &&
-      !this.isDestroyed &&
       !this.childTooltip
     );
   }
@@ -189,6 +190,7 @@ export default class TooltipComponent extends Component {
     this._cancelTimers();
     this._tearDownTooltipper();
     this.element = null;
+    this.tooltipElement = null;
     this.positionElement = null;
     this.tooltipperElement = null;
     this.destinationElement = null;
@@ -423,14 +425,22 @@ export default class TooltipComponent extends Component {
   }
 
   _updateAria() {
+    if (this.isDestroying) {
+      return;
+    }
+
     if (this.hasTooltip) {
       this.tooltipperElement.setAttribute('aria-describedby', this.id);
-    } else if (!this.isDestroying) {
+    } else {
       this.tooltipperElement.removeAttribute('aria-describedby');
     }
   }
 
   _updateLoading() {
+    if (this.isDestroying) {
+      return;
+    }
+
     if (this.isLoading) {
       this.tooltipperElement.dataset.loading = 'true';
     } else {
