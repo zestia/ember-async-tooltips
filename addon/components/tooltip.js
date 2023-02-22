@@ -29,6 +29,7 @@ export default class TooltipComponent extends Component {
   @tracked positionElement = null;
 
   _api = {};
+  element = null;
   hideTimer = null;
   isLoaded = false;
   isOverTooltipElement = false;
@@ -187,6 +188,10 @@ export default class TooltipComponent extends Component {
     this._stopTether();
     this._cancelTimers();
     this._tearDownTooltipper();
+    this.element = null;
+    this.positionElement = null;
+    this.tooltipperElement = null;
+    this.destinationElement = null;
   }
 
   @action
