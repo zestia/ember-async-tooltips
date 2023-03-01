@@ -10,45 +10,33 @@ import { waitFor } from '@ember/test-waiters';
 import { waitForAnimation } from '@zestia/animation-utils';
 import autoPosition from '../utils/auto-position';
 import { action } from '@ember/object';
-const { seal, assign } = Object;
 const { max } = Math;
 
 export default class TooltipComponent extends Component {
   @inject('tooltip') tooltipService;
 
-  @tracked isLoading = false;
+  @tracked destinationElement;
+  @tracked isLoading;
   @tracked loadedData = null;
   @tracked loadError = null;
-  @tracked shouldRenderTooltip = false;
-  @tracked shouldShowTooltip = false;
+  @tracked positionElement;
+  @tracked shouldRenderTooltip;
+  @tracked shouldShowTooltip;
   @tracked tooltipCoords = [0, 0];
-  @tracked tooltipElement = null;
-  @tracked tooltipPosition = null;
-  @tracked destinationElement = null;
-  @tracked tooltipperElement = null;
-  @tracked positionElement = null;
+  @tracked tooltipElement;
+  @tracked tooltipperElement;
+  @tracked tooltipPosition;
 
-  _api = {};
-  element = null;
-  hideTimer = null;
-  isLoaded = false;
-  isOverTooltipElement = false;
-  isOverTooltipperElement = false;
+  element;
+  hideTimer;
+  isLoaded;
+  isOverTooltipElement;
+  isOverTooltipperElement;
   loadDuration = 0;
-  showTimer = null;
-  stickyTimer = null;
-  tetherID = null;
-  willInsertTooltip = null;
-
-  get api() {
-    return seal(
-      assign(this._api, {
-        data: this.loadedData,
-        error: this.loadError,
-        hide: this.hide
-      })
-    );
-  }
+  showTimer;
+  stickyTimer;
+  tetherID;
+  willInsertTooltip;
 
   get hasTooltip() {
     return !!this.tooltipElement;
@@ -522,4 +510,19 @@ export default class TooltipComponent extends Component {
 
     return autoPosition(referencePosition);
   }
+
+  api = new Proxy(this, {
+    get(target, key) {
+      switch (key) {
+        case 'data':
+          return target.loadedData;
+        case 'error':
+          return target.loadError;
+        case 'hide':
+          return target.hide;
+      }
+    },
+
+    set() {}
+  });
 }
