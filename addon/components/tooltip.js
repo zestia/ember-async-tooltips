@@ -511,18 +511,18 @@ export default class TooltipComponent extends Component {
     return autoPosition(referencePosition);
   }
 
+  get _api() {
+    return {
+      data: this.loadedData,
+      error: this.loadError,
+      hide: this.hide
+    };
+  }
+
   api = new Proxy(this, {
     get(target, key) {
-      switch (key) {
-        case 'data':
-          return target.loadedData;
-        case 'error':
-          return target.loadError;
-        case 'hide':
-          return target.hide;
-      }
+      return target._api[key];
     },
-
     set() {}
   });
 }
