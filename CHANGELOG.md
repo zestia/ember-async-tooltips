@@ -1,5 +1,9 @@
 # Changelog
 
+## 15.0.3
+
+- Run ember-cli-update
+
 ## 15.0.2
 
 - Upgrade animation utils
