@@ -8,7 +8,7 @@ import { defer } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';
 import { waitForAnimation } from '@zestia/animation-utils';
-import autoPosition from '../utils/auto-position';
+import autoPosition from '@zestia/ember-async-tooltips/utils/auto-position';
 import { action } from '@ember/object';
 const { max } = Math;
 

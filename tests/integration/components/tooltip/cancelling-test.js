@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import setupTooltipperTest from './setup';
+import setupTooltipperTest from 'dummy/tests/integration/components/tooltip/setup';
 import { render, triggerEvent, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 

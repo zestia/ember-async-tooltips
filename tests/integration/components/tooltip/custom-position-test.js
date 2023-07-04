@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
-import setupTooltipperTest from './setup';
+import setupTooltipperTest from 'dummy/tests/integration/components/tooltip/setup';
 import { render, triggerEvent } from '@ember/test-helpers';
 
 module('tooltip | custom position', function (hooks) {

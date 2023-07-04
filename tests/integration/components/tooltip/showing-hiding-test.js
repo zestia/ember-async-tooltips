@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
-import setupTooltipperTest from './setup';
+import setupTooltipperTest from 'dummy/tests/integration/components/tooltip/setup';
 import { render, waitFor, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import waitForAnimation from '../../../helpers/wait-for-animation';
+import waitForAnimation from 'dummy/tests/helpers/wait-for-animation';
 
 module('tooltip | showing & hiding', function (hooks) {
   setupTooltipperTest(hooks);
