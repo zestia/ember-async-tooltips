@@ -1,6 +1,6 @@
 # Changelog
 
-## 15.0.3
+## 15.1.0
 
 - Run ember-cli-update
 
