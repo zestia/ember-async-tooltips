@@ -2,7 +2,7 @@
 
 ## 15.1.0
 
-- Run ember-cli-update
+- Run `ember-cli-update`
 
 ## 15.0.2
 
