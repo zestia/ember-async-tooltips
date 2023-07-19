@@ -2,7 +2,7 @@
 
 ## 15.1.2
 
-- Update @zestia scoped packages
+- Update `@zestia` scoped packages
 
 ## 15.1.1
 
