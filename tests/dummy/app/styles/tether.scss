@@ -1,6 +1,5 @@
 .scroll-area {
   border: 1px solid var(--black);
   height: 100px;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  overflow: hidden scroll;
 }
