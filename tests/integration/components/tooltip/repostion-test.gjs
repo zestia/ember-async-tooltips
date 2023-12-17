@@ -1,8 +1,11 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'dummy/tests/helpers';
-import { render, settled, triggerEvent } from '@ember/test-helpers';
+import { render, settled, waitUntil, triggerEvent } from '@ember/test-helpers';
 import { tracked } from '@glimmer/tracking';
-import { assertPosition } from 'dummy/tests/integration/components/tooltip/helpers';
+import {
+  assertPosition,
+  getPosition
+} from 'dummy/tests/integration/components/tooltip/helpers';
 import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 
 module('tooltip | reposition', function (hooks) {
@@ -32,7 +35,9 @@ module('tooltip | reposition', function (hooks) {
 
     state.text = 'Hello World';
 
-    await settled();
+    await waitUntil(() => {
+      return getPosition('.tooltip').left !== expectedStartPosition.left;
+    });
 
     assertPosition('.tooltip', expectedEndPosition);
   });
