@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { settled, render, rerender, triggerEvent } from '@ember/test-helpers';
+import { settled, render, triggerEvent } from '@ember/test-helpers';
 import { defer } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
