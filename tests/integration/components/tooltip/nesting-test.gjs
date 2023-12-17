@@ -1,15 +1,17 @@
 import { module, test } from 'qunit';
-import setupTooltipperTest from 'dummy/tests/integration/components/tooltip/setup';
+import { setupRenderingTest } from 'dummy/tests/helpers';
 import { render, settled, triggerEvent } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 
 module('tooltip | nesting', function (hooks) {
-  setupTooltipperTest(hooks);
+  setupRenderingTest(hooks);
+
+  let parentDelay;
 
   hooks.beforeEach(async function () {
-    await render(hbs`
+    await render(<template>
       <div class="parent">
-        <Tooltip @showDelay={{this.parentDelay}}>
+        <Tooltip @showDelay={{parentDelay}}>
           Parent
         </Tooltip>
 
@@ -19,13 +21,13 @@ module('tooltip | nesting', function (hooks) {
           </Tooltip>
         </div>
       </div>
-    `);
+    </template>);
   });
 
   test('entering a child with a delayed parent aborts the parent', async function (assert) {
     assert.expect(2);
 
-    this.set('parentDelay', 1000);
+    parentDelay = 1000;
 
     triggerEvent('.parent', 'mouseenter', { bubbles: false });
     triggerEvent('.child', 'mouseenter', { bubbles: false });

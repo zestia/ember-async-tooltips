@@ -1,24 +1,24 @@
 import { module, test } from 'qunit';
-import setupTooltipperTest from 'dummy/tests/integration/components/tooltip/setup';
+import { setupRenderingTest } from 'dummy/tests/helpers';
 import { render, triggerEvent, settled } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 import { defer } from 'rsvp';
 
 module('tooltip | loading attributes', function (hooks) {
-  setupTooltipperTest(hooks);
+  setupRenderingTest(hooks);
 
   test('tooltip informs tooltipper it is loading', async function (assert) {
     assert.expect(3);
 
-    this.deferred = defer();
+    const deferred = defer();
 
-    this.load = () => this.deferred.promise;
+    const load = () => deferred.promise;
 
-    await render(hbs`
+    await render(<template>
       <div>
-        <Tooltip @onLoad={{this.load}} />
+        <Tooltip @onLoad={{load}} />
       </div>
-    `);
+    </template>);
 
     assert.dom('.tooltipper').doesNotHaveAttribute('data-loading');
 
@@ -26,7 +26,7 @@ module('tooltip | loading attributes', function (hooks) {
 
     assert.dom('.tooltipper').hasAttribute('data-loading', 'true');
 
-    this.deferred.resolve();
+    deferred.resolve();
 
     await settled();
 

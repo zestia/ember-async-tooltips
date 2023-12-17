@@ -9,7 +9,8 @@
     "@zestia/position-utils": "^7.0.6",
     "ember-auto-import": "^2.7.1",
     "ember-cli-babel": "^8.2.0",
-    "ember-cli-htmlbars": "^6.3.0"
+    "ember-cli-htmlbars": "^6.3.0",
+    "ember-modifier": "^4.1.0"
   },
   "description": "Render tooltips asyncronously on hover",
   "devDependencies": {

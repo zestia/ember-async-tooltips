@@ -1,17 +1,17 @@
 import { module, test } from 'qunit';
-import setupTooltipperTest from 'dummy/tests/integration/components/tooltip/setup';
+import { setupRenderingTest } from 'dummy/tests/helpers';
 import { render, find, triggerEvent } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 
 module('tooltip | aria', function (hooks) {
-  setupTooltipperTest(hooks);
+  setupRenderingTest(hooks);
 
   hooks.beforeEach(async function () {
-    await render(hbs`
+    await render(<template>
       <div>
         <Tooltip />
       </div>
-    `);
+    </template>);
   });
 
   test('the tooltip will be politely announced by screen readers', async function (assert) {
