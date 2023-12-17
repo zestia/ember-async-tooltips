@@ -1,33 +1,37 @@
 import { module, test } from 'qunit';
-import setupTooltipperTest from 'dummy/tests/integration/components/tooltip/setup';
+import { setupRenderingTest } from 'dummy/tests/helpers';
 import { render, triggerEvent, settled } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { tracked } from '@glimmer/tracking';
+import { wait } from 'dummy/tests/integration/components/tooltip/helpers';
+import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 
 module('tooltip | destroying', function (hooks) {
-  setupTooltipperTest(hooks);
+  setupRenderingTest(hooks);
+
+  let state;
 
   hooks.beforeEach(function () {
-    this.tooltipService = this.owner.lookup('service:tooltip');
+    state = new (class {
+      @tracked show = true;
+    })();
   });
 
   test('destroying a tooltipper when about to show its tooltip', async function (assert) {
     assert.expect(2);
 
-    this.show = true;
-
-    await render(hbs`
-      {{#if this.show}}
+    await render(<template>
+      {{#if state.show}}
         <div id="tooltipper"></div>
       {{/if}}
 
       <Tooltip @element="#tooltipper" @showDelay={{1000}} />
-    `);
+    </template>);
 
     triggerEvent('.tooltipper', 'mouseenter');
 
-    await this.wait(500);
+    await wait(500);
 
-    this.set('show', false);
+    state.show = false;
 
     await settled();
 
@@ -38,19 +42,17 @@ module('tooltip | destroying', function (hooks) {
   test('destroying a tooltipper when already showing a tooltip', async function (assert) {
     assert.expect(2);
 
-    this.show = true;
-
-    await render(hbs`
-      {{#if this.show}}
+    await render(<template>
+      {{#if state.show}}
         <div id="tooltipper"></div>
       {{/if}}
 
       <Tooltip @element="#tooltipper" />
-    `);
+    </template>);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    this.set('show', false);
+    state.show = false;
 
     await settled();
 
@@ -61,22 +63,20 @@ module('tooltip | destroying', function (hooks) {
   test('destroying a tooltip when attached to a tooltipper', async function (assert) {
     assert.expect(5);
 
-    this.show = true;
-
-    await render(hbs`
+    await render(<template>
       <div id="tooltipper"></div>
 
-      {{#if this.show}}
+      {{#if state.show}}
         <Tooltip @element="#tooltipper" />
       {{/if}}
-    `);
+    </template>);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
     assert.dom('.tooltip').exists();
     assert.dom('.tooltipper').exists();
 
-    this.set('show', false);
+    state.show = false;
 
     await settled();
 

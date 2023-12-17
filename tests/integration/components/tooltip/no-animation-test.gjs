@@ -1,30 +1,27 @@
 import { module, test } from 'qunit';
-import setupTooltipperTest from 'dummy/tests/integration/components/tooltip/setup';
+import { setupRenderingTest } from 'dummy/tests/helpers';
 import { render, triggerEvent } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 
 module('tooltip | no animation', function (hooks) {
-  setupTooltipperTest(hooks);
+  setupRenderingTest(hooks);
 
   test('show/hide actions still fire when no animation', async function (assert) {
     assert.expect(6);
 
-    this.handleShow = () => assert.step('show');
-    this.handleHide = () => assert.step('hide');
+    const handleShow = () => assert.step('show');
+    const handleHide = () => assert.step('hide');
 
-    await render(hbs`
+    await render(<template>
       {{! template-lint-disable no-forbidden-elements }}
       <style>
-      .tooltip { animation: none !important }
+        .tooltip { animation: none !important }
       </style>
 
       <div>
-        <Tooltip
-          @onShow={{this.handleShow}}
-          @onHide={{this.handleHide}}
-        />
+        <Tooltip @onShow={{handleShow}} @onHide={{handleHide}} />
       </div>
-    `);
+    </template>);
 
     assert.dom('.tooltip').doesNotExist();
 

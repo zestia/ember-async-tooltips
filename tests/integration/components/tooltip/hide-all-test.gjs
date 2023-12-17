@@ -1,10 +1,11 @@
 import { module, test } from 'qunit';
-import setupTooltipperTest from 'dummy/tests/integration/components/tooltip/setup';
+import { setupRenderingTest } from 'dummy/tests/helpers';
 import { render, click } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { on } from '@ember/modifier';
+import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 
 module('tooltip | hide all', function (hooks) {
-  setupTooltipperTest(hooks);
+  setupRenderingTest(hooks);
 
   test('can hide all tooltips', async function (assert) {
     assert.expect(2);
@@ -12,9 +13,9 @@ module('tooltip | hide all', function (hooks) {
     // hideAllTooltips can be called directly
     // without having to use `@action` to bind `this`.
 
-    this.tooltipService = this.owner.lookup('service:tooltip');
+    const tooltipService = this.owner.lookup('service:tooltip');
 
-    await render(hbs`
+    await render(<template>
       <div>
         <Tooltip @show={{true}} />
       </div>
@@ -25,9 +26,9 @@ module('tooltip | hide all', function (hooks) {
 
       <button
         type="button"
-        {{on "click" this.tooltipService.hideAllTooltips}}
+        {{on "click" tooltipService.hideAllTooltips}}
       ></button>
-    `);
+    </template>);
 
     assert.dom('.tooltip').exists({ count: 2 });
 

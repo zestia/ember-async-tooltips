@@ -1,29 +1,31 @@
 import { module, test } from 'qunit';
-import hbs from 'htmlbars-inline-precompile';
-import setupTooltipperTest from 'dummy/tests/integration/components/tooltip/setup';
+import { setupRenderingTest } from 'dummy/tests/helpers';
 import { render, triggerEvent } from '@ember/test-helpers';
+import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 
 module('tooltip | custom position', function (hooks) {
-  setupTooltipperTest(hooks);
+  setupRenderingTest(hooks);
 
   test('can position the tooltip using a function', async function (assert) {
     assert.expect(2);
 
-    this.position = (referencePosition) => {
-      this.referencePosition = referencePosition;
+    let referencePosition;
+
+    const position = (_position) => {
+      referencePosition = _position;
 
       return 'left top';
     };
 
-    await render(hbs`
+    await render(<template>
       <div>
-        <Tooltip @position={{this.position}} />
+        <Tooltip @position={{position}} />
       </div>
-    `);
+    </template>);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    assert.strictEqual(this.referencePosition, 'middle center');
+    assert.strictEqual(referencePosition, 'middle center');
 
     assert.dom('.tooltip').hasAttribute('data-position', 'left top');
   });
@@ -31,11 +33,11 @@ module('tooltip | custom position', function (hooks) {
   test('no position', async function (assert) {
     assert.expect(1);
 
-    await render(hbs`
+    await render(<template>
       <div>
-        <Tooltip @position={{this.position}} />
+        <Tooltip />
       </div>
-    `);
+    </template>);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
@@ -45,11 +47,11 @@ module('tooltip | custom position', function (hooks) {
   test('invalid position', async function (assert) {
     assert.expect(2);
 
-    await render(hbs`
+    await render(<template>
       <div>
         <Tooltip @position="foo" />
       </div>
-    `);
+    </template>);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 

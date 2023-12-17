@@ -1,35 +1,36 @@
 import { module, test } from 'qunit';
-import setupTooltipperTest from 'dummy/tests/integration/components/tooltip/setup';
+import { setupRenderingTest } from 'dummy/tests/helpers';
 import { render, waitFor, triggerEvent, settled } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { Timer } from 'dummy/tests/integration/components/tooltip/helpers';
+import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 
 module('tooltip | delays', function (hooks) {
-  setupTooltipperTest(hooks);
+  setupRenderingTest(hooks);
 
   test('hide delay', async function (assert) {
     assert.expect(4);
 
-    await render(hbs`
+    await render(<template>
       <div>
         <Tooltip @hideDelay={{100}} />
       </div>
-    `);
+    </template>);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
     assert.dom('.tooltip').hasAttribute('data-showing', 'true');
 
-    this.startTimer();
+    const timer = new Timer();
+
+    timer.start();
 
     triggerEvent('.tooltipper', 'mouseleave');
 
     await waitFor(".tooltip[data-showing='false']");
 
-    this.stopTimer();
+    timer.stop();
 
-    this.delayed = this.timeTaken() >= 100 && this.timeTaken() <= 150;
-
-    assert.ok(this.delayed);
+    timer.assertBetween(100, 150);
 
     assert.dom('.tooltip').exists();
 

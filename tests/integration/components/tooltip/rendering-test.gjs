@@ -1,32 +1,35 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { settled, render, triggerEvent } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { settled, render, rerender, triggerEvent } from '@ember/test-helpers';
 import { defer } from 'rsvp';
+import { tracked } from '@glimmer/tracking';
+import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 
 module('tooltip | rendering', function (hooks) {
   setupRenderingTest(hooks);
 
+  let tooltipService;
+
   hooks.beforeEach(function () {
-    this.tooltipService = this.owner.lookup('service:tooltip');
+    tooltipService = this.owner.lookup('service:tooltip');
   });
 
   test('rendering test', async function (assert) {
     assert.expect(1);
 
-    await render(hbs`
+    await render(<template>
       <div>
         <Tooltip @show={{true}} />
       </div>
-    `);
+    </template>);
 
-    assert.strictEqual(this.tooltipService.tooltips.length, 1);
+    assert.strictEqual(tooltipService.tooltips.length, 1);
   });
 
   test('multiple tooltips', async function (assert) {
     assert.expect(1);
 
-    await render(hbs`
+    await render(<template>
       <div>
         <Tooltip @show={{true}} />
       </div>
@@ -34,7 +37,7 @@ module('tooltip | rendering', function (hooks) {
       <div>
         <Tooltip />
       </div>
-    `);
+    </template>);
 
     await triggerEvent('.tooltipper:nth-child(2)', 'mouseenter');
 
@@ -48,15 +51,15 @@ module('tooltip | rendering', function (hooks) {
     // animating out. The tooltip should finish hiding and then show again,
     // and not be destroyed and rerendered.
 
-    await render(hbs`
+    await render(<template>
       <div>
         <Tooltip />
       </div>
-    `);
+    </template>);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    const tooltip = this.tooltipService.tooltips[0];
+    const tooltip = tooltipService.tooltips[0];
     const willHideTooltip = tooltip.hide();
 
     triggerEvent('.tooltipper', 'mouseenter');
@@ -75,10 +78,12 @@ module('tooltip | rendering', function (hooks) {
     // that the tooltip service does not hold on to a reference
     // to its tooltip, which should also be destroyed.
 
-    this.show = true;
+    const state = new (class {
+      @tracked show = true;
+    })();
 
-    await render(hbs`
-      {{#if this.show}}
+    await render(<template>
+      {{#if state.show}}
         <div class="one">
           <Tooltip />
         </div>
@@ -87,15 +92,15 @@ module('tooltip | rendering', function (hooks) {
       <div class="two">
         <Tooltip />
       </div>
-    `);
+    </template>);
 
     await triggerEvent('.one', 'mouseenter');
 
-    this.set('show', false);
+    state.show = false;
 
     await triggerEvent('.two', 'mouseenter');
 
-    assert.strictEqual(this.tooltipService.tooltips.length, 1);
+    assert.strictEqual(tooltipService.tooltips.length, 1);
   });
 
   test('tearing down whilst showing another tooltip', async function (assert) {
@@ -107,27 +112,29 @@ module('tooltip | rendering', function (hooks) {
     // or is-a-parent to run. The recently destroyed tooltipper's element
     // will be null so any parent/child checks need to account for this.
 
-    this.show = true;
+    const state = new (class {
+      @tracked show = true;
+    })();
 
     const deferred = defer();
 
-    this.load = () => deferred.promise;
+    const load = () => deferred.promise;
 
-    await render(hbs`
-      {{#if this.show}}
+    await render(<template>
+      {{#if state.show}}
         <div class="one">
-          <Tooltip @onLoad={{this.load}} />
+          <Tooltip @onLoad={{load}} />
         </div>
       {{/if}}
 
       <div class="two">
         <Tooltip />
       </div>
-    `);
+    </template>);
 
     await triggerEvent('.one', 'mouseenter');
 
-    this.set('show', false);
+    state.show = false;
 
     await triggerEvent('.two', 'mouseenter');
 

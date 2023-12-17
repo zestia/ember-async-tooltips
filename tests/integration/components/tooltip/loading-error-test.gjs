@@ -1,23 +1,26 @@
 import { module, test } from 'qunit';
-import setupTooltipperTest from 'dummy/tests/integration/components/tooltip/setup';
+import { setupRenderingTest } from 'dummy/tests/helpers';
 import { render, settled, triggerEvent } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
 import { defer } from 'rsvp';
+import { tracked } from '@glimmer/tracking';
+import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 
 module('tooltip | loading error', function (hooks) {
-  setupTooltipperTest(hooks);
+  setupRenderingTest(hooks);
 
   test('loading error', async function (assert) {
     assert.expect(3);
 
-    this.deferred1 = defer();
-    this.deferred2 = defer();
+    const deferred1 = defer();
+    const deferred2 = defer();
 
-    this.load = () => this.deferred1.promise;
+    const state = new (class {
+      @tracked load = () => deferred1.promise;
+    })();
 
-    await render(hbs`
+    await render(<template>
       <div>
-        <Tooltip @onLoad={{this.load}} as |tooltip|>
+        <Tooltip @onLoad={{state.load}} as |tooltip|>
           {{#if tooltip.data}}
             {{tooltip.data.greeting}}
           {{else}}
@@ -25,13 +28,13 @@ module('tooltip | loading error', function (hooks) {
           {{/if}}
         </Tooltip>
       </div>
-    `);
+    </template>);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
     assert.dom('.tooltip').doesNotExist();
 
-    this.deferred1.reject({ message: 'Failed to load' });
+    deferred1.reject({ message: 'Failed to load' });
 
     await settled();
 
@@ -39,11 +42,11 @@ module('tooltip | loading error', function (hooks) {
 
     await triggerEvent('.tooltipper', 'mouseleave');
 
-    this.set('load', () => this.deferred2.promise);
+    state.load = () => deferred2.promise;
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    this.deferred2.resolve({ greeting: 'Loaded OK' });
+    deferred2.resolve({ greeting: 'Loaded OK' });
 
     await settled();
 

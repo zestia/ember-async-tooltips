@@ -1,23 +1,23 @@
 import { module, test } from 'qunit';
-import setupTooltipperTest from 'dummy/tests/integration/components/tooltip/setup';
+import { setupRenderingTest } from 'dummy/tests/helpers';
 import { render, triggerEvent } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 import { htmlSafe } from '@ember/template';
 
 module('tooltip | display', function (hooks) {
-  setupTooltipperTest(hooks);
+  setupRenderingTest(hooks);
 
   test('css display none', async function (assert) {
     assert.expect(1);
 
-    this.style = htmlSafe('display: none');
+    const style = htmlSafe('display: none');
 
-    await render(hbs`
+    await render(<template>
       {{! template-lint-disable no-inline-styles }}
       <div>
-        <Tooltip style={{this.style}} />
+        <Tooltip style={{style}} />
       </div>
-    `);
+    </template>);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 

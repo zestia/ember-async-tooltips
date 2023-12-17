@@ -1,19 +1,19 @@
 import { module, test } from 'qunit';
-import setupTooltipperTest from 'dummy/tests/integration/components/tooltip/setup';
+import { setupRenderingTest } from 'dummy/tests/helpers';
 import { focus, render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 
 module('tooltip | focus', function (hooks) {
-  setupTooltipperTest(hooks);
+  setupRenderingTest(hooks);
 
   test('focusing', async function (assert) {
     assert.expect(1);
 
-    await render(hbs`
+    await render(<template>
       <a href="#">
         <Tooltip />
       </a>
-    `);
+    </template>);
 
     await focus('.tooltipper');
 

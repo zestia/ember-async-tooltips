@@ -1,30 +1,35 @@
 import { module, test } from 'qunit';
-import setupTooltipperTest from 'dummy/tests/integration/components/tooltip/setup';
+import { setupRenderingTest } from 'dummy/tests/helpers';
 import { render, waitUntil, settled, triggerEvent } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
 import { defer } from 'rsvp';
+import {
+  wait,
+  hasText,
+  assertPosition
+} from 'dummy/tests/integration/components/tooltip/helpers';
+import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 
 module('tooltip | loading data', function (hooks) {
-  setupTooltipperTest(hooks);
+  setupRenderingTest(hooks);
 
   test('loading data', async function (assert) {
     assert.expect(6);
 
     const deferred = defer();
 
-    this.load = () => {
+    const load = () => {
       assert.step('load tooltip');
 
       return deferred.promise;
     };
 
-    await render(hbs`
+    await render(<template>
       <div>
-        <Tooltip @onLoad={{this.load}} as |tooltip|>
+        <Tooltip @onLoad={{load}} as |tooltip|>
           {{tooltip.data.greeting}}
         </Tooltip>
       </div>
-    `);
+    </template>);
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
@@ -49,13 +54,13 @@ module('tooltip | loading data', function (hooks) {
   test('mouse enter / loading data', async function (assert) {
     assert.expect(3);
 
-    this.load = () => assert.step('loading data');
+    const load = () => assert.step('loading data');
 
-    await render(hbs`
+    await render(<template>
       <div>
-        <Tooltip @onLoad={{this.load}} />
+        <Tooltip @onLoad={{load}} />
       </div>
-    `);
+    </template>);
 
     triggerEvent('.tooltipper', 'mouseenter');
     triggerEvent('.tooltipper', 'mouseenter');
@@ -70,13 +75,13 @@ module('tooltip | loading data', function (hooks) {
   test('mouse leave / loading data', async function (assert) {
     assert.expect(3);
 
-    this.load = () => assert.step('loading data');
+    const load = () => assert.step('loading data');
 
-    await render(hbs`
+    await render(<template>
       <div>
-        <Tooltip @onLoad={{this.load}} />
+        <Tooltip @onLoad={{load}} />
       </div>
-    `);
+    </template>);
 
     triggerEvent('.tooltipper', 'mouseenter');
     triggerEvent('.tooltipper', 'mouseleave');
@@ -91,14 +96,17 @@ module('tooltip | loading data', function (hooks) {
   test('loading data with show arg renders correct position straight away', async function (assert) {
     assert.expect(2);
 
-    this.load = () => this.resolve({ greeting: 'Hello World' }, 50);
+    const load = async () => {
+      await wait(50);
+      return { greeting: 'Hello World' };
+    };
 
-    render(hbs`
+    render(<template>
       <div>
         Hover over me
 
         <Tooltip
-          @onLoad={{this.load}}
+          @onLoad={{load}}
           @show={{true}}
           @position="bottom center"
           as |tooltip|
@@ -106,10 +114,10 @@ module('tooltip | loading data', function (hooks) {
           {{tooltip.data.greeting}}
         </Tooltip>
       </div>
-    `);
+    </template>);
 
-    await waitUntil(() => this.hasText('.tooltip', 'Hello World'));
+    await waitUntil(() => hasText('.tooltip', 'Hello World'));
 
-    this.assertPosition('.tooltip', { left: 8, top: 14 });
+    assertPosition('.tooltip', { left: 8, top: 14 });
   });
 });
