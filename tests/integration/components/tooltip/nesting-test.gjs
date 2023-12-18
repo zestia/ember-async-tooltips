@@ -8,8 +8,8 @@ module('tooltip | nesting', function (hooks) {
 
   let parentDelay;
 
-  hooks.beforeEach(async function () {
-    await render(<template>
+  const _render = () => {
+    return render(<template>
       <div class="parent">
         <Tooltip @showDelay={{parentDelay}}>
           Parent
@@ -22,12 +22,14 @@ module('tooltip | nesting', function (hooks) {
         </div>
       </div>
     </template>);
-  });
+  };
 
   test('entering a child with a delayed parent aborts the parent', async function (assert) {
     assert.expect(2);
 
     parentDelay = 1000;
+
+    await _render();
 
     triggerEvent('.parent', 'mouseenter', { bubbles: false });
     triggerEvent('.child', 'mouseenter', { bubbles: false });
@@ -41,6 +43,8 @@ module('tooltip | nesting', function (hooks) {
     assert.expect(4);
 
     parentDelay = null;
+
+    await _render();
 
     await triggerEvent('.parent', 'mouseenter', { bubbles: false });
 
