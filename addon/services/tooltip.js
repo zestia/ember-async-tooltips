@@ -1,5 +1,4 @@
 import Service from '@ember/service';
-import { all } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 
 export default class TooltipService extends Service {
@@ -7,7 +6,7 @@ export default class TooltipService extends Service {
   @tracked _sticky = {};
 
   hideAllTooltips = () => {
-    return all(this.tooltips.map((tooltip) => tooltip.hide()));
+    return Promise.all(this.tooltips.map((tooltip) => tooltip.hide()));
   };
 
   _add = (tooltip) => {

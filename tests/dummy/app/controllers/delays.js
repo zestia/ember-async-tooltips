@@ -2,7 +2,6 @@ import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { next, later } from '@ember/runloop';
-import { Promise } from 'rsvp';
 const { max } = Math;
 
 export default class DelaysController extends Controller {
