@@ -1,5 +1,9 @@
 import Component from '@glimmer/component';
 import { cancel, later, next } from '@ember/runloop';
+import didInsert from '@ember/render-modifiers/modifiers/did-insert';
+import didUpdate from '@ember/render-modifiers/modifiers/did-update';
+import willDestroy from '@ember/render-modifiers/modifiers/will-destroy';
+import { on } from '@ember/modifier';
 import { getPosition, getCoords } from '@zestia/position-utils';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
@@ -525,4 +529,44 @@ export default class TooltipComponent extends Component {
     },
     set() {}
   });
+
+  <template>
+    <span
+      class="__tooltip__"
+      hidden
+      {{didInsert this.handleInsertElement}}
+      {{didUpdate
+        this.handleUpdatedArguments
+        @columns
+        @element
+        @position
+        @destination
+        @attachTo
+        @rows
+        @show
+      }}
+      {{willDestroy this.handleDestroyElement}}
+    ></span>
+    {{~#if this.shouldRenderTooltip~}}
+      {{~#in-element this.destinationElement insertBefore=null~}}
+        <div
+          class="tooltip"
+          data-showing="{{this.shouldShowTooltip}}"
+          data-position={{this.tooltipPosition}}
+          data-sticky="{{this.isSticky}}"
+          id={{this.id}}
+          style={{this.tooltipStyle}}
+          role="tooltip"
+          aria-live="polite"
+          {{didInsert this.handleInsertTooltip}}
+          {{willDestroy this.handleDestroyTooltip}}
+          {{on "mouseenter" this.handleMouseEnterTooltip}}
+          {{on "mouseleave" this.handleMouseLeaveTooltip}}
+          ...attributes
+        >
+          {{~yield this.api~}}
+        </div>
+      {{~/in-element~}}
+    {{/if}}
+  </template>
 }
