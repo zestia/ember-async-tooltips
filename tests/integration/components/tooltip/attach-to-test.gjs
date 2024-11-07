@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'dummy/tests/helpers';
-import { render, rerender, triggerEvent } from '@ember/test-helpers';
+import { render, settled, triggerEvent } from '@ember/test-helpers';
 import { tracked } from '@glimmer/tracking';
 import { assertPosition } from 'dummy/tests/integration/components/tooltip/helpers';
 import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
@@ -39,7 +39,8 @@ module('tooltip | attach to', function (hooks) {
 
     state.attachTo = '#two';
 
-    await rerender();
+    await settled();
+    await new Promise(requestAnimationFrame);
 
     assertPosition('.tooltip', { left: 37, top: 42 });
   });

@@ -1,12 +1,9 @@
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
+import { modifier } from 'ember-modifier';
 
 export default class InElementController extends Controller {
   @tracked elsewhere;
 
-  @action
-  registerElsewhere(element) {
-    this.elsewhere = element;
-  }
+  registerElsewhere = modifier((element) => (this.elsewhere = element));
 }

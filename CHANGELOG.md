@@ -3,6 +3,7 @@
 ## 15.1.4
 
 - Convert to `.gjs`
+- Remove use of `@ember/render-modifiers`
 
 ## 15.1.3
 
