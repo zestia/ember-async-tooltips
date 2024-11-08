@@ -16,7 +16,10 @@ export class Timer {
   }
 
   assertBetween(lower, upper) {
-    assert.ok(this.time >= lower && this.time <= upper);
+    assert.ok(
+      this.time >= lower && this.time <= upper,
+      `expected ${this.time} to be between ${lower} and ${upper}`
+    );
   }
 }
 

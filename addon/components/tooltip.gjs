@@ -1,37 +1,31 @@
-import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import { cancel, later, next } from '@ember/runloop';
-import didInsert from '@ember/render-modifiers/modifiers/did-insert';
-import didUpdate from '@ember/render-modifiers/modifiers/did-update';
-import willDestroy from '@ember/render-modifiers/modifiers/will-destroy';
-import { on } from '@ember/modifier';
+import { defer } from 'rsvp';
 import { getPosition, getCoords } from '@zestia/position-utils';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
 import { inject } from '@ember/service';
-import { defer } from 'rsvp';
+import { on } from '@ember/modifier';
 import { tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';
 import { waitForAnimation } from '@zestia/animation-utils';
 import autoPosition from '@zestia/ember-async-tooltips/utils/auto-position';
-import { action } from '@ember/object';
+import Component from '@glimmer/component';
+import { modifier } from 'ember-modifier';
 const { max } = Math;
 
 export default class TooltipComponent extends Component {
   @inject('tooltip') tooltipService;
 
-  @tracked destinationElement;
+  @tracked element;
   @tracked isLoading;
   @tracked loadedData = null;
   @tracked loadError = null;
-  @tracked positionElement;
   @tracked shouldRenderTooltip;
   @tracked shouldShowTooltip;
   @tracked tooltipCoords = [0, 0];
   @tracked tooltipElement;
-  @tracked tooltipperElement;
-  @tracked tooltipPosition;
 
-  element;
   hideTimer;
   isLoaded;
   isOverTooltipElement;
@@ -41,20 +35,6 @@ export default class TooltipComponent extends Component {
   stickyTimer;
   tetherID;
   willInsertTooltip;
-
-  get hasTooltip() {
-    return !!this.tooltipElement;
-  }
-
-  get canRenderTooltip() {
-    return (
-      !this.isDestroying &&
-      !this.isDestroyed &&
-      this.tooltipperElement.isConnected &&
-      this.needsToShowTooltip &&
-      !this.childTooltip
-    );
-  }
 
   get id() {
     return guidFor(this);
@@ -98,11 +78,18 @@ export default class TooltipComponent extends Component {
     return this.args.stickyTimeout ?? this.showDelay / 2;
   }
 
+  get canRenderTooltip() {
+    return (
+      this.tooltipperElement && this.needsToShowTooltip && !this.childTooltip
+    );
+  }
+
   get needsToShowTooltip() {
     return (
-      this.isOverTooltipperElement ||
-      this.isOverTooltipElement ||
-      this.args.show
+      !(this.isOverTooltipperElement && this.args.show === false) &&
+      (this.isOverTooltipperElement ||
+        this.isOverTooltipElement ||
+        this.args.show)
     );
   }
 
@@ -147,58 +134,52 @@ export default class TooltipComponent extends Component {
     return this.tooltipService._sticky[this.args.stickyID] === true;
   }
 
-  @action
-  handleInsertElement(element) {
-    this.element = element;
-    this._update();
+  get destinationElement() {
+    return this.args.destination
+      ? this._getElement(this.args.destination)
+      : this.element.parentElement;
   }
 
-  @action
-  handleUpdatedArguments() {
-    this._update();
+  get positionElement() {
+    return this.args.attachTo
+      ? this._getElement(this.args.attachTo)
+      : this.tooltipperElement;
   }
 
-  @action
-  handleInsertTooltip(element) {
-    this.tooltipElement = element;
-    this._updateAria();
-    this._updateVisibility();
-    this._updatePosition();
-    this.willInsertTooltip.resolve();
-    this.tooltipService._add(this);
+  get tooltipperElement() {
+    return this.args.element
+      ? this._getElement(this.args.element)
+      : this.element.parentElement;
   }
 
-  @action
-  handleDestroyTooltip() {
-    this.tooltipElement = null;
-    this.isOverTooltipElement = false;
-    this._updateAria();
-    this.tooltipService._remove(this);
+  get referencePosition() {
+    return getPosition(this.positionElement, window, this.columns, this.rows);
   }
 
-  @action
-  handleDestroyElement() {
-    this._stopTether();
-    this._cancelTimers();
-    this._tearDownTooltipper();
-    this.element = null;
-    this.tooltipElement = null;
-    this.positionElement = null;
-    this.tooltipperElement = null;
-    this.destinationElement = null;
+  get tooltipPosition() {
+    const { position } = this.args;
+
+    if (typeof position === 'string') {
+      return position;
+    }
+
+    if (typeof position === 'function') {
+      return position(this.referencePosition);
+    }
+
+    return autoPosition(this.referencePosition);
   }
 
   @action
   async handleMouseEnterTooltipperElement() {
     this.isOverTooltipperElement = true;
+    this.loadDuration = 0;
 
     if (this.shouldLoadEagerly) {
       await this._load();
     }
 
     this._scheduleShowTooltip();
-
-    this.loadDuration = 0;
   }
 
   @action
@@ -230,24 +211,12 @@ export default class TooltipComponent extends Component {
     this._showTooltip();
   }
 
-  _updateVisibility() {
-    next(() => this._maybeToggleViaArg());
-  }
-
-  _maybeToggleViaArg() {
-    if (this.args.show === true) {
-      this._showTooltip();
-    } else if (this.args.show === false) {
-      this._hideTooltip();
-    }
-  }
-
   async _load() {
     const start = Date.now();
-    this.isLoading = true;
-    this._updateLoading();
 
     try {
+      this.isLoading = true;
+      this.loadDuration = 0;
       this.loadedData = await this.args.onLoad?.();
       this.isLoaded = true;
     } catch (error) {
@@ -257,13 +226,11 @@ export default class TooltipComponent extends Component {
       const end = Date.now();
       this.loadDuration = end - start;
       this.isLoading = false;
-      this._updateLoading();
     }
   }
 
   _scheduleShowTooltip() {
     this._cancelTimers();
-
     this.showTimer = later(this, '_attemptShowTooltip', this.actualShowDelay);
   }
 
@@ -285,8 +252,6 @@ export default class TooltipComponent extends Component {
     if (this.shouldRenderTooltip) {
       return;
     }
-
-    this._startTether();
 
     if (this.shouldLoad) {
       this._load();
@@ -362,7 +327,6 @@ export default class TooltipComponent extends Component {
       this._scheduleResetSticky();
     }
 
-    this._stopTether();
     this._attemptDestroyTooltip();
 
     this.args.onHide?.();
@@ -385,85 +349,6 @@ export default class TooltipComponent extends Component {
     this.shouldRenderTooltip = false;
   }
 
-  _update() {
-    if (this.tooltipperElement) {
-      this._tearDownTooltipper();
-    }
-
-    this._updateElements();
-    this._setUpTooltipper();
-    this._updateVisibility();
-    this._updatePosition();
-  }
-
-  _updateElements() {
-    this.tooltipperElement =
-      this._getElement(this.args.element) ?? this.element.parentElement;
-
-    this.destinationElement =
-      this._getElement(this.args.destination) ?? this.element.parentElement;
-
-    this.positionElement =
-      this._getElement(this.args.attachTo) ?? this.tooltipperElement;
-  }
-
-  _updatePosition() {
-    if (!this.hasTooltip) {
-      return;
-    }
-
-    this.tooltipPosition = this._decideTooltipPosition();
-    this.tooltipCoords = this._computeTooltipCoords();
-  }
-
-  _updateAria() {
-    if (this.isDestroying) {
-      return;
-    }
-
-    if (this.hasTooltip) {
-      this.tooltipperElement.setAttribute('aria-describedby', this.id);
-    } else {
-      this.tooltipperElement.removeAttribute('aria-describedby');
-    }
-  }
-
-  _updateLoading() {
-    if (this.isDestroying) {
-      return;
-    }
-
-    if (this.isLoading) {
-      this.tooltipperElement.dataset.loading = 'true';
-    } else {
-      delete this.tooltipperElement.dataset.loading;
-    }
-  }
-
-  _tearDownTooltipper() {
-    this._remove('mouseenter', this.handleMouseEnterTooltipperElement);
-    this._remove('mouseleave', this.handleMouseLeaveTooltipperElement);
-
-    this.tooltipperElement.removeAttribute('aria-describedby');
-    this.tooltipperElement.classList.remove('tooltipper');
-    delete this.tooltipperElement.dataset.tooltipLoading;
-  }
-
-  _setUpTooltipper() {
-    this._add('mouseenter', this.handleMouseEnterTooltipperElement);
-    this._add('mouseleave', this.handleMouseLeaveTooltipperElement);
-
-    this.tooltipperElement.classList.add('tooltipper');
-  }
-
-  _add(...args) {
-    this.tooltipperElement.addEventListener(...args);
-  }
-
-  _remove(...args) {
-    this.tooltipperElement.removeEventListener(...args);
-  }
-
   _getElement(element) {
     if (typeof element === 'string') {
       return document.querySelector(element);
@@ -475,7 +360,16 @@ export default class TooltipComponent extends Component {
   }
 
   _tether() {
-    this._updatePosition();
+    if (!this.positionElement) {
+      return;
+    }
+
+    this.tooltipCoords = getCoords(
+      this.tooltipPosition,
+      this.tooltipElement,
+      this.positionElement
+    );
+
     this.tetherID = requestAnimationFrame(this._tether.bind(this));
   }
 
@@ -487,32 +381,12 @@ export default class TooltipComponent extends Component {
     cancelAnimationFrame(this.tetherID);
   }
 
-  _getReferencePosition() {
-    return getPosition(this.positionElement, window, this.columns, this.rows);
+  _add(element, ...args) {
+    element.addEventListener(...args);
   }
 
-  _computeTooltipCoords() {
-    return getCoords(
-      this.tooltipPosition,
-      this.tooltipElement,
-      this.positionElement
-    );
-  }
-
-  _decideTooltipPosition() {
-    const { position } = this.args;
-
-    if (typeof position === 'string') {
-      return position;
-    }
-
-    const referencePosition = this._getReferencePosition();
-
-    if (typeof position === 'function') {
-      return position(referencePosition);
-    }
-
-    return autoPosition(referencePosition);
+  _remove(element, ...args) {
+    element.removeEventListener(...args);
   }
 
   get _api() {
@@ -530,22 +404,69 @@ export default class TooltipComponent extends Component {
     set() {}
   });
 
+  visibility = modifier((_, [show]) => {
+    next(() => {
+      if (show === true) {
+        this._showTooltip();
+      } else if (show === false) {
+        this._hideTooltip();
+      }
+    });
+  });
+
+  position = modifier((_, [position, columns, rows, destination, attachTo]) => {
+    this._startTether();
+    return () => this._stopTether();
+  });
+
+  events = modifier((element, [otherElement]) => {
+    this.element = element;
+    const { tooltipperElement: el } = this;
+
+    this._add(el, 'mouseenter', this.handleMouseEnterTooltipperElement);
+    this._add(el, 'mouseleave', this.handleMouseLeaveTooltipperElement);
+
+    return () => {
+      this._remove(el, 'mouseenter', this.handleMouseEnterTooltipperElement);
+      this._remove(el, 'mouseleave', this.handleMouseLeaveTooltipperElement);
+    };
+  });
+
+  className = modifier(() => {
+    this.tooltipperElement.classList.add('tooltipper');
+    return () => this.tooltipperElement?.classList.remove('tooltipper');
+  });
+
+  loading = modifier((_, [isLoading]) => {
+    if (this.isLoading) {
+      this.tooltipperElement.dataset.loading = 'true';
+    } else {
+      delete this.tooltipperElement?.dataset.loading;
+    }
+  });
+
+  aria = modifier(() => {
+    this.tooltipperElement.setAttribute('aria-describedby', this.id);
+    return () => this.tooltipperElement?.removeAttribute('aria-describedby');
+  });
+
+  register = modifier((element) => {
+    this.tooltipElement = element;
+    this.willInsertTooltip.resolve();
+    this.tooltipService._add(this);
+
+    return () => this.tooltipService._remove(this);
+  });
+
   <template>
+    {{~""~}}
     <span
       class="__tooltip__"
       hidden
-      {{didInsert this.handleInsertElement}}
-      {{didUpdate
-        this.handleUpdatedArguments
-        @columns
-        @element
-        @position
-        @destination
-        @attachTo
-        @rows
-        @show
-      }}
-      {{willDestroy this.handleDestroyElement}}
+      {{this.events @element}}
+      {{this.className}}
+      {{this.visibility @show}}
+      {{this.loading this.isLoading}}
     ></span>
     {{~#if this.shouldRenderTooltip~}}
       {{~#in-element this.destinationElement insertBefore=null~}}
@@ -558,15 +479,17 @@ export default class TooltipComponent extends Component {
           style={{this.tooltipStyle}}
           role="tooltip"
           aria-live="polite"
-          {{didInsert this.handleInsertTooltip}}
-          {{willDestroy this.handleDestroyTooltip}}
           {{on "mouseenter" this.handleMouseEnterTooltip}}
           {{on "mouseleave" this.handleMouseLeaveTooltip}}
+          {{this.register}}
+          {{this.aria}}
+          {{this.position @position @columns @rows @destination @attachTo}}
           ...attributes
         >
           {{~yield this.api~}}
         </div>
       {{~/in-element~}}
     {{/if}}
+    {{~""~}}
   </template>
 }
