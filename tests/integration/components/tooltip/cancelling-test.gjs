@@ -12,7 +12,7 @@ module('tooltip | cancelling', function (hooks) {
     assert.expect(1);
 
     const state = new (class {
-      @tracked show = '#one';
+      @tracked show = true;
     })();
 
     await render(<template>
