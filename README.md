@@ -102,7 +102,7 @@ In the following example, there is a show delay of `300`ms before a tooltip will
   <summary>Example</summary>
   
 ```handlebars
-{{! application.hbs }}
+{{! application.gjs }}
 <LinkTo @route='user' @model={{123}}>
   Preview user
   <UserTooltip @id={{123}} />
@@ -111,7 +111,7 @@ In the following example, there is a show delay of `300`ms before a tooltip will
 ````
 
 ```handlebars
-{{! user-tooltip.hbs }}
+{{! user-tooltip.gjs }}
 <Tooltip @showDelay={{300}} @onLoad={{fn this.loadUser @id}} as |tooltip|>
   {{tooltip.data.user.name}}
 </Tooltip>
