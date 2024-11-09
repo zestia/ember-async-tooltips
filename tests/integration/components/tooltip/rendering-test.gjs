@@ -59,7 +59,7 @@ module('tooltip | rendering', function (hooks) {
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    const tooltip = tooltipService.tooltips[0];
+    const [tooltip] = tooltipService.tooltips;
     const willHideTooltip = tooltip.hide();
 
     triggerEvent('.tooltipper', 'mouseenter');

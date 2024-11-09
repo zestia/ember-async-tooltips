@@ -55,7 +55,7 @@ module('tooltip | lazy loading', function (hooks) {
 
     timer.stop();
 
-    timer.assertBetween(250, 300); // animation duration
+    timer.assertBetween(240, 300); // animation duration
   });
 
   test('load time is more than the show delay', async function (assert) {

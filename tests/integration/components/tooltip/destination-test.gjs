@@ -15,9 +15,7 @@ module('tooltip | destination', function (hooks) {
       @tracked elsewhere;
     })();
 
-    const register = modifier((element) => (state.elsewhere = element), {
-      eager: false
-    });
+    const register = modifier((element) => (state.elsewhere = element));
 
     await render(<template>
       <div>
