@@ -1,6 +1,6 @@
 # Changelog
 
-## 15.1.4
+## 15.2.0
 
 - Convert to `.gjs`
 - Remove use of `@ember/render-modifiers`
