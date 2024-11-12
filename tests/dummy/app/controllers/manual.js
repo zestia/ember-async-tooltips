@@ -6,12 +6,7 @@ export default class ManualPositioningController extends Controller {
   @tracked shouldShowTooltip;
 
   @action
-  showTooltip() {
-    this.shouldShowTooltip = true;
-  }
-
-  @action
-  hideTooltip() {
-    this.shouldShowTooltip = false;
+  toggleTooltip() {
+    this.shouldShowTooltip = !this.shouldShowTooltip;
   }
 }

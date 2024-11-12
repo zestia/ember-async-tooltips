@@ -19,4 +19,5 @@ Router.map(function () {
   this.route('attach-to');
   this.route('sticky');
   this.route('tether');
+  this.route('use-focus');
 });

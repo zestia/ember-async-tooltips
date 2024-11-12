@@ -84,6 +84,10 @@ Optional. The show delay will prevent the tooltip from being shown until the spe
 
 Optional. The hide delay will prevent the tooltip from being hidden until the specified milliseconds have passed after leaving the reference element.
 
+#### `@useFocus`
+
+Optional. By default, tooltips will only show when hovering over the reference element. Use this argument to also show the tooltip when the reference element is focused with keyboard.
+
 #### `@stickyID`
 
 Optional. You can group tooltips together with a sticky identifier. When a tooltip from a group of tooltips all with the same identifier is shown, then other tooltips in that group will show instantly - ignoring their show delay. The term sticky is used because it feels as if the tooltips are stuck open.
@@ -100,22 +104,21 @@ In the following example, there is a show delay of `300`ms before a tooltip will
 
 <details>
   <summary>Example</summary>
-  
+
 ```handlebars
 {{! application.gjs }}
 <LinkTo @route='user' @model={{123}}>
   Preview user
   <UserTooltip @id={{123}} />
 </LinkTo>
-
-````
+```
 
 ```handlebars
 {{! user-tooltip.gjs }}
 <Tooltip @showDelay={{300}} @onLoad={{fn this.loadUser @id}} as |tooltip|>
   {{tooltip.data.user.name}}
 </Tooltip>
-````
+```
 
 </details>
 
