@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'dummy/tests/helpers';
 import { render, triggerEvent, settled } from '@ember/test-helpers';
 import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
-import { defer } from 'rsvp';
 
 module('tooltip | loading attributes', function (hooks) {
   setupRenderingTest(hooks);
@@ -10,7 +9,7 @@ module('tooltip | loading attributes', function (hooks) {
   test('tooltip informs tooltipper it is loading', async function (assert) {
     assert.expect(3);
 
-    const deferred = defer();
+    const deferred = Promise.withResolvers();
 
     const load = () => deferred.promise;
 

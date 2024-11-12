@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'dummy/tests/helpers';
 import { render, waitUntil, settled, triggerEvent } from '@ember/test-helpers';
-import { defer } from 'rsvp';
 import {
   wait,
   hasText,
@@ -15,7 +14,7 @@ module('tooltip | loading data', function (hooks) {
   test('loading data', async function (assert) {
     assert.expect(6);
 
-    const deferred = defer();
+    const deferred = Promise.withResolvers();
 
     const load = () => {
       assert.step('load tooltip');

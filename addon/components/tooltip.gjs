@@ -1,6 +1,5 @@
 import { action } from '@ember/object';
 import { cancel, later, next } from '@ember/runloop';
-import { defer } from 'rsvp';
 import { getPosition, getCoords } from '@zestia/position-utils';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
@@ -264,7 +263,7 @@ export default class TooltipComponent extends Component {
   }
 
   _renderTooltip() {
-    this.willInsertTooltip = defer();
+    this.willInsertTooltip = Promise.withResolvers();
     this.shouldRenderTooltip = true;
 
     return this.willInsertTooltip.promise;

@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'dummy/tests/helpers';
 import { settled, render, triggerEvent } from '@ember/test-helpers';
-import { defer } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 
@@ -116,7 +115,7 @@ module('tooltip | rendering', function (hooks) {
       @tracked show = true;
     })();
 
-    const deferred = defer();
+    const deferred = Promise.withResolvers();
 
     const load = () => deferred.promise;
 

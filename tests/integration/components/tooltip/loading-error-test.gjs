@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'dummy/tests/helpers';
 import { render, settled, triggerEvent } from '@ember/test-helpers';
-import { defer } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 
@@ -11,8 +10,8 @@ module('tooltip | loading error', function (hooks) {
   test('loading error', async function (assert) {
     assert.expect(3);
 
-    const deferred1 = defer();
-    const deferred2 = defer();
+    const deferred1 = Promise.withResolvers();
+    const deferred2 = Promise.withResolvers();
 
     const state = new (class {
       @tracked load = () => deferred1.promise;
