@@ -3,13 +3,7 @@
 </p>
 
 <div>
-  <input
-    type="text"
-    placeholder="Focus me"
-    aria-label="Example text area"
-    {{on "focus" this.showTooltip}}
-    {{on "blur" this.hideTooltip}}
-  />
+  <button type="button" {{on "click" this.toggleTooltip}}>Toggle Tooltip</button>
 
   {{#if this.shouldShowTooltip}}
     <Tooltip @show={{true}}>
