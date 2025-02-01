@@ -77,7 +77,7 @@ module('tooltip | focus', function (hooks) {
 
     await render(<template>
       <div class="tooltipper" tabindex="0">
-        <Tooltip @useFocus={{true}} @destination={{"#portal"}}>
+        <Tooltip @useFocus={{true}} @destination="#portal">
           Hello
           <a href="#">World</a>
         </Tooltip>
