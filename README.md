@@ -86,7 +86,7 @@ Optional. The hide delay will prevent the tooltip from being hidden until the sp
 
 #### `@useFocus`
 
-Optional. By default, tooltips will only show when hovering over the reference element. Use this argument to also show the tooltip when the reference element is focused with keyboard.
+Optional. By default, tooltips will only show when hovering over the reference element. Use this argument to also show the tooltip when the reference element is focused.
 
 #### `@stickyID`
 
