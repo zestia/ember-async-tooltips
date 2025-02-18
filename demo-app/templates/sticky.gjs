@@ -1,4 +1,3 @@
-import Route from 'ember-route-template';
 import Tooltip from '#src/components/tooltip';
 
 const StickyTooltip = <template>
@@ -11,35 +10,33 @@ const StickyTooltip = <template>
   </Tooltip>
 </template>;
 
-export default Route(
-  <template>
-    <p>
-      Subsequent tooltips show delays are ignored
-    </p>
+<template>
+  <p>
+    Subsequent tooltips show delays are ignored
+  </p>
 
-    <div>
-      One
-      <StickyTooltip>One</StickyTooltip>
-    </div>
+  <div>
+    One
+    <StickyTooltip>One</StickyTooltip>
+  </div>
 
-    <div>
-      Two
-      <StickyTooltip>Two</StickyTooltip>
-    </div>
+  <div>
+    Two
+    <StickyTooltip>Two</StickyTooltip>
+  </div>
 
-    <div>
-      Three
-      <StickyTooltip>Three</StickyTooltip>
-    </div>
+  <div>
+    Three
+    <StickyTooltip>Three</StickyTooltip>
+  </div>
 
-    <div>
-      Four
-      <StickyTooltip>Four</StickyTooltip>
-    </div>
+  <div>
+    Four
+    <StickyTooltip>Four</StickyTooltip>
+  </div>
 
-    <div>
-      Five
-      <StickyTooltip>Five</StickyTooltip>
-    </div>
-  </template>
-);
+  <div>
+    Five
+    <StickyTooltip>Five</StickyTooltip>
+  </div>
+</template>

@@ -8,7 +8,7 @@ import { setup } from 'qunit-dom';
 import { start as qunitStart, setupEmberOnerrorValidation } from 'ember-qunit';
 import TooltipService from '#src/services/tooltip';
 import { setTesting } from '@embroider/macros';
-import '../demo-app/styles/app.scss';
+import '../demo-app/styles/app.css';
 
 class Router extends EmberRouter {
   location = 'none';

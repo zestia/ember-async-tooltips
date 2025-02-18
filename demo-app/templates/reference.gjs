@@ -1,30 +1,27 @@
-import Route from 'ember-route-template';
 import Tooltip from '#src/components/tooltip';
 import { uniqueId } from '@ember/helper';
 
-export default Route(
-  <template>
-    <p>
-      A tooltip displayed on a specific reference element.
-    </p>
+<template>
+  <p>
+    A tooltip displayed on a specific reference element.
+  </p>
 
-    {{#let (uniqueId) as |id|}}
-      <table>
-        <tbody>
-          <tr id={{id}}>
-            <td>
-              Table cell 1
+  {{#let (uniqueId) as |id|}}
+    <table>
+      <tbody>
+        <tr id={{id}}>
+          <td>
+            Table cell 1
 
-              <Tooltip @element="#{{id}}">
-                Hello World
-              </Tooltip>
-            </td>
-            <td>
-              Table cell 2
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    {{/let}}
-  </template>
-);
+            <Tooltip @element="#{{id}}">
+              Hello World
+            </Tooltip>
+          </td>
+          <td>
+            Table cell 2
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  {{/let}}
+</template>

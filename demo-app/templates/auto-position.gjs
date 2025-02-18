@@ -1,9 +1,8 @@
-import Route from 'ember-route-template';
 import Component from '@glimmer/component';
 import Tooltip from '#src/components/tooltip';
 import { on } from '@ember/modifier';
 
-class AutoPositionRoute extends Component {
+export default class extends Component {
   constructor() {
     super(...arguments);
     document.ondragover = (e) => e.preventDefault(); // Prevent ghost spring back
@@ -83,5 +82,3 @@ class AutoPositionRoute extends Component {
     </table>
   </template>
 }
-
-export default Route(AutoPositionRoute);

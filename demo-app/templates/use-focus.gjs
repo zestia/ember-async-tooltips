@@ -1,48 +1,45 @@
-import Route from 'ember-route-template';
 import Tooltip from '#src/components/tooltip';
 
-export default Route(
-  <template>
-    <p>
-      Use Focus (for keyboard support)
-    </p>
+<template>
+  <p>
+    Use Focus (for keyboard support)
+  </p>
 
-    <br />
+  <br />
 
-    <p>
-      <button type="button">
-        I should show when focused with a keyboard
+  <p>
+    <button type="button">
+      I should show when focused with a keyboard
 
-        <Tooltip @useFocus={{true}}>
-          Hello World
-        </Tooltip>
-      </button>
-    </p>
+      <Tooltip @useFocus={{true}}>
+        Hello World
+      </Tooltip>
+    </button>
+  </p>
 
-    <br />
+  <br />
 
-    <p>
-      <span tabindex="0">
-        Focus me (I have interactive children)
-        <Tooltip @useFocus={{true}}>
-          Hello
-          <a href="#">World</a>
-        </Tooltip>
-      </span>
-    </p>
+  <p>
+    <span tabindex="0">
+      Focus me (I have interactive children)
+      <Tooltip @useFocus={{true}}>
+        Hello
+        <a href="#">World</a>
+      </Tooltip>
+    </span>
+  </p>
 
-    <br />
+  <br />
 
-    <p>
-      <button type="button">
-        I should
-        <em>not</em>
-        show a tooltip when focused with a keyboard
+  <p>
+    <button type="button">
+      I should
+      <em>not</em>
+      show a tooltip when focused with a keyboard
 
-        <Tooltip>
-          Hello World
-        </Tooltip>
-      </button>
-    </p>
-  </template>
-);
+      <Tooltip>
+        Hello World
+      </Tooltip>
+    </button>
+  </p>
+</template>

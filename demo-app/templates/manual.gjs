@@ -1,10 +1,9 @@
-import Route from 'ember-route-template';
 import Tooltip from '#src/components/tooltip';
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import { on } from '@ember/modifier';
 
-class ManualRoute extends Component {
+export default class extends Component {
   @tracked shouldShowTooltip;
 
   toggleTooltip = () => (this.shouldShowTooltip = !this.shouldShowTooltip);
@@ -31,5 +30,3 @@ class ManualRoute extends Component {
     </div>
   </template>
 }
-
-export default Route(ManualRoute);

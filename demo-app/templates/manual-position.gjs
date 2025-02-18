@@ -1,10 +1,9 @@
-import Route from 'ember-route-template';
 import Component from '@glimmer/component';
 import Tooltip from '#src/components/tooltip';
 import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 
-class ManualPositionRoute extends Component {
+export default class extends Component {
   @tracked position = 'top left';
 
   setPosition = ({ target: { value } }) => {
@@ -66,5 +65,3 @@ class ManualPositionRoute extends Component {
     </div>
   </template>
 }
-
-export default Route(ManualPositionRoute);

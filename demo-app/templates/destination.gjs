@@ -1,10 +1,9 @@
-import Route from 'ember-route-template';
 import Tooltip from '#src/components/tooltip';
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import { modifier } from 'ember-modifier';
 
-class DestinationRoute extends Component {
+export default class extends Component {
   @tracked elsewhere;
 
   registerElsewhere = modifier((element) => (this.elsewhere = element));
@@ -27,5 +26,3 @@ class DestinationRoute extends Component {
     </div>
   </template>
 }
-
-export default Route(DestinationRoute);

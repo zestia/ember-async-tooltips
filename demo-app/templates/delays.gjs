@@ -1,11 +1,10 @@
-import Route from 'ember-route-template';
 import Tooltip from '#src/components/tooltip';
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import { on } from '@ember/modifier';
 const { max } = Math;
 
-class DelaysRoute extends Component {
+export default class extends Component {
   @tracked isEager = true;
   @tracked showDelay = 500;
   @tracked hideDelay = 0;
@@ -172,5 +171,3 @@ class DelaysRoute extends Component {
     {{/if}}
   </template>
 }
-
-export default Route(DelaysRoute);
