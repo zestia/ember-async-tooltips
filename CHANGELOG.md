@@ -1,5 +1,9 @@
 # Changelog
 
+## 16.4.0
+
+- Add ability to opt out of the JavaScript positioning utils, and opt in to CSS anchor positioning.
+
 ## 16.3.4
 
 - Fix sticky state not being cleared
