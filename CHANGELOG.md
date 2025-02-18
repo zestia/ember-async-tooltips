@@ -1,5 +1,9 @@
 # Changelog
 
+## 15.3.0
+
+- Add `@useFocus` argument
+
 ## 15.2.0
 
 - Convert to `.gjs`
