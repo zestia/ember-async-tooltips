@@ -15,6 +15,7 @@ Router.map(function () {
   this.route('delays');
   this.route('manual-position');
   this.route('auto-position');
+  this.route('anchor-position');
   this.route('destination');
   this.route('attach-to');
   this.route('sticky');

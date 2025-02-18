@@ -4,6 +4,7 @@
 @import 'tooltippers';
 @import 'manual-position';
 @import 'auto-position';
+@import 'anchor-position';
 @import 'nesting';
 @import 'tables';
 @import 'util';
