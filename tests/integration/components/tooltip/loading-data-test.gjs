@@ -1,6 +1,12 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'dummy/tests/helpers';
-import { render, waitUntil, settled, triggerEvent } from '@ember/test-helpers';
+import {
+  render,
+  waitUntil,
+  settled,
+  triggerEvent,
+  focus
+} from '@ember/test-helpers';
 import {
   wait,
   hasText,
@@ -84,6 +90,45 @@ module('tooltip | loading data', function (hooks) {
 
     triggerEvent('.tooltipper', 'mouseenter');
     triggerEvent('.tooltipper', 'mouseleave');
+
+    await settled();
+
+    assert.verifySteps(['loading data']);
+
+    assert.dom('.tooltip').doesNotExist();
+  });
+
+  test('focus / loading data', async function (assert) {
+    assert.expect(3);
+
+    const load = () => assert.step('loading data');
+
+    await render(<template>
+      <button type="button">
+        <Tooltip @onLoad={{load}} @useFocus={{true}} />
+      </button>
+    </template>);
+
+    await focus('.tooltipper');
+
+    assert.verifySteps(['loading data']);
+
+    assert.dom('.tooltip').exists();
+  });
+
+  test('blur / loading data', async function (assert) {
+    assert.expect(3);
+
+    const load = () => assert.step('loading data');
+
+    await render(<template>
+      <button type="button">
+        <Tooltip @onLoad={{load}} @useFocus={{true}} />
+      </button>
+    </template>);
+
+    triggerEvent('.tooltipper', 'focus');
+    triggerEvent('.tooltipper', 'blur');
 
     await settled();
 
