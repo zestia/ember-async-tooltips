@@ -1,5 +1,9 @@
 .tooltip {
-  position: absolute;
+  position: fixed;
+  position-area: bottom center;
+  position-try: flip-block, flip-inline;
+  white-space: nowrap;
+
   border: 1px solid var(--green);
 
   &[data-showing='true'] {
