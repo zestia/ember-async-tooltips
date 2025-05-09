@@ -1,3 +1,5 @@
+/* eslint-disable ember/no-runloop, no-unused-vars */
+
 import { action } from '@ember/object';
 import { cancel, later, next } from '@ember/runloop';
 import { getPosition, getCoords } from '@zestia/position-utils';

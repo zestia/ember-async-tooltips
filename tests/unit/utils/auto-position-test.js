@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import autoPosition from '@zestia/ember-async-tooltips/utils/auto-position';
 
-module('autoPosition', function (hooks) {
+module('autoPosition', function () {
   test('#autoPosition', function (assert) {
     assert.expect(9);
 

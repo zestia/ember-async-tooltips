@@ -94,6 +94,13 @@
     "type": "git",
     "url": "https://github.com/zestia/ember-async-tooltips.git"
   },
+  "release-it": {
+    "hooks": {
+      "before:init": [
+        "npm test"
+      ]
+    }
+  },
   "scripts": {
     "build": "ember build --environment=production",
     "deploy": "ember build --environment production && ember github-pages:commit --message \"Deploy gh-pages from commit $(git rev-parse HEAD)\" && git push origin gh-pages:gh-pages",

@@ -40,6 +40,14 @@ export default [
   ember.configs.base,
   ember.configs.gjs,
   zestia,
+
+  // Project specific...
+  {
+    rules: {
+      'ember/template-no-let-reference': 'off'
+    }
+  },
+
   /**
    * Ignores must be in their own object
    * https://eslint.org/docs/latest/use/configure/ignore
