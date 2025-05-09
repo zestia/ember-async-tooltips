@@ -15,11 +15,13 @@ module('tooltip | manual', function (hooks) {
       @tracked show;
     })();
 
-    await render(<template>
-      <div>
-        <Tooltip @show={{state.show}} />
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip @show={{state.show}} />
+        </div>
+      </template>
+    );
 
     assert.dom('.tooltip').doesNotExist();
 
@@ -47,15 +49,17 @@ module('tooltip | manual', function (hooks) {
       state.show = !state.show;
     };
 
-    await render(<template>
-      <button
-        type="button"
-        class="tooltipper-element"
-        {{on "click" toggleTooltip}}
-      >
-        <Tooltip @show={{state.show}} />
-      </button>
-    </template>);
+    await render(
+      <template>
+        <button
+          type="button"
+          class="tooltipper-element"
+          {{on "click" toggleTooltip}}
+        >
+          <Tooltip @show={{state.show}} />
+        </button>
+      </template>
+    );
 
     assert.dom('.tooltip').doesNotExist();
 

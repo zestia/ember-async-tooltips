@@ -7,11 +7,13 @@ module('tooltip | hover', function (hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(async function () {
-    await render(<template>
-      <div>
-        <Tooltip />
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip />
+        </div>
+      </template>
+    );
   });
 
   test('mouse enter reference', async function (assert) {

@@ -9,11 +9,13 @@ module('tooltip | focus', function (hooks) {
   test('focusing (default)', async function (assert) {
     assert.expect(1);
 
-    await render(<template>
-      <a href="#">
-        <Tooltip />
-      </a>
-    </template>);
+    await render(
+      <template>
+        <a href="#">
+          <Tooltip />
+        </a>
+      </template>
+    );
 
     await focus('.tooltipper');
 
@@ -28,11 +30,13 @@ module('tooltip | focus', function (hooks) {
   test('focusing (@useFocus)', async function (assert) {
     assert.expect(2);
 
-    await render(<template>
-      <a href="#">
-        <Tooltip @useFocus={{true}} />
-      </a>
-    </template>);
+    await render(
+      <template>
+        <a href="#">
+          <Tooltip @useFocus={{true}} />
+        </a>
+      </template>
+    );
 
     await focus('.tooltipper');
 
@@ -50,14 +54,16 @@ module('tooltip | focus', function (hooks) {
   test('focusing a tooltip with interactive children', async function (assert) {
     assert.expect(3);
 
-    await render(<template>
-      <div class="tooltipper" tabindex="0">
-        <Tooltip @useFocus={{true}}>
-          Hello
-          <a href="#">World</a>
-        </Tooltip>
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div class="tooltipper" tabindex="0">
+          <Tooltip @useFocus={{true}}>
+            Hello
+            <a href="#">World</a>
+          </Tooltip>
+        </div>
+      </template>
+    );
 
     assert.dom('.tooltip').doesNotExist();
 
@@ -75,18 +81,20 @@ module('tooltip | focus', function (hooks) {
   test('focusing a tooltip with interactive children (rendered in a different output destination)', async function (assert) {
     assert.expect(3);
 
-    await render(<template>
-      <div class="tooltipper" tabindex="0">
-        <Tooltip @useFocus={{true}} @destination="#portal">
-          Hello
-          <a href="#">World</a>
-        </Tooltip>
-      </div>
+    await render(
+      <template>
+        <div class="tooltipper" tabindex="0">
+          <Tooltip @useFocus={{true}} @destination="#portal">
+            Hello
+            <a href="#">World</a>
+          </Tooltip>
+        </div>
 
-      <div id="portal">
-        {{! tooltip rendered here }}
-      </div>
-    </template>);
+        <div id="portal">
+          {{! tooltip rendered here }}
+        </div>
+      </template>
+    );
 
     assert.dom('.tooltip').doesNotExist();
 

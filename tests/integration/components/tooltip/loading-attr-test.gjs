@@ -13,11 +13,13 @@ module('tooltip | loading attributes', function (hooks) {
 
     const load = () => deferred.promise;
 
-    await render(<template>
-      <div>
-        <Tooltip @onLoad={{load}} />
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip @onLoad={{load}} />
+        </div>
+      </template>
+    );
 
     assert.dom('.tooltipper').doesNotHaveAttribute('data-loading');
 

@@ -12,20 +12,22 @@ module('tooltip | sticky', function (hooks) {
 
     const timer = new Timer();
 
-    await render(<template>
-      <div class="a1">a1
-        <Tooltip @showDelay={{1000}} @stickyID="A">a1</Tooltip>
-      </div>
-      <div class="a2">a2
-        <Tooltip @showDelay={{1000}} @stickyID="A">a1</Tooltip>
-      </div>
-      <div class="b1">b1
-        <Tooltip @showDelay={{1000}} @stickyID="B">b1</Tooltip>
-      </div>
-      <div class="b2">b1
-        <Tooltip @showDelay={{1000}} @stickyID="B">b2</Tooltip>
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div class="a1">a1
+          <Tooltip @showDelay={{1000}} @stickyID="A">a1</Tooltip>
+        </div>
+        <div class="a2">a2
+          <Tooltip @showDelay={{1000}} @stickyID="A">a1</Tooltip>
+        </div>
+        <div class="b1">b1
+          <Tooltip @showDelay={{1000}} @stickyID="B">b1</Tooltip>
+        </div>
+        <div class="b2">b1
+          <Tooltip @showDelay={{1000}} @stickyID="B">b2</Tooltip>
+        </div>
+      </template>
+    );
 
     // A1
 

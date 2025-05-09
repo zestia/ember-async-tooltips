@@ -12,16 +12,20 @@ module('tooltip | no animation', function (hooks) {
     const handleShow = () => assert.step('show');
     const handleHide = () => assert.step('hide');
 
-    await render(<template>
-      {{! template-lint-disable no-forbidden-elements }}
-      <style>
-        .tooltip { animation: none !important }
-      </style>
+    await render(
+      <template>
+        {{! template-lint-disable no-forbidden-elements }}
+        <style>
+          .tooltip {
+            animation: none !important;
+          }
+        </style>
 
-      <div>
-        <Tooltip @onShow={{handleShow}} @onHide={{handleHide}} />
-      </div>
-    </template>);
+        <div>
+          <Tooltip @onShow={{handleShow}} @onHide={{handleHide}} />
+        </div>
+      </template>
+    );
 
     assert.dom('.tooltip').doesNotExist();
 

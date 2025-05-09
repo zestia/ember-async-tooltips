@@ -9,9 +9,11 @@ module('tooltip | basic', function (hooks) {
   test('basic rendering test', async function (assert) {
     assert.expect(7);
 
-    await render(<template>
-      <div class="parent"><Tooltip class="example" /></div>
-    </template>);
+    await render(
+      <template>
+        <div class="parent"><Tooltip class="example" /></div>
+      </template>
+    );
 
     assert.dom('.parent').hasClass('tooltipper');
     assert.dom('.tooltipper > span.__tooltip__').isNotVisible();

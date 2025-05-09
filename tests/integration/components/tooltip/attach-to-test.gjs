@@ -15,21 +15,23 @@ module('tooltip | attach to', function (hooks) {
       @tracked attachTo = '#one';
     })();
 
-    await render(<template>
-      <div class="parent">
-        Hover over me
+    await render(
+      <template>
+        <div class="parent">
+          Hover over me
 
-        <div id="one">
-          one
+          <div id="one">
+            one
+          </div>
+
+          <div id="two">
+            two
+          </div>
+
+          <Tooltip @attachTo={{state.attachTo}} @position="bottom center" />
         </div>
-
-        <div id="two">
-          two
-        </div>
-
-        <Tooltip @attachTo={{state.attachTo}} @position="bottom center" />
-      </div>
-    </template>);
+      </template>
+    );
 
     await triggerEvent('.tooltipper', 'mouseenter');
 

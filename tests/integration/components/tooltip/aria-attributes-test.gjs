@@ -7,11 +7,13 @@ module('tooltip | aria', function (hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(async function () {
-    await render(<template>
-      <div>
-        <Tooltip />
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip />
+        </div>
+      </template>
+    );
   });
 
   test('the tooltip will be politely announced by screen readers', async function (assert) {

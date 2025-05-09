@@ -15,20 +15,22 @@ module('tooltip | hide all', function (hooks) {
 
     const tooltipService = this.owner.lookup('service:tooltip');
 
-    await render(<template>
-      <div>
-        <Tooltip @show={{true}} />
-      </div>
+    await render(
+      <template>
+        <div>
+          <Tooltip @show={{true}} />
+        </div>
 
-      <div>
-        <Tooltip @show={{true}} />
-      </div>
+        <div>
+          <Tooltip @show={{true}} />
+        </div>
 
-      <button
-        type="button"
-        {{on "click" tooltipService.hideAllTooltips}}
-      ></button>
-    </template>);
+        <button
+          type="button"
+          {{on "click" tooltipService.hideAllTooltips}}
+        ></button>
+      </template>
+    );
 
     assert.dom('.tooltip').exists({ count: 2 });
 

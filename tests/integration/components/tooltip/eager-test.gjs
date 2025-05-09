@@ -19,13 +19,15 @@ module('tooltip | eager loading', function (hooks) {
       return { greeting: 'Hello World' };
     };
 
-    await render(<template>
-      <div>
-        <Tooltip @onLoad={{load}} @showDelay={{100}} as |tooltip|>
-          {{tooltip.data.greeting}}
-        </Tooltip>
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip @onLoad={{load}} @showDelay={{100}} as |tooltip|>
+            {{tooltip.data.greeting}}
+          </Tooltip>
+        </div>
+      </template>
+    );
 
     const timer = new Timer();
 
@@ -56,13 +58,15 @@ module('tooltip | eager loading', function (hooks) {
       return { greeting: 'Hello World' };
     };
 
-    await render(<template>
-      <div>
-        <Tooltip @onLoad={{load}} @showDelay={{100}} as |tooltip|>
-          {{tooltip.data.greeting}}
-        </Tooltip>
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip @onLoad={{load}} @showDelay={{100}} as |tooltip|>
+            {{tooltip.data.greeting}}
+          </Tooltip>
+        </div>
+      </template>
+    );
 
     const timer = new Timer();
 

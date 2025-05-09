@@ -28,13 +28,15 @@ module('tooltip | loading data', function (hooks) {
       return deferred.promise;
     };
 
-    await render(<template>
-      <div>
-        <Tooltip @onLoad={{load}} as |tooltip|>
-          {{tooltip.data.greeting}}
-        </Tooltip>
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip @onLoad={{load}} as |tooltip|>
+            {{tooltip.data.greeting}}
+          </Tooltip>
+        </div>
+      </template>
+    );
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
@@ -61,11 +63,13 @@ module('tooltip | loading data', function (hooks) {
 
     const load = () => assert.step('loading data');
 
-    await render(<template>
-      <div>
-        <Tooltip @onLoad={{load}} />
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip @onLoad={{load}} />
+        </div>
+      </template>
+    );
 
     triggerEvent('.tooltipper', 'mouseenter');
     triggerEvent('.tooltipper', 'mouseenter');
@@ -82,11 +86,13 @@ module('tooltip | loading data', function (hooks) {
 
     const load = () => assert.step('loading data');
 
-    await render(<template>
-      <div>
-        <Tooltip @onLoad={{load}} />
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip @onLoad={{load}} />
+        </div>
+      </template>
+    );
 
     triggerEvent('.tooltipper', 'mouseenter');
     triggerEvent('.tooltipper', 'mouseleave');
@@ -103,11 +109,13 @@ module('tooltip | loading data', function (hooks) {
 
     const load = () => assert.step('loading data');
 
-    await render(<template>
-      <button type="button">
-        <Tooltip @onLoad={{load}} @useFocus={{true}} />
-      </button>
-    </template>);
+    await render(
+      <template>
+        <button type="button">
+          <Tooltip @onLoad={{load}} @useFocus={{true}} />
+        </button>
+      </template>
+    );
 
     await focus('.tooltipper');
 
@@ -121,11 +129,13 @@ module('tooltip | loading data', function (hooks) {
 
     const load = () => assert.step('loading data');
 
-    await render(<template>
-      <button type="button">
-        <Tooltip @onLoad={{load}} @useFocus={{true}} />
-      </button>
-    </template>);
+    await render(
+      <template>
+        <button type="button">
+          <Tooltip @onLoad={{load}} @useFocus={{true}} />
+        </button>
+      </template>
+    );
 
     triggerEvent('.tooltipper', 'focus');
     triggerEvent('.tooltipper', 'blur');
@@ -145,20 +155,22 @@ module('tooltip | loading data', function (hooks) {
       return { greeting: 'Hello World' };
     };
 
-    render(<template>
-      <div>
-        Hover over me
+    render(
+      <template>
+        <div>
+          Hover over me
 
-        <Tooltip
-          @onLoad={{load}}
-          @show={{true}}
-          @position="bottom center"
-          as |tooltip|
-        >
-          {{tooltip.data.greeting}}
-        </Tooltip>
-      </div>
-    </template>);
+          <Tooltip
+            @onLoad={{load}}
+            @show={{true}}
+            @position="bottom center"
+            as |tooltip|
+          >
+            {{tooltip.data.greeting}}
+          </Tooltip>
+        </div>
+      </template>
+    );
 
     await waitUntil(() => hasText('.tooltip', 'Hello World'));
 

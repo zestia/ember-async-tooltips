@@ -18,13 +18,15 @@ module('tooltip | reposition', function (hooks) {
       @tracked text = 'Hello';
     })();
 
-    await render(<template>
-      <div>
-        <Tooltip @position="bottom center">
-          {{state.text}}
-        </Tooltip>
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip @position="bottom center">
+            {{state.text}}
+          </Tooltip>
+        </div>
+      </template>
+    );
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
@@ -51,13 +53,15 @@ module('tooltip | reposition', function (hooks) {
       @tracked show = true;
     })();
 
-    await render(<template>
-      {{#if state.show}}
-        <div>
-          <Tooltip @position="bottom center" />
-        </div>
-      {{/if}}
-    </template>);
+    await render(
+      <template>
+        {{#if state.show}}
+          <div>
+            <Tooltip @position="bottom center" />
+          </div>
+        {{/if}}
+      </template>
+    );
 
     await triggerEvent('.tooltipper', 'mouseenter');
 

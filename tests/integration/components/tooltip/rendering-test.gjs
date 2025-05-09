@@ -16,11 +16,13 @@ module('tooltip | rendering', function (hooks) {
   test('rendering test', async function (assert) {
     assert.expect(1);
 
-    await render(<template>
-      <div>
-        <Tooltip @show={{true}} />
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip @show={{true}} />
+        </div>
+      </template>
+    );
 
     assert.strictEqual(tooltipService.tooltips.length, 1);
   });
@@ -28,15 +30,17 @@ module('tooltip | rendering', function (hooks) {
   test('multiple tooltips', async function (assert) {
     assert.expect(1);
 
-    await render(<template>
-      <div>
-        <Tooltip @show={{true}} />
-      </div>
+    await render(
+      <template>
+        <div>
+          <Tooltip @show={{true}} />
+        </div>
 
-      <div>
-        <Tooltip />
-      </div>
-    </template>);
+        <div>
+          <Tooltip />
+        </div>
+      </template>
+    );
 
     await triggerEvent('.tooltipper:nth-child(2)', 'mouseenter');
 
@@ -50,11 +54,13 @@ module('tooltip | rendering', function (hooks) {
     // animating out. The tooltip should finish hiding and then show again,
     // and not be destroyed and rerendered.
 
-    await render(<template>
-      <div>
-        <Tooltip />
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip />
+        </div>
+      </template>
+    );
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
@@ -81,17 +87,19 @@ module('tooltip | rendering', function (hooks) {
       @tracked show = true;
     })();
 
-    await render(<template>
-      {{#if state.show}}
-        <div class="one">
+    await render(
+      <template>
+        {{#if state.show}}
+          <div class="one">
+            <Tooltip />
+          </div>
+        {{/if}}
+
+        <div class="two">
           <Tooltip />
         </div>
-      {{/if}}
-
-      <div class="two">
-        <Tooltip />
-      </div>
-    </template>);
+      </template>
+    );
 
     await triggerEvent('.one', 'mouseenter');
 
@@ -119,17 +127,19 @@ module('tooltip | rendering', function (hooks) {
 
     const load = () => deferred.promise;
 
-    await render(<template>
-      {{#if state.show}}
-        <div class="one">
-          <Tooltip @onLoad={{load}} />
-        </div>
-      {{/if}}
+    await render(
+      <template>
+        {{#if state.show}}
+          <div class="one">
+            <Tooltip @onLoad={{load}} />
+          </div>
+        {{/if}}
 
-      <div class="two">
-        <Tooltip />
-      </div>
-    </template>);
+        <div class="two">
+          <Tooltip />
+        </div>
+      </template>
+    );
 
     await triggerEvent('.one', 'mouseenter');
 

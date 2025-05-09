@@ -17,11 +17,13 @@ module('tooltip | lifecycle', function (hooks) {
     // that we delay starting the hide animation for
     // test purposes)
 
-    await render(<template>
-      <div class="t1">1 <Tooltip @hideDelay={{300}}>1</Tooltip></div>
-      <div class="t2">2 <Tooltip @hideDelay={{200}}>2</Tooltip></div>
-      <div class="t3">3 <Tooltip @hideDelay={{100}}>3</Tooltip></div>
-    </template>);
+    await render(
+      <template>
+        <div class="t1">1 <Tooltip @hideDelay={{300}}>1</Tooltip></div>
+        <div class="t2">2 <Tooltip @hideDelay={{200}}>2</Tooltip></div>
+        <div class="t3">3 <Tooltip @hideDelay={{100}}>3</Tooltip></div>
+      </template>
+    );
 
     triggerEvent('.t1', 'mouseenter');
 

@@ -19,13 +19,15 @@ module('tooltip | destroying', function (hooks) {
   test('destroying a tooltipper when about to show its tooltip', async function (assert) {
     assert.expect(2);
 
-    await render(<template>
-      {{#if state.show}}
-        <div id="tooltipper"></div>
-      {{/if}}
+    await render(
+      <template>
+        {{#if state.show}}
+          <div id="tooltipper"></div>
+        {{/if}}
 
-      <Tooltip @element="#tooltipper" @showDelay={{1000}} />
-    </template>);
+        <Tooltip @element="#tooltipper" @showDelay={{1000}} />
+      </template>
+    );
 
     triggerEvent('.tooltipper', 'mouseenter');
 
@@ -42,13 +44,15 @@ module('tooltip | destroying', function (hooks) {
   test('destroying a tooltipper when already showing a tooltip', async function (assert) {
     assert.expect(2);
 
-    await render(<template>
-      {{#if state.show}}
-        <div id="tooltipper"></div>
-      {{/if}}
+    await render(
+      <template>
+        {{#if state.show}}
+          <div id="tooltipper"></div>
+        {{/if}}
 
-      <Tooltip @element="#tooltipper" />
-    </template>);
+        <Tooltip @element="#tooltipper" />
+      </template>
+    );
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
@@ -63,13 +67,15 @@ module('tooltip | destroying', function (hooks) {
   test('destroying a tooltip when attached to a tooltipper', async function (assert) {
     assert.expect(5);
 
-    await render(<template>
-      <div id="tooltipper"></div>
+    await render(
+      <template>
+        <div id="tooltipper"></div>
 
-      {{#if state.show}}
-        <Tooltip @element="#tooltipper" />
-      {{/if}}
-    </template>);
+        {{#if state.show}}
+          <Tooltip @element="#tooltipper" />
+        {{/if}}
+      </template>
+    );
 
     await triggerEvent('.tooltipper', 'mouseenter');
 

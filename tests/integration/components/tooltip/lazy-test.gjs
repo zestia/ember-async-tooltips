@@ -19,22 +19,24 @@ module('tooltip | lazy loading', function (hooks) {
       return { greeting: 'Hello World' };
     };
 
-    await render(<template>
-      <div>
-        <Tooltip
-          @onLoad={{load}}
-          @eager={{false}}
-          @showDelay={{100}}
-          as |tooltip|
-        >
-          {{#if tooltip.data}}
-            {{tooltip.data.greeting}}
-          {{else}}
-            Loading...
-          {{/if}}
-        </Tooltip>
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip
+            @onLoad={{load}}
+            @eager={{false}}
+            @showDelay={{100}}
+            as |tooltip|
+          >
+            {{#if tooltip.data}}
+              {{tooltip.data.greeting}}
+            {{else}}
+              Loading...
+            {{/if}}
+          </Tooltip>
+        </div>
+      </template>
+    );
 
     const timer = new Timer();
 
@@ -66,22 +68,24 @@ module('tooltip | lazy loading', function (hooks) {
       return { greeting: 'Hello World' };
     };
 
-    await render(<template>
-      <div>
-        <Tooltip
-          @onLoad={{load}}
-          @eager={{false}}
-          @showDelay={{100}}
-          as |tooltip|
-        >
-          {{#if tooltip.data}}
-            {{tooltip.data.greeting}}
-          {{else}}
-            Loading...
-          {{/if}}
-        </Tooltip>
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip
+            @onLoad={{load}}
+            @eager={{false}}
+            @showDelay={{100}}
+            as |tooltip|
+          >
+            {{#if tooltip.data}}
+              {{tooltip.data.greeting}}
+            {{else}}
+              Loading...
+            {{/if}}
+          </Tooltip>
+        </div>
+      </template>
+    );
 
     const timer = new Timer();
 

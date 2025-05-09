@@ -15,11 +15,13 @@ module('tooltip | cancelling', function (hooks) {
       @tracked show = true;
     })();
 
-    await render(<template>
-      <div>
-        <Tooltip @showDelay={{1000}} @show={{state.show}} />
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip @showDelay={{1000}} @show={{state.show}} />
+        </div>
+      </template>
+    );
 
     triggerEvent('.tooltipper', 'mouseenter');
 

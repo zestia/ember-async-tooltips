@@ -17,11 +17,13 @@ module('tooltip | custom position', function (hooks) {
       return 'left top';
     };
 
-    await render(<template>
-      <div>
-        <Tooltip @position={{position}} />
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip @position={{position}} />
+        </div>
+      </template>
+    );
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
@@ -33,11 +35,13 @@ module('tooltip | custom position', function (hooks) {
   test('no position', async function (assert) {
     assert.expect(1);
 
-    await render(<template>
-      <div>
-        <Tooltip />
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip />
+        </div>
+      </template>
+    );
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
@@ -47,11 +51,13 @@ module('tooltip | custom position', function (hooks) {
   test('invalid position', async function (assert) {
     assert.expect(2);
 
-    await render(<template>
-      <div>
-        <Tooltip @position="foo" />
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip @position="foo" />
+        </div>
+      </template>
+    );
 
     await triggerEvent('.tooltipper', 'mouseenter');
 

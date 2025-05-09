@@ -17,13 +17,15 @@ module('tooltip | destination', function (hooks) {
 
     const register = modifier((element) => (state.elsewhere = element));
 
-    await render(<template>
-      <div>
-        <Tooltip @destination={{state.elsewhere}} />
-      </div>
+    await render(
+      <template>
+        <div>
+          <Tooltip @destination={{state.elsewhere}} />
+        </div>
 
-      <div class="elsewhere" {{register}}></div>
-    </template>);
+        <div class="elsewhere" {{register}}></div>
+      </template>
+    );
 
     await triggerEvent('.tooltipper', 'mouseenter');
 

@@ -14,13 +14,15 @@ module('tooltip | api', function (hooks) {
     const capture = (_api) => (api = _api);
     const load = () => 'foo';
 
-    await render(<template>
-      <div>
-        <Tooltip @onLoad={{load}} as |tooltip|>
-          {{capture tooltip}}
-        </Tooltip>
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip @onLoad={{load}} as |tooltip|>
+            {{capture tooltip}}
+          </Tooltip>
+        </div>
+      </template>
+    );
 
     assert.dom('.tooltip').doesNotExist();
 

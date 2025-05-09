@@ -17,17 +17,19 @@ module('tooltip | loading error', function (hooks) {
       @tracked load = () => deferred1.promise;
     })();
 
-    await render(<template>
-      <div>
-        <Tooltip @onLoad={{state.load}} as |tooltip|>
-          {{#if tooltip.data}}
-            {{tooltip.data.greeting}}
-          {{else}}
-            {{tooltip.error.message}}
-          {{/if}}
-        </Tooltip>
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip @onLoad={{state.load}} as |tooltip|>
+            {{#if tooltip.data}}
+              {{tooltip.data.greeting}}
+            {{else}}
+              {{tooltip.error.message}}
+            {{/if}}
+          </Tooltip>
+        </div>
+      </template>
+    );
 
     await triggerEvent('.tooltipper', 'mouseenter');
 

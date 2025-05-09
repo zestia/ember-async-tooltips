@@ -20,15 +20,17 @@ module('tooltip | showing & hiding', function (hooks) {
     const tooltipShown = () => assert.step('tooltip shown');
     const tooltipHidden = () => assert.step('tooltip hidden');
 
-    await render(<template>
-      <div>
-        <Tooltip
-          @show={{state.show}}
-          @onShow={{tooltipShown}}
-          @onHide={{tooltipHidden}}
-        />
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip
+            @show={{state.show}}
+            @onShow={{tooltipShown}}
+            @onHide={{tooltipHidden}}
+          />
+        </div>
+      </template>
+    );
 
     state.show = true;
 

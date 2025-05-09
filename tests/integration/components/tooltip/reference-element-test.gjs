@@ -14,14 +14,16 @@ module('tooltip | reference', function (hooks) {
       @tracked referenceElement;
     })();
 
-    await render(<template>
-      <div class="parent">
-        <Tooltip @element={{state.referenceElement}} />
-      </div>
+    await render(
+      <template>
+        <div class="parent">
+          <Tooltip @element={{state.referenceElement}} />
+        </div>
 
-      <div class="reference-element-1"></div>
-      <div class="reference-element-2"></div>
-    </template>);
+        <div class="reference-element-1"></div>
+        <div class="reference-element-2"></div>
+      </template>
+    );
 
     // HTMLElemnt
 

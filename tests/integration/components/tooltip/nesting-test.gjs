@@ -9,19 +9,21 @@ module('tooltip | nesting', function (hooks) {
   let parentDelay;
 
   const _render = () => {
-    return render(<template>
-      <div class="parent">
-        <Tooltip @showDelay={{parentDelay}}>
-          Parent
-        </Tooltip>
-
-        <div class="child">
-          <Tooltip>
-            Child
+    return render(
+      <template>
+        <div class="parent">
+          <Tooltip @showDelay={{parentDelay}}>
+            Parent
           </Tooltip>
+
+          <div class="child">
+            <Tooltip>
+              Child
+            </Tooltip>
+          </div>
         </div>
-      </div>
-    </template>);
+      </template>
+    );
   };
 
   test('entering a child with a delayed parent aborts the parent', async function (assert) {

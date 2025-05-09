@@ -12,12 +12,14 @@ module('tooltip | display', function (hooks) {
 
     const style = htmlSafe('display: none');
 
-    await render(<template>
-      {{! template-lint-disable no-inline-styles }}
-      <div>
-        <Tooltip style={{style}} />
-      </div>
-    </template>);
+    await render(
+      <template>
+        {{! template-lint-disable no-inline-styles }}
+        <div>
+          <Tooltip style={{style}} />
+        </div>
+      </template>
+    );
 
     await triggerEvent('.tooltipper', 'mouseenter');
 

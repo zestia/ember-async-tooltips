@@ -10,11 +10,13 @@ module('tooltip | delays', function (hooks) {
   test('hide delay', async function (assert) {
     assert.expect(4);
 
-    await render(<template>
-      <div>
-        <Tooltip @hideDelay={{100}} />
-      </div>
-    </template>);
+    await render(
+      <template>
+        <div>
+          <Tooltip @hideDelay={{100}} />
+        </div>
+      </template>
+    );
 
     await triggerEvent('.tooltipper', 'mouseenter');
 

@@ -20,5 +20,5 @@ setupDeprecationWorkflow({
      */
     /* example: */
     /* { handler: 'silence', matchId: 'template-action' }, */
-  ],
+  ]
 });

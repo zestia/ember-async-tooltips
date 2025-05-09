@@ -23,7 +23,7 @@ import zestia from '@zestia/eslint-config';
 
 const esmParserOptions = {
   ecmaFeatures: { modules: true },
-  ecmaVersion: 'latest',
+  ecmaVersion: 'latest'
 };
 
 export default [
@@ -37,40 +37,40 @@ export default [
    * https://eslint.org/docs/latest/use/configure/ignore
    */
   {
-    ignores: ['dist/', 'declarations/', 'node_modules/', 'coverage/', '!**/.*'],
+    ignores: ['dist/', 'declarations/', 'node_modules/', 'coverage/', '!**/.*']
   },
   /**
    * https://eslint.org/docs/latest/use/configure/configuration-files#configuring-linter-options
    */
   {
     linterOptions: {
-      reportUnusedDisableDirectives: 'error',
-    },
+      reportUnusedDisableDirectives: 'error'
+    }
   },
   {
     files: ['**/*.js'],
     languageOptions: {
-      parser: babelParser,
-    },
+      parser: babelParser
+    }
   },
   {
     files: ['**/*.{js,gjs}'],
     languageOptions: {
       parserOptions: esmParserOptions,
       globals: {
-        ...globals.browser,
-      },
-    },
+        ...globals.browser
+      }
+    }
   },
   {
     files: ['src/**/*'],
     plugins: {
-      import: importPlugin,
+      import: importPlugin
     },
     rules: {
       // require relative imports use full extensions
-      'import/extensions': ['error', 'always', { ignorePackages: true }],
-    },
+      'import/extensions': ['error', 'always', { ignorePackages: true }]
+    }
   },
   /**
    * CJS node files
@@ -81,19 +81,19 @@ export default [
       '.prettierrc.js',
       '.stylelintrc.js',
       '.template-lintrc.js',
-      'addon-main.cjs',
+      'addon-main.cjs'
     ],
     plugins: {
-      n,
+      n
     },
 
     languageOptions: {
       sourceType: 'script',
       ecmaVersion: 'latest',
       globals: {
-        ...globals.node,
-      },
-    },
+        ...globals.node
+      }
+    }
   },
   /**
    * ESM node files
@@ -101,7 +101,7 @@ export default [
   {
     files: ['**/*.mjs'],
     plugins: {
-      n,
+      n
     },
 
     languageOptions: {
@@ -109,8 +109,8 @@ export default [
       ecmaVersion: 'latest',
       parserOptions: esmParserOptions,
       globals: {
-        ...globals.node,
-      },
-    },
-  },
+        ...globals.node
+      }
+    }
+  }
 ];
