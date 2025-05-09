@@ -1,17 +1,11 @@
 # Changelog
 
-## 15.3.1
-
-- Swap use of `inject` for `service`
-
-## 15.3.0
-
-- Add `@useFocus` argument
-
 ## 15.2.0
 
 - Convert to `.gjs`
 - Remove use of `@ember/render-modifiers`
+- Add `@useFocus` argument
+- Swap use of `inject` for `service`
 
 ## 15.1.3
 
