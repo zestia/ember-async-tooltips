@@ -41,7 +41,7 @@
     "ember-page-title": "^9.0.1",
     "ember-qunit": "^9.0.2",
     "ember-resolver": "^13.1.0",
-    "ember-source": "~6.4.0",
+    "ember-source": "~5.12.0",
     "ember-source-channel-url": "^3.0.0",
     "ember-template-lint": "^6.1.0",
     "ember-try": "^4.0.0",
@@ -93,13 +93,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/zestia/ember-async-tooltips.git"
-  },
-  "release-it": {
-    "hooks": {
-      "before:init": [
-        "npm test"
-      ]
-    }
   },
   "scripts": {
     "build": "ember build --environment=production",
