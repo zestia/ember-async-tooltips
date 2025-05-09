@@ -3,7 +3,7 @@ import { cancel, later, next } from '@ember/runloop';
 import { getPosition, getCoords } from '@zestia/position-utils';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
-import { inject } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';
 import { waitForAnimation } from '@zestia/animation-utils';
@@ -13,7 +13,7 @@ import { modifier } from 'ember-modifier';
 const { max } = Math;
 
 export default class TooltipComponent extends Component {
-  @inject('tooltip') tooltipService;
+  @service('tooltip') tooltipService;
 
   @tracked element;
   @tracked isLoading;

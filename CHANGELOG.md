@@ -1,5 +1,9 @@
 # Changelog
 
+## 15.3.1
+
+- Swap use of `inject` for `service`
+
 ## 15.3.0
 
 - Add `@useFocus` argument
