@@ -12,23 +12,31 @@
  *     npx eslint --inspect-config
  *
  */
-import babelParser from '@babel/eslint-parser';
-import js from '@eslint/js';
-import prettier from 'eslint-config-prettier';
-import ember from 'eslint-plugin-ember/recommended';
-import importPlugin from 'eslint-plugin-import';
-import n from 'eslint-plugin-n';
 import globals from 'globals';
+import js from '@eslint/js';
+
+import ember from 'eslint-plugin-ember/recommended';
+import eslintConfigPrettier from 'eslint-config-prettier';
+import qunit from 'eslint-plugin-qunit';
+import n from 'eslint-plugin-n';
 import zestia from '@zestia/eslint-config';
+
+import babelParser from '@babel/eslint-parser';
 
 const esmParserOptions = {
   ecmaFeatures: { modules: true },
-  ecmaVersion: 'latest'
+  ecmaVersion: 'latest',
+  requireConfigFile: false,
+  babelOptions: {
+    plugins: [
+      ['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }]
+    ]
+  }
 };
 
 export default [
   js.configs.recommended,
-  prettier,
+  eslintConfigPrettier,
   ember.configs.base,
   ember.configs.gjs,
   zestia,
@@ -37,7 +45,7 @@ export default [
    * https://eslint.org/docs/latest/use/configure/ignore
    */
   {
-    ignores: ['dist/', 'declarations/', 'node_modules/', 'coverage/', '!**/.*']
+    ignores: ['dist/', 'node_modules/', 'coverage/', '!**/.*']
   },
   /**
    * https://eslint.org/docs/latest/use/configure/configuration-files#configuring-linter-options
@@ -63,13 +71,9 @@ export default [
     }
   },
   {
-    files: ['src/**/*'],
+    files: ['tests/**/*-test.{js,gjs}'],
     plugins: {
-      import: importPlugin
-    },
-    rules: {
-      // require relative imports use full extensions
-      'import/extensions': ['error', 'always', { ignorePackages: true }]
+      qunit
     }
   },
   /**
@@ -78,10 +82,15 @@ export default [
   {
     files: [
       '**/*.cjs',
+      'config/**/*.js',
+      'tests/dummy/config/**/*.js',
+      'testem.js',
+      'testem*.js',
+      'index.js',
       '.prettierrc.js',
       '.stylelintrc.js',
       '.template-lintrc.js',
-      'addon-main.cjs'
+      'ember-cli-build.js'
     ],
     plugins: {
       n
