@@ -42,6 +42,10 @@ export default class TooltipComponent extends Component {
     return guidFor(this);
   }
 
+  get anchorName() {
+    return `--${this.id}`;
+  }
+
   get columns() {
     return this.args.columns ?? 3;
   }
@@ -51,9 +55,13 @@ export default class TooltipComponent extends Component {
   }
 
   get tooltipStyle() {
-    const [x, y] = this.tooltipCoords;
+    if (this.tooltipService.useCSSAnchorPositioning) {
+      return htmlSafe(`position-anchor: ${this.anchorName}`);
+    } else {
+      const [x, y] = this.tooltipCoords;
 
-    return htmlSafe(`top: ${y}px; left: ${x}px`);
+      return htmlSafe(`top: ${y}px; left: ${x}px`);
+    }
   }
 
   get hideDelay() {
@@ -458,6 +466,10 @@ export default class TooltipComponent extends Component {
   });
 
   position = modifier((_, [position, columns, rows, destination, attachTo]) => {
+    if (this.tooltipService.useCSSAnchorPositioning) {
+      return;
+    }
+
     this._startTether();
     return () => this._stopTether();
   });
@@ -505,6 +517,11 @@ export default class TooltipComponent extends Component {
     };
   });
 
+  anchor = modifier(() => {
+    this.positionElement.style.anchorName = this.anchorName;
+    return () => (this.positionElement.style.anchorName = null);
+  });
+
   className = modifier(() => {
     this.tooltipperElement.classList.add('tooltipper');
     return () => this.tooltipperElement?.classList.remove('tooltipper');
@@ -537,6 +554,7 @@ export default class TooltipComponent extends Component {
       class="__tooltip__"
       hidden
       {{this.tooltipperEvents @element}}
+      {{this.anchor}}
       {{this.className}}
       {{this.visibility @show}}
       {{this.loading this.isLoading}}
