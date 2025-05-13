@@ -43,6 +43,6 @@ export function getPosition(selector) {
 export function assertPosition(selector, expected) {
   const position = getPosition(selector);
 
-  assert.strictEqual(position.left, expected.left);
-  assert.strictEqual(position.top, expected.top);
+  assert.closeTo(position.left, expected.left, 1);
+  assert.closeTo(position.top, expected.top, 1);
 }

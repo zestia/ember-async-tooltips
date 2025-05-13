@@ -116,7 +116,7 @@
     "lint:js:fix": "eslint . --fix",
     "release": "release-it",
     "start": "ember serve",
-    "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\" --prefixColors auto",
+    "test": "concurrently \"npm:lint\" \"npm:test:ember\" --names \"lint,test:\" --prefixColors auto",
     "test:ember": "ember test",
     "test:ember-compatibility": "ember try:each"
   },

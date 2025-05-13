@@ -2,16 +2,17 @@
 
 import { action } from '@ember/object';
 import { cancel, later, next } from '@ember/runloop';
+import { defer } from 'rsvp';
 import { getPosition, getCoords } from '@zestia/position-utils';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
+import { modifier } from 'ember-modifier';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';
 import { waitForAnimation } from '@zestia/animation-utils';
 import autoPosition from '@zestia/ember-async-tooltips/utils/auto-position';
 import Component from '@glimmer/component';
-import { modifier } from 'ember-modifier';
 const { max } = Math;
 
 export default class TooltipComponent extends Component {
@@ -307,7 +308,7 @@ export default class TooltipComponent extends Component {
   }
 
   _renderTooltip() {
-    this.willInsertTooltip = Promise.withResolvers();
+    this.willInsertTooltip = defer();
     this.shouldRenderTooltip = true;
 
     return this.willInsertTooltip.promise;

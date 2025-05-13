@@ -1,5 +1,9 @@
 # Changelog
 
+## 15.2.1
+
+- Revert back from `Promise.withResolvers` to `RSVP`
+
 ## 15.2.0
 
 - Convert to `.gjs`
