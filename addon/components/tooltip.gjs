@@ -112,13 +112,13 @@ export default class TooltipComponent extends Component {
 
   get childTooltip() {
     return this.tooltips.find((tooltip) => {
-      return this.tooltipperElement.contains(tooltip.tooltipperElement);
+      return this.tooltipperElement?.contains(tooltip.tooltipperElement);
     });
   }
 
   get parentTooltip() {
     return this.tooltips.find((tooltip) => {
-      return tooltip.tooltipperElement.contains(this.tooltipperElement);
+      return tooltip.tooltipperElement?.contains(this.tooltipperElement);
     });
   }
 
