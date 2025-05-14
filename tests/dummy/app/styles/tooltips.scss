@@ -1,5 +1,13 @@
 .tooltip {
-  position: absolute;
+  position: fixed;
+  position-area: bottom;
+  position-try:
+    bottom span-right,
+    bottom span-left,
+    top,
+    top span-right,
+    top span-left;
+  white-space: nowrap;
   border: 1px solid var(--green);
 
   &[data-showing='true'] {
