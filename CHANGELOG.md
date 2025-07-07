@@ -1,5 +1,9 @@
 # Changelog
 
+## 15.2.2
+
+- Upgrade `@ember/test-waiters`
+
 ## 15.2.1
 
 - Revert back from `Promise.withResolvers` to `RSVP`
