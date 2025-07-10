@@ -40,7 +40,7 @@ https://zestia.github.io/ember-async-tooltips
 ## Notes
 
 - This addon intentionally does not come with any styles.
-- Currently ships with rudimentary positioning utils. The goal being to strip out positioning as a concern once CSS anchors have better support.
+- Currently ships with rudimentary positioning utils. The goal being to strip out positioning as a concern once CSS Anchor Positioning has better support.
 - It is configured with [ember-test-waiters](https://github.com/emberjs/ember-test-waiters) so `await`ing in your test suite will just work.
 
 ## Example
