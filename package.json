@@ -88,7 +88,11 @@
   "ember-addon": {
     "version": 2,
     "type": "addon",
-    "main": "addon-main.cjs"
+    "main": "addon-main.cjs",
+    "app-js": {
+      "./components/tooltip.js": "./dist/_app_/components/tooltip.js",
+      "./services/tooltip.js": "./dist/_app_/services/tooltip.js"
+    }
   },
   "imports": {
     "#app/*": "./demo/*",
