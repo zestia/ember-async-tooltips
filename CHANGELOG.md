@@ -1,5 +1,9 @@
 # Changelog
 
+## 16.0.0
+
+- Convert to v2 addon
+
 ## 15.2.2
 
 - Upgrade `@ember/test-waiters`
