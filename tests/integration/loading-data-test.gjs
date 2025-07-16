@@ -174,7 +174,7 @@ module('tooltip | loading data', function (hooks) {
     assertPosition('.tooltip', { left: 8, top: 14 });
   });
 
-  test('cached data ', async function (assert) {
+  test('cached data', async function (assert) {
     assert.expect(2);
 
     const state = new (class {
