@@ -164,9 +164,13 @@ position(referencePosition) {
 
 ### API
 
+#### `isLoading`
+
+Whether or not the tooltip is waiting for data to load
+
 #### `hide`
 
-Hides the tooltip (waiting for any animations), then un-renders it.
+Hides the tooltip (waiting for any animations), then un-renders it
 
 #### `data`
 
