@@ -9,6 +9,7 @@ import {
 } from '@ember/test-helpers';
 import { wait, hasText, assertPosition } from '../helpers';
 import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
+import { tracked } from '@glimmer/tracking';
 
 module('tooltip | loading data', function (hooks) {
   setupRenderingTest(hooks);
@@ -171,5 +172,73 @@ module('tooltip | loading data', function (hooks) {
     await waitUntil(() => hasText('.tooltip', 'Hello World'));
 
     assertPosition('.tooltip', { left: 8, top: 14 });
+  });
+
+  test('cached data ', async function (assert) {
+    assert.expect(2);
+
+    const state = new (class {
+      @tracked id = 1;
+    })();
+
+    const load = () => state.id;
+
+    await render(
+      <template>
+        <div>
+          Hover over me
+
+          <Tooltip @onLoad={{load}} as |tooltip|>
+            {{tooltip.data}}
+          </Tooltip>
+        </div>
+      </template>
+    );
+
+    await triggerEvent('.tooltipper', 'mouseenter');
+
+    assert.dom('.tooltip').hasText('1');
+
+    await triggerEvent('.tooltipper', 'mouseleave');
+
+    state.id = 2;
+
+    await triggerEvent('.tooltipper', 'mouseenter');
+
+    assert.dom('.tooltip').hasText('1');
+  });
+
+  test('clearing cached data', async function (assert) {
+    assert.expect(2);
+
+    const state = new (class {
+      @tracked id = 1;
+    })();
+
+    const load = () => state.id;
+
+    await render(
+      <template>
+        <div>
+          Hover over me
+
+          <Tooltip @onLoad={{load}} @loadID={{state.id}} as |tooltip|>
+            {{tooltip.data}}
+          </Tooltip>
+        </div>
+      </template>
+    );
+
+    await triggerEvent('.tooltipper', 'mouseenter');
+
+    assert.dom('.tooltip').hasText('1');
+
+    await triggerEvent('.tooltipper', 'mouseleave');
+
+    state.id = 2;
+
+    await triggerEvent('.tooltipper', 'mouseenter');
+
+    assert.dom('.tooltip').hasText('2');
   });
 });

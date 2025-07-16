@@ -8,7 +8,7 @@ import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
 import { modifier } from 'ember-modifier';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';
 import { waitForAnimation } from '@zestia/animation-utils';
 import autoPosition from '@zestia/ember-async-tooltips/utils/auto-position';
@@ -31,12 +31,13 @@ export default class TooltipComponent extends Component {
   isLoaded;
   isOverTooltipElement;
   isOverTooltipperElement;
-  tooltipperElementIsFocused;
-  tooltipElementIsFocused;
   loadDuration = 0;
+  loadID;
   showTimer;
   stickyTimer;
   tetherID;
+  tooltipElementIsFocused;
+  tooltipperElementIsFocused;
   willInsertTooltip;
 
   get id() {
@@ -130,8 +131,9 @@ export default class TooltipComponent extends Component {
 
   get shouldLoad() {
     return (
-      typeof this.args.onLoad === 'function' &&
-      !(this.isLoading || this.isLoaded)
+      (typeof this.args.onLoad === 'function' &&
+        !(this.isLoading || this.isLoaded)) ||
+      this.args.loadID !== this.loadID
     );
   }
 
@@ -253,6 +255,7 @@ export default class TooltipComponent extends Component {
       this.loadDuration = 0;
       this.loadedData = await this.args.onLoad?.();
       this.isLoaded = true;
+      this.loadID = this.args.loadID;
     } catch (error) {
       this.loadError = error;
       this.isLoaded = false;
@@ -296,6 +299,8 @@ export default class TooltipComponent extends Component {
     if (this.shouldRenderTooltip) {
       return;
     }
+
+    console.log(this.shouldLoad);
 
     if (this.shouldLoad) {
       this._load();
@@ -437,7 +442,8 @@ export default class TooltipComponent extends Component {
     return {
       data: this.loadedData,
       error: this.loadError,
-      hide: this.hide
+      hide: this.hide,
+      isLoading: this.isLoading
     };
   }
 

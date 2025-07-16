@@ -1,18 +1,21 @@
+/* eslint-disable ember/no-runloop */
+
 import Route from 'ember-route-template';
 import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import { on } from '@ember/modifier';
-import { next, later } from '@ember/runloop';
+import { later } from '@ember/runloop';
 const { max } = Math;
 
 class DelaysRoute extends Component {
-  @tracked isEager = true;
-  @tracked showDelay = 500;
   @tracked hideDelay = 0;
-  @tracked loadDuration = 200;
-  @tracked isLoading = false;
+  @tracked isEager = true;
   @tracked isLoaded = false;
+  @tracked isLoading = false;
+  @tracked loadDuration = 200;
+  @tracked loadID = 1;
+  @tracked showDelay = 500;
   @tracked showTooltipper = true;
 
   get isLazy() {
@@ -82,15 +85,14 @@ class DelaysRoute extends Component {
       later(() => {
         this.isLoading = false;
         this.isLoaded = true;
-        resolve({ message: 'Hello World' });
+        resolve({ message: `Hello World ${this.loadID}` });
       }, this.loadDuration);
     });
   };
 
   unload = () => {
-    this.showTooltipper = false;
     this.isLoaded = false;
-    next(() => (this.showTooltipper = true));
+    this.loadID++;
   };
 
   <template>
@@ -170,18 +172,21 @@ class DelaysRoute extends Component {
           (Loading...)
         {{/if}}
 
+        {{this.loadID}}
+
         <Tooltip
           @onLoad={{this.load}}
+          @loadID={{this.loadID}}
           @eager={{this.isEager}}
           @showDelay={{this.showDelay}}
           @hideDelay={{this.hideDelay}}
           @position="bottom center"
           as |tooltip|
         >
-          {{#if tooltip.data}}
-            {{tooltip.data.message}}
-          {{else}}
+          {{#if tooltip.isLoading}}
             Loading...
+          {{else}}
+            {{tooltip.data.message}}
           {{/if}}
         </Tooltip>
       </div>

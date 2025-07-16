@@ -1,5 +1,9 @@
 # Changelog
 
+## 16.2.0
+
+- Add ability to clear cache by setting `@loadID`
+
 ## 16.0.0
 
 - Convert to v2 addon

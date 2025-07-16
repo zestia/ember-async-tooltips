@@ -24,10 +24,10 @@ module('tooltip | lazy loading', function (hooks) {
             @showDelay={{100}}
             as |tooltip|
           >
-            {{#if tooltip.data}}
-              {{tooltip.data.greeting}}
-            {{else}}
+            {{#if tooltip.isLoading}}
               Loading...
+            {{else}}
+              {{tooltip.data.greeting}}
             {{/if}}
           </Tooltip>
         </div>
@@ -73,10 +73,10 @@ module('tooltip | lazy loading', function (hooks) {
             @showDelay={{100}}
             as |tooltip|
           >
-            {{#if tooltip.data}}
-              {{tooltip.data.greeting}}
-            {{else}}
+            {{#if tooltip.isLoading}}
               Loading...
+            {{else}}
+              {{tooltip.data.greeting}}
             {{/if}}
           </Tooltip>
         </div>

@@ -101,6 +101,10 @@ Optional. When an element is hovered over, `@onLoad` will be fired. You can resp
 
 In the following example, there is a show delay of `300`ms before a tooltip will appear. But, _during that time_ it is loading some data which takes `50`ms. The actual show delay is reduced to `250`ms, so that the total delay remains at `300`ms.
 
+#### `@loadID`
+
+Loaded data is cached on the component instance by default. Provide a `@loadID` to uniquely identify the data. This argument then allows you to unload the data whenever the id changes.
+
 <details>
   <summary>Example</summary>
 
