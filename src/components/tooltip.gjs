@@ -300,8 +300,6 @@ export default class TooltipComponent extends Component {
       return;
     }
 
-    console.log(this.shouldLoad);
-
     if (this.shouldLoad) {
       this._load();
     }
