@@ -1,5 +1,9 @@
 # Changelog
 
+## 16.2.0
+
+- Remove caching of data loaded via `@onLoad`
+
 ## 16.0.0
 
 - Convert to v2 addon

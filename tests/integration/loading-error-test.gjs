@@ -23,7 +23,7 @@ module('tooltip | loading error', function (hooks) {
           <Tooltip @onLoad={{state.load}} as |tooltip|>
             {{#if tooltip.data}}
               {{tooltip.data.greeting}}
-            {{else}}
+            {{else if tooltip.error}}
               {{tooltip.error.message}}
             {{/if}}
           </Tooltip>

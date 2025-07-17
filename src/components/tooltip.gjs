@@ -28,7 +28,6 @@ export default class TooltipComponent extends Component {
   @tracked tooltipElement;
 
   hideTimer;
-  isLoaded;
   isOverTooltipElement;
   isOverTooltipperElement;
   tooltipperElementIsFocused;
@@ -129,14 +128,15 @@ export default class TooltipComponent extends Component {
   }
 
   get shouldLoad() {
-    return (
-      typeof this.args.onLoad === 'function' &&
-      !(this.isLoading || this.isLoaded)
-    );
+    return typeof this.args.onLoad === 'function' && !this.isLoading;
   }
 
   get shouldLoadEagerly() {
     return this.isEager && this.shouldLoad;
+  }
+
+  get shouldLoadLazily() {
+    return (!this.isEager && this.shouldLoad) || this.args.show === true;
   }
 
   get isEager() {
@@ -186,7 +186,6 @@ export default class TooltipComponent extends Component {
   @action
   handleMouseEnterTooltipperElement() {
     this.isOverTooltipperElement = true;
-
     this._prepareToShowTooltip();
   }
 
@@ -252,10 +251,8 @@ export default class TooltipComponent extends Component {
       this.isLoading = true;
       this.loadDuration = 0;
       this.loadedData = await this.args.onLoad?.();
-      this.isLoaded = true;
     } catch (error) {
       this.loadError = error;
-      this.isLoaded = false;
     } finally {
       const end = Date.now();
       this.loadDuration = end - start;
@@ -297,7 +294,7 @@ export default class TooltipComponent extends Component {
       return;
     }
 
-    if (this.shouldLoad) {
+    if (this.shouldLoadLazily) {
       this._load();
     }
 
@@ -435,6 +432,7 @@ export default class TooltipComponent extends Component {
 
   get _api() {
     return {
+      isLoading: this.isLoading,
       data: this.loadedData,
       error: this.loadError,
       hide: this.hide
