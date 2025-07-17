@@ -3,7 +3,6 @@ import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import { on } from '@ember/modifier';
-import { next, later } from '@ember/runloop';
 const { max } = Math;
 
 class DelaysRoute extends Component {
@@ -79,18 +78,12 @@ class DelaysRoute extends Component {
     this.isLoading = true;
 
     return new Promise((resolve) => {
-      later(() => {
+      setTimeout(() => {
         this.isLoading = false;
         this.isLoaded = true;
         resolve({ message: 'Hello World' });
       }, this.loadDuration);
     });
-  };
-
-  unload = () => {
-    this.showTooltipper = false;
-    this.isLoaded = false;
-    next(() => (this.showTooltipper = true));
   };
 
   <template>
@@ -151,15 +144,6 @@ class DelaysRoute extends Component {
           Load duration
         </label>
       </p>
-      <p>
-        <button
-          type="button"
-          disabled={{if this.isLoaded false true}}
-          {{on "click" this.unload}}
-        >
-          Unload
-        </button>
-      </p>
     </form>
 
     {{#if this.showTooltipper}}
@@ -178,10 +162,10 @@ class DelaysRoute extends Component {
           @position="bottom center"
           as |tooltip|
         >
-          {{#if tooltip.data}}
-            {{tooltip.data.message}}
-          {{else}}
+          {{#if tooltip.isLoading}}
             Loading...
+          {{else}}
+            {{tooltip.data.message}}
           {{/if}}
         </Tooltip>
       </div>

@@ -14,7 +14,7 @@ module('tooltip | loading data', function (hooks) {
   setupRenderingTest(hooks);
 
   test('loading data', async function (assert) {
-    assert.expect(6);
+    assert.expect(7);
 
     const deferred = Promise.withResolvers();
 
@@ -49,7 +49,7 @@ module('tooltip | loading data', function (hooks) {
     await triggerEvent('.tooltipper', 'mouseleave');
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    assert.verifySteps([]);
+    assert.verifySteps(['load tooltip']);
 
     assert.dom('.tooltip').containsText('Hello World');
   });
