@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 
 export default class TooltipService extends Service {
   tooltips = [];
+
   @tracked _sticky = {};
 
   hideAllTooltips = () => {

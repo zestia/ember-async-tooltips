@@ -1,6 +1,5 @@
 /* eslint-disable ember/no-runloop, no-unused-vars */
 
-import { action } from '@ember/object';
 import { cancel, later, next } from '@ember/runloop';
 import { defer } from 'rsvp';
 import { getPosition, getCoords } from '@zestia/position-utils';
@@ -149,19 +148,19 @@ export default class TooltipComponent extends Component {
 
   get destinationElement() {
     return this.args.destination
-      ? this._getElement(this.args.destination)
+      ? this.#getElement(this.args.destination)
       : this.element.parentElement;
   }
 
   get positionElement() {
     return this.args.attachTo
-      ? this._getElement(this.args.attachTo)
+      ? this.#getElement(this.args.attachTo)
       : this.tooltipperElement;
   }
 
   get tooltipperElement() {
     return this.args.element
-      ? this._getElement(this.args.element)
+      ? this.#getElement(this.args.element)
       : this.element.parentElement;
   }
 
@@ -183,68 +182,58 @@ export default class TooltipComponent extends Component {
     return autoPosition(this.referencePosition);
   }
 
-  @action
-  handleMouseEnterTooltipperElement() {
+  handleMouseEnterTooltipperElement = () => {
     this.isOverTooltipperElement = true;
-    this._prepareToShowTooltip();
-  }
+    this.#prepareToShowTooltip();
+  };
 
-  @action
-  handleMouseLeaveTooltipperElement() {
+  handleMouseLeaveTooltipperElement = () => {
     this.isOverTooltipperElement = false;
 
-    this._scheduleHideTooltip();
-  }
+    this.#scheduleHideTooltip();
+  };
 
-  @action
-  handleMouseEnterTooltip() {
+  handleMouseEnterTooltip = () => {
     this.isOverTooltipElement = true;
-  }
+  };
 
-  @action
-  handleMouseLeaveTooltip() {
+  handleMouseLeaveTooltip = () => {
     this.isOverTooltipElement = false;
 
-    this._scheduleHideTooltip();
-  }
+    this.#scheduleHideTooltip();
+  };
 
-  @action
-  handleFocusTooltipperElement() {
+  handleFocusTooltipperElement = () => {
     this.tooltipperElementIsFocused = true;
 
-    this._prepareToShowTooltip();
-  }
+    this.#prepareToShowTooltip();
+  };
 
-  @action
-  handleBlurTooltipperElement() {
+  handleBlurTooltipperElement = () => {
     this.tooltipperElementIsFocused = false;
 
-    this._scheduleHideTooltip();
-  }
+    this.#scheduleHideTooltip();
+  };
 
-  @action
-  handleFocusTooltipElement() {
+  handleFocusTooltipElement = () => {
     this.tooltipElementIsFocused = true;
-  }
+  };
 
-  @action
-  handleBlurTooltipElement() {
+  handleBlurTooltipElement = () => {
     this.tooltipElementIsFocused = false;
 
-    this._scheduleHideTooltip();
-  }
+    this.#scheduleHideTooltip();
+  };
 
-  @action
-  hide() {
-    return this._hideTooltip();
-  }
+  hide = () => {
+    return this.#hideTooltip();
+  };
 
-  @action
-  show() {
-    this._showTooltip();
-  }
+  show = () => {
+    this.#showTooltip();
+  };
 
-  async _load() {
+  async #load() {
     const start = Date.now();
 
     try {
@@ -260,8 +249,8 @@ export default class TooltipComponent extends Component {
     }
   }
 
-  _scheduleShowTooltip() {
-    this._cancelTimers();
+  #scheduleShowTooltip() {
+    this.#cancelTimers();
     this.showTimer = later(this, '_attemptShowTooltip', this.actualShowDelay);
   }
 
@@ -274,20 +263,20 @@ export default class TooltipComponent extends Component {
       this.parentTooltip.hide();
     }
 
-    this._showTooltip();
+    this.#showTooltip();
   }
 
-  async _prepareToShowTooltip() {
+  async #prepareToShowTooltip() {
     this.loadDuration = 0;
 
     if (this.shouldLoadEagerly) {
-      await this._load();
+      await this.#load();
     }
 
-    this._scheduleShowTooltip();
+    this.#scheduleShowTooltip();
   }
 
-  async _showTooltip() {
+  async #showTooltip() {
     this.shouldShowTooltip = true;
 
     if (this.shouldRenderTooltip) {
@@ -295,24 +284,24 @@ export default class TooltipComponent extends Component {
     }
 
     if (this.shouldLoadLazily) {
-      this._load();
+      this.#load();
     }
 
-    await this._renderTooltip();
+    await this.#renderTooltip();
     await this._waitForAnimation();
 
-    this._handleShow();
+    this.#handleShow();
   }
 
-  _renderTooltip() {
+  #renderTooltip() {
     this.willInsertTooltip = defer();
     this.shouldRenderTooltip = true;
 
     return this.willInsertTooltip.promise;
   }
 
-  _scheduleHideTooltip() {
-    this._cancelTimers();
+  #scheduleHideTooltip() {
+    this.#cancelTimers();
 
     this.hideTimer = later(this, '_attemptHideTooltip', this.hideDelay);
   }
@@ -322,10 +311,10 @@ export default class TooltipComponent extends Component {
       return;
     }
 
-    this._hideTooltip();
+    this.#hideTooltip();
   }
 
-  async _hideTooltip() {
+  async #hideTooltip() {
     if (!this.tooltipElement) {
       return;
     }
@@ -334,16 +323,16 @@ export default class TooltipComponent extends Component {
 
     await this._waitForAnimation();
 
-    this._handleHide();
+    this.#handleHide();
   }
 
-  _cancelTimers() {
+  #cancelTimers() {
     cancel(this.showTimer);
     cancel(this.hideTimer);
     cancel(this.stickyTimer);
   }
 
-  _scheduleResetSticky() {
+  #scheduleResetSticky() {
     this.stickyTimer = later(this, '_attemptResetSticky', this.stickyTimeout);
   }
 
@@ -355,7 +344,7 @@ export default class TooltipComponent extends Component {
     this.tooltipService._setSticky(this, false);
   }
 
-  _handleShow() {
+  #handleShow() {
     if (this.args.stickyID) {
       this.tooltipService._setSticky(this, true);
     }
@@ -363,12 +352,12 @@ export default class TooltipComponent extends Component {
     this.args.onShow?.();
   }
 
-  _handleHide() {
+  #handleHide() {
     if (this.args.stickyID) {
-      this._scheduleResetSticky();
+      this.#scheduleResetSticky();
     }
 
-    this._attemptDestroyTooltip();
+    this.#attemptDestroyTooltip();
 
     this.args.onHide?.();
   }
@@ -378,19 +367,19 @@ export default class TooltipComponent extends Component {
     await waitForAnimation(this.tooltipElement, { maybe: true });
   }
 
-  _attemptDestroyTooltip() {
+  #attemptDestroyTooltip() {
     if (this.shouldShowTooltip) {
       return;
     }
 
-    this._destroyTooltip();
+    this.#destroyTooltip();
   }
 
-  _destroyTooltip() {
+  #destroyTooltip() {
     this.shouldRenderTooltip = false;
   }
 
-  _getElement(element) {
+  #getElement(element) {
     if (typeof element === 'string') {
       return document.querySelector(element);
     }
@@ -400,7 +389,7 @@ export default class TooltipComponent extends Component {
     }
   }
 
-  _tether() {
+  #tether() {
     if (!this.positionElement) {
       return;
     }
@@ -411,26 +400,26 @@ export default class TooltipComponent extends Component {
       this.positionElement
     );
 
-    this.tetherID = requestAnimationFrame(this._tether.bind(this));
+    this.tetherID = requestAnimationFrame(this.#tether.bind(this));
   }
 
-  _startTether() {
-    requestAnimationFrame(this._tether.bind(this));
+  #startTether() {
+    requestAnimationFrame(this.#tether.bind(this));
   }
 
-  _stopTether() {
+  #stopTether() {
     cancelAnimationFrame(this.tetherID);
   }
 
-  _add(element, ...args) {
+  #add(element, ...args) {
     element.addEventListener(...args);
   }
 
-  _remove(element, ...args) {
+  #remove(element, ...args) {
     element.removeEventListener(...args);
   }
 
-  get _api() {
+  get #api() {
     return {
       isLoading: this.isLoading,
       data: this.loadedData,
@@ -441,7 +430,7 @@ export default class TooltipComponent extends Component {
 
   api = new Proxy(this, {
     get(target, key) {
-      return target._api[key];
+      return target.#api[key];
     },
     set() {}
   });
@@ -449,57 +438,57 @@ export default class TooltipComponent extends Component {
   visibility = modifier((_, [show]) => {
     next(() => {
       if (show === true) {
-        this._showTooltip();
+        this.#showTooltip();
       } else if (show === false) {
-        this._hideTooltip();
+        this.#hideTooltip();
       }
     });
   });
 
   position = modifier((_, [position, columns, rows, destination, attachTo]) => {
-    this._startTether();
-    return () => this._stopTether();
+    this.#startTether();
+    return () => this.#stopTether();
   });
 
   tooltipperEvents = modifier((element, [otherElement]) => {
     this.element = element;
     const { tooltipperElement: el } = this;
 
-    this._add(el, 'mouseenter', this.handleMouseEnterTooltipperElement);
-    this._add(el, 'mouseleave', this.handleMouseLeaveTooltipperElement);
+    this.#add(el, 'mouseenter', this.handleMouseEnterTooltipperElement);
+    this.#add(el, 'mouseleave', this.handleMouseLeaveTooltipperElement);
 
     if (this.args.useFocus) {
-      this._add(el, 'focus', this.handleFocusTooltipperElement);
-      this._add(el, 'blur', this.handleBlurTooltipperElement);
+      this.#add(el, 'focus', this.handleFocusTooltipperElement);
+      this.#add(el, 'blur', this.handleBlurTooltipperElement);
     }
 
     return () => {
-      this._remove(el, 'mouseenter', this.handleMouseEnterTooltipperElement);
-      this._remove(el, 'mouseleave', this.handleMouseLeaveTooltipperElement);
+      this.#remove(el, 'mouseenter', this.handleMouseEnterTooltipperElement);
+      this.#remove(el, 'mouseleave', this.handleMouseLeaveTooltipperElement);
 
       if (this.args.useFocus) {
-        this._remove(el, 'focus', this.handleFocusTooltipperElement);
-        this._remove(el, 'blur', this.handleBlurTooltipperElement);
+        this.#remove(el, 'focus', this.handleFocusTooltipperElement);
+        this.#remove(el, 'blur', this.handleBlurTooltipperElement);
       }
     };
   });
 
   tooltipEvents = modifier((element) => {
-    this._add(element, 'mouseenter', this.handleMouseEnterTooltip);
-    this._add(element, 'mouseleave', this.handleMouseLeaveTooltip);
+    this.#add(element, 'mouseenter', this.handleMouseEnterTooltip);
+    this.#add(element, 'mouseleave', this.handleMouseLeaveTooltip);
 
     if (this.args.useFocus) {
-      this._add(element, 'focusin', this.handleFocusTooltipElement);
-      this._add(element, 'focusout', this.handleBlurTooltipElement);
+      this.#add(element, 'focusin', this.handleFocusTooltipElement);
+      this.#add(element, 'focusout', this.handleBlurTooltipElement);
     }
 
     return () => {
-      this._remove(element, 'mouseenter', this.handleMouseEnterTooltip);
-      this._remove(element, 'mouseleave', this.handleMouseLeaveTooltip);
+      this.#remove(element, 'mouseenter', this.handleMouseEnterTooltip);
+      this.#remove(element, 'mouseleave', this.handleMouseLeaveTooltip);
 
       if (this.args.useFocus) {
-        this._remove(element, 'focusin', this.handleFocusTooltipElement);
-        this._remove(element, 'focusout', this.handleBlurTooltipElement);
+        this.#remove(element, 'focusin', this.handleFocusTooltipElement);
+        this.#remove(element, 'focusout', this.handleBlurTooltipElement);
       }
     };
   });
