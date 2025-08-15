@@ -25,7 +25,7 @@ module('tooltip | reference', function (hooks) {
       </template>
     );
 
-    // HTMLElemnt
+    // HTMLElement
 
     state.referenceElement = find('.reference-element-1');
 
