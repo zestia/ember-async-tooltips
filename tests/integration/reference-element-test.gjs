@@ -57,7 +57,7 @@ module('tooltip | reference', function (hooks) {
     await render(
       <template>
         <div>
-          <Tooltip @element="#bar" />
+          <Tooltip @element="#missing" />
         </div>
       </template>
     );
