@@ -1,5 +1,9 @@
 # Changelog
 
+## 16.2.1
+
+- Resilience against invalid `@element` selectors
+
 ## 16.2.0
 
 - Remove caching of data loaded via `@onLoad`

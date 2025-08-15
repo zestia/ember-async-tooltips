@@ -380,12 +380,16 @@ export default class TooltipComponent extends Component {
   }
 
   #getElement(element) {
-    if (typeof element === 'string') {
-      return document.querySelector(element);
-    }
+    try {
+      if (typeof element === 'string') {
+        return document.querySelector(element);
+      }
 
-    if (element instanceof HTMLElement) {
-      return element;
+      if (element instanceof HTMLElement) {
+        return element;
+      }
+    } catch {
+      /* squelch */
     }
   }
 
@@ -454,21 +458,25 @@ export default class TooltipComponent extends Component {
     this.element = element;
     const { tooltipperElement: el } = this;
 
-    this.#add(el, 'mouseenter', this.handleMouseEnterTooltipperElement);
-    this.#add(el, 'mouseleave', this.handleMouseLeaveTooltipperElement);
+    if (el) {
+      this.#add(el, 'mouseenter', this.handleMouseEnterTooltipperElement);
+      this.#add(el, 'mouseleave', this.handleMouseLeaveTooltipperElement);
 
-    if (this.args.useFocus) {
-      this.#add(el, 'focus', this.handleFocusTooltipperElement);
-      this.#add(el, 'blur', this.handleBlurTooltipperElement);
+      if (this.args.useFocus) {
+        this.#add(el, 'focus', this.handleFocusTooltipperElement);
+        this.#add(el, 'blur', this.handleBlurTooltipperElement);
+      }
     }
 
     return () => {
-      this.#remove(el, 'mouseenter', this.handleMouseEnterTooltipperElement);
-      this.#remove(el, 'mouseleave', this.handleMouseLeaveTooltipperElement);
+      if (el) {
+        this.#remove(el, 'mouseenter', this.handleMouseEnterTooltipperElement);
+        this.#remove(el, 'mouseleave', this.handleMouseLeaveTooltipperElement);
 
-      if (this.args.useFocus) {
-        this.#remove(el, 'focus', this.handleFocusTooltipperElement);
-        this.#remove(el, 'blur', this.handleBlurTooltipperElement);
+        if (this.args.useFocus) {
+          this.#remove(el, 'focus', this.handleFocusTooltipperElement);
+          this.#remove(el, 'blur', this.handleBlurTooltipperElement);
+        }
       }
     };
   });
@@ -494,12 +502,12 @@ export default class TooltipComponent extends Component {
   });
 
   className = modifier(() => {
-    this.tooltipperElement.classList.add('tooltipper');
+    this.tooltipperElement?.classList.add('tooltipper');
     return () => this.tooltipperElement?.classList.remove('tooltipper');
   });
 
   loading = modifier((_, [isLoading]) => {
-    if (this.isLoading) {
+    if (this.isLoading && this.tooltipperElement) {
       this.tooltipperElement.dataset.loading = 'true';
     } else {
       delete this.tooltipperElement?.dataset.loading;
@@ -507,7 +515,7 @@ export default class TooltipComponent extends Component {
   });
 
   aria = modifier(() => {
-    this.tooltipperElement.setAttribute('aria-describedby', this.id);
+    this.tooltipperElement?.setAttribute('aria-describedby', this.id);
     return () => this.tooltipperElement?.removeAttribute('aria-describedby');
   });
 
@@ -516,7 +524,10 @@ export default class TooltipComponent extends Component {
     this.willInsertTooltip.resolve();
     this.tooltipService._add(this);
 
-    return () => this.tooltipService._remove(this);
+    return () => {
+      this.#cancelTimers();
+      this.tooltipService._remove(this);
+    };
   });
 
   <template>

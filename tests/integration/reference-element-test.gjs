@@ -50,4 +50,21 @@ module('tooltip | reference', function (hooks) {
 
     assert.dom('.parent > .tooltip').exists();
   });
+
+  test('invalid element', async function (assert) {
+    assert.expect(2);
+
+    await render(
+      <template>
+        <div>
+          <Tooltip @element="#bar" />
+        </div>
+      </template>
+    );
+
+    await triggerEvent('div', 'mouseenter');
+
+    assert.dom('.tooltip').doesNotExist();
+    assert.dom('.tooltipper').doesNotExist();
+  });
 });
