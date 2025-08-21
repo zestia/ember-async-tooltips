@@ -7,7 +7,9 @@ export default Route(
       Use Focus (for keyboard support)
     </p>
 
-    <div class="use-focus-page">
+    <br />
+
+    <p>
       <button type="button">
         I should show when focused with a keyboard
 
@@ -15,15 +17,23 @@ export default Route(
           Hello World
         </Tooltip>
       </button>
+    </p>
 
-      <div tabindex="0">
+    <br />
+
+    <p>
+      <span tabindex="0">
         Focus me (I have interactive children)
         <Tooltip @useFocus={{true}}>
           Hello
           <a href="#">World</a>
         </Tooltip>
-      </div>
+      </span>
+    </p>
 
+    <br />
+
+    <p>
       <button type="button">
         I should
         <em>not</em>
@@ -33,10 +43,6 @@ export default Route(
           Hello World
         </Tooltip>
       </button>
-    </div>
-
-    <div id="portal">
-      {{! tooltip rendered here }}
-    </div>
+    </p>
   </template>
 );

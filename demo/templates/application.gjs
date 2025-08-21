@@ -75,6 +75,12 @@ export default Route(
 
       |
 
+      <LinkTo @route="use-click">
+        Use Click
+      </LinkTo>
+
+      |
+
       <LinkTo @route="use-focus">
         Use Focus
       </LinkTo>

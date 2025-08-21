@@ -14,6 +14,7 @@ import * as ManualPositionTemplate from './templates/manual-position.gjs';
 import * as AutoPositionTemplate from './templates/auto-position.gjs';
 import * as StickyTemplate from './templates/sticky.gjs';
 import * as TetherTemplate from './templates/tether.gjs';
+import * as UseClickTemplate from './templates/use-click.gjs';
 import * as UseFocusTemplate from './templates/use-focus.gjs';
 import * as TooltipService from '@zestia/ember-async-tooltips/services/tooltip';
 
@@ -33,6 +34,7 @@ export default class App extends Application {
     'demo/templates/auto-position': AutoPositionTemplate,
     'demo/templates/sticky': StickyTemplate,
     'demo/templates/tether': TetherTemplate,
+    'demo/templates/use-click': UseClickTemplate,
     'demo/templates/use-focus': UseFocusTemplate,
     'demo/services/tooltip': TooltipService
   });

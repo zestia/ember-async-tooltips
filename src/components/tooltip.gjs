@@ -30,6 +30,7 @@ export default class TooltipComponent extends Component {
   isOverTooltipElement;
   isOverTooltipperElement;
   tooltipperElementIsFocused;
+  tooltipperElementWasClicked;
   tooltipElementIsFocused;
   loadDuration = 0;
   showTimer;
@@ -91,6 +92,10 @@ export default class TooltipComponent extends Component {
     }
 
     if (this.isOverTooltipperElement || this.isOverTooltipElement) {
+      return true;
+    }
+
+    if (this.args.useClick && this.tooltipperElementWasClicked) {
       return true;
     }
 
@@ -189,7 +194,18 @@ export default class TooltipComponent extends Component {
 
   handleMouseLeaveTooltipperElement = () => {
     this.isOverTooltipperElement = false;
+    this.#scheduleHideTooltip();
+  };
 
+  handleClickTooltipperElement = (event) => {
+    event.stopPropagation();
+    this.tooltipService.hideAllTooltips();
+    this.tooltipperElementWasClicked = true;
+    this.#prepareToShowTooltip();
+  };
+
+  handleClickDocument = () => {
+    this.tooltipperElementWasClicked = false;
     this.#scheduleHideTooltip();
   };
 
@@ -199,19 +215,16 @@ export default class TooltipComponent extends Component {
 
   handleMouseLeaveTooltip = () => {
     this.isOverTooltipElement = false;
-
     this.#scheduleHideTooltip();
   };
 
   handleFocusTooltipperElement = () => {
     this.tooltipperElementIsFocused = true;
-
     this.#prepareToShowTooltip();
   };
 
   handleBlurTooltipperElement = () => {
     this.tooltipperElementIsFocused = false;
-
     this.#scheduleHideTooltip();
   };
 
@@ -221,7 +234,6 @@ export default class TooltipComponent extends Component {
 
   handleBlurTooltipElement = () => {
     this.tooltipElementIsFocused = false;
-
     this.#scheduleHideTooltip();
   };
 
@@ -419,7 +431,7 @@ export default class TooltipComponent extends Component {
     element.addEventListener(...args);
   }
 
-  #remove(element, ...args) {
+  #rem(element, ...args) {
     element.removeEventListener(...args);
   }
 
@@ -456,11 +468,17 @@ export default class TooltipComponent extends Component {
 
   tooltipperEvents = modifier((element, [otherElement]) => {
     this.element = element;
+    const doc = document;
     const { tooltipperElement: el } = this;
 
     if (el) {
-      this.#add(el, 'mouseenter', this.handleMouseEnterTooltipperElement);
-      this.#add(el, 'mouseleave', this.handleMouseLeaveTooltipperElement);
+      if (this.args.useClick) {
+        this.#add(el, 'click', this.handleClickTooltipperElement);
+        this.#add(doc, 'click', this.handleClickDocument);
+      } else {
+        this.#add(el, 'mouseenter', this.handleMouseEnterTooltipperElement);
+        this.#add(el, 'mouseleave', this.handleMouseLeaveTooltipperElement);
+      }
 
       if (this.args.useFocus) {
         this.#add(el, 'focus', this.handleFocusTooltipperElement);
@@ -470,12 +488,17 @@ export default class TooltipComponent extends Component {
 
     return () => {
       if (el) {
-        this.#remove(el, 'mouseenter', this.handleMouseEnterTooltipperElement);
-        this.#remove(el, 'mouseleave', this.handleMouseLeaveTooltipperElement);
+        if (this.args.useClick) {
+          this.#rem(el, 'click', this.handleClickTooltipperElement);
+          this.#rem(doc, 'click', this.handleClickDocument);
+        } else {
+          this.#rem(el, 'mouseenter', this.handleMouseEnterTooltipperElement);
+          this.#rem(el, 'mouseleave', this.handleMouseLeaveTooltipperElement);
+        }
 
         if (this.args.useFocus) {
-          this.#remove(el, 'focus', this.handleFocusTooltipperElement);
-          this.#remove(el, 'blur', this.handleBlurTooltipperElement);
+          this.#rem(el, 'focus', this.handleFocusTooltipperElement);
+          this.#rem(el, 'blur', this.handleBlurTooltipperElement);
         }
       }
     };
@@ -491,12 +514,12 @@ export default class TooltipComponent extends Component {
     }
 
     return () => {
-      this.#remove(element, 'mouseenter', this.handleMouseEnterTooltip);
-      this.#remove(element, 'mouseleave', this.handleMouseLeaveTooltip);
+      this.#rem(element, 'mouseenter', this.handleMouseEnterTooltip);
+      this.#rem(element, 'mouseleave', this.handleMouseLeaveTooltip);
 
       if (this.args.useFocus) {
-        this.#remove(element, 'focusin', this.handleFocusTooltipElement);
-        this.#remove(element, 'focusout', this.handleBlurTooltipElement);
+        this.#rem(element, 'focusin', this.handleFocusTooltipElement);
+        this.#rem(element, 'focusout', this.handleBlurTooltipElement);
       }
     };
   });
