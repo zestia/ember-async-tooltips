@@ -15,7 +15,13 @@ class ManualRoute extends Component {
     </p>
 
     <div>
-      <button type="button" {{on "click" this.toggleTooltip}}>Toggle Tooltip</button>
+      <input
+        type="text"
+        {{on "focus" this.toggleTooltip}}
+        {{on "blur" this.toggleTooltip}}
+        placeholder="Focus me"
+        aria-label="Example input with a tooltip"
+      />
 
       {{#if this.shouldShowTooltip}}
         <Tooltip @show={{true}}>
