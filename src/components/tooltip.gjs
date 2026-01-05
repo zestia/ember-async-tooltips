@@ -194,6 +194,7 @@ export default class TooltipComponent extends Component {
 
   handleMouseLeaveTooltipperElement = () => {
     this.isOverTooltipperElement = false;
+    this.tooltipperElementIsFocused = false;
     this.#scheduleHideTooltip();
   };
 

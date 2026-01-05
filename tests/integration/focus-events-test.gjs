@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { focus, render, blur } from '@ember/test-helpers';
+import { focus, render, blur, click, triggerEvent } from '@ember/test-helpers';
 import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 
 module('tooltip | focus', function (hooks) {
@@ -51,7 +51,7 @@ module('tooltip | focus', function (hooks) {
     assert.dom('.tooltip').doesNotExist();
   });
 
-  test('focusing a tooltip with interactive children', async function (assert) {
+  test('focusing a tooltip with interactive children (@useFocus)', async function (assert) {
     assert.expect(3);
 
     await render(
@@ -78,7 +78,7 @@ module('tooltip | focus', function (hooks) {
       .exists('it does not hide the tooltip when focusing within the tooltip');
   });
 
-  test('focusing a tooltip with interactive children (rendered in a different output destination)', async function (assert) {
+  test('focusing a tooltip with interactive children rendered in a different output destination (@useFocus)', async function (assert) {
     assert.expect(3);
 
     await render(
@@ -107,5 +107,70 @@ module('tooltip | focus', function (hooks) {
     assert
       .dom('.tooltip')
       .exists('it does not hide the tooltip when focusing within the tooltip');
+  });
+
+  test('focusing by clicking (@useFocus)', async function (assert) {
+    assert.expect(3);
+
+    await render(
+      <template>
+        <button type="button">
+          <Tooltip @useFocus={{true}} />
+        </button>
+      </template>
+    );
+
+    await click('.tooltipper');
+
+    assert.dom('.tooltip').exists(
+      `
+      tooltips are displayed when element is focused/hovered
+      `
+    );
+
+    await triggerEvent('.tooltipper', 'mouseleave');
+
+    assert.dom('.tooltipper').isFocused();
+
+    assert
+      .dom('.tooltip')
+      .doesNotExist(
+        'it hides the tooltip when the mouse leaves the reference element, even if the reference element is still focused and @useFocus is true'
+      );
+  });
+
+  test('focusing a tooltip that has interactive children by clicking (@useFocus)', async function (assert) {
+    assert.expect(4);
+
+    await render(
+      <template>
+        <button type="button">
+          <Tooltip @useFocus={{true}}>
+            Hello
+            <a href="#">World</a>
+          </Tooltip>
+        </button>
+      </template>
+    );
+
+    assert.dom('.tooltip').doesNotExist();
+
+    await click('.tooltipper');
+
+    assert.dom('.tooltip').exists();
+
+    await focus('.tooltip a');
+
+    assert
+      .dom('.tooltip')
+      .exists('it does not hide the tooltip when focusing within the tooltip');
+
+    await triggerEvent('.tooltipper', 'mouseleave');
+
+    assert
+      .dom('.tooltip')
+      .exists(
+        'it does not hide the tooltip when the mouse leaves the reference element, if the interactive content inside of the tooltip has focus'
+      );
   });
 });
