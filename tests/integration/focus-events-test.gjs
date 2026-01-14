@@ -15,7 +15,7 @@ module('tooltip | focus', function (hooks) {
         <a href="#">
           <Tooltip />
         </a>
-      </template>,
+      </template>
     );
 
     await focus('.tooltipper');
@@ -24,7 +24,7 @@ module('tooltip | focus', function (hooks) {
       `
       tooltips are not displayed when focus enters a reference element by default.
       though many browsers will display it on touch
-      `,
+      `
     );
   });
 
@@ -36,7 +36,7 @@ module('tooltip | focus', function (hooks) {
         <a href="#">
           <Tooltip @useFocus={{true}} />
         </a>
-      </template>,
+      </template>
     );
 
     await focus('.tooltipper');
@@ -44,7 +44,7 @@ module('tooltip | focus', function (hooks) {
     assert.dom('.tooltip').exists(
       `
       tooltips are displayed when focus enters a reference element if @useFocus is true.
-      `,
+      `
     );
 
     await blur('.tooltipper');
@@ -63,7 +63,7 @@ module('tooltip | focus', function (hooks) {
             <a href="#">World</a>
           </Tooltip>
         </div>
-      </template>,
+      </template>
     );
 
     assert.dom('.tooltip').doesNotExist();
@@ -94,7 +94,7 @@ module('tooltip | focus', function (hooks) {
         <div id="portal">
           {{! tooltip rendered here }}
         </div>
-      </template>,
+      </template>
     );
 
     assert.dom('.tooltip').doesNotExist();
@@ -118,7 +118,7 @@ module('tooltip | focus', function (hooks) {
         <button type="button">
           <Tooltip @useFocus={{true}} />
         </button>
-      </template>,
+      </template>
     );
 
     await click('.tooltipper');
@@ -126,7 +126,7 @@ module('tooltip | focus', function (hooks) {
     assert.dom('.tooltip').exists(
       `
       tooltips are displayed when element is focused/hovered
-      `,
+      `
     );
 
     await triggerEvent('.tooltipper', 'mouseleave');
@@ -136,7 +136,7 @@ module('tooltip | focus', function (hooks) {
     assert
       .dom('.tooltip')
       .doesNotExist(
-        'it hides the tooltip when the mouse leaves the reference element, even if the reference element is still focused and @useFocus is true',
+        'it hides the tooltip when the mouse leaves the reference element, even if the reference element is still focused and @useFocus is true'
       );
   });
 
@@ -152,7 +152,7 @@ module('tooltip | focus', function (hooks) {
             <a href="#">World</a>
           </Tooltip>
         {{/let}}
-      </template>,
+      </template>
     );
 
     assert.dom('.tooltip').doesNotExist();
@@ -172,7 +172,7 @@ module('tooltip | focus', function (hooks) {
     assert
       .dom('.tooltip')
       .exists(
-        'it does not hide the tooltip when the mouse leaves the reference element, if the interactive content inside of the tooltip has focus',
+        'it does not hide the tooltip when the mouse leaves the reference element, if the interactive content inside of the tooltip has focus'
       );
   });
 });

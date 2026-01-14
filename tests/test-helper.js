@@ -17,7 +17,7 @@ class Router extends EmberRouter {
 class TestApp extends EmberApp {
   modules = {
     './router': Router,
-    './services/tooltip': TooltipService,
+    './services/tooltip': TooltipService
     // add any custom services here
     // import.meta.glob('./services/*', { eager: true }),
   };
@@ -29,8 +29,8 @@ export function start() {
   setApplication(
     TestApp.create({
       autoboot: false,
-      rootElement: '#ember-testing',
-    }),
+      rootElement: '#ember-testing'
+    })
   );
   setup(QUnit.assert);
   setupEmberOnerrorValidation();
