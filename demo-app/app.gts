@@ -1,11 +1,27 @@
 import EmberApp from 'ember-strict-application-resolver';
 import EmberRouter from '@ember/routing/router';
 import PageTitleService from 'ember-page-title/services/page-title';
+import * as TooltipService from '@zestia/ember-async-tooltips/services/tooltip';
 
 class Router extends EmberRouter {
   location = 'history';
   rootURL = '/';
 }
+
+Router.map(function () {
+  this.route('manual');
+  this.route('reference');
+  this.route('nesting');
+  this.route('delays');
+  this.route('manual-position');
+  this.route('auto-position');
+  this.route('destination');
+  this.route('attach-to');
+  this.route('sticky');
+  this.route('tether');
+  this.route('use-click');
+  this.route('use-focus');
+});
 
 export class App extends EmberApp {
   /**
@@ -20,6 +36,7 @@ export class App extends EmberApp {
   modules = {
     './router': Router,
     './services/page-title': PageTitleService,
+    './services/tooltip': TooltipService,
     /**
      * NOTE: this glob will import everything matching the glob,
      *     and includes non-services in the services directory.
@@ -31,7 +48,7 @@ export class App extends EmberApp {
      *
      * See: https://rfcs.emberjs.com/id/1132-default-strict-resolver
      */
-    ...import.meta.glob('./templates/**/*', { eager: true })
+    ...import.meta.glob('./templates/**/*', { eager: true }),
   };
 }
 

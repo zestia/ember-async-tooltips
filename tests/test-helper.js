@@ -6,6 +6,8 @@ import * as QUnit from 'qunit';
 import { setApplication } from '@ember/test-helpers';
 import { setup } from 'qunit-dom';
 import { start as qunitStart, setupEmberOnerrorValidation } from 'ember-qunit';
+import TooltipService from '@zestia/ember-async-tooltips/services/tooltip';
+import '../demo-app/styles/app.scss';
 
 class Router extends EmberRouter {
   location = 'none';
@@ -14,7 +16,8 @@ class Router extends EmberRouter {
 
 class TestApp extends EmberApp {
   modules = {
-    './router': Router
+    './router': Router,
+    './services/tooltip': TooltipService,
     // add any custom services here
     // import.meta.glob('./services/*', { eager: true }),
   };
@@ -26,8 +29,8 @@ export function start() {
   setApplication(
     TestApp.create({
       autoboot: false,
-      rootElement: '#ember-testing'
-    })
+      rootElement: '#ember-testing',
+    }),
   );
   setup(QUnit.assert);
   setupEmberOnerrorValidation();
