@@ -1,10 +1,13 @@
 /* eslint-disable array-callback-return */
 
-import EmberApp from '@ember/application';
-import Resolver from 'ember-resolver';
+import EmberApp from 'ember-strict-application-resolver';
 import EmberRouter from '@ember/routing/router';
+import * as QUnit from 'qunit';
+import { setApplication } from '@ember/test-helpers';
+import { setup } from 'qunit-dom';
+import { start as qunitStart, setupEmberOnerrorValidation } from 'ember-qunit';
 import TooltipService from '@zestia/ember-async-tooltips/services/tooltip';
-import '../demo/styles/app.scss';
+import '../demo-app/styles/app.scss';
 
 class Router extends EmberRouter {
   location = 'none';
@@ -12,19 +15,15 @@ class Router extends EmberRouter {
 }
 
 class TestApp extends EmberApp {
-  modulePrefix = 'test-app';
-  Resolver = Resolver.withModules({
-    'test-app/router': { default: Router },
-    'test-app/services/tooltip': TooltipService
-  });
+  modules = {
+    './router': Router,
+    './services/tooltip': TooltipService
+    // add any custom services here
+    // import.meta.glob('./services/*', { eager: true }),
+  };
 }
 
 Router.map(function () {});
-
-import * as QUnit from 'qunit';
-import { setApplication } from '@ember/test-helpers';
-import { setup } from 'qunit-dom';
-import { start as qunitStart, setupEmberOnerrorValidation } from 'ember-qunit';
 
 export function start() {
   setApplication(

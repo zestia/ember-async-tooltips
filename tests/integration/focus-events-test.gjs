@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { focus, render, blur, click, triggerEvent } from '@ember/test-helpers';
 import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
+import { uniqueId } from '@ember/helper';
 
 module('tooltip | focus', function (hooks) {
   setupRenderingTest(hooks);
@@ -144,12 +145,13 @@ module('tooltip | focus', function (hooks) {
 
     await render(
       <template>
-        <button type="button">
-          <Tooltip @useFocus={{true}}>
+        {{#let (uniqueId) as |id|}}
+          <button type="button" id={{id}} />
+          <Tooltip @useFocus={{true}} @element="#{{id}}">
             Hello
             <a href="#">World</a>
           </Tooltip>
-        </button>
+        {{/let}}
       </template>
     );
 
