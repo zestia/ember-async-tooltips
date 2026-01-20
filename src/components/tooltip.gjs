@@ -219,8 +219,9 @@ export default class TooltipComponent extends Component {
     this.#scheduleHideTooltip();
   };
 
-  handleFocusTooltipperElement = () => {
-    this.tooltipperElementIsFocused = true;
+  handleFocusTooltipperElement = (event) => {
+    this.tooltipperElementIsFocused =
+      !this.tooltipperElement.dataset.programmaticallyFocused;
     this.#prepareToShowTooltip();
   };
 

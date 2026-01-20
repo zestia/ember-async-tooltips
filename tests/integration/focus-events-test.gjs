@@ -1,8 +1,16 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { focus, render, blur, click, triggerEvent } from '@ember/test-helpers';
+import {
+  find,
+  focus,
+  render,
+  blur,
+  click,
+  triggerEvent
+} from '@ember/test-helpers';
 import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 import { uniqueId } from '@ember/helper';
+import programaticallyFocus from '@zestia/ember-auto-focus/utils/focus';
 
 module('tooltip | focus', function (hooks) {
   setupRenderingTest(hooks);
@@ -41,15 +49,35 @@ module('tooltip | focus', function (hooks) {
 
     await focus('.tooltipper');
 
-    assert.dom('.tooltip').exists(
-      `
-      tooltips are displayed when focus enters a reference element if @useFocus is true.
-      `
-    );
+    assert
+      .dom('.tooltip')
+      .exists(
+        'tooltips are displayed when focus enters a reference element if @useFocus is true.'
+      );
 
     await blur('.tooltipper');
 
     assert.dom('.tooltip').doesNotExist();
+  });
+
+  test('programatically focusing (@useFocus)', async function (assert) {
+    assert.expect(1);
+
+    await render(
+      <template>
+        <a href="#">
+          <Tooltip @useFocus={{true}} />
+        </a>
+      </template>
+    );
+
+    await programaticallyFocus(find('.tooltipper'));
+
+    assert
+      .dom('.tooltip')
+      .doesNotExist(
+        'tooltips are not displayed if the tooltipper was programmatically focused'
+      );
   });
 
   test('focusing a tooltip with interactive children (@useFocus)', async function (assert) {
@@ -123,11 +151,9 @@ module('tooltip | focus', function (hooks) {
 
     await click('.tooltipper');
 
-    assert.dom('.tooltip').exists(
-      `
-      tooltips are displayed when element is focused/hovered
-      `
-    );
+    assert
+      .dom('.tooltip')
+      .exists('tooltips are displayed when element is focused/hovered');
 
     await triggerEvent('.tooltipper', 'mouseleave');
 

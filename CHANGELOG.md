@@ -1,5 +1,9 @@
 # Changelog
 
+## 16.3.1
+
+- Prevent programmatically focusing an element from showing its tooltip
+
 ## 16.3.0
 
 - Hide tooltips on mouseleave whe `@useFocus` is true
