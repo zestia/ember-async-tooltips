@@ -2,7 +2,7 @@
 
 ## 16.3.0
 
-- Hide tooltips on mouseleave whe `@useFocus`is true 
+- Hide tooltips on mouseleave whe `@useFocus` is true
 - Update to latest addon blueprint
 
 ## 16.2.0
