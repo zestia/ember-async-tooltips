@@ -58,6 +58,7 @@
   "ember-addon": {
     "app-js": {
       "./components/tooltip.js": "./dist/_app_/components/tooltip.js",
+      "./components/disabled-wrapper.js": "./dist/_app_/components/disabled-wrapper.js",
       "./services/tooltip.js": "./dist/_app_/services/tooltip.js"
     },
     "main": "addon-main.cjs",

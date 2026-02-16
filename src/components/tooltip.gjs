@@ -483,8 +483,8 @@ export default class TooltipComponent extends Component {
       }
 
       if (this.args.useFocus) {
-        this.#add(el, 'focus', this.handleFocusTooltipperElement);
-        this.#add(el, 'blur', this.handleBlurTooltipperElement);
+        this.#add(el, 'focusin', this.handleFocusTooltipperElement);
+        this.#add(el, 'focusout', this.handleBlurTooltipperElement);
       }
     }
 
@@ -499,8 +499,8 @@ export default class TooltipComponent extends Component {
         }
 
         if (this.args.useFocus) {
-          this.#rem(el, 'focus', this.handleFocusTooltipperElement);
-          this.#rem(el, 'blur', this.handleBlurTooltipperElement);
+          this.#rem(el, 'focusin', this.handleFocusTooltipperElement);
+          this.#rem(el, 'focusout', this.handleBlurTooltipperElement);
         }
       }
     };
