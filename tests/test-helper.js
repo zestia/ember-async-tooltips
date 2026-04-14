@@ -7,6 +7,7 @@ import { setApplication } from '@ember/test-helpers';
 import { setup } from 'qunit-dom';
 import { start as qunitStart, setupEmberOnerrorValidation } from 'ember-qunit';
 import TooltipService from '@zestia/ember-async-tooltips/services/tooltip';
+import { setTesting } from '@embroider/macros';
 import '../demo-app/styles/app.scss';
 
 class Router extends EmberRouter {
@@ -26,6 +27,7 @@ class TestApp extends EmberApp {
 Router.map(function () {});
 
 export function start() {
+  setTesting(true);
   setApplication(
     TestApp.create({
       autoboot: false,
