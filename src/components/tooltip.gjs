@@ -10,7 +10,7 @@ import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';
 import { waitForAnimation } from '@zestia/animation-utils';
-import autoPosition from '@zestia/ember-async-tooltips/utils/auto-position';
+import autoPosition from '../utils/auto-position.js';
 import Component from '@glimmer/component';
 const { max } = Math;
 
