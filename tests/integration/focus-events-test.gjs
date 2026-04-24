@@ -60,6 +60,54 @@ module('tooltip | focus', function (hooks) {
     assert.dom('.tooltip').doesNotExist();
   });
 
+  test('mousing over another tooltipper closes a focus-only tooltip', async function (assert) {
+    assert.expect(3);
+
+    await render(
+      <template>
+        <a class="first" href="#">
+          <Tooltip @useFocus={{true}}>First</Tooltip>
+        </a>
+        <a class="second" href="#">
+          <Tooltip @useFocus={{true}}>Second</Tooltip>
+        </a>
+      </template>
+    );
+
+    await focus('a.first');
+
+    assert.dom('.tooltip').exists({ count: 1 });
+
+    await triggerEvent('a.second', 'mouseenter');
+
+    assert.dom('.tooltip').exists({ count: 1 });
+
+    assert.dom('.tooltip').hasText('Second');
+  });
+
+  test('mousing over another tooltipper does not close manually opened tooltips just because they happen to have focus', async function (assert) {
+    assert.expect(2);
+
+    await render(
+      <template>
+        <a class="first" href="#">
+          <Tooltip @show={{true}} @useFocus={{true}}>First</Tooltip>
+        </a>
+        <a class="second" href="#">
+          <Tooltip @useFocus={{true}}>Second</Tooltip>
+        </a>
+      </template>
+    );
+
+    await focus('a.first');
+
+    assert.dom('.tooltip').exists({ count: 1 });
+
+    await triggerEvent('a.second', 'mouseenter');
+
+    assert.dom('.tooltip').exists({ count: 2 });
+  });
+
   test('programatically focusing (@useFocus)', async function (assert) {
     assert.expect(1);
 

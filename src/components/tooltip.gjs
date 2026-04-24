@@ -188,6 +188,7 @@ export default class TooltipComponent extends Component {
   }
 
   handleMouseEnterTooltipperElement = () => {
+    this.#hideFocusOnlyTooltip();
     this.isOverTooltipperElement = true;
     this.#prepareToShowTooltip();
   };
@@ -338,6 +339,20 @@ export default class TooltipComponent extends Component {
     await this._waitForAnimation();
 
     this.#handleHide();
+  }
+
+  #hideFocusOnlyTooltip() {
+    if (this.tooltipperElement === document.activeElement) {
+      return;
+    }
+
+    this.tooltipService.tooltips
+      .find(
+        (tooltip) =>
+          tooltip.tooltipperElement === document.activeElement &&
+          !tooltip.args.show
+      )
+      ?.hide();
   }
 
   #cancelTimers() {

@@ -1,5 +1,9 @@
 # Changelog
 
+## 16.3.2
+
+- Prevent multiple tooltips showing at the same with `@useFocus` enabled.
+
 ## 16.3.1
 
 - Prevent programmatically focusing an element from showing its tooltip

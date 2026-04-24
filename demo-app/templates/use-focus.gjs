@@ -39,7 +39,7 @@ export default Route(
         <em>not</em>
         show a tooltip when focused with a keyboard
 
-        <Tooltip @useFocus={{false}}>
+        <Tooltip>
           Hello World
         </Tooltip>
       </button>
