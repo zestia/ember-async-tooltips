@@ -21,6 +21,7 @@ Router.map(function () {
   this.route('tether');
   this.route('use-click');
   this.route('use-focus');
+  this.route('disabled-button');
 });
 
 export class App extends EmberApp {

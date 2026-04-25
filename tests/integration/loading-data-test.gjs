@@ -120,7 +120,7 @@ module('tooltip | loading data', function (hooks) {
     assert.dom('.tooltip').exists();
   });
 
-  test('blur / loading data', async function (assert) {
+  test('focusout / loading data', async function (assert) {
     assert.expect(3);
 
     const load = () => assert.step('loading data');
@@ -133,8 +133,9 @@ module('tooltip | loading data', function (hooks) {
       </template>
     );
 
-    triggerEvent('.tooltipper', 'focus');
-    triggerEvent('.tooltipper', 'blur');
+    focus('.tooltipper');
+
+    triggerEvent('.tooltipper', 'focusout');
 
     await settled();
 

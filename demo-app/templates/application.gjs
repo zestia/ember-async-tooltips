@@ -84,6 +84,12 @@ export default Route(
       <LinkTo @route="use-focus">
         Use Focus
       </LinkTo>
+
+      |
+
+      <LinkTo @route="disabled-button">
+        Disabled button
+      </LinkTo>
     </p>
 
     {{outlet}}
