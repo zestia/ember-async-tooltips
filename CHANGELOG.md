@@ -1,8 +1,13 @@
 # Changelog
 
+## 16.3.3
+
+- Fix build issues
+
 ## 16.3.2
 
 - Prevent multiple tooltips showing at the same with `@useFocus` enabled.
+- Sub path imports
 
 ## 16.3.1
 
