@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, waitFor, settled, triggerEvent } from '@ember/test-helpers';
-import { Timer } from '../helpers';
+import { Timer } from '#tests/helpers';
 import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 
 module('tooltip | sticky', function (hooks) {

@@ -7,7 +7,7 @@ import {
   triggerEvent,
   focus
 } from '@ember/test-helpers';
-import { wait, hasText, assertPosition } from '../helpers';
+import { wait, hasText, assertPosition } from '#tests/helpers';
 import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
 
 module('tooltip | loading data', function (hooks) {
