@@ -1,5 +1,9 @@
 # Changelog
 
+## 16.3.4
+
+- Fix sticky state not being cleared
+
 ## 16.3.3
 
 - Fix build issues

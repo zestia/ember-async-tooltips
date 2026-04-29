@@ -358,7 +358,6 @@ export default class TooltipComponent extends Component {
   #cancelTimers() {
     cancel(this.showTimer);
     cancel(this.hideTimer);
-    cancel(this.stickyTimer);
   }
 
   #scheduleResetSticky() {

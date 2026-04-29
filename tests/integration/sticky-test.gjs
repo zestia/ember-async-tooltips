@@ -8,22 +8,26 @@ module('tooltip | sticky', function (hooks) {
   setupRenderingTest(hooks);
 
   test('stickyness', async function (assert) {
-    assert.expect(7);
+    assert.expect(9);
 
     const timer = new Timer();
 
     await render(
       <template>
-        <div class="a1">a1
+        <div class="a1">
+          a1
           <Tooltip @showDelay={{1000}} @stickyID="A">a1</Tooltip>
         </div>
-        <div class="a2">a2
+        <div class="a2">
+          a2
           <Tooltip @showDelay={{1000}} @stickyID="A">a1</Tooltip>
         </div>
-        <div class="b1">b1
+        <div class="b1">
+          b1
           <Tooltip @showDelay={{1000}} @stickyID="B">b1</Tooltip>
         </div>
-        <div class="b2">b1
+        <div class="b2">
+          b1
           <Tooltip @showDelay={{1000}} @stickyID="B">b2</Tooltip>
         </div>
       </template>
@@ -47,6 +51,8 @@ module('tooltip | sticky', function (hooks) {
 
     assert.dom('.a1 .tooltip').hasAttribute('data-sticky', 'true');
 
+    triggerEvent('.a1', 'mouseleave');
+
     // A2
 
     timer.start();
@@ -59,6 +65,8 @@ module('tooltip | sticky', function (hooks) {
 
     assert.ok(timer.time < 1000);
 
+    await triggerEvent('.a2', 'mouseleave');
+
     // B1
 
     timer.start();
@@ -69,7 +77,9 @@ module('tooltip | sticky', function (hooks) {
 
     assert.ok(timer.time >= 1000);
 
-    // B2
+    triggerEvent('.b1', 'mouseleave');
+
+    // // B2
 
     timer.start();
 
@@ -78,5 +88,21 @@ module('tooltip | sticky', function (hooks) {
     timer.stop();
 
     assert.ok(timer.time < 1000);
+
+    triggerEvent('.b2', 'mouseleave');
+
+    // A1 (reset)
+
+    timer.start();
+
+    triggerEvent('.a1', 'mouseenter');
+
+    await waitFor('.a1 .tooltip');
+
+    assert.dom('.a1 .tooltip').hasAttribute('data-sticky', 'false');
+
+    timer.stop();
+
+    assert.ok(timer.time >= 1000);
   });
 });
