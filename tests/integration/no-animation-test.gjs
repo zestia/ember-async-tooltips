@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, triggerEvent } from '@ember/test-helpers';
-import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
+import Tooltip from '#src/components/tooltip';
 
 module('tooltip | no animation', function (hooks) {
   setupRenderingTest(hooks);

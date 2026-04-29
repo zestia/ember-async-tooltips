@@ -8,7 +8,7 @@ import {
   focus
 } from '@ember/test-helpers';
 import { wait, hasText, assertPosition } from '#tests/helpers';
-import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
+import Tooltip from '#src/components/tooltip';
 
 module('tooltip | loading data', function (hooks) {
   setupRenderingTest(hooks);

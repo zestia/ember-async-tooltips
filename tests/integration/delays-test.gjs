@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, waitFor, triggerEvent, settled } from '@ember/test-helpers';
 import { Timer } from '#tests/helpers';
-import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
+import Tooltip from '#src/components/tooltip';
 
 module('tooltip | delays', function (hooks) {
   setupRenderingTest(hooks);

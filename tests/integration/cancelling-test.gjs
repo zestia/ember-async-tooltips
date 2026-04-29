@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, triggerEvent, settled } from '@ember/test-helpers';
 import { tracked } from '@glimmer/tracking';
 import { wait } from '#tests/helpers';
-import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
+import Tooltip from '#src/components/tooltip';
 
 module('tooltip | cancelling', function (hooks) {
   setupRenderingTest(hooks);

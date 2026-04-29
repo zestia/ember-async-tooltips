@@ -1,6 +1,6 @@
 import Route from 'ember-route-template';
 import Component from '@glimmer/component';
-import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
+import Tooltip from '#src/components/tooltip';
 import { on } from '@ember/modifier';
 
 class AutoPositionRoute extends Component {

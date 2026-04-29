@@ -1,6 +1,6 @@
 import Route from 'ember-route-template';
 import { uniqueId } from '@ember/helper';
-import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
+import Tooltip from '#src/components/tooltip';
 
 export default Route(
   <template>

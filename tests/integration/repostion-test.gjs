@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, settled, waitUntil, triggerEvent } from '@ember/test-helpers';
 import { tracked } from '@glimmer/tracking';
 import { assertPosition, getPosition } from '#tests/helpers';
-import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
+import Tooltip from '#src/components/tooltip';
 
 module('tooltip | reposition', function (hooks) {
   setupRenderingTest(hooks);

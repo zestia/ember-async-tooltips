@@ -1,7 +1,7 @@
 import EmberApp from 'ember-strict-application-resolver';
 import EmberRouter from '@ember/routing/router';
 import PageTitleService from 'ember-page-title/services/page-title';
-import * as TooltipService from '@zestia/ember-async-tooltips/services/tooltip';
+import * as TooltipService from '#src/services/tooltip';
 
 class Router extends EmberRouter {
   location = 'history';

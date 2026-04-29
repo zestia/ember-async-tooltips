@@ -8,7 +8,7 @@ import {
   click,
   triggerEvent
 } from '@ember/test-helpers';
-import Tooltip from '@zestia/ember-async-tooltips/components/tooltip';
+import Tooltip from '#src/components/tooltip';
 import { uniqueId } from '@ember/helper';
 import programaticallyFocus from '@zestia/ember-auto-focus/utils/focus';
 

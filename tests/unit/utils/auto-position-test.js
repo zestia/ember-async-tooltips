@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import autoPosition from '@zestia/ember-async-tooltips/utils/auto-position';
+import autoPosition from '#src/utils/auto-position';
 
 module('autoPosition', function () {
   test('#autoPosition', function (assert) {
