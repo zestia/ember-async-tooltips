@@ -191,6 +191,10 @@ export default class TooltipComponent extends Component {
   get tooltipPosition() {
     const { position } = this.args;
 
+    if (this.useCSSAnchorPositioning) {
+      return null;
+    }
+
     if (typeof position === 'string') {
       return position;
     }
@@ -560,9 +564,8 @@ export default class TooltipComponent extends Component {
   });
 
   anchor = modifier(() => {
-    this.positionElement.style.anchorName = this.anchorName;
-    return () =>
-      this.positionElement && (this.positionElement.style.anchorName = null);
+    this.positionElement.style.setProperty('anchor-name', this.anchorName);
+    return () => this.positionElement?.style.removeProperty('anchor-name');
   });
 
   className = modifier(() => {

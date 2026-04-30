@@ -7,7 +7,7 @@ module('tooltip | css anchor', function (hooks) {
   setupRenderingTest(hooks);
 
   test('css anchor positioning', async function (assert) {
-    assert.expect(1);
+    assert.expect(2);
 
     // When CSS Anchor positioning is opted into, the tooltipper and the toolip
     // are coupled together via a CSS anchor name. No manual top/left positioning is set.
@@ -24,6 +24,9 @@ module('tooltip | css anchor', function (hooks) {
 
     await triggerEvent('.tooltipper', 'mouseenter');
 
-    assert.dom('.tooltip').hasAttribute('style', `position-anchor: ${id}`);
+    assert
+      .dom('.tooltip')
+      .hasAttribute('style', `position-anchor: ${id}`)
+      .doesNotHaveAttribute('data-position');
   });
 });
