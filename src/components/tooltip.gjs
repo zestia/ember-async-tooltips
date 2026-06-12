@@ -38,9 +38,7 @@ export default class TooltipComponent extends Component {
   tetherID;
   willInsertTooltip;
 
-  get id() {
-    return guidFor(this);
-  }
+  id = guidFor(this);
 
   get anchorName() {
     return `--${this.id}`;
