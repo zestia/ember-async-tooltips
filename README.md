@@ -91,6 +91,12 @@ Optional. By default, tooltips only show when hovering over the reference elemen
 
 Optional. By default, tooltips only show when hovering over the reference element. Use this argument to also show the tooltip when the reference element is focused.
 
+#### `@useCSSAnchorPositioning`
+
+Optional. By default, tooltips use the rudimentary JavaScript positioning utils. Use this argument to opt out of that, and opt in to positioning the tooltip yourself with CSS anchor positioning.
+
+When this option is enabled, the following arguments are essentially redundant: `@position`, `@rows`, `@columns`, `@attachTo`, `@destination`.
+
 #### `@stickyID`
 
 Optional. You can group tooltips together with a sticky identifier. When a tooltip from a group of tooltips all with the same identifier is shown, then other tooltips in that group will show instantly - ignoring their show delay. The term sticky is used because it feels as if the tooltips are stuck open.
@@ -179,6 +185,16 @@ Any data that was loaded via `@onLoad`
 #### `error`
 
 Any error if the data was `@onLoad` failed
+
+### Utils
+
+#### `supportsCSSAnchorPositioning`
+
+Useful in this transitory period where JavaScript positioning and CSS anchor positioning are both needed. e.g.
+
+```handlebars
+<Tooltip @useCSSAnchorPositioning={{(supportsCSSAnchorPositioning)}} />
+```
 
 # Animating
 

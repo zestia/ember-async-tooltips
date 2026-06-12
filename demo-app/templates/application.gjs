@@ -61,6 +61,12 @@ import '../styles/app.css';
 
     |
 
+    <LinkTo @route="anchor-position">
+      CSS Anchor position
+    </LinkTo>
+
+    |
+
     <LinkTo @route="sticky">
       Sticky
     </LinkTo>
