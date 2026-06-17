@@ -1,5 +1,9 @@
 # Changelog
 
+## 16.5.0
+
+- Use `popover` when opting into CSS anchor positioning, to get anchor coupling for free
+
 ## 16.4.0
 
 - Add ability to opt out of the JavaScript positioning utils, and opt in to CSS anchor positioning.

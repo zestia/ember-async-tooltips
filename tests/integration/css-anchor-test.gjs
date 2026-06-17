@@ -1,32 +1,50 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, triggerEvent, find } from '@ember/test-helpers';
+import { find, render, triggerEvent } from '@ember/test-helpers';
+import { on } from '@ember/modifier';
 import Tooltip from '#src/components/tooltip';
 
 module('tooltip | css anchor', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('css anchor positioning', async function (assert) {
-    assert.expect(2);
+  test('uses the tooltipper as the popover source', async function (assert) {
+    assert.expect(6);
 
-    // When CSS Anchor positioning is opted into, the tooltipper and the toolip
-    // are coupled together via a CSS anchor name. No manual top/left positioning is set.
+    let popoverSource;
+
+    const handleToggle = (event) => {
+      popoverSource = event.source;
+    };
 
     await render(
       <template>
-        <div><Tooltip @useCSSAnchorPositioning={{true}} /></div>
+        <div>
+          <Tooltip
+            @useCSSAnchorPositioning={{true}}
+            {{on "toggle" handleToggle}}
+          />
+        </div>
       </template>
     );
 
-    const [, id] = find('.tooltipper')
-      .getAttribute('style')
-      .match(/anchor-name: (--[a-zA-Z0-9]+)/);
+    const tooltipper = find('.tooltipper');
 
-    await triggerEvent('.tooltipper', 'mouseenter');
+    await triggerEvent(tooltipper, 'mouseenter');
 
+    const tooltip = find('.tooltip');
+
+    assert.strictEqual(
+      popoverSource,
+      tooltipper,
+      'tooltip is coupled to the tooltipper to get css anchor scoped positioning for free'
+    );
+
+    assert.true(tooltip.matches(':popover-open'));
+    assert.dom('.tooltipper').doesNotHaveAttribute('popovertarget');
     assert
-      .dom('.tooltip')
-      .hasAttribute('style', `position-anchor: ${id}`)
+      .dom(tooltip)
+      .hasAttribute('popover', 'manual')
+      .doesNotHaveAttribute('style')
       .doesNotHaveAttribute('data-position');
   });
 });

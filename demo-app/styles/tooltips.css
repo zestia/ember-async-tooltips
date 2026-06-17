@@ -1,5 +1,6 @@
 .tooltip {
   position: absolute;
+  padding: 0;
   border: 1px solid var(--green);
 
   &[data-showing='true'] {

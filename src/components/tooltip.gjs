@@ -40,10 +40,6 @@ export default class TooltipComponent extends Component {
 
   id = guidFor(this);
 
-  get anchorName() {
-    return `--${this.id}`;
-  }
-
   get columns() {
     return this.args.columns ?? 3;
   }
@@ -54,12 +50,12 @@ export default class TooltipComponent extends Component {
 
   get tooltipStyle() {
     if (this.useCSSAnchorPositioning) {
-      return htmlSafe(`position-anchor: ${this.anchorName}`);
-    } else {
-      const [x, y] = this.tooltipCoords;
-
-      return htmlSafe(`top: ${y}px; left: ${x}px`);
+      return null;
     }
+
+    const [x, y] = this.tooltipCoords;
+
+    return htmlSafe(`top: ${y}px; left: ${x}px`);
   }
 
   get useCSSAnchorPositioning() {
@@ -595,13 +591,17 @@ export default class TooltipComponent extends Component {
     };
   });
 
+  popover = modifier(() => {
+    this.tooltipElement?.showPopover({ source: this.tooltipperElement });
+    return () => this.tooltipElement?.hidePopover();
+  });
+
   <template>
     {{~""~}}
     <span
       class="__tooltip__"
       hidden
       {{this.tooltipperEvents @element}}
-      {{(if this.useCSSAnchorPositioning this.anchor)}}
       {{this.className}}
       {{this.visibility @show}}
       {{this.loading this.isLoading}}
@@ -617,8 +617,10 @@ export default class TooltipComponent extends Component {
           style={{this.tooltipStyle}}
           role="tooltip"
           aria-live="polite"
-          {{this.tooltipEvents}}
+          popover={{if this.useCSSAnchorPositioning "manual"}}
           {{this.register}}
+          {{(if this.useCSSAnchorPositioning this.popover)}}
+          {{this.tooltipEvents}}
           {{this.aria}}
           {{this.position @position @columns @rows @destination @attachTo}}
           ...attributes
