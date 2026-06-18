@@ -19,10 +19,7 @@ module('tooltip | css anchor', function (hooks) {
     await render(
       <template>
         <div>
-          <Tooltip
-            @useCSSAnchorPositioning={{true}}
-            {{on "toggle" handleToggle}}
-          />
+          <Tooltip @usePopover={{true}} {{on "toggle" handleToggle}} />
         </div>
       </template>
     );

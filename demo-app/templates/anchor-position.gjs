@@ -2,14 +2,14 @@ import Tooltip from '#src/components/tooltip';
 
 <template>
   <p>
-    Opt into CSS Anchor positioning on a per tooltip basis or across all
-    tooltips.
+    Opt in to native popover, and opt out of the JS positioning, allowing you to
+    use CSS anchor positioning instead.
   </p>
 
   <div>
     Hover over me
 
-    <Tooltip class="anchor-position-tooltip" @useCSSAnchorPositioning={{true}}>
+    <Tooltip class="anchor-position-tooltip" @usePopover={{true}}>
       Hello World
     </Tooltip>
   </div>

@@ -1,5 +1,9 @@
 # Changelog
 
+## 16.6.0
+
+- Introduce `@usePopover` arg
+
 ## 16.5.0
 
 - Use `popover` when opting into CSS anchor positioning, to get anchor coupling for free

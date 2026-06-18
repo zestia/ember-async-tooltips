@@ -2,8 +2,6 @@ import Service from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class TooltipService extends Service {
-  useCSSAnchorPositioning = false;
-
   tooltips = [];
 
   @tracked _sticky = {};

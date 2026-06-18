@@ -49,20 +49,9 @@ export default class TooltipComponent extends Component {
   }
 
   get tooltipStyle() {
-    if (this.useCSSAnchorPositioning) {
-      return null;
-    }
-
     const [x, y] = this.tooltipCoords;
 
     return htmlSafe(`top: ${y}px; left: ${x}px`);
-  }
-
-  get useCSSAnchorPositioning() {
-    return (
-      this.args.useCSSAnchorPositioning ??
-      this.tooltipService.useCSSAnchorPositioning
-    );
   }
 
   get hideDelay() {
@@ -184,10 +173,6 @@ export default class TooltipComponent extends Component {
 
   get tooltipPosition() {
     const { position } = this.args;
-
-    if (this.useCSSAnchorPositioning) {
-      return null;
-    }
 
     if (typeof position === 'string') {
       return position;
@@ -491,7 +476,7 @@ export default class TooltipComponent extends Component {
   });
 
   position = modifier((_, [position, columns, rows, destination, attachTo]) => {
-    if (this.useCSSAnchorPositioning) {
+    if (this.args.usePopover) {
       return;
     }
 
@@ -557,11 +542,6 @@ export default class TooltipComponent extends Component {
     };
   });
 
-  anchor = modifier(() => {
-    this.positionElement.style.setProperty('anchor-name', this.anchorName);
-    return () => this.positionElement?.style.removeProperty('anchor-name');
-  });
-
   className = modifier(() => {
     this.tooltipperElement?.classList.add('tooltipper');
     return () => this.tooltipperElement?.classList.remove('tooltipper');
@@ -611,15 +591,15 @@ export default class TooltipComponent extends Component {
         <div
           class="tooltip"
           data-showing="{{this.shouldShowTooltip}}"
-          data-position={{this.tooltipPosition}}
+          data-position={{(unless @usePopover this.tooltipPosition)}}
           data-sticky="{{this.isSticky}}"
           id={{this.id}}
-          style={{this.tooltipStyle}}
+          style={{(unless @usePopover this.tooltipStyle)}}
           role="tooltip"
           aria-live="polite"
-          popover={{if this.useCSSAnchorPositioning "manual"}}
+          popover={{if @usePopover "manual"}}
           {{this.register}}
-          {{(if this.useCSSAnchorPositioning this.popover)}}
+          {{(if @usePopover this.popover)}}
           {{this.tooltipEvents}}
           {{this.aria}}
           {{this.position @position @columns @rows @destination @attachTo}}

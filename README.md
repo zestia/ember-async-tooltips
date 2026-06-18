@@ -59,6 +59,12 @@ https://zestia.github.io/ember-async-tooltips
 
 ### Arguments
 
+#### `@usePopover`
+
+Optional. Opt in to native popover, and opt out of the JS positioning, allowing you to use CSS anchor positioning instead.
+
+When this option is enabled, the following arguments are essentially redundant: `@position`, `@rows`, `@columns`, `@attachTo`, `@destination`.
+
 #### `@element`
 
 Optional. By default, the parent of the tooltip element is what causes the tooltip to show & hide, and is _also_ the element it will be positioned next to.
@@ -90,12 +96,6 @@ Optional. By default, tooltips only show when hovering over the reference elemen
 #### `@useFocus`
 
 Optional. By default, tooltips only show when hovering over the reference element. Use this argument to also show the tooltip when the reference element is focused.
-
-#### `@useCSSAnchorPositioning`
-
-Optional. By default, tooltips use the rudimentary JavaScript positioning utils. Use this argument to opt out of that, and opt in to positioning the tooltip yourself with CSS anchor positioning.
-
-When this option is enabled, the following arguments are essentially redundant: `@position`, `@rows`, `@columns`, `@attachTo`, `@destination`.
 
 #### `@stickyID`
 
@@ -185,16 +185,6 @@ Any data that was loaded via `@onLoad`
 #### `error`
 
 Any error if the data was `@onLoad` failed
-
-### Utils
-
-#### `supportsCSSAnchorPositioning`
-
-Useful in this transitory period where JavaScript positioning and CSS anchor positioning are both needed. e.g.
-
-```handlebars
-<Tooltip @useCSSAnchorPositioning={{(supportsCSSAnchorPositioning)}} />
-```
 
 # Animating
 
