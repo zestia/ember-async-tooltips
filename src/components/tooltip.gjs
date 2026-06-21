@@ -592,7 +592,7 @@ export default class TooltipComponent extends Component {
         <div
           class="tooltip"
           data-showing="{{this.shouldShowTooltip}}"
-          data-position={{(unless @usePopover this.tooltipPosition)}}
+          data-position={{unless @usePopover this.tooltipPosition}}
           data-sticky="{{this.isSticky}}"
           id={{this.id}}
           style={{(unless @usePopover this.tooltipStyle)}}
