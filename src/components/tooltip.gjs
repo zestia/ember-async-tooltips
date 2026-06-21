@@ -578,8 +578,7 @@ export default class TooltipComponent extends Component {
     return () => this.tooltipElement?.hidePopover();
   });
 
-  <template>
-    {{! template-lint-disable  no-unnecessary-curly-parens }}
+  <template>{{! template-lint-disable  no-unnecessary-curly-parens }}
     {{~""~}}
     <span
       class="__tooltip__"
