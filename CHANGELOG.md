@@ -1,6 +1,6 @@
 # Changelog
 
-## 16.5.0
+## 16.4.0
 
 - Introduce `@usePopover` arg
 - Rename `@attachTo` to `@popoverTarget`.
