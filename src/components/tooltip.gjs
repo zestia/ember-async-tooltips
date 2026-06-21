@@ -595,7 +595,7 @@ export default class TooltipComponent extends Component {
           data-position={{unless @usePopover this.tooltipPosition}}
           data-sticky="{{this.isSticky}}"
           id={{this.id}}
-          style={{(unless @usePopover this.tooltipStyle)}}
+          style={{unless @usePopover this.tooltipStyle}}
           role="tooltip"
           aria-live="polite"
           popover={{if @usePopover "manual"}}
