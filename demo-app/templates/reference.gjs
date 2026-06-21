@@ -3,7 +3,7 @@ import { uniqueId } from '@ember/helper';
 
 <template>
   <p>
-    A tooltip displayed on a specific reference element.
+    A tooltip displayed when interacting with a specific element
   </p>
 
   {{#let (uniqueId) as |id|}}
