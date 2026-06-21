@@ -4,7 +4,7 @@ import PageTitleService from 'ember-page-title/services/page-title';
 import * as TooltipService from '#src/services/tooltip';
 
 class Router extends EmberRouter {
-  location = 'history';
+  location = 'hash';
   rootURL = '/';
 }
 
