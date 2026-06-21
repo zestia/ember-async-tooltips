@@ -59,12 +59,6 @@ https://zestia.github.io/ember-async-tooltips
 
 ### Arguments
 
-#### `@usePopover`
-
-Optional. Opt in to native popover, and opt out of the JS positioning, allowing you to use CSS anchor positioning instead.
-
-When this option is enabled, the following arguments are essentially redundant: `@position`, `@rows`, `@columns`, `@attachTo`, `@destination`.
-
 #### `@element`
 
 Optional. By default, the parent of the tooltip element is what causes the tooltip to show & hide, and is _also_ the element it will be positioned next to.
@@ -72,10 +66,6 @@ Optional. By default, the parent of the tooltip element is what causes the toolt
 #### `@destination`
 
 Optional. By default, tooltips are rendered in-place. Specify a destination if you want to render them in that element instead.
-
-#### `@attachTo`
-
-Optional. By default, tooltips will be positioned next to the element that caused them to display. Unless this argument is specified, in which case the tooltip will show when mousing over the element, but will then be positioned next to a _different_ element.
 
 #### `@show`
 
@@ -110,6 +100,16 @@ Optional. When a group of tooltips is in sticky mode (and so they have no show d
 Optional. When an element is hovered over, `@onLoad` will be fired. You can respond to this action by returning a promise. The result of that promise is available on the API. This is a good way preload any data required for the tooltip to display.
 
 In the following example, there is a show delay of `300`ms before a tooltip will appear. But, _during that time_ it is loading some data which takes `50`ms. The actual show delay is reduced to `250`ms, so that the total delay remains at `300`ms.
+
+#### `@usePopover`
+
+Optional. Opt in to native popover, and opt out of the JS positioning, allowing you to use CSS anchor positioning instead.
+
+When this option is enabled, the following arguments are essentially redundant: `@position`, `@rows`, `@columns`, `@destination`.
+
+#### `@popoverTarget`
+
+Optional. By default, tooltips will be positioned next to the element that caused them to display. When this argument is specified, the tooltip will still show when mousing over the `@element`, but will be positioned next to a _different_ element.
 
 <details>
   <summary>Example</summary>

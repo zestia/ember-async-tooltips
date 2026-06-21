@@ -31,8 +31,8 @@ import '../styles/app.css';
 
     |
 
-    <LinkTo @route="attach-to">
-      Attach to
+    <LinkTo @route="popover-target">
+      Popover target
     </LinkTo>
 
     |
@@ -61,8 +61,8 @@ import '../styles/app.css';
 
     |
 
-    <LinkTo @route="anchor-position">
-      CSS Anchor position
+    <LinkTo @route="use-popover">
+      Use popover
     </LinkTo>
 
     |

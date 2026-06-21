@@ -9,7 +9,7 @@ import Tooltip from '#src/components/tooltip';
   <div>
     Hover over me
 
-    <Tooltip class="anchor-position-tooltip" @usePopover={{true}}>
+    <Tooltip class="use-popover-tooltip" @usePopover={{true}}>
       Hello World
     </Tooltip>
   </div>

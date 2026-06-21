@@ -156,8 +156,8 @@ export default class TooltipComponent extends Component {
   }
 
   get positionElement() {
-    return this.args.attachTo
-      ? this.#getElement(this.args.attachTo)
+    return this.args.popoverTarget
+      ? this.#getElement(this.args.popoverTarget)
       : this.tooltipperElement;
   }
 
@@ -475,14 +475,16 @@ export default class TooltipComponent extends Component {
     });
   });
 
-  position = modifier((_, [position, columns, rows, destination, attachTo]) => {
-    if (this.args.usePopover) {
-      return;
-    }
+  position = modifier(
+    (_, [position, columns, rows, destination, popoverTarget]) => {
+      if (this.args.usePopover) {
+        return;
+      }
 
-    this.#startTether();
-    return () => this.#stopTether();
-  });
+      this.#startTether();
+      return () => this.#stopTether();
+    }
+  );
 
   tooltipperEvents = modifier((element, [otherElement]) => {
     this.element = element;
@@ -572,7 +574,7 @@ export default class TooltipComponent extends Component {
   });
 
   popover = modifier(() => {
-    this.tooltipElement?.showPopover({ source: this.tooltipperElement });
+    this.tooltipElement?.showPopover({ source: this.positionElement });
     return () => this.tooltipElement?.hidePopover();
   });
 
@@ -602,7 +604,7 @@ export default class TooltipComponent extends Component {
           {{(if @usePopover this.popover)}}
           {{this.tooltipEvents}}
           {{this.aria}}
-          {{this.position @position @columns @rows @destination @attachTo}}
+          {{this.position @position @columns @rows @destination @popoverTarget}}
           ...attributes
         >
           {{~yield this.api~}}

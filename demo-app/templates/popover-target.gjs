@@ -4,7 +4,7 @@ import { uniqueId } from '@ember/helper';
 <template>
   <p>
     Trigger the tooltip on mouse over of an element, but position the tooltip to
-    a child element
+    a different element entirely.
   </p>
 
   <div>
@@ -13,7 +13,7 @@ import { uniqueId } from '@ember/helper';
     {{#let (uniqueId) as |id|}}
       <small id={{id}}>ⓘ</small>
 
-      <Tooltip @attachTo="#{{id}}" @position="bottom center">
+      <Tooltip @popoverTarget="#{{id}}" @position="bottom center">
         Hello World
       </Tooltip>
     {{/let}}
