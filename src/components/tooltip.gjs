@@ -579,6 +579,7 @@ export default class TooltipComponent extends Component {
   });
 
   <template>
+    {{! template-lint-disable  no-unnecessary-curly-parens }}
     {{~""~}}
     <span
       class="__tooltip__"

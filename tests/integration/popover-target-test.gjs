@@ -23,7 +23,7 @@ module('tooltip | popover target', function (hooks) {
   const _render = () => {
     return render(
       <template>
-        {{! template-lint-disable no-inline-styles }}
+        {{! template-lint-disable no-forbidden-elements }}
         <style>
           #one,
           #two {
