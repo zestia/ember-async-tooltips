@@ -4,7 +4,7 @@ import { find, render, triggerEvent } from '@ember/test-helpers';
 import { on } from '@ember/modifier';
 import Tooltip from '#src/components/tooltip';
 
-module('tooltip | css anchor', function (hooks) {
+module('tooltip | use popover', function (hooks) {
   setupRenderingTest(hooks);
 
   test('uses the tooltipper as the popover source', async function (assert) {
