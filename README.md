@@ -101,16 +101,6 @@ Optional. When an element is hovered over, `@onLoad` will be fired. You can resp
 
 In the following example, there is a show delay of `300`ms before a tooltip will appear. But, _during that time_ it is loading some data which takes `50`ms. The actual show delay is reduced to `250`ms, so that the total delay remains at `300`ms.
 
-#### `@usePopover`
-
-Optional. Opt in to native popover, and opt out of the JS positioning, allowing you to use CSS anchor positioning instead.
-
-When this option is enabled, the following arguments are essentially redundant: `@position`, `@rows`, `@columns`, `@destination`.
-
-#### `@popoverTarget`
-
-Optional. By default, tooltips will be positioned next to the element that caused them to display. When this argument is specified, the tooltip will still show when mousing over the `@element`, but will be positioned next to a _different_ element.
-
 <details>
   <summary>Example</summary>
 
@@ -130,7 +120,6 @@ Optional. By default, tooltips will be positioned next to the element that cause
 ```
 
 </details>
-
 #### `@onShow`
 
 Optional. Fired after a tooltip has been rendered, _and_ any animations have been performed.
@@ -167,6 +156,16 @@ position(referencePosition) {
 ```
 
 </details>
+
+#### `@usePopover`
+
+Optional. Opt in to native popover, and opt out of the JS positioning, allowing you to use CSS anchor positioning instead.
+
+When this option is enabled, the following arguments are essentially redundant: `@position`, `@rows`, `@columns`, `@destination`.
+
+#### `@popoverTarget`
+
+Optional. By default, tooltips will be positioned next to the element that caused them to display. When this argument is specified, the tooltip will still show when mousing over the `@element`, but will be positioned next to a _different_ element.
 
 ### API
 
