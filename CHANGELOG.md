@@ -1,20 +1,9 @@
 # Changelog
 
-## 16.7.0
-
-- Rename `@attachTo` to `@popoverTarget`.
-
-## 16.6.0
-
-- Introduce `@usePopover` arg
-
 ## 16.5.0
 
-- Use `popover` when opting into CSS anchor positioning, to get anchor coupling for free
-
-## 16.4.0
-
-- Add ability to opt out of the JavaScript positioning utils, and opt in to CSS anchor positioning.
+- Introduce `@usePopover` arg
+- Rename `@attachTo` to `@popoverTarget`.
 
 ## 16.3.4
 
