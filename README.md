@@ -161,7 +161,7 @@ position(referencePosition) {
 
 Optional. Opt in to native popover, and opt out of the JS positioning, allowing you to use CSS anchor positioning instead.
 
-When this option is enabled, the following arguments are essentially redundant: `@position`, `@rows`, `@columns`, `@destination`.
+When this option is enabled, the following arguments are become irrelevant: `@position`, `@rows`, `@columns`, `@destination`.
 
 #### `@popoverTarget`
 
