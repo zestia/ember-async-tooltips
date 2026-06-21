@@ -47,7 +47,7 @@ module('tooltip | popover target', function (hooks) {
     );
   };
 
-  hooks.beforeEach(async function () {
+  hooks.beforeEach(function () {
     popoverSource = null;
   });
 
