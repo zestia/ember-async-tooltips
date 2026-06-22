@@ -42,6 +42,6 @@ module('tooltip | use popover', function (hooks) {
       .dom(tooltip)
       .hasAttribute('popover', 'manual')
       .doesNotHaveAttribute('style')
-      .doesNotHaveAttribute('data-position');
+      .hasAttribute('data-position', 'bottom center');
   });
 });
