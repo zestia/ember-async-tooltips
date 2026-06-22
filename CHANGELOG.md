@@ -1,5 +1,9 @@
 # Changelog
 
+## 16.4.1
+
+- Ensure `data-position` re-computes
+
 ## 16.4.0
 
 - Introduce `@usePopover` arg

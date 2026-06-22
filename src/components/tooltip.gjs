@@ -3,7 +3,6 @@
 import { cancel, later, next } from '@ember/runloop';
 import { defer } from 'rsvp';
 import { getPosition, getCoords } from '@zestia/position-utils';
-// import getSide from '../utils/side.js';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
 import { modifier } from 'ember-modifier';
@@ -26,7 +25,7 @@ export default class TooltipComponent extends Component {
   @tracked shouldShowTooltip;
   @tracked tooltipCoords = [0, 0];
   @tracked tooltipElement;
-  // @tracked tooltipSide;
+  @tracked tooltipPosition = this.#getTooltipPosition();
 
   hideTimer;
   isOverTooltipElement;
@@ -171,20 +170,6 @@ export default class TooltipComponent extends Component {
 
   get referencePosition() {
     return getPosition(this.positionElement, window, this.columns, this.rows);
-  }
-
-  get tooltipPosition() {
-    const { position } = this.args;
-
-    if (typeof position === 'string') {
-      return position;
-    }
-
-    if (typeof position === 'function') {
-      return position(this.referencePosition);
-    }
-
-    return autoPosition(this.referencePosition);
   }
 
   handleMouseEnterTooltipperElement = () => {
@@ -421,16 +406,35 @@ export default class TooltipComponent extends Component {
     }
   }
 
+  #getTooltipCoords() {
+    return getCoords(
+      this.tooltipPosition,
+      this.tooltipElement,
+      this.positionElement
+    );
+  }
+
+  #getTooltipPosition() {
+    const { position } = this.args;
+
+    if (typeof position === 'string') {
+      return position;
+    }
+
+    if (typeof position === 'function') {
+      return position(this.referencePosition);
+    }
+
+    return autoPosition(this.referencePosition);
+  }
+
   #tether() {
     if (!this.positionElement || this.args.usePopover) {
       return;
     }
 
-    this.tooltipCoords = getCoords(
-      this.tooltipPosition,
-      this.tooltipElement,
-      this.positionElement
-    );
+    this.tooltipCoords = this.#getTooltipCoords();
+    this.tooltipPosition = this.#getTooltipPosition();
 
     this.tetherID = requestAnimationFrame(this.#tether.bind(this));
   }
@@ -590,7 +594,7 @@ export default class TooltipComponent extends Component {
         <div
           class="tooltip"
           data-showing="{{this.shouldShowTooltip}}"
-          data-position={{unless @usePopover this.tooltipPosition}}
+          data-position={{this.tooltipPosition}}
           data-sticky="{{this.isSticky}}"
           id={{this.id}}
           style={{unless @usePopover this.tooltipStyle}}
