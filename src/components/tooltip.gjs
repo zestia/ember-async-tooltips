@@ -3,7 +3,8 @@
 import { cancel, later, next } from '@ember/runloop';
 import { defer } from 'rsvp';
 import { getPosition, getCoords } from '@zestia/position-utils';
-import getSide from '../utils/side.js';
+// import getSide from '../utils/side.js';
+import getPositionArea from '../utils/position-area.js';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
 import { modifier } from 'ember-modifier';
@@ -26,7 +27,8 @@ export default class TooltipComponent extends Component {
   @tracked shouldShowTooltip;
   @tracked tooltipCoords = [0, 0];
   @tracked tooltipElement;
-  @tracked tooltipSide;
+  @tracked tooltipPositionArea;
+  // @tracked tooltipSide;
 
   hideTimer;
   isOverTooltipElement;
@@ -174,6 +176,10 @@ export default class TooltipComponent extends Component {
   }
 
   get tooltipPosition() {
+    if (this.args.usePopover) {
+      return this.tooltipPositionArea;
+    }
+
     const { position } = this.args;
 
     if (typeof position === 'string') {
@@ -427,7 +433,7 @@ export default class TooltipComponent extends Component {
     }
 
     if (this.args.usePopover) {
-      this.tooltipSide = getSide(this.positionElement, this.tooltipElement);
+      this.tooltipPositionArea = getPositionArea(this.tooltipElement);
     } else {
       this.tooltipCoords = getCoords(
         this.tooltipPosition,
@@ -594,9 +600,8 @@ export default class TooltipComponent extends Component {
         <div
           class="tooltip"
           data-showing="{{this.shouldShowTooltip}}"
-          data-position={{unless @usePopover this.tooltipPosition}}
+          data-position={{this.tooltipPosition}}
           data-sticky="{{this.isSticky}}"
-          data-side={{if @usePopover this.tooltipSide}}
           id={{this.id}}
           style={{unless @usePopover this.tooltipStyle}}
           role="tooltip"

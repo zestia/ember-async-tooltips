@@ -1,17 +1,17 @@
 const { abs } = Math;
 
-export default function getSide(tooltipper, tooltip) {
-  const anchorRect = tooltipper.getBoundingClientRect();
-  const popoverRect = tooltip.getBoundingClientRect();
+export default function getSide(anchor, popover) {
+  const anchorRect = anchor.getBoundingClientRect();
+  const popoverRect = popover.getBoundingClientRect();
 
-  const tooltipperCenterX = anchorRect.left + anchorRect.width / 2;
-  const tooltipperCenterY = anchorRect.top + anchorRect.height / 2;
+  const anchorCenterX = anchorRect.left + anchorRect.width / 2;
+  const anchorCenterY = anchorRect.top + anchorRect.height / 2;
 
-  const tooltipCenterX = popoverRect.left + popoverRect.width / 2;
-  const tooltipCenterY = popoverRect.top + popoverRect.height / 2;
+  const popoverCenterX = popoverRect.left + popoverRect.width / 2;
+  const popoverCenterY = popoverRect.top + popoverRect.height / 2;
 
-  const deltaX = tooltipCenterX - tooltipperCenterX;
-  const deltaY = tooltipCenterY - tooltipperCenterY;
+  const deltaX = popoverCenterX - anchorCenterX;
+  const deltaY = popoverCenterY - anchorCenterY;
 
   if (abs(deltaX) > abs(deltaY)) {
     return deltaX > 0 ? 'right' : 'left';

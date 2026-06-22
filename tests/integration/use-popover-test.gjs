@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { find, render, settled, triggerEvent } from '@ember/test-helpers';
+import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import Tooltip from '#src/components/tooltip';
 
@@ -42,49 +43,53 @@ module('tooltip | use popover', function (hooks) {
       .dom(tooltip)
       .hasAttribute('popover', 'manual')
       .doesNotHaveAttribute('style')
-      .doesNotHaveAttribute('data-position');
+      .hasAttribute('data-position', 'none');
   });
 
-  test('sets the side of the tooltipper that the popover is anchored to', async function (assert) {
-    assert.expect(4);
+  test('exposes the computed position-area for native popovers', async function (assert) {
+    assert.expect(3);
+
+    const state = new (class {
+      @tracked positionArea = 'bottom-right';
+    })();
 
     await render(
       <template>
+        {{! template-lint-disable no-forbidden-elements }}
+        <style>
+          .bottom-right {
+            position-area: bottom span-right;
+          }
+
+          .top-left {
+            position-area: top span-left;
+          }
+        </style>
+
         <div>
-          <Tooltip @usePopover={{true}} />
+          <Tooltip class={{state.positionArea}} @usePopover={{true}} />
         </div>
       </template>
     );
 
-    const tooltipper = find('.tooltipper');
+    await triggerEvent('.tooltipper', 'mouseenter');
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    await settled();
 
-    tooltipper.getBoundingClientRect = () => ({
-      left: 100,
-      top: 100,
-      width: 20,
-      height: 20
-    });
+    assert.dom('.tooltip').hasAttribute('data-position', 'span-right bottom');
 
-    await triggerEvent(tooltipper, 'mouseenter');
+    state.positionArea = 'top-left';
 
-    const tooltip = find('.tooltip');
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    await settled();
 
-    let tooltipRect;
+    assert.dom('.tooltip').hasAttribute('data-position', 'span-left top');
 
-    tooltip.getBoundingClientRect = () => tooltipRect;
+    state.positionArea = '';
 
-    const assertSide = async (rect, side) => {
-      tooltipRect = rect;
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    await settled();
 
-      await new Promise((resolve) => requestAnimationFrame(resolve));
-      await settled();
-
-      assert.dom(tooltip).hasAttribute('data-side', side);
-    };
-
-    await assertSide({ left: 100, top: 140, width: 20, height: 20 }, 'bottom');
-    await assertSide({ left: 100, top: 60, width: 20, height: 20 }, 'top');
-    await assertSide({ left: 140, top: 100, width: 20, height: 20 }, 'right');
-    await assertSide({ left: 60, top: 100, width: 20, height: 20 }, 'left');
+    assert.dom('.tooltip').hasAttribute('data-position', 'none');
   });
 });
