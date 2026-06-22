@@ -184,7 +184,11 @@ export default class TooltipComponent extends Component {
       return position(this.referencePosition);
     }
 
-    return autoPosition(this.referencePosition);
+    if (!this.args.usePopover) {
+      return autoPosition(this.referencePosition);
+    }
+
+    return null;
   }
 
   handleMouseEnterTooltipperElement = () => {
@@ -590,7 +594,7 @@ export default class TooltipComponent extends Component {
         <div
           class="tooltip"
           data-showing="{{this.shouldShowTooltip}}"
-          data-position={{unless @usePopover this.tooltipPosition}}
+          data-position={{this.tooltipPosition}}
           data-sticky="{{this.isSticky}}"
           id={{this.id}}
           style={{unless @usePopover this.tooltipStyle}}
