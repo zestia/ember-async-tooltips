@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { find, render, settled, triggerEvent } from '@ember/test-helpers';
-import { tracked } from '@glimmer/tracking';
+import { trackedObject } from '@ember/reactive/collections';
 import { assertPosition } from '#tests/helpers';
 import Tooltip from '#src/components/tooltip';
 import { on } from '@ember/modifier';
@@ -15,10 +15,10 @@ module('tooltip | popover target', function (hooks) {
     popoverSource = event.source;
   };
 
-  const state = new (class {
-    @tracked popoverTarget;
-    @tracked usePopover;
-  })();
+  const state = trackedObject({
+    popoverTarget: null,
+    usePopover: null
+  });
 
   const _render = () => {
     return render(

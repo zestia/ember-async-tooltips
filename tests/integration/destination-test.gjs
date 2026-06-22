@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, triggerEvent } from '@ember/test-helpers';
 import { modifier } from 'ember-modifier';
-import { tracked } from '@glimmer/tracking';
+import { trackedObject } from '@ember/reactive/collections';
 import Tooltip from '#src/components/tooltip';
 
 module('tooltip | destination', function (hooks) {
@@ -11,9 +11,7 @@ module('tooltip | destination', function (hooks) {
   test('can specify an output destination', async function (assert) {
     assert.expect(3);
 
-    const state = new (class {
-      @tracked elsewhere;
-    })();
+    const state = trackedObject({ elsewhere: null });
 
     const register = modifier((element) => (state.elsewhere = element));
 

@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, triggerEvent, settled } from '@ember/test-helpers';
-import { tracked } from '@glimmer/tracking';
+import { trackedObject } from '@ember/reactive/collections';
 import { wait } from '#tests/helpers';
 import Tooltip from '#src/components/tooltip';
 
@@ -11,9 +11,7 @@ module('tooltip | cancelling', function (hooks) {
   test('tooltips scheduled to show, will be cancelled', async function (assert) {
     assert.expect(1);
 
-    const state = new (class {
-      @tracked show = true;
-    })();
+    const state = trackedObject({ show: true });
 
     await render(
       <template>

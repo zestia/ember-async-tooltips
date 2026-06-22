@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, find, triggerEvent } from '@ember/test-helpers';
-import { tracked } from '@glimmer/tracking';
+import { trackedObject } from '@ember/reactive/collections';
 import Tooltip from '#src/components/tooltip';
 
 module('tooltip | reference', function (hooks) {
@@ -10,9 +10,7 @@ module('tooltip | reference', function (hooks) {
   test('can specify a reference element to attach to', async function (assert) {
     assert.expect(4);
 
-    const state = new (class {
-      @tracked referenceElement;
-    })();
+    const state = trackedObject({ referenceElement: null });
 
     await render(
       <template>

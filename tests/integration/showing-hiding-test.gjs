@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, waitFor, settled } from '@ember/test-helpers';
-import { tracked } from '@glimmer/tracking';
+import { trackedObject } from '@ember/reactive/collections';
 import waitForAnimation from '#tests/helpers/wait-for-animation';
 import Tooltip from '#src/components/tooltip';
 
@@ -13,9 +13,7 @@ module('tooltip | showing & hiding', function (hooks) {
 
     let animations;
 
-    const state = new (class {
-      @tracked show;
-    })();
+    const state = trackedObject({ show: null });
 
     const tooltipShown = () => assert.step('tooltip shown');
     const tooltipHidden = () => assert.step('tooltip hidden');

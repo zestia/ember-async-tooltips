@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled, waitUntil, triggerEvent } from '@ember/test-helpers';
-import { tracked } from '@glimmer/tracking';
+import { trackedObject } from '@ember/reactive/collections';
 import { assertPosition, getPosition } from '#tests/helpers';
 import Tooltip from '#src/components/tooltip';
 
@@ -11,9 +11,7 @@ module('tooltip | reposition', function (hooks) {
   test('reposition', async function (assert) {
     assert.expect(4);
 
-    const state = new (class {
-      @tracked text = 'Hello';
-    })();
+    const state = trackedObject({ text: 'Hello' });
 
     await render(
       <template>
@@ -46,9 +44,7 @@ module('tooltip | reposition', function (hooks) {
 
     const tooltipService = this.owner.lookup('service:tooltip');
 
-    const state = new (class {
-      @tracked show = true;
-    })();
+    const state = trackedObject({ show: true });
 
     await render(
       <template>

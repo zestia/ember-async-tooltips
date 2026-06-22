@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { find, render, settled, triggerEvent } from '@ember/test-helpers';
-import { tracked } from '@glimmer/tracking';
+import { trackedObject } from '@ember/reactive/collections';
 import { on } from '@ember/modifier';
 import Tooltip from '#src/components/tooltip';
 
@@ -49,9 +49,7 @@ module('tooltip | use popover', function (hooks) {
   test('exposes the computed position-area for native popovers', async function (assert) {
     assert.expect(3);
 
-    const state = new (class {
-      @tracked positionArea = 'bottom-right';
-    })();
+    const state = trackedObject({ positionArea: 'bottom-right' });
 
     await render(
       <template>

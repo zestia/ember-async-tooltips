@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled, click, triggerEvent } from '@ember/test-helpers';
 import { on } from '@ember/modifier';
-import { tracked } from '@glimmer/tracking';
+import { trackedObject } from '@ember/reactive/collections';
 import Tooltip from '#src/components/tooltip';
 
 module('tooltip | manual', function (hooks) {
@@ -11,9 +11,7 @@ module('tooltip | manual', function (hooks) {
   test('manually showing / hiding test', async function (assert) {
     assert.expect(3);
 
-    const state = new (class {
-      @tracked show;
-    })();
+    const state = trackedObject({ show: null });
 
     await render(
       <template>
@@ -41,9 +39,7 @@ module('tooltip | manual', function (hooks) {
   test('mouse/keyboard events do not effect tooltip when manually showing / hiding', async function (assert) {
     assert.expect(6);
 
-    const state = new (class {
-      @tracked show;
-    })();
+    const state = trackedObject({ show: null });
 
     const toggleTooltip = () => {
       state.show = !state.show;

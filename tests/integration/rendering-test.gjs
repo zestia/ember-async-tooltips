@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { settled, render, triggerEvent } from '@ember/test-helpers';
-import { tracked } from '@glimmer/tracking';
+import { trackedObject } from '@ember/reactive/collections';
 import Tooltip from '#src/components/tooltip';
 
 module('tooltip | rendering', function (hooks) {
@@ -83,9 +83,7 @@ module('tooltip | rendering', function (hooks) {
     // that the tooltip service does not hold on to a reference
     // to its tooltip, which should also be destroyed.
 
-    const state = new (class {
-      @tracked show = true;
-    })();
+    const state = trackedObject({ show: true });
 
     await render(
       <template>
@@ -119,9 +117,7 @@ module('tooltip | rendering', function (hooks) {
     // or is-a-parent to run. The recently destroyed tooltipper's element
     // will be null so any parent/child checks need to account for this.
 
-    const state = new (class {
-      @tracked show = true;
-    })();
+    const state = trackedObject({ show: true });
 
     const deferred = Promise.withResolvers();
 

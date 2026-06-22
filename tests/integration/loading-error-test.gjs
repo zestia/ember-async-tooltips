@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled, triggerEvent } from '@ember/test-helpers';
-import { tracked } from '@glimmer/tracking';
+import { trackedObject } from '@ember/reactive/collections';
 import Tooltip from '#src/components/tooltip';
 
 module('tooltip | loading error', function (hooks) {
@@ -13,9 +13,7 @@ module('tooltip | loading error', function (hooks) {
     const deferred1 = Promise.withResolvers();
     const deferred2 = Promise.withResolvers();
 
-    const state = new (class {
-      @tracked load = () => deferred1.promise;
-    })();
+    const state = trackedObject({ load: () => deferred1.promise });
 
     await render(
       <template>
