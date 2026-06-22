@@ -1,7 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { find, render, settled, triggerEvent } from '@ember/test-helpers';
-import { trackedObject } from '@ember/reactive/collections';
+import { find, render, triggerEvent } from '@ember/test-helpers';
 import { on } from '@ember/modifier';
 import Tooltip from '#src/components/tooltip';
 
@@ -43,51 +42,6 @@ module('tooltip | use popover', function (hooks) {
       .dom(tooltip)
       .hasAttribute('popover', 'manual')
       .doesNotHaveAttribute('style')
-      .hasAttribute('data-position', 'none');
-  });
-
-  test('exposes the computed position-area for native popovers', async function (assert) {
-    assert.expect(3);
-
-    const state = trackedObject({ positionArea: 'bottom-right' });
-
-    await render(
-      <template>
-        {{! template-lint-disable no-forbidden-elements }}
-        <style>
-          .bottom-right {
-            position-area: bottom span-right;
-          }
-
-          .top-left {
-            position-area: top span-left;
-          }
-        </style>
-
-        <div>
-          <Tooltip class={{state.positionArea}} @usePopover={{true}} />
-        </div>
-      </template>
-    );
-
-    await triggerEvent('.tooltipper', 'mouseenter');
-    await new Promise((resolve) => requestAnimationFrame(resolve));
-    await settled();
-
-    assert.dom('.tooltip').hasAttribute('data-position', 'span-right bottom');
-
-    state.positionArea = 'top-left';
-
-    await new Promise((resolve) => requestAnimationFrame(resolve));
-    await settled();
-
-    assert.dom('.tooltip').hasAttribute('data-position', 'span-left top');
-
-    state.positionArea = '';
-
-    await new Promise((resolve) => requestAnimationFrame(resolve));
-    await settled();
-
-    assert.dom('.tooltip').hasAttribute('data-position', 'none');
+      .doesNotHaveAttribute('data-position');
   });
 });

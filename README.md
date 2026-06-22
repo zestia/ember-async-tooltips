@@ -36,7 +36,6 @@ https://zestia.github.io/ember-async-tooltips
 - Customisable destination element ✔︎
 - Pre-loads any required data ✔︎
 - Tethers to element ✔︎
-- Arrow support for native popover ✔︎
 
 ## Notes
 
@@ -161,8 +160,6 @@ position(referencePosition) {
 #### `@usePopover`
 
 Optional. Opt in to native popover, and opt out of the JS positioning, allowing you to use CSS anchor positioning instead.
-
-The tooltip's computed [`position-area`](https://drafts.csswg.org/css-anchor-position-1/#position-area) is exposed as `data-position`, this allows you to render arrows.
 
 When this option is enabled, the following arguments are become irrelevant: `@position`, `@rows`, `@columns`, `@destination`.
 
