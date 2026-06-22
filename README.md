@@ -36,6 +36,7 @@ https://zestia.github.io/ember-async-tooltips
 - Customisable destination element ✔︎
 - Pre-loads any required data ✔︎
 - Tethers to element ✔︎
+- Arrow support for native popover ✔︎
 
 ## Notes
 

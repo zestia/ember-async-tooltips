@@ -3,6 +3,7 @@
 import { cancel, later, next } from '@ember/runloop';
 import { defer } from 'rsvp';
 import { getPosition, getCoords } from '@zestia/position-utils';
+import getSide from '../utils/side.js';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/template';
 import { modifier } from 'ember-modifier';
@@ -25,6 +26,7 @@ export default class TooltipComponent extends Component {
   @tracked shouldShowTooltip;
   @tracked tooltipCoords = [0, 0];
   @tracked tooltipElement;
+  @tracked tooltipSide;
 
   hideTimer;
   isOverTooltipElement;
@@ -424,11 +426,15 @@ export default class TooltipComponent extends Component {
       return;
     }
 
-    this.tooltipCoords = getCoords(
-      this.tooltipPosition,
-      this.tooltipElement,
-      this.positionElement
-    );
+    if (this.args.usePopover) {
+      this.tooltipSide = getSide(this.positionElement, this.tooltipElement);
+    } else {
+      this.tooltipCoords = getCoords(
+        this.tooltipPosition,
+        this.tooltipElement,
+        this.positionElement
+      );
+    }
 
     this.tetherID = requestAnimationFrame(this.#tether.bind(this));
   }
@@ -477,10 +483,6 @@ export default class TooltipComponent extends Component {
 
   position = modifier(
     (_, [position, columns, rows, destination, popoverTarget]) => {
-      if (this.args.usePopover) {
-        return;
-      }
-
       this.#startTether();
       return () => this.#stopTether();
     }
@@ -594,6 +596,7 @@ export default class TooltipComponent extends Component {
           data-showing="{{this.shouldShowTooltip}}"
           data-position={{unless @usePopover this.tooltipPosition}}
           data-sticky="{{this.isSticky}}"
+          data-side={{if @usePopover this.tooltipSide}}
           id={{this.id}}
           style={{unless @usePopover this.tooltipStyle}}
           role="tooltip"
