@@ -1,5 +1,9 @@
 # Changelog
 
+## 16.4.2
+
+- When opted into popovers, `data-position` will be up-to-date after a flip-block/inline. This is a temporary solution to until container queries can tell us the location (support is not great yet)
+
 ## 16.4.1
 
 - Ensure `data-position` re-computes

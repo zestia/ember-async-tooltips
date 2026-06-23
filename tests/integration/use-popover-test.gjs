@@ -18,8 +18,23 @@ module('tooltip | use popover', function (hooks) {
 
     await render(
       <template>
+        {{! template-lint-disable no-forbidden-elements }}
+        <style>
+          .tooltipper {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+          }
+          .tooltip {
+            position-area: bottom;
+            position-try: flip-block;
+          }
+        </style>
         <div>
-          <Tooltip @usePopover={{true}} {{on "toggle" handleToggle}} />
+          Popover target
+          <Tooltip @usePopover={{true}} {{on "toggle" handleToggle}}>
+            Tooltip
+          </Tooltip>
         </div>
       </template>
     );
@@ -42,6 +57,6 @@ module('tooltip | use popover', function (hooks) {
       .dom(tooltip)
       .hasAttribute('popover', 'manual')
       .doesNotHaveAttribute('style')
-      .hasAttribute('data-position', 'bottom center');
+      .hasAttribute('data-position', 'top center', '(flipped)');
   });
 });

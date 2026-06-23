@@ -11,6 +11,7 @@ import { tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';
 import { waitForAnimation } from '@zestia/animation-utils';
 import autoPosition from '../utils/auto-position.js';
+import getPositionArea from '../utils/position-area.js';
 import Component from '@glimmer/component';
 const { max } = Math;
 
@@ -25,7 +26,7 @@ export default class TooltipComponent extends Component {
   @tracked shouldShowTooltip;
   @tracked tooltipCoords = [0, 0];
   @tracked tooltipElement;
-  @tracked tooltipPosition = this.#getTooltipPosition();
+  @tracked tooltipPosition;
 
   hideTimer;
   isOverTooltipElement;
@@ -425,11 +426,15 @@ export default class TooltipComponent extends Component {
       return position(this.referencePosition);
     }
 
+    if (this.args.usePopover) {
+      return getPositionArea(this.tooltipElement, this.positionElement);
+    }
+
     return autoPosition(this.referencePosition);
   }
 
   #tether() {
-    if (!this.positionElement || this.args.usePopover) {
+    if (!this.positionElement) {
       return;
     }
 
