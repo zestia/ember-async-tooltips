@@ -22,6 +22,7 @@ Router.map(function () {
   this.route('tether');
   this.route('use-click');
   this.route('use-focus');
+  this.route('follow-mouse');
 });
 
 export class App extends EmberApp {

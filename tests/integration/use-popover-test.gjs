@@ -56,7 +56,7 @@ module('tooltip | use popover', function (hooks) {
     assert
       .dom(tooltip)
       .hasAttribute('popover', 'manual')
-      .doesNotHaveAttribute('style')
+      .hasAttribute('style', '')
       .hasAttribute('data-position', 'top center', '(flipped)');
   });
 });
