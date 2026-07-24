@@ -12,6 +12,7 @@ import { waitFor } from '@ember/test-waiters';
 import { waitForAnimation } from '@zestia/animation-utils';
 import autoPosition from '../utils/auto-position.js';
 import getPositionArea from '../utils/position-area.js';
+import getSide from '../utils/get-side.js';
 import Component from '@glimmer/component';
 const { max } = Math;
 
@@ -27,6 +28,7 @@ export default class TooltipComponent extends Component {
   @tracked tooltipCoords = [0, 0];
   @tracked tooltipElement;
   @tracked tooltipPosition;
+  @tracked tooltipSide;
 
   hideTimer;
   isOverTooltipElement;
@@ -51,9 +53,17 @@ export default class TooltipComponent extends Component {
   }
 
   get tooltipStyle() {
-    const [x, y] = this.tooltipCoords;
+    if (!this.args.usePopover) {
+      const [x, y] = this.tooltipCoords;
 
-    return htmlSafe(`top: ${y}px; left: ${x}px`);
+      return htmlSafe(`top: ${y}px; left: ${x}px`);
+    }
+
+    if (this.shouldFollowMouse) {
+      return htmlSafe(`translate: var(--offset-x, 0px) var(--offset-y, 0px)`);
+    }
+
+    return '';
   }
 
   get hideDelay() {
@@ -173,6 +183,14 @@ export default class TooltipComponent extends Component {
     return getPosition(this.positionElement, window, this.columns, this.rows);
   }
 
+  get shouldFollowMouse() {
+    if (this.args.useClick) {
+      return false;
+    }
+
+    return this.args.followMouse && this.args.usePopover;
+  }
+
   handleMouseEnterTooltipperElement = () => {
     this.#hideFocusOnlyTooltip();
     this.isOverTooltipperElement = true;
@@ -183,6 +201,18 @@ export default class TooltipComponent extends Component {
     this.isOverTooltipperElement = false;
     this.tooltipperElementIsFocused = false;
     this.#scheduleHideTooltip();
+  };
+
+  handleMouseMoveTooltipperElement = (event) => {
+    if (!this.tooltipElement) {
+      return;
+    }
+
+    if (this.tooltipElement.contains(event.target)) {
+      return;
+    }
+
+    this.#followMouse(event);
   };
 
   handleClickTooltipperElement = (event) => {
@@ -233,6 +263,26 @@ export default class TooltipComponent extends Component {
   show = () => {
     this.#showTooltip();
   };
+
+  #followMouse() {
+    const tooltipperRect = this.tooltipperElement.getBoundingClientRect();
+
+    let offsetX = 0;
+    let offsetY = 0;
+
+    if (this.tooltipSide === 'top' || this.tooltipSide === 'bottom') {
+      offsetX =
+        event.clientX - (tooltipperRect.left + tooltipperRect.width / 2);
+    }
+
+    if (this.tooltipSide === 'left' || this.tooltipSide === 'right') {
+      offsetY =
+        event.clientY - (tooltipperRect.top + tooltipperRect.height / 2);
+    }
+
+    this.tooltipElement.style.setProperty(`--offset-x`, `${offsetX}px`);
+    this.tooltipElement.style.setProperty(`--offset-y`, `${offsetY}px`);
+  }
 
   async #load() {
     const start = Date.now();
@@ -433,6 +483,10 @@ export default class TooltipComponent extends Component {
     return autoPosition(this.referencePosition);
   }
 
+  #getTooltipSide() {
+    return getSide(this.tooltipperElement, this.tooltipElement);
+  }
+
   #tether() {
     if (!this.positionElement) {
       return;
@@ -440,6 +494,7 @@ export default class TooltipComponent extends Component {
 
     this.tooltipCoords = this.#getTooltipCoords();
     this.tooltipPosition = this.#getTooltipPosition();
+    this.tooltipSide = this.#getTooltipSide();
 
     this.tetherID = requestAnimationFrame(this.#tether.bind(this));
   }
@@ -511,6 +566,10 @@ export default class TooltipComponent extends Component {
         this.#add(el, 'focus', this.handleFocusTooltipperElement);
         this.#add(el, 'blur', this.handleBlurTooltipperElement);
       }
+
+      if (this.shouldFollowMouse) {
+        this.#add(el, 'mousemove', this.handleMouseMoveTooltipperElement);
+      }
     }
 
     return () => {
@@ -526,6 +585,10 @@ export default class TooltipComponent extends Component {
         if (this.args.useFocus) {
           this.#rem(el, 'focus', this.handleFocusTooltipperElement);
           this.#rem(el, 'blur', this.handleBlurTooltipperElement);
+        }
+
+        if (this.shouldFollowMouse) {
+          this.#rem(el, 'mousemove', this.handleMouseMoveTooltipperElement);
         }
       }
     };
@@ -600,9 +663,10 @@ export default class TooltipComponent extends Component {
           class="tooltip"
           data-showing="{{this.shouldShowTooltip}}"
           data-position={{this.tooltipPosition}}
+          data-side={{this.tooltipSide}}
           data-sticky="{{this.isSticky}}"
           id={{this.id}}
-          style={{unless @usePopover this.tooltipStyle}}
+          style={{this.tooltipStyle}}
           role="tooltip"
           aria-live="polite"
           popover={{if @usePopover "manual"}}

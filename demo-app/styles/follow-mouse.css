@@ -1,0 +1,38 @@
+.follow-mouse-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 100px;
+}
+
+.follow-mouse-tooltipper {
+  width: 200px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.follow-mouse-tooltip {
+  position: fixed;
+  position-try:
+    flip-inline,
+    flip-block,
+    flip-inline flip-block;
+}
+
+.follow-mouse-tooltip-top {
+  position-area: top;
+}
+
+.follow-mouse-tooltip-bottom {
+  position-area: bottom;
+}
+
+.follow-mouse-tooltip-left {
+  position-area: left;
+}
+
+.follow-mouse-tooltip-right {
+  position-area: right;
+}

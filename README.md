@@ -167,6 +167,12 @@ When this option is enabled, the following arguments are become irrelevant: `@po
 
 Optional. By default, tooltips will be positioned next to the element that caused them to display. When this argument is specified, the tooltip will still show when mousing over the `@element`, but will be positioned next to a _different_ element.
 
+#### `@followMouse`
+
+Note: You must be opted in to `@usePopover` to use `@followMouse`
+
+Optional. Instead of a statically positioned tooltip, make the tooltip follow the position of the mouse when it is inside of the tooltipper, anchored to the axis the tooltip is positioned on. (ie. if the tooltip on the right hand side of the tooltipper, then it will only move on the Y axis)
+
 ### API
 
 #### `isLoading`

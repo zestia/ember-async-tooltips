@@ -88,6 +88,12 @@ import '../styles/app.css';
     <LinkTo @route="use-focus">
       Use Focus
     </LinkTo>
+
+    |
+
+    <LinkTo @route="follow-mouse">
+      Follow mouse
+    </LinkTo>
   </p>
 
   {{outlet}}
