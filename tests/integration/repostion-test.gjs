@@ -1,6 +1,13 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, waitUntil, triggerEvent } from '@ember/test-helpers';
+import {
+  find,
+  render,
+  settled,
+  waitFor,
+  waitUntil,
+  triggerEvent
+} from '@ember/test-helpers';
 import { trackedObject } from '@ember/reactive/collections';
 import { assertPosition, getPosition } from '#tests/helpers';
 import Tooltip from '#src/components/tooltip';
@@ -9,7 +16,7 @@ module('tooltip | reposition', function (hooks) {
   setupRenderingTest(hooks);
 
   test('reposition', async function (assert) {
-    assert.expect(4);
+    assert.expect(6);
 
     const state = trackedObject({ text: 'Hello' });
 
@@ -23,10 +30,17 @@ module('tooltip | reposition', function (hooks) {
       </template>
     );
 
-    await triggerEvent('.tooltipper', 'mouseenter');
-
     const expectedStartPosition = { left: -4, top: 11 };
     const expectedEndPosition = { left: -15, top: 11 };
+
+    triggerEvent('.tooltipper', 'mouseenter');
+
+    await waitFor('.tooltip');
+    await waitUntil(() => find('.tooltip').style.top !== '0px');
+
+    assertPosition('.tooltip', expectedStartPosition);
+
+    await settled();
 
     assertPosition('.tooltip', expectedStartPosition);
 

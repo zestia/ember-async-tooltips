@@ -438,8 +438,8 @@ export default class TooltipComponent extends Component {
       return;
     }
 
-    this.tooltipCoords = this.#getTooltipCoords();
     this.tooltipPosition = this.#getTooltipPosition();
+    this.tooltipCoords = this.#getTooltipCoords();
 
     this.tetherID = requestAnimationFrame(this.#tether.bind(this));
   }
